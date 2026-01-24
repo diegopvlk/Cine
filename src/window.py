@@ -951,7 +951,11 @@ class CineWindow(Adw.ApplicationWindow):
             "opengl",
             opengl_init_params={"get_proc_address": proc_address_fn},
         )
-        self.mpv_ctx.update_cb = lambda: GLib.idle_add(self.gl_area.queue_render)
+
+        self.mpv_ctx.update_cb = lambda: GLib.idle_add(
+            self.gl_area.queue_render,
+            priority=GLib.PRIORITY_HIGH_IDLE,  # pyright: ignore[reportCallIssue]
+        )
         self.fbo = ctypes.c_int()
 
     def _on_render_area(self, area, _context):

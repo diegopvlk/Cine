@@ -23,11 +23,13 @@ gi.require_version("Gio", "2.0")
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gio, GLib, Gtk
+from gettext import gettext as _
 
 APP_ID = "io.github.diegopvlk.Cine"
 
-# Keep PlaybackStatus and Metadata commented, otherwise it causes frame drops
-# those will come from _sync_player_state
+# This is a mess, but it (kinda) works :D
+# Keep PlaybackStatus, Metadata and CanSeek commented, it causes stutters
+# those will come from _sync_player_state and _update_props
 INTERFACE = """
 <!DOCTYPE node PUBLIC
 '-//freedesktop//DTD D-BUS Object Introspection 1.0//EN'
@@ -64,6 +66,7 @@ INTERFACE = """
         <!--
         <property name='PlaybackStatus' type='s' access='read'/>
         <property name='Metadata' type='a{sv}' access='read'/>
+        <property name='CanSeek' type='b' access='read'/>
         -->
         <property name='LoopStatus' type='s' access='readwrite'/>
         <property name='Volume' type='d' access='readwrite'/>
@@ -72,7 +75,6 @@ INTERFACE = """
         <property name='CanGoPrevious' type='b' access='read'/>
         <property name='CanPlay' type='b' access='read'/>
         <property name='CanPause' type='b' access='read'/>
-        <property name='CanSeek' type='b' access='read'/>
         <property name='CanControl' type='b' access='read'/>
         <property name='Shuffle' type='b' access='readwrite'/>
     </interface>
@@ -95,7 +97,6 @@ class MPRIS:
         self._last_vol = None
         self._last_loop = None
         self._last_shuffle = None
-        self._last_art_url = None
 
         Gio.bus_get(Gio.BusType.SESSION, None, self._on_bus_acquired)
 
@@ -149,7 +150,7 @@ class MPRIS:
 
         if self.player:
             status = "Paused" if self.player.pause else "Playing"
-            title = getattr(self.player, "media_title", "Unknown") or "Unknown"
+            title = getattr(self.player, "media_title") or _("Unknown title")
             loop = self._get_loop_status()
 
             self.emit_properties_changed(
@@ -217,7 +218,7 @@ class MPRIS:
             )
             self._last_vol = current_vol
 
-        current_title = getattr(p, "media_title", "Unknown") or "Unknown"
+        current_title = getattr(p, "media_title") or _("Unknown title")
         if current_title != self._last_title:
             metadata = self._get_metadata_variant(current_title)
             self.emit_properties_changed(
@@ -257,14 +258,6 @@ class MPRIS:
             )
             self._last_shuffle = current_shuffle
 
-        current_art = getattr(p, "cover_path", "")
-        if current_art != self._last_art_url:
-            metadata = self._get_metadata_variant(getattr(p, "media_title", "Unknown"))
-            self.emit_properties_changed(
-                "org.mpris.MediaPlayer2.Player", {"Metadata": metadata}
-            )
-            self._last_art_url = current_art
-
         return True
 
     def _get_metadata_variant(self, title):
@@ -278,12 +271,6 @@ class MPRIS:
             "xesam:title": GLib.Variant("s", str(title)),
             "mpris:length": GLib.Variant("x", duration),
         }
-
-        art_path = getattr(p, "cover_path", "")
-        if art_path:
-            if not (art_path.startswith("file://") or art_path.startswith("http")):
-                art_path = "file://" + art_path
-            metadata["mpris:artUrl"] = GLib.Variant("s", art_path)
 
         return GLib.Variant("a{sv}", metadata)
 
@@ -351,7 +338,7 @@ class MPRIS:
                 return GLib.Variant("b", self.can_go_prev)
             if prop == "CanGoNext":
                 return GLib.Variant("b", self.can_go_next)
-            if prop in ["CanPlay", "CanPause", "CanControl", "CanSeek"]:
+            if prop in ["CanPlay", "CanPause", "CanControl"]:
                 return GLib.Variant("b", True)
             if prop == "Volume":
                 vol = getattr(p, "volume", 0) / 100.0 if p else 0.0
@@ -366,7 +353,7 @@ class MPRIS:
                 pos = int(raw_pos * 1_000_000)
                 return GLib.Variant("x", pos)
             if prop == "Metadata":
-                title = getattr(p, "media_title", "Unknown") if p else "Unknown"
+                title = getattr(p, "media_title") or _("Unknown title")
                 return self._get_metadata_variant(title)
             if prop == "Shuffle":
                 _shuffle = getattr(p, "_shuffle", False) if p else False
