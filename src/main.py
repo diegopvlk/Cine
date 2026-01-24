@@ -130,7 +130,7 @@ class CineApplication(Adw.Application):
         if not open_new:
             win.mpv.pause = False
 
-        GLib.timeout_add_seconds(2, win._hide_ui)
+        win._hide_ui_timeout()
 
     def find_first_file(self, gfile, visited=None):
         """Local-only recursive search."""
