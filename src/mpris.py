@@ -168,17 +168,17 @@ class MPRIS:
 
     @property
     def player(self):
-        win = self._app.get_active_window()
+        win = self._app.props.active_window
         return getattr(win, "mpv", None) if win else None
 
     @property
     def can_go_prev(self):
-        win = self._app.get_active_window()
+        win = self._app.props.active_window
         return getattr(win, "can_go_prev", False) if win else False
 
     @property
     def can_go_next(self):
-        win = self._app.get_active_window()
+        win = self._app.props.active_window
         return getattr(win, "can_go_next", False) if win else False
 
     def _get_loop_status(self):
@@ -292,11 +292,11 @@ class MPRIS:
         elif method == "Play":
             p.pause = False
         elif method == "Previous":
-            win = self._app.get_active_window()
+            win = self._app.props.active_window
             if win:
                 win._on_previous_clicked(win)  # type: ignore
         elif method == "Next":
-            win = self._app.get_active_window()
+            win = self._app.props.active_window
             if win:
                 win._on_next_clicked(win)  # type: ignore
         elif method == "Stop":
@@ -311,7 +311,7 @@ class MPRIS:
             p.time_pos = pos_usec / 1_000_000.0
             self._emit_seeked()
         elif method == "Raise":
-            win = self._app.get_active_window()
+            win = self._app.props.active_window
             if win:
                 win.present()
         elif method == "Quit":
@@ -410,7 +410,7 @@ class MPRIS:
             if prop == "Shuffle":
                 new_shuffle = value.get_boolean()
                 p._shuffle = new_shuffle
-                win = self._app.get_active_window()
+                win = self._app.props.active_window
                 if win:
                     btn = win.playlist_shuffle_toggle_button  # type: ignore
                     btn.props.active = new_shuffle

@@ -78,7 +78,7 @@ class CineApplication(Adw.Application):
     def do_open(  # pyright: ignore[reportIncompatibleMethodOverride]
         self, gfiles, _n_files, _hint
     ):
-        win: CineWindow = cast(CineWindow, self.get_active_window())
+        win: CineWindow = cast(CineWindow, self.props.active_window)
         open_new = settings.get_boolean("open-new-windows") or not win
 
         if open_new:
