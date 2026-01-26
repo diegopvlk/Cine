@@ -178,8 +178,8 @@ class CineWindow(Adw.ApplicationWindow):
         self._create_action("clear-and-add", self._on_clear_and_add)
         self._create_action_stateful("select-subtitle", self._on_subtitle_selected, "i")
         self._create_action_stateful("select-audio", self._on_audio_selected, "i")
-        self._create_action("add-sub-files", self._on_add_sub_dialog)
-        self._create_action("add-audio-files", self._on_add_audio_dialog)
+        self._create_action("add-sub-tracks", self._on_add_sub_dialog)
+        self._create_action("add-audio-tracks", self._on_add_audio_dialog)
         self._create_action("add-playlist-files", self._on_add_playlist_dialog)
         self._create_action("open-folder", self._on_open_folder_dialog)
         self._create_action("open-playlist-dialog", self._on_open_playlist)
@@ -412,7 +412,7 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _update_track_menus(self, tracks):
         self.subtitles_menu.remove_all()
-        self.subtitles_menu.append(_("Add Subtitle Track"), "win.add-sub-files")
+        self.subtitles_menu.append(_("Add Subtitle Track"), "win.add-sub-tracks")
 
         item_none_sub = Gio.MenuItem.new(_("None"), None)
         item_none_sub.set_action_and_target_value(
@@ -421,7 +421,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.subtitles_menu.append_item(item_none_sub)
 
         self.audio_tracks_menu.remove_all()
-        self.audio_tracks_menu.append(_("Add Audio Track"), "win.add-audio-files")
+        self.audio_tracks_menu.append(_("Add Audio Track"), "win.add-audio-tracks")
 
         item_none_audio = Gio.MenuItem.new(_("None"), None)
         item_none_audio.set_action_and_target_value(
