@@ -415,7 +415,7 @@ class CineWindow(Adw.ApplicationWindow):
 
             self._hide_ui_timeout()
 
-    def _update_track_menus(self, tracks):
+    def _update_track_menus(self, track_list):
         self.subtitles_menu.remove_all()
         self.subtitles_menu.append(_("Add Subtitle Track"), "win.add-sub-tracks")
 
@@ -430,12 +430,12 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.video_tracks_menu.remove_all()
 
-        for track in tracks:
+        for track in track_list:
             if track["type"] in ("sub", "audio", "video"):
                 self._add_track_to_menu(track)
 
         video_count = len(
-            [t for t in tracks if t["type"] == "video" and not t.get("albumart")]
+            [t for t in track_list if t["type"] == "video" and not t.get("albumart")]
         )
         self.video_tracks_menu_button.set_visible(video_count > 1)
 
@@ -1112,44 +1112,28 @@ class CineWindow(Adw.ApplicationWindow):
 
             GLib.idle_add(update_icon_and_vol_adj)
 
-        @self.mpv.property_observer("sid")
-        def on_sid_change(_name, value):
-            def set_val():
+        track_map = {
+            "sid": "select-subtitle",
+            "aid": "select-audio",
+            "vid": "select-video",
+        }
+
+        def on_track_change(name, value):
+            def set_track():
+                action_name = track_map.get(name) or ""
                 val = value if isinstance(value, int) else 0
-                action: Gio.SimpleAction | None = self.lookup_action(
-                    "select-subtitle"
-                )  # pyright: ignore[reportAssignmentType]
-                if action:
-                    action.set_state(GLib.Variant("i", val))
+                if action := self.lookup_action(action_name):
+                    action.set_state(  # pyright: ignore[reportAttributeAccessIssue]
+                        GLib.Variant("i", val)
+                    )
 
-            GLib.idle_add(set_val)
+            GLib.idle_add(set_track)
 
-        @self.mpv.property_observer("aid")
-        def on_aid_change(_name, value):
-            def set_val():
-                val = value if isinstance(value, int) else 0
-                action: Gio.SimpleAction | None = self.lookup_action(
-                    "select-audio"
-                )  # pyright: ignore[reportAssignmentType]
-                if action:
-                    action.set_state(GLib.Variant("i", val))
-
-            GLib.idle_add(set_val)
-
-        @self.mpv.property_observer("vid")
-        def on_vid_change(_name, value):
-            def set_val():
-                val = value if isinstance(value, int) else 0
-                action: Gio.SimpleAction | None = self.lookup_action(
-                    "select-video"
-                )  # pyright: ignore[reportAssignmentType]
-                if action:
-                    action.set_state(GLib.Variant("i", val))
-
-            GLib.idle_add(set_val)
+        for prop in track_map.keys():
+            self.mpv.property_observer(prop)(on_track_change)
 
         @self.mpv.property_observer("track-list")
-        def on_tracks_change(_name, track_list):
+        def on_track_list_change(_name, track_list):
             GLib.idle_add(self._update_track_menus, track_list)
 
         @self.mpv.property_observer("playlist-pos")
