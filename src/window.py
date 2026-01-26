@@ -693,6 +693,7 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.playlist_next()
 
     def _on_subtitle_selected(self, action, parameter):
+        self.mpv.command("set", "sub-visibility", "yes")
         track_id = parameter.get_int32()
         self.mpv.sid = track_id if track_id > 0 else "no"
         action.set_state(parameter)
