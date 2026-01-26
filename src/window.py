@@ -289,7 +289,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.video_overlay.add_controller(click_gesture)
 
         scroll_controller_overlay = Gtk.EventControllerScroll.new(
-            Gtk.EventControllerScrollFlags.VERTICAL
+            Gtk.EventControllerScrollFlags.BOTH_AXES
         )
         scroll_controller_vol = Gtk.EventControllerScroll.new(
             Gtk.EventControllerScrollFlags.VERTICAL
@@ -660,21 +660,22 @@ class CineWindow(Adw.ApplicationWindow):
         self.chapter_popover.set_pointing_to(rect)
         self.chapter_popover.popup()
 
-    def _on_progress_scroll(self, _controller, _dx, dy):
-        current_time = time.time()
+    def _on_progress_scroll(self, controller, _dx, dy):
+        event: Gdk.ScrollEvent = controller.get_current_event()
+        direction: Gdk.ScrollDirection = event.get_direction()
+        rel_dir: Gdk.ScrollRelativeDirection = event.get_relative_direction(event)  # type: ignore
+        is_natural: bool = rel_dir == Gdk.ScrollRelativeDirection.INVERTED  # type: ignore
+        step = dy if direction == Gdk.ScrollDirection.SMOOTH else dy * 10
 
-        if current_time - self.last_seek_scroll_time < 0.2:
-            return
+        if is_natural:
+            step = -step
 
-        time_pos = cast(float, self.mpv.time_pos)
+        adj = self.video_progress_scale.get_adjustment()
+        progress = adj.get_value()
+        new_progress = progress - step
+        adj.set_value(new_progress)
 
-        if dy < 0:
-            new_time = time_pos + 10
-        else:
-            new_time = time_pos - 10
-
-        self.mpv.time_pos = max(0, new_time)
-        self.last_seek_scroll_time = current_time
+        return True
 
     def _update_volume_icon(self, is_muted):
         volume = cast(int, self.mpv.volume)
@@ -964,24 +965,44 @@ class CineWindow(Adw.ApplicationWindow):
         self.mpv.keyup(mpv_button)
         gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
-    def _on_mouse_scroll(self, _controller, _dx, dy):
-        if dy < 0:
-            self.mpv.keypress("WHEEL_UP")
-        elif dy > 0:
-            self.mpv.keypress("WHEEL_DOWN")
+    def _on_mouse_scroll(self, controller, dx, dy):
+        event: Gdk.ScrollEvent = controller.get_current_event()
+        rel_dir: Gdk.ScrollRelativeDirection = event.get_relative_direction(event)  # type: ignore
+        is_natural: bool = rel_dir == Gdk.ScrollRelativeDirection.INVERTED  # type: ignore
+        UP: str = "WHEEL_DOWN" if is_natural else "WHEEL_UP"
+        DOWN: str = "WHEEL_UP" if is_natural else "WHEEL_DOWN"
+        LEFT: str = "WHEEL_RIGHT" if is_natural else "WHEEL_LEFT"
+        RIGHT: str = "WHEEL_LEFT" if is_natural else "WHEEL_RIGHT"
+        wheel: str | None = None
 
-    def _on_mouse_scroll_volume(self, _controller, _dx, dy):
-        volume = cast(float, self.mpv.volume)
+        # Only trigger if scrolled a full 'unit'
+        if abs(dy) >= 1:
+            wheel = UP if dy < 0 else DOWN
+        elif abs(dx) >= 1:
+            wheel = RIGHT if dx > 0 else LEFT
+
+        if wheel:
+            self.mpv.keypress(wheel)
+            return True
+
+    def _on_mouse_scroll_volume(self, controller, _dx, dy):
+        event: Gdk.ScrollEvent = controller.get_current_event()
+        direction: Gdk.ScrollDirection = event.get_direction()
+        rel_dir: Gdk.ScrollRelativeDirection = event.get_relative_direction(event)  # type: ignore
+        is_natural: bool = rel_dir == Gdk.ScrollRelativeDirection.INVERTED  # type: ignore
         max_vol = cast(float, self.mpv.volume_max)
+        step = dy if direction == Gdk.ScrollDirection.SMOOTH else dy * 5
 
-        if dy < 0:
-            if volume >= max_vol:
-                return
-            self.mpv.volume = volume + 5
-        elif dy > 0:
-            if volume <= 0:
-                return
-            self.mpv.volume = volume - 5
+        if is_natural:
+            step = -step
+
+        adj = self.volume_scale.get_adjustment()
+        volume = adj.get_value()
+        new_vol = int(volume - step)
+        new_vol = max(adj.get_lower(), min(new_vol, max_vol))
+        adj.set_value(new_vol)
+
+        return True
 
     def _on_realize_area(self, area):
         area.make_current()
@@ -1112,7 +1133,8 @@ class CineWindow(Adw.ApplicationWindow):
             def update_icon_and_vol_adj():
                 # block the signal to not trigger value-changed
                 self.volume_scale.handler_block(self.volume_handler_id)
-                self.volume_scale_adjustment.set_value(value)
+                self.volume_scale_adjustment.set_value(int(value))
+                self.mpv.show_text(_("Volume") + f": {int(value)}%")
                 self.volume_scale.handler_unblock(self.volume_handler_id)
                 self._update_volume_icon(self.mpv.mute)
 
