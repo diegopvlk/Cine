@@ -32,25 +32,25 @@
   </description>
 
   <branding>
-    <color type="primary" scheme_preference="light">#BDE7ED</color>
-    <color type="primary" scheme_preference="dark">#23576B</color>
+    <color type="primary" scheme_preference="light">#C7E7EC</color>
+    <color type="primary" scheme_preference="dark">#284754</color>
   </branding>
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/diegopvlk/Cine/3369fdedfe1a373db64f1d6c68cec04eba14a400/screenshots/video.png</image>
+      <image>https://raw.githubusercontent.com/diegopvlk/Cine/ccb285bdf3d20b6c010b0d522fc8257b857bb009/screenshots/video.png</image>
       <caption>Video Playing</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/diegopvlk/Cine/3369fdedfe1a373db64f1d6c68cec04eba14a400/screenshots/preferences.png</image>
+      <image>https://raw.githubusercontent.com/diegopvlk/Cine/ccb285bdf3d20b6c010b0d522fc8257b857bb009/screenshots/preferences.png</image>
       <caption>Preferences</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/diegopvlk/Cine/3369fdedfe1a373db64f1d6c68cec04eba14a400/screenshots/options.png</image>
+      <image>https://raw.githubusercontent.com/diegopvlk/Cine/62c79b1342012ea57824c0b385fab955a5a5762d/screenshots/options.png</image>
       <caption>Video Options</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/diegopvlk/Cine/3369fdedfe1a373db64f1d6c68cec04eba14a400/screenshots/window.png</image>
+      <image>https://raw.githubusercontent.com/diegopvlk/Cine/ccb285bdf3d20b6c010b0d522fc8257b857bb009/screenshots/window.png</image>
       <caption>Main Window</caption>
     </screenshot>
   </screenshots>
@@ -71,6 +71,15 @@
   </requires>
 
   <releases>
+    <release version="1.0.2" date="2026-01-29">
+      <description translate="no">
+        <ul>
+          <li>Added a preference for hardware decoding</li>
+          <li>Improved video options</li>
+          <li>Fixes and performance improvements</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.1" date="2026-01-26">
       <description translate="no">
         <ul>
