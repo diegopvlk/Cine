@@ -478,11 +478,11 @@ msgstr "Lista de Reprodução"
 
 #: src/preferences.blp:16
 msgid "Open New Window for New Files"
-msgstr "Abrir nova janela para novos arquivos"
+msgstr "Abrir Nova Janela para Novos Arquivos"
 
 #: src/preferences.blp:20
 msgid "Subtitle Color"
-msgstr "Cor da legenda"
+msgstr "Cor da Legenda"
 
 #: src/preferences.blp:33 src/preferences.blp:79
 msgid "Reset"
