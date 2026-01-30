@@ -71,12 +71,13 @@
   </requires>
 
   <releases>
-    <release version="1.0.2" date="2026-01-29">
+    <release version="1.0.3" date="2026-01-30">
       <description translate="no">
         <ul>
           <li>Added a preference for hardware decoding</li>
           <li>Improved video options</li>
           <li>Fixes and performance improvements</li>
+          <li>Added French translation</li>
         </ul>
       </description>
     </release>
