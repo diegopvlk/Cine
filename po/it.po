@@ -454,7 +454,7 @@ msgstr "Reimposta la luminosità"
 
 #: src/options.blp:379
 msgid "Reset Gamma"
-msgstr "Reimposta il gamma"
+msgstr "Reimposta la gamma"
 
 #: src/options.blp:433
 msgid "Reset Saturation"
