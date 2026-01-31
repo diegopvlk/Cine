@@ -774,6 +774,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         if duration == 0:
             self.video_progress_scale.set_sensitive(False)
+            self.chapter_popover.popdown()
             return
 
         self.video_progress_scale.set_sensitive(True)
