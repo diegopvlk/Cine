@@ -38,7 +38,7 @@ DEFAULT_WIDTH, DEFAULT_HEIGHT = 1088, 612
 
 from .options import OptionsMenuButton
 from .playlist import Playlist
-from .preferences import sync_mpv_with_settings
+from .preferences import sync_mpv_with_settings, settings
 from .shortcuts import INTERNAL_BINDINGS, populate_shortcuts_dialog_mpv
 
 gi.require_version("Adw", "1")
@@ -128,7 +128,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.volume_update_timer_id: int = 0
         self.inhibit_id: int = 0
         self.last_seek_scroll_time: float = 0
-        self.show_remaining_time: bool = False
+        self.show_remaining_time = settings.get_boolean("show-remaining-time")
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -710,11 +710,16 @@ class CineWindow(Adw.ApplicationWindow):
         self.volume_menu_button.set_icon_name(icon)
 
     def _update_progress(self, current_time):
+        try:
+            duration = float(self.mpv.duration or 0)
+        except mpv.ShutdownError:
+            return
+
+        show_remaining = getattr(self, "show_remaining_time", False)
+
         self.time_elapsed_label.set_text(format_time(current_time))
 
-        duration = float(self.mpv.duration or 0)
-
-        if self.show_remaining_time and duration > 0:
+        if show_remaining and duration > 0:
             remaining = max(0, duration - current_time)
             self.time_total_label.set_text("-" + format_time(remaining))
         else:
@@ -723,7 +728,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.video_progress_adjustment.handler_block_by_func(self._on_progress_adjusted)
         self.video_progress_adjustment.set_value(current_time)
         self.video_progress_adjustment.handler_unblock_by_func(
-            self._on_progress_adjusted
+        self._on_progress_adjusted
         )
 
     def _update_chapter_marks(self, chapters):
@@ -812,6 +817,7 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _on_time_total_clicked(self, _gesture, _n_press, _x, _y):
         self.show_remaining_time = not self.show_remaining_time
+        settings.set_boolean("show-remaining-time", self.show_remaining_time)
 
         # Force refresh using current mpv state
         pos = float(self.mpv.time_pos or 0)
