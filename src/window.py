@@ -128,6 +128,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.volume_update_timer_id: int = 0
         self.inhibit_id: int = 0
         self.last_seek_scroll_time: float = 0
+        self.show_remaining_time: bool = False
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -277,6 +278,10 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.gl_area.connect("realize", self._on_realize_area)
         self.gl_area.connect("render", self._on_render_area)
+        time_click = Gtk.GestureClick()
+        time_click.set_button(0)
+        time_click.connect("pressed", self._on_time_total_clicked)
+        self.time_total_label.add_controller(time_click)
 
     def _setup_event_handlers(self):
         key_controller = Gtk.EventControllerKey()
@@ -706,6 +711,15 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _update_progress(self, current_time):
         self.time_elapsed_label.set_text(format_time(current_time))
+
+        duration = float(self.mpv.duration or 0)
+
+        if self.show_remaining_time and duration > 0:
+            remaining = max(0, duration - current_time)
+            self.time_total_label.set_text("-" + format_time(remaining))
+        else:
+            self.time_total_label.set_text(format_time(duration))
+
         self.video_progress_adjustment.handler_block_by_func(self._on_progress_adjusted)
         self.video_progress_adjustment.set_value(current_time)
         self.video_progress_adjustment.handler_unblock_by_func(
@@ -770,14 +784,19 @@ class CineWindow(Adw.ApplicationWindow):
             GLib.timeout_add(350, self.revealer_pause_indicator.set_reveal_child, False)
 
     def _update_duration(self, duration):
-        self.time_total_label.set_text(format_time(duration))
+
+        if not self.show_remaining_time:
+            self.time_total_label.set_text(format_time(duration))
+        else:
+            pos = float(self.mpv.time_pos or 0)
+            remaining = max(0, duration - pos)
+            self.time_total_label.set_text("-" + format_time(remaining))
 
         if duration == 0:
             self.video_progress_scale.set_sensitive(False)
             return
 
         self.video_progress_scale.set_sensitive(True)
-
         self.video_progress_adjustment.set_upper(duration)
 
         if duration >= 86400:
@@ -790,6 +809,13 @@ class CineWindow(Adw.ApplicationWindow):
             chars = 5
 
         self.time_elapsed_label.set_width_chars(chars)
+
+    def _on_time_total_clicked(self, _gesture, _n_press, _x, _y):
+        self.show_remaining_time = not self.show_remaining_time
+
+        # Force refresh using current mpv state
+        pos = float(self.mpv.time_pos or 0)
+        self._update_progress(pos)
 
     def _on_play_pause_clicked(self, _button):
         self.mpv.pause = not self.mpv.pause
@@ -1278,3 +1304,4 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.event_callback("shutdown")
         def on_quit(_event):
             GLib.idle_add(self.close)
+
