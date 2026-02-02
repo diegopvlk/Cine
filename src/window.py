@@ -770,6 +770,9 @@ class CineWindow(Adw.ApplicationWindow):
         self.play_pause_button.set_icon_name(icon)
         self.pause_indicator.props.icon_name = icon_indicator
 
+        text = _("Pause") if is_paused else _("Play")
+        self.play_pause_button.update_property([Gtk.AccessibleProperty.LABEL], [text])
+
         if not self.mpv.idle_active:
             self.revealer_pause_indicator.set_reveal_child(True)
             GLib.timeout_add(350, self.revealer_pause_indicator.set_reveal_child, False)
@@ -932,7 +935,7 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.fullscreen = False
             return
 
-        if key_name == "Tab" or key_name == "ISO_Left_Tab":
+        if key_name in ("Tab", "ISO_Left_Tab", "Return"):
             self.revealer_ui.set_reveal_child(True)
             self._hide_ui_timeout(s=3)
             return
@@ -1179,6 +1182,8 @@ class CineWindow(Adw.ApplicationWindow):
                     if value
                     else "cine-view-fullscreen-symbolic"
                 )
+                text = _("Exit Fullscreen") if value else _("Fullscreen")
+                self.fullscreen_button.set_tooltip_text(text)
                 self.fullscreen_button.set_icon_name(icon)
                 self._sync_fullscreen(value)
 
