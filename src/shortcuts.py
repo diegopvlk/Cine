@@ -19,7 +19,7 @@
 
 import gi
 import re
-from gettext import gettext as _
+from gettext import gettext as _, gettext as gt
 
 gi.require_version("Adw", "1")
 gi.require_version("Gtk", "4.0")
@@ -173,33 +173,42 @@ def translate_mpv_to_gtk(key):
 def get_section_name(cmd):
     """Categorizes an mpv command into a section title."""
     cmd = cmd.lower()
-    if any(x in cmd for x in ["sub-", "sub ", "sid", "secondary-sub"]):
-        return _("Subtitles")
-    if any(x in cmd for x in ["volume", "mute", "audio", "aid"]):
-        return _("Audio & Volume")
-    if (
-        any(
-            x in cmd
-            for x in [
+
+    # matches keyword only as a whole word or followed by '-'
+    def is_match(k, c):
+        return any(x in c for x in [f"{k} ", f"{k}-"]) or c.endswith(k) or c == k
+
+    mapping = [
+        (
+            _("Display & Video"),
+            [
                 "video",
                 "fullscreen",
                 "contrast",
                 "brightness",
                 "gamma",
                 "saturation",
+                "hue",
                 "panscan",
                 "zoom",
                 "rotate",
                 "aspect",
-            ]
-        )
-        and "screenshot" not in cmd
-    ):
-        return _("Display & Video")
-    if any(x in cmd for x in ["seek", "chapter", "playlist", "frame-", "revert-seek"]):
-        return _("Navigation")
-    if any(x in cmd for x in ["pause", "stop", "quit", "speed", "loop"]):
-        return _("Playback")
+                "vf",
+            ],
+        ),
+        (_("Subtitles"), ["sub", "sid"]),
+        (_("Audio & Volume"), ["volume", "mute", "audio", "aid", "af", "ao"]),
+        (_("Navigation"), ["seek", "chapter", "playlist", "frame", "revert-seek"]),
+        (_("Playback"), ["pause", "stop", "quit", "speed", "loop"]),
+    ]
+
+    if "screenshot" in cmd:
+        return _("Miscellaneous")
+
+    for section, keywords in mapping:
+        if any(is_match(k, cmd) for k in keywords):
+            return section
+
     return _("Miscellaneous")
 
 
@@ -250,21 +259,32 @@ def populate_shortcuts_dialog_mpv(dialog, mpv_bindings):
             grouped_bindings[group_key] = []
         grouped_bindings[group_key].append(gtk_accel)
 
-    sections = {}
+    sections = {
+        gt("Subtitles"): [],
+        gt("Audio & Volume"): [],
+        gt("Navigation"): [],
+        gt("Display & Video"): [],
+        gt("Playback"): [],
+        gt("Miscellaneous"): [],
+    }
 
-    for (label, section_title), accels in grouped_bindings.items():
-        if section_title not in sections:
-            sections[section_title] = (
-                Adw.ShortcutsSection(  # pyright: ignore[reportAttributeAccessIssue]
-                    title=section_title
-                )
-            )
-            dialog.add(sections[section_title])
-
+    for (label, title), accels in grouped_bindings.items():
+        target = title if title in sections else gt("Miscellaneous")
         # Allows space-separated accelerators
         # e.g. "<Control>q q" shows both shortcuts for the same item
-        combined_accels = " ".join(accels)
-        item = Adw.ShortcutsItem(  # pyright: ignore[reportAttributeAccessIssue]
-            title=label, accelerator=combined_accels
-        )
-        sections[section_title].add(item)
+        sections[target].append((label, " ".join(accels)))
+
+    for title, items in sections.items():
+        if items:
+            section_widget = (
+                Adw.ShortcutsSection(  # pyright: ignore[reportAttributeAccessIssue]
+                    title=title
+                )
+            )
+            dialog.add(section_widget)
+            for label, accels in items:
+                section_widget.add(
+                    Adw.ShortcutsItem(  # pyright: ignore[reportAttributeAccessIssue]
+                        title=label, accelerator=accels
+                    )
+                )
