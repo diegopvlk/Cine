@@ -869,8 +869,8 @@ class CineWindow(Adw.ApplicationWindow):
                     self.drop_label.props.label = _("Add Subtitle Track")
                     return
 
-                self.drop_icon.props.icon_name = "cine-list-add-symbolic"
-                self.drop_label.props.label = _("Add to Playlist")
+                self.drop_icon.props.icon_name = "cine-playback-start-symbolic"
+                self.drop_label.props.label = _("Play")
 
             except GLib.Error as e:
                 toast = Adw.Toast.new(_("File Error") + f": {e.message}")
@@ -885,37 +885,40 @@ class CineWindow(Adw.ApplicationWindow):
     def _on_drop_leave(self, _target):
         GLib.timeout_add(10, self.revealer_drop_indicator.set_reveal_child, False)
         GLib.timeout_add(
-            100, self.drop_icon.set_from_icon_name, "cine-list-add-symbolic"
+            100, self.drop_icon.set_from_icon_name, "cine-playback-start-symbolic"
         )
-        GLib.timeout_add(100, self.drop_label.set_text, _("Add to Playlist"))
+        GLib.timeout_add(100, self.drop_label.set_text, _("Play"))
 
-    def _on_drop(self, _target, value, _x, _y, from_playlist=False):
-        was_empty = self.mpv.playlist_count == 0
-        is_playing = not self.mpv.idle_active
+    def _on_drop(self, _target, list: Gdk.FileList, _x, _y):
+        first_file = True
 
-        for file in value.get_files():
-            info = file.query_info("standard::content-type,standard::type", 0, None)
-
+        for file in list.get_files():
+            info = file.query_info(
+                "standard::content-type,standard::type",
+                Gio.FileQueryInfoFlags.NONE,
+                None,
+            )
             path = file.get_path() or file.get_uri()
             file_type = info.get_file_type()
             mime_type = info.get_content_type() or ""
 
+            mode = "replace" if first_file else "append-play"
+
             if file_type == Gio.FileType.DIRECTORY:
-                self.mpv.loadfile(path, "append-play")
+                self.mpv.loadfile(path, mode)
+                first_file = False
                 continue
 
-            name = file.get_basename().lower()
+            name = cast(str, file.get_basename()).lower()
             if name.endswith(SUB_EXTS):
-                if is_playing and not from_playlist:
+                if not self.mpv.idle_active:
                     self.mpv.command("sub-add", path, "select")
                 continue
 
             valid_types = ("video/", "audio/", "image/")
             if mime_type.startswith(valid_types):
-                self.mpv.loadfile(path, "append-play")
-
-        if was_empty and cast(int, self.mpv.playlist_count) > 0:
-            self.mpv.pause = False
+                self.mpv.loadfile(path, mode)
+                first_file = False
 
         GLib.idle_add(
             lambda *a: self._on_shuffle_toggled(self.playlist_shuffle_toggle_button)

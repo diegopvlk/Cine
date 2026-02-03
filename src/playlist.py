@@ -2,10 +2,11 @@ import gi
 import os
 
 gi.require_version("Adw", "1")
+gi.require_version("Gio", "2.0")
 gi.require_version("Gdk", "4.0")
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
-from gi.repository import Adw, Gdk, GLib, Gtk
+from gi.repository import Adw, Gio, Gdk, GLib, Gtk
 from gettext import gettext as _
 
 
@@ -56,8 +57,32 @@ class Playlist(Adw.Dialog):
         self.spinner.set_visible(False)
         GLib.timeout_add(10, self.drop_indicator_revealer.set_reveal_child, False)
 
-    def _on_drop(self, _target, _value, _x, _y):
-        self.win._on_drop(_target, _value, _x, _y, from_playlist=True)
+    def _on_drop(self, _target, list: Gdk.FileList, _x, _y):
+        for file in list.get_files():
+            info = file.query_info(
+                "standard::content-type,standard::type",
+                Gio.FileQueryInfoFlags.NONE,
+                None,
+            )
+
+            path = file.get_path() or file.get_uri()
+            file_type = info.get_file_type()
+            mime_type = info.get_content_type() or ""
+
+            if file_type == Gio.FileType.DIRECTORY:
+                self.mpv.loadfile(path, "append-play")
+                continue
+
+            valid_types = ("video/", "audio/", "image/")
+            if mime_type.startswith(valid_types):
+                self.mpv.loadfile(path, "append-play")
+
+        GLib.idle_add(
+            lambda *a: self.win._on_shuffle_toggled(
+                self.win.playlist_shuffle_toggle_button
+            )
+        )
+
         self._populate_list()
         self.spinner.set_visible(False)
 
