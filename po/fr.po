@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-03 21:52-0300\n"
-"PO-Revision-Date: 2026-02-04 00:57+0000\n"
+"PO-Revision-Date: 2026-02-04 01:20+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/cine/cine/fr/>\n"
 "Language: fr\n"
@@ -32,8 +32,7 @@ msgstr "Visionnez vos vidéos"
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
-msgstr ""
-"Audio ;Video ;Movie ;TV ;Film ;Clip ;Player ;Cine ;mpv ;Vidéo ;Lecteur ;Media ;"
+msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;Vidéo;Lecteur;Media;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:117
