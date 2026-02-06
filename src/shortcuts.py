@@ -174,9 +174,9 @@ def get_section_name(cmd):
     """Categorizes an mpv command into a section title."""
     cmd = cmd.lower()
 
-    # matches keyword only as a whole word or followed by '-'
-    def is_match(k, c):
-        return any(x in c for x in [f"{k} ", f"{k}-"]) or c.endswith(k) or c == k
+    def is_match(keyword, cmd):
+        # matches the boundary between a word char and a non-word char
+        return re.search(rf"\b{re.escape(keyword)}\b", cmd)
 
     mapping = [
         (
@@ -248,8 +248,8 @@ def populate_shortcuts_dialog_mpv(dialog, mpv_bindings):
         label = b.get("comment")
         if not label:
             clean_cmd = cmd.split(";")[0].strip()
-            label = re.sub(r"(?<=[a-zA-Z])-(?=[a-zA-Z])", " ", clean_cmd)
-            label = label[0].upper() + label[1:] if label else ""
+            label = clean_cmd.replace("-", " ")
+            label = label.capitalize()
 
         section_title = get_section_name(cmd)
 
