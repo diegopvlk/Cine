@@ -1315,6 +1315,9 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("sid")
         def on_sub_vis_change(_name, value):
             def set_icon():
+                if not self.mpv:
+                    return
+
                 sub_on = (value == "auto" or value) and self.mpv.sid
                 self.subtitles_menu_button.props.icon_name = (
                     "cine-subtitles-symbolic"
@@ -1327,6 +1330,9 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("aid")
         def on_aid_change(_name, value):
             def set_icon():
+                if not self.mpv:
+                    return
+
                 audio_on = value == "auto" or value
                 self.audio_tracks_menu_button.props.icon_name = (
                     "cine-audio-symbolic" if audio_on else "cine-audio-off-symbolic"
