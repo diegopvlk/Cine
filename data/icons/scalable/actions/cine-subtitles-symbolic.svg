@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="16" height="16" gpa:keywords="media-view-subtitles sub srt video screen" gpa:state="1" gpa:version="1" xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa">
- <path id="path3" class="transparent-fill foreground-stroke" d="m1 4v8c0 1.1046 0.89543 2 2 2h10c1.1046 0 2-0.89543 2-2v-8c0-1.1046-0.89543-2-2-2h-10c-1.1046 0-2 0.89543-2 2z" fill="none" stroke='url("#gpa:foreground") rgb(0,0,0)' stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:fill="none" gpa:stroke="foreground" gpa:stroke-width="0.5 2 3"></path>
- <path id="path9" class="transparent-fill foreground-stroke" d="m10 11.5h3m-7 0h3m-6 0h2m7-2h1m-5 0h3m-8 0h4" fill="none" stroke='url("#gpa:foreground") rgb(0,0,0)' stroke-linejoin="round" gpa:fill="none" gpa:stroke="foreground" gpa:stroke-width="0 1 2"></path>
+<svg id="svg1" width="16" height="16" gpa:keywords="media-view-subtitles sub srt video screen" gpa:state="1" gpa:version="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa">
+ <path id="path4" d="m3 1c-1.645 0-3 1.355-3 3v8c0 1.645 1.355 3 3 3h10c1.645 0 3-1.355 3-3v-8c0-1.645-1.355-3-3-3h-10zm0 8h4v0.5 0.5h-4v-0.5-0.5zm5 0h3v0.5 0.5h-3v-0.5-0.5zm4 0h1v0.5 0.5h-1v-0.5-0.5zm-9 2h2v0.5 0.5h-2v-0.5-0.5zm3 0h3v0.5 0.5h-3v-0.5-0.5zm4 0h3v0.5 0.5h-3v-0.5-0.5z" stop-color="#000000" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
