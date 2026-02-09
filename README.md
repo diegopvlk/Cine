@@ -40,6 +40,13 @@ If you want to help with a donation (thank you!), you can use:
 - [Ko-fi](https://ko-fi.com/diegopvlk)
 - Pix: diego.pvlk@gmail.com
 
+### Translations
+
+You can help translate using [Weblate](https://hosted.weblate.org/projects/cine/app/)
+
+[![Translation status](https://hosted.weblate.org/widget/cine/app/multi-auto.svg)](https://hosted.weblate.org/engage/cine/)
+
+
 ### Code of Conduct
 
 This project follows the [GNOME Code of Conduct](https://conduct.gnome.org).
