@@ -91,7 +91,8 @@ class Playlist(Adw.Dialog):
 
         for index, item in enumerate(playlist):
             path = item.get("filename", "")
-            file_title = item.get("title") or os.path.basename(path)
+            file_name_with_ext = os.path.basename(path)
+            file_title = item.get("title") or os.path.splitext(file_name_with_ext)[0]
             parent_dir = os.path.basename(os.path.dirname(path))
             dir = parent_dir if parent_dir else path
 
