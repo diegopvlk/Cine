@@ -71,6 +71,14 @@
   </requires>
 
   <releases>
+    <release version="1.0.7" date="2026-02-14">
+      <description translate="no">
+        <ul>
+          <li>The playlist now has custom icons for different file types + small fixes</li>
+          <li>The Weblate page for translations is now available at: https://hosted.weblate.org/projects/cine/app/</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.0.6" date="2026-02-06">
       <description translate="no">
         <ul>
