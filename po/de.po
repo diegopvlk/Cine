@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-09 19:59-0300\n"
-"PO-Revision-Date: 2026-02-12 22:00+0000\n"
-"Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
+"PO-Revision-Date: 2026-02-14 22:27+0000\n"
+"Last-Translator: Gryfin <weblate@gryfin.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/cine/app/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -44,6 +44,8 @@ msgid ""
 "Cine combines a clean interface with a high-performance engine to deliver a "
 "seamless viewing experience."
 msgstr ""
+"Cine kombiniert eine schlichte Benutzeroberfläche mit einer leistungsstarken "
+"Engine und bietet so ein nahtloses Videoerlebnis."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:27
 msgid "Simple Design: A refined, distraction-free interface"
@@ -54,16 +56,22 @@ msgid ""
 "MPV-Based: Leverages the robust power of MPV for great playback and format "
 "support"
 msgstr ""
+"MPV-basiert: Nutzt die hohe Leistungsfähigkeit von MPV für hervorragende "
+"Wiedergabe und umfassende Formatunterstützung"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:29
 msgid ""
 "Audio and Subtitles: Control track selection and synchronization for both"
 msgstr ""
+"Audio und Untertitel: Steuerung der Spurauswahl und Synchronisierung für "
+"beides"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:30
 msgid ""
 "Video Controls: Easily adjust brightness, contrast, zoom, aspect ratio, etc."
 msgstr ""
+"Videosteuerung: Einfaches Anpassen der Helligkeit, Kontrast, Zoom, "
+"Seitenverhältnis etc."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:42
 msgid "Video Playing"
@@ -76,7 +84,7 @@ msgstr "Einstellungen"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50
 msgid "Video Options"
-msgstr ""
+msgstr "Video-Optionen"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:54
 msgid "Main Window"
@@ -85,23 +93,23 @@ msgstr "Hauptfenster"
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:220
 msgid "translator-credits"
-msgstr ""
+msgstr "Gryfin92"
 
 #: src/mpris.py:153 src/mpris.py:221 src/mpris.py:356
 msgid "Unknown title"
-msgstr ""
+msgstr "Unbekannter Titel"
 
 #: src/options.py:151 src/options.blp:79
 msgid "Original"
-msgstr ""
+msgstr "Original"
 
 #: src/playlist.py:47 src/window.py:887 src/window.py:1174
 msgid "File Error"
-msgstr ""
+msgstr "Dateifehler"
 
 #: src/playlist.py:160 src/window.py:562 src/playlist.blp:23 src/window.blp:91
 msgid "Add Files"
-msgstr ""
+msgstr "Dateien hinzufügen"
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/window.py:1225
 #: src/window.blp:197
@@ -110,40 +118,40 @@ msgstr "Lautstärke"
 
 #: src/shortcuts.py:29
 msgid "Volume Increase"
-msgstr ""
+msgstr "Lautstärke erhöhen"
 
 #: src/shortcuts.py:30
 msgid "Volume Decrease"
-msgstr ""
+msgstr "Lautstärke verringern"
 
 #: src/shortcuts.py:33 src/shortcuts.py:34 src/shortcuts.py:35
 #: src/window.blp:180
 msgid "Play/Pause"
-msgstr ""
+msgstr "Wiedergabe/Pause"
 
 #: src/shortcuts.py:36 src/shortcuts.py:199 src/window.blp:239
 msgid "Subtitles"
-msgstr ""
+msgstr "Untertitel"
 
 #: src/shortcuts.py:36
 msgid "Show/Hide Subtitles"
-msgstr ""
+msgstr "Untertitel anzeigen/verstecken"
 
 #: src/shortcuts.py:37
 msgid "Seek 10s Backward"
-msgstr ""
+msgstr "Springe 10s rückwärts"
 
 #: src/shortcuts.py:38
 msgid "Seek 10s Forward"
-msgstr ""
+msgstr "Springe 10s vorwärts"
 
 #: src/shortcuts.py:39
 msgid "Seek 5s Backward"
-msgstr ""
+msgstr "Springe 5s rückwärts"
 
 #: src/shortcuts.py:40
 msgid "Seek 5s Forward"
-msgstr ""
+msgstr "Springe 5s vorwärts"
 
 #: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:1204
 #: src/window.blp:332
@@ -154,205 +162,205 @@ msgstr "Vollbild"
 #: src/shortcuts.py:53 src/shortcuts.py:54 src/options.blp:226
 #: src/options.blp:250
 msgid "Zoom"
-msgstr ""
+msgstr "Vergrößerung"
 
 #: src/shortcuts.py:50 src/shortcuts.py:51 src/shortcuts.py:52
 msgid "Zoom In"
-msgstr ""
+msgstr "Vergrößern"
 
 #: src/shortcuts.py:53 src/shortcuts.py:54
 msgid "Zoom Out"
-msgstr ""
+msgstr "Verkleinern"
 
 #: src/shortcuts.py:55 src/shortcuts.py:56 src/options.blp:552
 #: src/options.blp:576
 msgid "Subtitle Delay"
-msgstr ""
+msgstr "Untertitelverzögerung"
 
 #: src/shortcuts.py:55
 msgid "Decrease Subtitle Delay"
-msgstr ""
+msgstr "Untertitelverzögerung verringern"
 
 #: src/shortcuts.py:56
 msgid "Increase Subtitle Delay"
-msgstr ""
+msgstr "Untertitelverzögerung erhöhen"
 
 #: src/shortcuts.py:57 src/shortcuts.py:58
 msgid "Subtitle Position"
-msgstr ""
+msgstr "Untertitelposition"
 
 #: src/shortcuts.py:57
 msgid "Move Subtitles Up"
-msgstr ""
+msgstr "Untertitel hoch bewegen"
 
 #: src/shortcuts.py:58
 msgid "Move Subtitles Down"
-msgstr ""
+msgstr "Untertitel runter bewegen"
 
 #: src/shortcuts.py:59 src/window.blp:208
 msgid "Mute"
-msgstr ""
+msgstr "Stumm"
 
 #: src/shortcuts.py:59
 msgid "Mute/Unmute"
-msgstr ""
+msgstr "Stumm/Laut"
 
 #: src/shortcuts.py:60 src/shortcuts.py:61 src/shortcuts.py:62
 #: src/options.blp:607 src/options.blp:631
 msgid "Audio Delay"
-msgstr ""
+msgstr "Audioverzögerung"
 
 #: src/shortcuts.py:60
 msgid "Decrease Audio Delay"
-msgstr ""
+msgstr "Audioverzögerung verringern"
 
 #: src/shortcuts.py:61 src/shortcuts.py:62
 msgid "Increase Audio Delay"
-msgstr ""
+msgstr "Audioverzögerung erhöhen"
 
 #: src/shortcuts.py:72
 msgid "Go Back One Frame"
-msgstr ""
+msgstr "Vorheriges Bild"
 
 #: src/shortcuts.py:73
 msgid "Advance One Frame"
-msgstr ""
+msgstr "Nächstes Bild"
 
 #: src/shortcuts.py:74
 msgid "Seek to the Previous Chapter"
-msgstr ""
+msgstr "Zum vorherigen Kapitel springen"
 
 #: src/shortcuts.py:75
 msgid "Seek to the Next Chapter"
-msgstr ""
+msgstr "Zum nächsten Kapitel springen"
 
 #: src/shortcuts.py:79
 msgid "Take Screenshot With Subtitles"
-msgstr ""
+msgstr "Bildschirmfoto mit Untertiteln aufnehmen"
 
 #: src/shortcuts.py:80
 msgid "Take Screenshot Without Subtitles"
-msgstr ""
+msgstr "Bildschirmfoto ohne Untertitel aufnehmen"
 
 #: src/shortcuts.py:81
 msgid "Statistics"
-msgstr ""
+msgstr "Statistiken"
 
 #: src/shortcuts.py:82
 msgid "Statistics Overlay"
-msgstr ""
+msgstr "Statistiken ein-/ausblenden"
 
 #: src/shortcuts.py:83
 msgid "Loop"
-msgstr ""
+msgstr "Wiederholen"
 
 #: src/shortcuts.py:83 src/window.blp:307
 msgid "Loop File"
-msgstr ""
+msgstr "Wiedergabe wiederholen"
 
 #: src/shortcuts.py:84 src/shortcuts.py:85 src/options.blp:281
 #: src/options.blp:304
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrast"
 
 #: src/shortcuts.py:84
 msgid "Decrease Contrast"
-msgstr ""
+msgstr "Kontrast verringern"
 
 #: src/shortcuts.py:85
 msgid "Increase Contrast"
-msgstr ""
+msgstr "Kontrast erhöhen"
 
 #: src/shortcuts.py:86 src/shortcuts.py:87 src/options.blp:335
 #: src/options.blp:358
 msgid "Brightness"
-msgstr ""
+msgstr "Helligkeit"
 
 #: src/shortcuts.py:86
 msgid "Decrease Brightness"
-msgstr ""
+msgstr "Helligkeit verringern"
 
 #: src/shortcuts.py:87
 msgid "Increase Brightness"
-msgstr ""
+msgstr "Helligkeit erhöhen"
 
 #: src/shortcuts.py:88 src/shortcuts.py:89 src/options.blp:389
 #: src/options.blp:412
 msgid "Gamma"
-msgstr ""
+msgstr "Gamma"
 
 #: src/shortcuts.py:88
 msgid "Decrease Gamma"
-msgstr ""
+msgstr "Gamma verringern"
 
 #: src/shortcuts.py:89
 msgid "Increase Gamma"
-msgstr ""
+msgstr "Gamma erhöhen"
 
 #: src/shortcuts.py:90 src/shortcuts.py:91 src/options.blp:443
 #: src/options.blp:466
 msgid "Saturation"
-msgstr ""
+msgstr "Sättigung"
 
 #: src/shortcuts.py:90
 msgid "Decrease Saturation"
-msgstr ""
+msgstr "Sättigung verringern"
 
 #: src/shortcuts.py:91
 msgid "Increase Saturation"
-msgstr ""
+msgstr "Sättigung erhöhen"
 
 #: src/shortcuts.py:92 src/shortcuts.py:93 src/shortcuts.py:94
 msgid "Speed"
-msgstr ""
+msgstr "Geschwindigkeit"
 
 #: src/shortcuts.py:92
 msgid "Decrease Playback Speed"
-msgstr ""
+msgstr "Wiedergabegeschwindigkeit verringern"
 
 #: src/shortcuts.py:93
 msgid "Increase Playback Speed"
-msgstr ""
+msgstr "Wiedergabegeschwindigkeit erhöhen"
 
 #: src/shortcuts.py:94 src/options.blp:652
 msgid "Reset Playback Speed"
-msgstr ""
+msgstr "Wiedergabegeschwindigkeit zurücksetzen"
 
 #: src/shortcuts.py:183
 msgid "Display & Video"
-msgstr ""
+msgstr "Anzeigen & Video"
 
 #: src/shortcuts.py:200
 msgid "Audio & Volume"
-msgstr ""
+msgstr "Audio & Lautstärke"
 
 #: src/shortcuts.py:201
 msgid "Navigation"
-msgstr ""
+msgstr "Navigation"
 
 #: src/shortcuts.py:202
 msgid "Playback"
-msgstr ""
+msgstr "Wiedergabe"
 
 #: src/shortcuts.py:206 src/shortcuts.py:212
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Verschiedenes"
 
 #: src/window.py:444 src/window.py:879 src/window.blp:96
 msgid "Add Subtitle Track"
-msgstr ""
+msgstr "Untertitelspur hinzufügen"
 
 #: src/window.py:446 src/window.py:455
 msgid "None"
-msgstr ""
+msgstr "Keine"
 
 #: src/window.py:453 src/window.blp:101
 msgid "Add Audio Track"
-msgstr ""
+msgstr "Audiospur hinzufügen"
 
 #: src/window.py:492
 msgid "Track"
-msgstr ""
+msgstr "Spur"
 
 #: src/window.py:534 src/shortcuts-dialog.blp:21 src/window.blp:86
 #: src/window.blp:426
@@ -361,75 +369,71 @@ msgstr "Ordner öffnen"
 
 #: src/window.py:559 src/shortcuts-dialog.blp:16 src/window.blp:81
 msgid "Open Files"
-msgstr ""
+msgstr "Dateien öffnen"
 
 #: src/window.py:565
 msgid "Add Subtitle"
-msgstr ""
+msgstr "Untertitel hinzufügen"
 
 #: src/window.py:568
 msgid "Add Audio"
-msgstr ""
+msgstr "Audio hinzufügen"
 
 #: src/window.py:581
 msgid "Subtitle"
-msgstr ""
+msgstr "Untertitel"
 
 #: src/window.py:586 src/window.blp:254
 msgid "Audio"
-msgstr ""
+msgstr "Audio"
 
 #: src/window.py:590
 msgid "Media"
-msgstr ""
+msgstr "Medien"
 
 #: src/window.py:783
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: src/window.py:783 src/window.py:883
 msgid "Play"
-msgstr ""
+msgstr "Abspielen"
 
 #: src/window.py:1204
-#, fuzzy
-#| msgid "Fullscreen"
 msgid "Exit Fullscreen"
-msgstr "Vollbild"
+msgstr "Vollbild verlassen"
 
 #: src/options.blp:14
 msgid "Options"
 msgstr "Optionen"
 
 #: src/options.blp:32
-#, fuzzy
-#| msgid "Reset Flip"
 msgid "Reset All"
-msgstr "Spiegeln zurücksetzen"
+msgstr "Alles zurücksetzen"
 
 #: src/options.blp:44
 msgid "Reset Aspect Ratio"
-msgstr ""
+msgstr "Seitenverhältnis zurücksetzen"
 
 #: src/options.blp:54
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "Seitenverhältnis"
 
 #: src/options.blp:102
 msgid "Reset Rotation"
-msgstr ""
+msgstr "Drehung zurücksetzen"
 
 #: src/options.blp:112
 msgid "Rotate"
-msgstr ""
+msgstr "Drehung"
 
 #: src/options.blp:138
 msgid "Rotate Left"
-msgstr ""
+msgstr "Nach links drehen"
 
 #: src/options.blp:146
 msgid "Rotate Right"
-msgstr ""
+msgstr "Nach rechts drehen"
 
 #: src/options.blp:159
 msgid "Reset Flip"
@@ -449,94 +453,92 @@ msgstr "Vertikal spiegeln"
 
 #: src/options.blp:216
 msgid "Reset Zoom"
-msgstr ""
+msgstr "Vergrößerung zurücksetzen"
 
 #: src/options.blp:271
 msgid "Reset Contrast"
-msgstr ""
+msgstr "Kontrast zurücksetzen"
 
 #: src/options.blp:325
 msgid "Reset Brightness"
-msgstr ""
+msgstr "Helligkeit zurücksetzen"
 
 #: src/options.blp:379
 msgid "Reset Gamma"
-msgstr ""
+msgstr "Gamma zurücksetzen"
 
 #: src/options.blp:433
 msgid "Reset Saturation"
-msgstr ""
+msgstr "Sättigung zurücksetzen"
 
 #: src/options.blp:487
-#, fuzzy
-#| msgid "Reset"
 msgid "Reset Hue"
-msgstr "Zurücksetzten"
+msgstr "Farbton zurücksetzen"
 
 #. TRANSLATORS: Do not use "Color" or "Temperature", those are different things
 #: src/options.blp:498 src/options.blp:521
 msgid "Hue"
-msgstr ""
+msgstr "Farbton"
 
 #: src/options.blp:542
 msgid "Reset Subtitle Delay"
-msgstr ""
+msgstr "Untertitelverzögerung zurücksetzen"
 
 #: src/options.blp:597
 msgid "Reset Audio Delay"
-msgstr ""
+msgstr "Audioverzögerung zurücksetzen"
 
 #: src/options.blp:662 src/options.blp:686
 msgid "Playback Speed"
-msgstr ""
+msgstr "Wiedergabegeschwindigkeit"
 
 #: src/playlist.blp:5 src/window.blp:317
 msgid "Playlist"
-msgstr ""
+msgstr "Wiedergabeliste"
 
 #: src/playlist.blp:78
 msgid "Add to Playlist"
-msgstr ""
+msgstr "Zur Wiedergabeliste hinzufügen"
 
 #: src/preferences.blp:16
 msgid "Open New Window for New Files"
-msgstr ""
+msgstr "Neues Fenster für neue Dateien öffnen"
 
 #: src/preferences.blp:20
 msgid "Subtitle Color"
-msgstr ""
+msgstr "Untertitelfarbe"
 
 #: src/preferences.blp:33 src/preferences.blp:79
 msgid "Reset"
-msgstr "Zurücksetzten"
+msgstr "Zurücksetzen"
 
 #: src/preferences.blp:43
 msgid "Subtitle Font"
-msgstr ""
+msgstr "Untertitelschriftart"
 
 #: src/preferences.blp:56
 msgid "Some fonts may not work"
-msgstr ""
+msgstr "Manche Schriftarten funktionieren möglicherweise nicht"
 
 #: src/preferences.blp:89
 msgid "Subtitle Scale"
-msgstr ""
+msgstr "Untertitelgröße"
 
 #: src/preferences.blp:100
 msgid "Preferred Subtitle Languages"
-msgstr ""
+msgstr "Bevorzugte Untertitelsprache"
 
 #: src/preferences.blp:101 src/preferences.blp:106
 msgid "Example: en,es,pt"
-msgstr ""
+msgstr "Beispiel: en, es, pt"
 
 #: src/preferences.blp:105
 msgid "Preferred Audio Languages"
-msgstr ""
+msgstr "Bevorzugte Audio-Sprache"
 
 #: src/preferences.blp:110
 msgid "Hardware Decoding"
-msgstr ""
+msgstr "Hardware-Dekodierung"
 
 #: src/preferences.blp:114
 msgid "Normalize Volume"
@@ -555,26 +557,28 @@ msgstr ""
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr ""
+"Benötigt Flatpak-Berechtigung, den Ordner zu lesen, in dem das Video "
+"gespeichert ist"
 
 #: src/shortcuts-dialog.blp:8
 msgid "Shortcuts"
-msgstr ""
+msgstr "Tastenkürzel"
 
 #: src/shortcuts-dialog.blp:26
 msgid "Add Files to Playlist"
-msgstr ""
+msgstr "Dateien zur Wiedergabeliste hinzufügen"
 
 #: src/shortcuts-dialog.blp:31
 msgid "Open Subtitles Menu"
-msgstr ""
+msgstr "Untertitelmenü öffnen"
 
 #: src/shortcuts-dialog.blp:36
 msgid "Open Audio Menu"
-msgstr ""
+msgstr "Audiomenü öffnen"
 
 #: src/shortcuts-dialog.blp:41
 msgid "Show Shortcuts"
-msgstr ""
+msgstr "Tastenkürzel anzeigen"
 
 #: src/shortcuts-dialog.blp:46
 msgid "Close Window"
@@ -594,7 +598,7 @@ msgstr "Hauptmenü"
 
 #: src/window.blp:127
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Tastaturkürzel"
 
 #: src/window.blp:132
 msgid "About Cine"
@@ -602,23 +606,23 @@ msgstr "Über Cine"
 
 #: src/window.blp:170
 msgid "Previous"
-msgstr ""
+msgstr "Vorheriges"
 
 #: src/window.blp:190
 msgid "Next"
-msgstr ""
+msgstr "Nächstes"
 
 #: src/window.blp:268
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: src/window.blp:285
 msgid "Shuffle Playlist"
-msgstr ""
+msgstr "Zufallswiedergabe"
 
 #: src/window.blp:296
 msgid "Loop Playlist"
-msgstr ""
+msgstr "Wiedergabeliste wiederholen"
 
 #: src/window.blp:402
 msgid "Drag and Drop Files Here"
