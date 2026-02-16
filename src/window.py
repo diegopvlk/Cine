@@ -317,6 +317,8 @@ class CineWindow(Adw.ApplicationWindow):
         click_gesture.connect("cancel", self._cancel_click_hold)
         self.video_overlay.add_controller(click_gesture)
 
+        self.connect("notify::visible-dialog", self._cancel_click_hold)
+
         scroll_controller_overlay = Gtk.EventControllerScroll.new(
             Gtk.EventControllerScrollFlags.BOTH_AXES
         )
@@ -997,7 +999,6 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.keydown(button)
 
         def on_click_hold():
-            self.click_holding = True
             self.click_hold_id = 0
 
             controls_hover = self.motion_controls.props.contains_pointer
@@ -1007,10 +1008,11 @@ class CineWindow(Adw.ApplicationWindow):
                 return
 
             try:
+                self.click_holding = True
                 self.prev_speed = cast(float, self.mpv["speed"])
                 new_speed = self.prev_speed * 2
                 self.mpv["speed"] = new_speed
-                self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
+                self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
                 self.mpv.keypress(button)
                 gesture.set_state(Gtk.EventSequenceState.CLAIMED)
             except mpv.ShutdownError:
@@ -1020,7 +1022,7 @@ class CineWindow(Adw.ApplicationWindow):
             if self.click_hold_id:
                 GLib.source_remove(self.click_hold_id)
 
-            self.click_hold_id = GLib.timeout_add(275, on_click_hold)
+            self.click_hold_id = GLib.timeout_add(350, on_click_hold)
 
         self._show_ui()
         self._hide_ui_timeout()
