@@ -91,12 +91,12 @@ class Playlist(Adw.Dialog):
 
         for index, item in enumerate(playlist):
             path = item.get("filename", "")
-            file_name_with_ext = os.path.basename(path)
-            file_title = item.get("title") or os.path.splitext(file_name_with_ext)[0]
+            path_with_ext = os.path.basename(path)
+            file_title = path_with_ext
             parent_dir = os.path.basename(os.path.dirname(path))
             dir = parent_dir if parent_dir else path
 
-            row = Adw.ActionRow(title=dir, subtitle=file_title)
+            row = Adw.ActionRow(title=dir)
             row.add_css_class("property")
             row.set_activatable(True)
 
@@ -106,7 +106,6 @@ class Playlist(Adw.Dialog):
                 "standard::content-type", Gio.FileQueryInfoFlags.NONE, None
             )
             content_type = info.get_content_type()
-
             if content_type == "inode/directory":
                 icon_name = "cine-folder-symbolic"
                 if not os.listdir(path):
@@ -120,7 +119,9 @@ class Playlist(Adw.Dialog):
                     icon_name = "cine-video-x-generic-symbolic"
                 elif "image" in content_type:
                     icon_name = "cine-image-x-generic-symbolic"
+                file_title = os.path.splitext(path_with_ext)[0]
 
+            row.set_subtitle(file_title)
             row.set_icon_name(icon_name)
             row.connect("activated", self._on_file_activated, index)
             self.playlist_list_box.append(row)
