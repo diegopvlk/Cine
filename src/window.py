@@ -1403,6 +1403,10 @@ class CineWindow(Adw.ApplicationWindow):
 
             GLib.idle_add(update)
 
+        @self.mpv.property_observer("sub-scale")
+        def on_sub_scale_change(_name, value):
+            settings.set_double("subtitle-scale", value)
+
         @self.mpv.property_observer("sub-visibility")
         @self.mpv.property_observer("sid")
         def on_sub_vis_change(_name, value):
