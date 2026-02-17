@@ -26,10 +26,10 @@ gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gtk
 
 INTERNAL_BINDINGS = f"""\
-UP             add volume 5; show-text "{_("Volume")}: ${{volume}}%" #{_("Volume Increase")}
-DOWN           add volume -5; show-text "{_("Volume")}: ${{volume}}%" #{_("Volume Decrease")}
-WHEEL_UP       add volume 5
-WHEEL_DOWN     add volume -5
+UP             no-osd add volume 5; #{_("Volume Increase")}
+DOWN           no-osd add volume -5; #{_("Volume Decrease")}
+WHEEL_UP       no-osd add volume 5
+WHEEL_DOWN     no-osd add volume -5
 k              cycle pause; #{_("Play/Pause")}
 p              cycle pause; #{_("Play/Pause")}
 SPACE          cycle pause; #{_("Play/Pause")}
@@ -75,8 +75,8 @@ ctrl+[         frame-step -1 seek #{_("Go Back One Frame")}
 ctrl+]         frame-step 1 seek #{_("Advance One Frame")}
 Ctrl+LEFT      add chapter -1 #{_("Seek to the Previous Chapter")}
 Ctrl+RIGHT     add chapter 1 #{_("Seek to the Next Chapter")}
-VOLUME_UP      add volume 5
-VOLUME_DOWN    add volume -5
+VOLUME_UP      no-osd add volume 5
+VOLUME_DOWN    no-osd add volume -5
 MUTE           cycle mute
 s              screenshot #{_("Take Screenshot With Subtitles")}
 S              screenshot video #{_("Take Screenshot Without Subtitles")}

@@ -1301,7 +1301,14 @@ class CineWindow(Adw.ApplicationWindow):
                 # block the signal to not trigger value-changed
                 self.volume_scale.handler_block(self.volume_handler_id)
                 self.volume_scale_adjustment.set_value(int(value))
-                self.mpv.show_text(_("Volume") + f": {int(value)}%")
+
+                if not self.mpv.mute:
+                    self.mpv.show_text(_("Volume") + f": {int(value)}%")
+                else:
+                    self.mpv.show_text(
+                        _("Volume") + f": {int(value)}% " + f"({_("Muted")})"
+                    )
+
                 self.volume_scale.handler_unblock(self.volume_handler_id)
                 self._update_volume_icon(self.mpv.mute)
                 settings.set_int("volume", int(value))
