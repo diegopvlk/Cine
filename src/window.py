@@ -76,8 +76,8 @@ class CineWindow(Adw.ApplicationWindow):
     toast_overlay: Adw.ToastOverlay = Gtk.Template.Child()
     video_overlay: Gtk.Overlay = Gtk.Template.Child()
     start_page: Adw.StatusPage = Gtk.Template.Child()
-    revealer_pause_indicator: Gtk.Revealer = Gtk.Template.Child()
-    pause_indicator: Gtk.Image = Gtk.Template.Child()
+    revealer_icon_indicator: Gtk.Revealer = Gtk.Template.Child()
+    icon_indicator: Gtk.Image = Gtk.Template.Child()
     headerbar: Adw.HeaderBar = Gtk.Template.Child()
     controls_box: Gtk.Box = Gtk.Template.Child()
     controls_separator: Gtk.Separator = Gtk.Template.Child()
@@ -813,18 +813,18 @@ class CineWindow(Adw.ApplicationWindow):
         play_icon = "cine-playback-start-symbolic"
         pause_icon = "cine-playback-pause-symbolic"
 
-        icon = play_icon if is_paused else pause_icon
-        icon_indicator = pause_icon if is_paused else play_icon
+        button_icon = play_icon if is_paused else pause_icon
+        indicator_icon = pause_icon if is_paused else play_icon
 
-        self.play_pause_button.set_icon_name(icon)
-        self.pause_indicator.props.icon_name = icon_indicator
+        self.play_pause_button.set_icon_name(button_icon)
+        self.icon_indicator.props.icon_name = indicator_icon
 
         text = _("Pause") if is_paused else _("Play")
         self.play_pause_button.update_property([Gtk.AccessibleProperty.LABEL], [text])
 
         if not self.mpv.idle_active:
-            self.revealer_pause_indicator.set_reveal_child(True)
-            GLib.timeout_add(350, self.revealer_pause_indicator.set_reveal_child, False)
+            self.revealer_icon_indicator.set_reveal_child(True)
+            GLib.timeout_add(350, self.revealer_icon_indicator.set_reveal_child, False)
 
     def _update_duration(self, duration):
         self.time_total_label.set_text(format_time(duration))
@@ -1409,15 +1409,25 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("sub-visibility")
         @self.mpv.property_observer("sid")
-        def on_sub_vis_change(_name, value):
+        def on_sub_vis_change(name, value):
             def set_icon():
                 try:
+                    sub_on_icon = "cine-subtitles-symbolic"
+                    sub_off_icon = "cine-subtitles-off-symbolic"
+
                     sub_on = (value == "auto" or value) and self.mpv.sid
                     self.subtitles_menu_button.props.icon_name = (
-                        "cine-subtitles-symbolic"
-                        if sub_on
-                        else "cine-subtitles-off-symbolic"
+                        sub_on_icon if sub_on else sub_off_icon
                     )
+
+                    if name == "sub-visibility" and not self.mpv.idle_active:
+                        icon = sub_on_icon if sub_on else sub_off_icon
+                        self.icon_indicator.props.icon_name = icon
+                        self.revealer_icon_indicator.set_reveal_child(True)
+                        GLib.timeout_add(
+                            350, self.revealer_icon_indicator.set_reveal_child, False
+                        )
+
                 except mpv.ShutdownError:
                     pass
 

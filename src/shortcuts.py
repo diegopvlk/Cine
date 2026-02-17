@@ -33,7 +33,7 @@ WHEEL_DOWN     add volume -5
 k              cycle pause; #{_("Play/Pause")}
 p              cycle pause; #{_("Play/Pause")}
 SPACE          cycle pause; #{_("Play/Pause")}
-c              cycle sub-visibility; show-text "{_("Subtitles")}: ${{sub-visibility}}" #{_("Show/Hide Subtitles")}
+c              no-osd cycle sub-visibility; #{_("Show/Hide Subtitles")}
 j              seek -10 exact; show-text "⯇⯇" #{_("Seek 10s Backward")}
 l              seek 10 exact; show-text "⯈⯈" #{_("Seek 10s Forward")}
 LEFT           seek -5 exact; show-text "⯇⯇" #{_("Seek 5s Backward")}
