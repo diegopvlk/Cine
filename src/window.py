@@ -143,6 +143,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.click_hold_id: int = 0
         self.click_holding = False
         self.prev_speed: float = 1.0
+        self._hold_speed_value: float = settings.get_double("hold-speed")
         self.hide_icon_indicator: bool = True
 
         self.mpv_ctx: mpv.MpvRenderContext
@@ -1043,7 +1044,7 @@ class CineWindow(Adw.ApplicationWindow):
             try:
                 self.click_holding = True
                 self.prev_speed = cast(float, self.mpv["speed"])
-                new_speed = self.prev_speed * 2
+                new_speed = self._hold_speed_value
                 self.mpv["speed"] = new_speed
                 self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
                 self.mpv.keypress(button)
