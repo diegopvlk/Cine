@@ -1087,7 +1087,7 @@ class CineWindow(Adw.ApplicationWindow):
         if self.click_holding:
             self.mpv["speed"] = self.prev_speed
             self.click_holding = False
-            self.mpv.show_text(f"{self.mpv['speed']:g}×")
+            self.mpv.show_text(f"{self.mpv['speed']:g}X")
 
     def _start_hold_speed(self):
         if self.click_holding:
@@ -1098,7 +1098,7 @@ class CineWindow(Adw.ApplicationWindow):
             self.prev_speed = cast(float, self.mpv["speed"])
             new_speed = self._hold_speed_value
             self.mpv["speed"] = new_speed
-            self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
+            self.mpv.show_text(f"{new_speed:g}X ⯈⯈", "100000000")
         except mpv.ShutdownError:
             pass
 
