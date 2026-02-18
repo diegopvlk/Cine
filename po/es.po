@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 14:50-0300\n"
+"POT-Creation-Date: 2026-02-18 15:54-0300\n"
 "PO-Revision-Date: 2026-02-17 14:50-0300\n"
 "Last-Translator: Diego Povliuk <diegopvlk@gmail.com>\n"
 "Language-Team: Spanish\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:210 src/mpris.py:146
-#: src/mpris.py:364 src/window.py:154 src/window.py:252 src/window.py:1389
+#: src/mpris.py:364 src/window.py:154 src/window.py:252 src/window.py:1392
 #: src/window.blp:6
 msgid "Cine"
 msgstr "Cine"
@@ -102,13 +102,19 @@ msgstr "Título desconocido"
 msgid "Original"
 msgstr "Original"
 
-#: src/playlist.py:47 src/window.py:925 src/window.py:1260
+#: src/playlist.py:47 src/window.py:928 src/window.py:1263
 msgid "File Error"
 msgstr "Error de Archivo"
 
 #: src/playlist.py:161 src/window.py:581 src/playlist.blp:23 src/window.blp:91
 msgid "Add Files"
 msgstr "Añadir Archivos"
+
+#: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
+#: src/shortcuts.py:32 src/shortcuts.py:78 src/shortcuts.py:79
+#: src/window.py:1321 src/window.blp:202
+msgid "Volume"
+msgstr "Volumen"
 
 #: src/shortcuts.py:29
 msgid "Volume Increase"
@@ -143,7 +149,7 @@ msgstr "Retroceder 5s"
 msgid "Seek 5s Forward"
 msgstr "Adelantar 5s"
 
-#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:1290
+#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:1293
 #: src/window.blp:337
 msgid "Fullscreen"
 msgstr "Pantalla Completa"
@@ -348,7 +354,7 @@ msgstr "Reproducción"
 msgid "Miscellaneous"
 msgstr "Miscelánea"
 
-#: src/window.py:458 src/window.py:917 src/window.blp:101
+#: src/window.py:458 src/window.py:920 src/window.blp:101
 msgid "Add Subtitle Track"
 msgstr "Añadir Pista de Subtítulos"
 
@@ -397,25 +403,17 @@ msgstr "Audio"
 msgid "Media"
 msgstr "Medio"
 
-#: src/window.py:823
+#: src/window.py:826
 msgid "Pause"
 msgstr "Pausar"
 
-#: src/window.py:823 src/window.py:921
+#: src/window.py:826 src/window.py:924
 msgid "Play"
 msgstr "Reproducir"
 
-#: src/window.py:1290
+#: src/window.py:1293
 msgid "Exit Fullscreen"
 msgstr "Salir de pantalla completa"
-
-#: src/window.py:1313 src/window.py:1316 src/window.blp:202
-msgid "Volume"
-msgstr "Volumen"
-
-#: src/window.py:1316
-msgid "Muted"
-msgstr "Silenciado"
 
 #: src/options.blp:14
 msgid "Options"
@@ -648,6 +646,9 @@ msgstr "Arrastre y Suelte Archivos Aquí"
 #: src/window.blp:428
 msgid "Open…"
 msgstr "Abrir…"
+
+#~ msgid "Muted"
+#~ msgstr "Silenciado"
 
 #~ msgid "Mute"
 #~ msgstr "Silenciar"
