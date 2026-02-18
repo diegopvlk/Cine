@@ -1314,10 +1314,11 @@ class CineWindow(Adw.ApplicationWindow):
                 self.volume_scale_adjustment.set_value(vol)
                 self.volume_scale.handler_unblock(self.volume_handler_id)
 
-                if not self.mpv.mute:
-                    self.mpv.show_text(_("Volume") + f": {vol}%")
-                elif vol > 0:
+                if vol > 0:
                     self.mpv.mute = False
+
+                if self.volume_menu_button.props.active:
+                    self.mpv.show_text(_("Volume") + f": {vol}%")
 
                 self._update_volume_icon()
                 settings.set_int("volume", vol)
