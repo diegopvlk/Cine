@@ -44,6 +44,7 @@ class OptionsMenuButton(Gtk.MenuButton):
     sub_delay_spin: Gtk.SpinButton = Gtk.Template.Child()
     audio_delay_spin: Gtk.SpinButton = Gtk.Template.Child()
     speed_spin: Gtk.SpinButton = Gtk.Template.Child()
+    hold_speed_spin: Gtk.SpinButton = Gtk.Template.Child()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -65,6 +66,7 @@ class OptionsMenuButton(Gtk.MenuButton):
             self.sub_delay_spin,
             self.audio_delay_spin,
             self.speed_spin,
+            self.hold_speed_spin,
         ]:
             spin_text = cast(Gtk.Text, spin.get_first_child())
             spin_down = cast(Gtk.Button, spin_text.get_next_sibling())
@@ -127,6 +129,7 @@ class OptionsMenuButton(Gtk.MenuButton):
         set_open_val(self.sub_delay_spin, float(self.win.mpv["sub-delay"] or 0))
         set_open_val(self.audio_delay_spin, float(self.win.mpv["audio-delay"] or 0))
         set_open_val(self.speed_spin, float(self.win.mpv["speed"] or 1.0))
+        set_open_val(self.hold_speed_spin, self.win._hold_speed_value)
 
     @Gtk.Template.Callback()
     def _on_reset_all_options(self, _btn):
@@ -142,6 +145,7 @@ class OptionsMenuButton(Gtk.MenuButton):
         self.sub_delay_spin.set_value(0)
         self.audio_delay_spin.set_value(0)
         self.speed_spin.set_value(1.0)
+        self.hold_speed_spin.set_value(2.0)
 
     @Gtk.Template.Callback()
     def _on_aspect_changed(self, dropdown, *arg):
@@ -264,3 +268,14 @@ class OptionsMenuButton(Gtk.MenuButton):
     @Gtk.Template.Callback()
     def _on_speed_reset(self, _btn):
         self.speed_spin.set_value(1.0)
+
+    # --- HOLD SPEED ---
+    @Gtk.Template.Callback()
+    def _on_hold_speed_changed(self, spin):
+        val = spin.get_value()
+        self.win._hold_speed_value = val
+        settings.set_double("hold-speed", val)
+
+    @Gtk.Template.Callback()
+    def _on_hold_speed_reset(self, _btn):
+        self.hold_speed_spin.set_value(2.0)
