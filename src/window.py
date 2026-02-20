@@ -1325,7 +1325,7 @@ class CineWindow(Adw.ApplicationWindow):
                         self.volume_menu_button.props.icon_name
                     )
                     self._show_icon_indicator()
-                    self.mpv._set_property("user-data/show-icon", False)
+                    self.mpv._set_property("user-data/show-icon", None)
 
             GLib.idle_add(update_mute)
 
@@ -1470,7 +1470,7 @@ class CineWindow(Adw.ApplicationWindow):
                         icon = sub_on_icon if sub_on else sub_off_icon
                         self.icon_indicator.props.icon_name = icon
                         self._show_icon_indicator()
-                        self.mpv._set_property("user-data/show-icon", False)
+                        self.mpv._set_property("user-data/show-icon", None)
                 except mpv.ShutdownError:
                     pass
 
