@@ -762,7 +762,7 @@ class CineWindow(Adw.ApplicationWindow):
         try:
             if settings.get_boolean("show-remaining"):
                 duration = float(self.mpv.duration or 0)
-                remaining = duration - current_time
+                remaining = (duration - current_time) if duration > current_time else 0
                 self.time_elapsed_label.set_text(f"-{format_time(remaining)}")
                 self.time_elapsed_label.props.margin_end = 3
             else:
