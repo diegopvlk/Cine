@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-18 15:54-0300\n"
 "PO-Revision-Date: 2026-02-20 19:37+0000\n"
-"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
+"Last-Translator: avds <avds@disroot.org>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/cine/app/fa/>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
@@ -251,7 +251,6 @@ msgid "Statistics"
 msgstr "آمار"
 
 #: src/shortcuts.py:84
-#, fuzzy
 msgid "Statistics Overlay"
 msgstr "لایه آمار"
 
