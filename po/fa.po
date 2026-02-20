@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-02-18 15:54-0300\n"
-"PO-Revision-Date: 2026-02-20 00:57+0000\n"
-"Last-Translator: avds <avds@disroot.org>\n"
+"PO-Revision-Date: 2026-02-20 12:33+0000\n"
+"Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/cine/app/fa/>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,6 @@ msgstr ""
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:210 src/mpris.py:146
 #: src/mpris.py:364 src/window.py:154 src/window.py:252 src/window.py:1392
 #: src/window.blp:6
-#, fuzzy
 msgid "Cine"
 msgstr "سین"
 
