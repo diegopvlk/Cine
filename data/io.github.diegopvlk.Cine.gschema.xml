@@ -35,7 +35,7 @@
 			<default>false</default>
 		</key>
 		<key name="thumbnail-preview" type="b">
-			<default>true</default>
+			<default>false</default>
 		</key>
 	</schema>
 </schemalist>
