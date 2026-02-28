@@ -1502,10 +1502,11 @@ class CineWindow(Adw.ApplicationWindow):
                 if settings.get_boolean("thumbnail-preview"):
                     self.thumb_preview.props.visible = True
                     self.setup_preview_player()
-                elif self.preview_player:
+                else:
                     self.thumb_preview.props.visible = False
-                    self.preview_player.terminate()
-                    self.preview_player = None
+                    if self.preview_player:
+                        self.preview_player.terminate()
+                        self.preview_player = None
 
             GLib.idle_add(set)
 
