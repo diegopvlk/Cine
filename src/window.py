@@ -860,14 +860,13 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _apply_preview_texture(self, res):
         try:
-            texture = Gdk.MemoryTexture.new(
+            self.thumb_preview.props.paintable = Gdk.MemoryTexture.new(
                 res["w"],
                 res["h"],
                 Gdk.MemoryFormat.B8G8R8A8,
                 GLib.Bytes.new(res["data"]),
                 res["stride"],
             )
-            self.thumb_preview.props.paintable = texture
         except Exception as e:
             self.thumb_preview.props.visible = False
             print(f"Preview texture error: {e}")
@@ -924,6 +923,10 @@ class CineWindow(Adw.ApplicationWindow):
         def update_preview():
             self.update_preview_id = 0
             self._update_video_preview()
+
+        if not self.thumb_preview.props.paintable:
+            self._update_video_preview()
+            return
 
         self.update_preview_id = GLib.timeout_add(200, update_preview)
 
