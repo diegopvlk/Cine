@@ -139,6 +139,7 @@ class Playlist(Adw.Dialog):
             file_title = path_with_ext
             parent_dir = os.path.basename(os.path.dirname(path))
             dir = parent_dir if parent_dir else path
+            dir = GLib.markup_escape_text(dir)
 
             row = Adw.ActionRow(title=dir)
             row.add_css_class("property")
@@ -172,6 +173,7 @@ class Playlist(Adw.Dialog):
 
                 file_title = os.path.splitext(path_with_ext)[0]
 
+            file_title = GLib.markup_escape_text(file_title)
             row.set_subtitle(file_title)
             row.set_icon_name(icon_name)
             row.connect("activated", self._on_file_activated, index)
