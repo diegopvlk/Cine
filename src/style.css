@@ -187,7 +187,7 @@ statuspage box {
 .chapter-popover > contents label {
   border: 1px solid #212122;
   background: rgba(25, 25, 27, 0.95);
-  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.33);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.33);
   border-radius: 13px;
 }
 .chapter-popover > contents picture {

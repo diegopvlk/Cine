@@ -24,6 +24,7 @@ import ctypes
 from typing import cast
 from gettext import gettext as _
 from urllib.parse import urlparse
+from time import time
 
 from .utils import (
     is_local_path,
@@ -153,6 +154,8 @@ class CineWindow(Adw.ApplicationWindow):
         self.preview_player: mpv.MPV | None = None
         self.update_preview_id: int = 0
         self.local_path: bool = True
+        self.last_preview_update: float = 0
+        self.last_preview_seek: int = 0
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -351,7 +354,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         progress_hover = Gtk.EventControllerMotion()
         progress_hover.connect("motion", self._on_progress_motion)
-        progress_hover.connect("leave", lambda _ctrl: self.chapter_popover.popdown())
+        progress_hover.connect("leave", lambda *a: self.chapter_popover.popdown())
         self.video_progress_scale.add_controller(progress_hover)
 
         scroll_controller_progress = Gtk.EventControllerScroll.new(
@@ -805,55 +808,67 @@ class CineWindow(Adw.ApplicationWindow):
                 ao="null",
                 hwdec=self.mpv.hwdec,
                 ytdl=False,
-                cache=False,
                 config=False,
                 osc=False,
                 terminal=False,
                 load_scripts=False,
                 msg_level="all=no",
-                vd_lavc_skiploopfilter="all",
+                vd_lavc_threads=2,
                 vd_lavc_fast=True,
+                vd_lavc_skiploopfilter="all",
                 vd_lavc_software_fallback=1,
-                # scale threads for 8K
-                vd_lavc_threads=4 if v_width > 4000 else 2,
-                sws_scaler="bilinear",
+                sws_scaler="fast-bilinear",
                 demuxer_readahead_secs=0,
                 demuxer_max_bytes="128KiB",
-                hr_seek="no",
-                gpu_dumb_mode="yes",
+                hr_seek=False,
+                gpu_dumb_mode=True,
                 pause=True,
+                ovc="rawvideo",
+                of="image2",
+                ofopts="update=1",
             )
+
+            self.preview_player["load-osd-console"] = "no"
+            self.preview_player["load-stats-overlay"] = "no"
+            self.preview_player["load-auto-profiles"] = "no"
+            self.preview_player["really-quiet"] = "yes"
+
+            @self.preview_player.property_observer("time-pos")
+            def pos_observer(_name, pos):
+                if hasattr(self, "hover_time") and pos:
+
+                    def on_screenshot_ready(_, result):
+                        if result is None:
+                            self.thumb_preview.props.visible = False
+                            return
+
+                        self._apply_preview_texture(result)
+
+                    if self.preview_player:
+                        self.preview_player.command_async(
+                            "screenshot-raw",
+                            callback=on_screenshot_ready,
+                        )
 
         self.preview_player.loadfile(self.mpv.path, "replace")
         self.preview_player["vf"] = (
             f"scale={width}:{height}:force_original_aspect_ratio=decrease,format=bgra"
         )
 
-        @self.preview_player.property_observer("time-pos")
-        def pos_observer(_name, pos):
-            if hasattr(self, "hover_time") and pos:
-
-                def on_screenshot_ready(_, result):
-                    if result is None:
-                        self.thumb_preview.props.visible = False
-                        return
-
-                    GLib.idle_add(self._apply_preview_texture, result)
-
-                if self.preview_player:
-                    self.preview_player.command_async(
-                        "screenshot-raw",
-                        callback=on_screenshot_ready,
-                    )
-
     def _update_video_preview(self):
         if self.preview_player is None or not self.preview_player.path:
             return
 
         def seek():
+            if self.last_preview_seek == int(self.hover_time):
+                return
+            self.last_preview_seek = int(self.hover_time)
+
             try:
                 if self.preview_player:
-                    self.preview_player.seek(self.hover_time, reference="absolute")
+                    self.preview_player.command_async(
+                        "seek", self.hover_time, "absolute+keyframes"
+                    )
             except:
                 pass
 
@@ -921,15 +936,17 @@ class CineWindow(Adw.ApplicationWindow):
             GLib.source_remove(self.update_preview_id)
             self.update_preview_id = 0
 
-        def update_preview():
+        curr_time = time()
+
+        if curr_time - self.last_preview_update > 0.35:
+            self._update_video_preview()
+            self.last_preview_update = curr_time
+
+        def late_update_preview():
             self.update_preview_id = 0
             self._update_video_preview()
 
-        if not self.thumb_preview.props.paintable:
-            self._update_video_preview()
-            return
-
-        self.update_preview_id = GLib.timeout_add(200, update_preview)
+        self.update_preview_id = GLib.timeout_add(70, late_update_preview)
 
     def _on_progress_scroll(self, controller, _dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
