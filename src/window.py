@@ -157,6 +157,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.last_preview_update: float = 0
         self.last_preview_seek: int = 0
         self.error_count: int = 0
+        self.seek_timeout_id: int | None = None
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -1098,7 +1099,14 @@ class CineWindow(Adw.ApplicationWindow):
         self.mpv.pause = not self.mpv.pause
 
     def _on_progress_adjusted(self, adjustment):
-        self.mpv.time_pos = adjustment.props.value
+        if self.seek_timeout_id:
+            GLib.source_remove(self.seek_timeout_id)
+
+        def seek():
+            self.mpv.time_pos = adjustment.props.value
+            self.seek_timeout_id = None
+
+        self.seek_timeout_id = GLib.timeout_add(20, seek)
 
     def _on_shuffle_toggled(self, button):
         if button.props.active:
