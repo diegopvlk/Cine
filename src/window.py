@@ -201,6 +201,9 @@ class CineWindow(Adw.ApplicationWindow):
             ignore_path_in_watch_later_config=True,
         )
 
+        if self.mpv["window-maximized"]:
+            self.maximize()
+
         self.conf_hwdec = list(
             filter(lambda x: x != "no", cast(list, self.mpv["hwdec"]))
         )
