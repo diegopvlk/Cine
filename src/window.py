@@ -367,8 +367,7 @@ class CineWindow(Adw.ApplicationWindow):
         scroll_controller_progress.connect("scroll", self._on_progress_scroll)
         self.video_progress_scale.add_controller(scroll_controller_progress)
 
-        click_gesture = Gtk.GestureClick()
-        click_gesture.set_button(0)
+        click_gesture = Gtk.GestureClick(button=0)
         click_gesture.connect("pressed", self._on_click_pressed)
         click_gesture.connect("released", self._on_click_released)
         click_gesture.connect("cancel", self._cancel_click_hold)

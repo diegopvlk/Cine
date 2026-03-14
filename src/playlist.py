@@ -135,7 +135,7 @@ class Playlist(Adw.Dialog):
 
         for index, item in enumerate(playlist):
             path = item.get("filename", "")
-            path_with_ext = os.path.basename(path)
+            name_with_ext = os.path.basename(path)
             parent_dir = os.path.basename(os.path.dirname(path))
             dir = parent_dir if parent_dir else path
             dir = GLib.markup_escape_text(dir)
@@ -145,7 +145,7 @@ class Playlist(Adw.Dialog):
             row.props.activatable = True
 
             icon_name = "cine-applications-multimedia-symbolic"
-            file_title = os.path.splitext(path_with_ext)[0]
+            file_title = os.path.splitext(name_with_ext)[0]
 
             if not is_local_path(path):
                 content_type = "mpv-url"
@@ -161,7 +161,7 @@ class Playlist(Adw.Dialog):
 
             if content_type == "inode/directory":
                 icon_name = "cine-folder-symbolic"
-                file_title = path_with_ext
+                file_title = name_with_ext
                 if not os.listdir(path):
                     row.set_sensitive(False)
             elif content_type:
