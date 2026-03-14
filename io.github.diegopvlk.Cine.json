@@ -121,8 +121,8 @@
                         {
                             "type": "git",
                             "url": "https://github.com/haasn/libplacebo.git",
-                            "commit": "b2ea27dceb6418aabfe9121174c6dbb232942998",
-                            "tag": "v7.360.0",
+                            "commit": "cee9b076f2c63104ccfd497fa79c39a867293ec4",
+                            "tag": "v7.360.1",
                             "x-checker-data": {
                                 "type": "git",
                                 "tag-pattern": "^v([\\d.]+)$"
@@ -144,8 +144,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/denoland/deno/releases/download/v2.7.4/deno-x86_64-unknown-linux-gnu.zip",
-                            "sha256": "aef56590931e785af10bdab2077a2a01344b620c78b7086b88ebca73962ef25d",
+                            "url": "https://github.com/denoland/deno/releases/download/v2.7.5/deno-x86_64-unknown-linux-gnu.zip",
+                            "sha256": "fd0a9e6cf085acb861b67577a13bfd0b1829e1c6d6a6dcfd35bcb8f05c973a47",
                             "only-arches": [
                                 "x86_64"
                             ],
@@ -157,8 +157,8 @@
                         },
                         {
                             "type": "archive",
-                            "url": "https://github.com/denoland/deno/releases/download/v2.7.4/deno-aarch64-unknown-linux-gnu.zip",
-                            "sha256": "d2b99d1c072cab6ec8ececda1a1bd5889a9ea5217fafd9a9a9f5b0e56ef5e9cd",
+                            "url": "https://github.com/denoland/deno/releases/download/v2.7.5/deno-aarch64-unknown-linux-gnu.zip",
+                            "sha256": "69259408777465378ad78ea97c3ec6722704a93caabdb8d272b36d93d8025101",
                             "only-arches": [
                                 "aarch64"
                             ],
@@ -179,8 +179,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/7e/5b/1283356b70d4893a8a050cee15092e1b08ea15310b94365f88067146721b/yt_dlp_ejs-0.5.0-py3-none-any.whl",
-                            "sha256": "674fc0efea741d3100cdf3f0f9e123150715ee41edf47ea7a62fbdeda204bdec",
+                            "url": "https://files.pythonhosted.org/packages/59/f6/54fe93b9db02b7727043fb48816504f09066ca6d7f7d6145cd9d713a1047/yt_dlp_ejs-0.7.0-py3-none-any.whl",
+                            "sha256": "967e9cbe114ddfd046ff4668af18b1827b4597e2e47a83deea668a355828c798",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "yt-dlp-ejs",
@@ -203,8 +203,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/yt-dlp/yt-dlp.git",
-                    "tag": "2026.03.03",
-                    "commit": "b8058cdf378cbbf60669b665dea146fb7dc90117",
+                    "tag": "2026.03.13",
+                    "commit": "990fdf36dd985403cb171e4b92d1d7f01a4e273d",
                     "x-checker-data": {
                         "type": "git",
                         "tag-pattern": "^([\\d.]+)$"
