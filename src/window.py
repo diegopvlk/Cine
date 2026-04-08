@@ -164,6 +164,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.error_count: int = 0
         self.pressed_keys: set[int] = set()
         self.key_state: Gdk.ModifierType
+        self.hide_timeout_id: int = 0
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -425,7 +426,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.motion_controls_separator = Gtk.EventControllerMotion()
         self.controls_separator.add_controller(self.motion_controls_separator)
 
-        self.connect("realize", self._on_realize)
+        self.connect("notify::fullscreened", self._set_fs_state)
 
         buttons = [
             self.primary_menu_button,
@@ -441,17 +442,8 @@ class CineWindow(Adw.ApplicationWindow):
             if btn.props.popover:
                 btn.props.popover.connect("closed", self._hide_ui_timeout)
 
-    def _on_realize(self, _window):
-        surface: Gdk.Surface | None = self.get_surface()
-
-        if isinstance(surface, Gdk.Toplevel):
-            # When dragging the window while in fullscreen,
-            # sometimes fullscreened signal is not triggered, so use this:
-            surface.connect("notify::state", self._set_fs_state)
-
-    def _set_fs_state(self, top_level, _pspec):
-        state: Gdk.ToplevelState = top_level.get_state()
-        is_fullscreen = bool(state & Gdk.ToplevelState.FULLSCREEN)
+    def _set_fs_state(self, _window, _gparam):
+        is_fullscreen = self.props.fullscreened
         settings: Gtk.Settings | None = Gtk.Settings.get_default()
 
         try:
@@ -477,13 +469,13 @@ class CineWindow(Adw.ApplicationWindow):
         self.revealer_ui.set_reveal_child(True)
 
     def _hide_ui_timeout(self, *args, s=2):
-        if hasattr(self, "_hide_timeout_id") and self._hide_timeout_id:
-            GLib.source_remove(self._hide_timeout_id)
-        self._hide_timeout_id = GLib.timeout_add_seconds(s, self._hide_ui)
+        if self.hide_timeout_id:
+            GLib.source_remove(self.hide_timeout_id)
+        self.hide_timeout_id = GLib.timeout_add_seconds(s, self._hide_ui)
 
     def _hide_ui(self, *args):
         try:
-            self._hide_timeout_id = None
+            self.hide_timeout_id = 0
             controls_hover = self.motion_controls.props.contains_pointer
             header_hover = self.motion_header.props.contains_pointer
 
