@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 19:59-0300\n"
+"POT-Creation-Date: 2026-04-08 21:37-0300\n"
 "PO-Revision-Date: 2026-02-28 11:40-0300\n"
 "Last-Translator: Neko the gamer\n"
 "Language-Team: Italian\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:209 src/mpris.py:146
-#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1806
+#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1803
 #: src/window.blp:6
 msgid "Cine"
 msgstr "Cine"
@@ -102,7 +102,7 @@ msgstr "Titolo sconosciuto"
 msgid "Original"
 msgstr "Originale"
 
-#: src/playlist.py:76 src/window.py:1220 src/window.py:1645
+#: src/playlist.py:76 src/window.py:1220 src/window.py:1642
 msgid "File Error"
 msgstr "Errore file"
 
@@ -135,7 +135,7 @@ msgstr "Playlist"
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
 #: src/shortcuts.py:32 src/shortcuts.py:85 src/shortcuts.py:86
-#: src/window.py:1729 src/window.blp:215
+#: src/window.py:1726 src/window.blp:215
 msgid "Volume"
 msgstr "Volume"
 
@@ -205,7 +205,7 @@ msgstr "Cerca 5s indietro"
 msgid "Seek 5s Forward"
 msgstr "Cerca 5s in avanti"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1678
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1675
 #: src/window.blp:364
 msgid "Fullscreen"
 msgstr "Schermo intero"
@@ -484,7 +484,7 @@ msgstr "Pausa"
 msgid "Play"
 msgstr "Riproduci"
 
-#: src/window.py:1678
+#: src/window.py:1675
 msgid "Exit Fullscreen"
 msgstr "Esci da schermo intero"
 

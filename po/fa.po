@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 19:59-0300\n"
+"POT-Creation-Date: 2026-04-08 21:37-0300\n"
 "PO-Revision-Date: 2026-04-03 15:09+0000\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/cine/app/fa/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Weblate 5.17-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:209 src/mpris.py:146
-#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1806
+#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1803
 #: src/window.blp:6
 msgid "Cine"
 msgstr "سین"
@@ -103,7 +103,7 @@ msgstr "عنوان ناشناخته"
 msgid "Original"
 msgstr "اصلی"
 
-#: src/playlist.py:76 src/window.py:1220 src/window.py:1645
+#: src/playlist.py:76 src/window.py:1220 src/window.py:1642
 msgid "File Error"
 msgstr "خطای پرونده"
 
@@ -134,7 +134,7 @@ msgstr "سیاههٔ پخش"
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
 #: src/shortcuts.py:32 src/shortcuts.py:85 src/shortcuts.py:86
-#: src/window.py:1729 src/window.blp:215
+#: src/window.py:1726 src/window.blp:215
 msgid "Volume"
 msgstr "حجم صدا"
 
@@ -204,7 +204,7 @@ msgstr "۵ ثانیه به پیش"
 msgid "Seek 5s Forward"
 msgstr "۵ ثانیه به پس"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1678
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1675
 #: src/window.blp:364
 msgid "Fullscreen"
 msgstr "تمام‌صفحه"
@@ -483,7 +483,7 @@ msgstr "مکث"
 msgid "Play"
 msgstr "پخش"
 
-#: src/window.py:1678
+#: src/window.py:1675
 msgid "Exit Fullscreen"
 msgstr "خروج از تمام‌صفحه"
 
