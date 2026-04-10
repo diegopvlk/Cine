@@ -71,7 +71,7 @@
   </requires>
 
   <releases>
-    <release version="1.2.1" date="2026-04-10">
+    <release version="1.2.2" date="2026-04-10">
       <description translate="no">
         <ul>
           <li>New: Added preference to save session on close</li>
