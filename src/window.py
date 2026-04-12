@@ -226,12 +226,12 @@ class CineWindow(Adw.ApplicationWindow):
         self._setup_event_handlers()
         self._setup_observers()
 
-        self.mouse_bindings: dict = get_mouse_bindings(self.mpv)
-
         self.mpv.command("load-input-conf", f"memory://{INTERNAL_BINDINGS}")
 
         if os.path.exists(INPUT_CONF):
             self.mpv.command("load-input-conf", INPUT_CONF)
+
+        self.mouse_bindings: dict = get_mouse_bindings(self.mpv)
 
         sync_mpv_with_settings(self)
 
@@ -1367,6 +1367,9 @@ class CineWindow(Adw.ApplicationWindow):
         gtk_button = gesture.get_button()
         button = MBTN_MAP.get(gtk_button)
 
+        if button != "MBTN_LEFT":
+            gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+
         controls_hover = self.motion_controls.props.contains_pointer
         header_hover = self.motion_header.props.contains_pointer
         separator_hover = self.motion_controls_separator.props.contains_pointer
@@ -1378,9 +1381,8 @@ class CineWindow(Adw.ApplicationWindow):
         ):
             return
 
-        # MBTN_MID don't show up in self.mouse_bindings (only INTERNAL_BINDINGS)
         # Back and forward dont trigger _on_click_released when video is playing (??)
-        if button in ("MBTN_BACK", "MBTN_FORWARD") or button == "MBTN_MID":
+        if button in ("MBTN_BACK", "MBTN_FORWARD"):
             self.mpv.command_async("keypress", button)
             gesture.set_state(Gtk.EventSequenceState.CLAIMED)
             return
@@ -1407,9 +1409,6 @@ class CineWindow(Adw.ApplicationWindow):
         self._show_ui()
         self._hide_ui_timeout()
 
-        if button != "MBTN_LEFT":
-            gesture.set_state(Gtk.EventSequenceState.CLAIMED)
-
     def _on_click_released(self, gesture, n_press, _x, _y):
         if self.click_holding:
             self._cancel_click_hold()
@@ -1417,14 +1416,12 @@ class CineWindow(Adw.ApplicationWindow):
         else:
             self._cancel_click_hold()
 
+        gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+
         gtk_button = gesture.get_button()
         button = MBTN_MAP.get(gtk_button)
 
-        if (
-            not button
-            or button == "MBTN_MID"
-            or button in ("MBTN_BACK", "MBTN_FORWARD")
-        ):
+        if not button or button in ("MBTN_BACK", "MBTN_FORWARD"):
             return
 
         if n_press == 2:
@@ -1447,8 +1444,6 @@ class CineWindow(Adw.ApplicationWindow):
         if "_DBL" in button:
             button = button.replace("_DBL", "")
             run_command(self.mouse_bindings.get(button))
-
-        gesture.set_state(Gtk.EventSequenceState.CLAIMED)
 
     def _cancel_click_hold(self, *args):
         if self.click_hold_id:
