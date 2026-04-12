@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-10 22:07-0300\n"
+"POT-Creation-Date: 2026-04-12 11:07-0300\n"
 "PO-Revision-Date: 2026-02-28 11:40-0300\n"
 "Last-Translator: Diego Povliuk <diegopvlk@gmail.com>\n"
 "Language-Team: English (United Kingdom)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:209 src/mpris.py:146
-#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1831
+#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1826
 #: src/window.blp:6
 msgid "Cine"
 msgstr "Cine"
@@ -100,7 +100,7 @@ msgstr "Unknown title"
 msgid "Original"
 msgstr "Original"
 
-#: src/playlist.py:76 src/window.py:1248 src/window.py:1670
+#: src/playlist.py:76 src/window.py:1248 src/window.py:1665
 msgid "File Error"
 msgstr "File Error"
 
@@ -132,7 +132,7 @@ msgstr "Playlist"
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
 #: src/shortcuts.py:32 src/shortcuts.py:85 src/shortcuts.py:86
-#: src/window.py:1754 src/window.blp:215
+#: src/window.py:1749 src/window.blp:215
 msgid "Volume"
 msgstr "Volume"
 
@@ -153,7 +153,7 @@ msgstr "Play/Pause"
 msgid "Show/Hide Subtitles"
 msgstr "Show/Hide Subtitles"
 
-#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:208
+#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:209
 #: src/window.blp:257
 msgid "Subtitles"
 msgstr "Subtitles"
@@ -202,7 +202,7 @@ msgstr "Seek 5s Backward"
 msgid "Seek 5s Forward"
 msgstr "Seek 5s Forward"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1703
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1698
 #: src/window.blp:364
 msgid "Fullscreen"
 msgstr "Full Screen"
@@ -308,98 +308,102 @@ msgid "Statistics Overlay"
 msgstr "Statistics Overlay"
 
 #: src/shortcuts.py:92
+msgid "Set/Clear A-B Loop Points"
+msgstr "Set/Clear A-B Loop Points"
+
+#: src/shortcuts.py:93
 msgid "Loop"
 msgstr "Loop"
 
-#: src/shortcuts.py:92 src/window.blp:339
+#: src/shortcuts.py:93 src/window.blp:339
 msgid "Loop File"
 msgstr "Loop File"
 
-#: src/shortcuts.py:93 src/shortcuts.py:94 src/options.blp:340
+#: src/shortcuts.py:94 src/shortcuts.py:95 src/options.blp:340
 #: src/options.blp:363
 msgid "Contrast"
 msgstr "Contrast"
 
-#: src/shortcuts.py:93
+#: src/shortcuts.py:94
 msgid "Decrease Contrast"
 msgstr "Decrease Contrast"
 
-#: src/shortcuts.py:94
+#: src/shortcuts.py:95
 msgid "Increase Contrast"
 msgstr "Increase Contrast"
 
-#: src/shortcuts.py:95 src/shortcuts.py:96 src/options.blp:394
+#: src/shortcuts.py:96 src/shortcuts.py:97 src/options.blp:394
 #: src/options.blp:417
 msgid "Brightness"
 msgstr "Brightness"
 
-#: src/shortcuts.py:95
+#: src/shortcuts.py:96
 msgid "Decrease Brightness"
 msgstr "Decrease Brightness"
 
-#: src/shortcuts.py:96
+#: src/shortcuts.py:97
 msgid "Increase Brightness"
 msgstr "Increase Brightness"
 
-#: src/shortcuts.py:97 src/shortcuts.py:98 src/options.blp:448
+#: src/shortcuts.py:98 src/shortcuts.py:99 src/options.blp:448
 #: src/options.blp:471
 msgid "Gamma"
 msgstr "Gamma"
 
-#: src/shortcuts.py:97
+#: src/shortcuts.py:98
 msgid "Decrease Gamma"
 msgstr "Decrease Gamma"
 
-#: src/shortcuts.py:98
+#: src/shortcuts.py:99
 msgid "Increase Gamma"
 msgstr "Increase Gamma"
 
-#: src/shortcuts.py:99 src/shortcuts.py:100 src/options.blp:502
+#: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:502
 #: src/options.blp:525
 msgid "Saturation"
 msgstr "Saturation"
 
-#: src/shortcuts.py:99
+#: src/shortcuts.py:100
 msgid "Decrease Saturation"
 msgstr "Decrease Saturation"
 
-#: src/shortcuts.py:100
+#: src/shortcuts.py:101
 msgid "Increase Saturation"
 msgstr "Increase Saturation"
 
-#: src/shortcuts.py:101 src/shortcuts.py:102 src/shortcuts.py:103
+#: src/shortcuts.py:102 src/shortcuts.py:103 src/shortcuts.py:104
 msgid "Speed"
 msgstr "Speed"
 
-#: src/shortcuts.py:101
+#: src/shortcuts.py:102
 msgid "Decrease Playback Speed"
 msgstr "Decrease Playback Speed"
 
-#: src/shortcuts.py:102
+#: src/shortcuts.py:103
 msgid "Increase Playback Speed"
 msgstr "Increase Playback Speed"
 
-#: src/shortcuts.py:103 src/options.blp:711
+#: src/shortcuts.py:104 src/options.blp:711
 msgid "Reset Playback Speed"
 msgstr "Reset Playback Speed"
 
-#: src/shortcuts.py:192
+#: src/shortcuts.py:193
 msgid "Display & Video"
 msgstr "Display & Video"
 
-#: src/shortcuts.py:209
+#: src/shortcuts.py:210
 msgid "Audio & Volume"
 msgstr "Audio & Volume"
 
-#: src/shortcuts.py:210
+#: src/shortcuts.py:211
 msgid "Navigation"
 msgstr "Navigation"
 
-#: src/shortcuts.py:211
+#: src/shortcuts.py:212
 msgid "Playback"
 msgstr "Playback"
 
-#: src/shortcuts.py:215 src/shortcuts.py:221
+#: src/shortcuts.py:216 src/shortcuts.py:222
 msgid "Miscellaneous"
 msgstr "Miscellaneous"
 
@@ -481,7 +485,7 @@ msgstr "Pause"
 msgid "Play"
 msgstr "Play"
 
-#: src/window.py:1703
+#: src/window.py:1698
 msgid "Exit Fullscreen"
 msgstr "Exit Fullscreen"
 

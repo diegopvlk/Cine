@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-10 22:07-0300\n"
+"POT-Creation-Date: 2026-04-12 11:07-0300\n"
 "PO-Revision-Date: 2026-04-08 23:12+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Occitan <https://hosted.weblate.org/projects/cine/app/oc/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Weblate 5.17-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:209 src/mpris.py:146
-#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1831
+#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1826
 #: src/window.blp:6
 msgid "Cine"
 msgstr "Cine"
@@ -105,7 +105,7 @@ msgstr "Títol desconegut"
 msgid "Original"
 msgstr "Original"
 
-#: src/playlist.py:76 src/window.py:1248 src/window.py:1670
+#: src/playlist.py:76 src/window.py:1248 src/window.py:1665
 msgid "File Error"
 msgstr "Error de fichièr"
 
@@ -138,7 +138,7 @@ msgstr "Lista de lectura"
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
 #: src/shortcuts.py:32 src/shortcuts.py:85 src/shortcuts.py:86
-#: src/window.py:1754 src/window.blp:215
+#: src/window.py:1749 src/window.blp:215
 msgid "Volume"
 msgstr "Volum"
 
@@ -159,7 +159,7 @@ msgstr "Lectura/Pausa"
 msgid "Show/Hide Subtitles"
 msgstr "Afichar/Amagar los sostítols"
 
-#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:208
+#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:209
 #: src/window.blp:257
 msgid "Subtitles"
 msgstr "Sostítols"
@@ -208,7 +208,7 @@ msgstr "Recular de 5 segondas"
 msgid "Seek 5s Forward"
 msgstr "Avançar de 5 segondas"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1703
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1698
 #: src/window.blp:364
 msgid "Fullscreen"
 msgstr "Ecran complèt"
@@ -314,98 +314,102 @@ msgid "Statistics Overlay"
 msgstr "Superposicion de las estadisticas"
 
 #: src/shortcuts.py:92
+msgid "Set/Clear A-B Loop Points"
+msgstr "Definir/escafar los punts de vòuta A-B"
+
+#: src/shortcuts.py:93
 msgid "Loop"
 msgstr "Bocla"
 
-#: src/shortcuts.py:92 src/window.blp:339
+#: src/shortcuts.py:93 src/window.blp:339
 msgid "Loop File"
 msgstr "Repetir lo fichièr"
 
-#: src/shortcuts.py:93 src/shortcuts.py:94 src/options.blp:340
+#: src/shortcuts.py:94 src/shortcuts.py:95 src/options.blp:340
 #: src/options.blp:363
 msgid "Contrast"
 msgstr "Contraste"
 
-#: src/shortcuts.py:93
+#: src/shortcuts.py:94
 msgid "Decrease Contrast"
 msgstr "Demenir lo contraste"
 
-#: src/shortcuts.py:94
+#: src/shortcuts.py:95
 msgid "Increase Contrast"
 msgstr "Aumentar lo contraste"
 
-#: src/shortcuts.py:95 src/shortcuts.py:96 src/options.blp:394
+#: src/shortcuts.py:96 src/shortcuts.py:97 src/options.blp:394
 #: src/options.blp:417
 msgid "Brightness"
 msgstr "Luminositat"
 
-#: src/shortcuts.py:95
+#: src/shortcuts.py:96
 msgid "Decrease Brightness"
 msgstr "Demenir la luminositat"
 
-#: src/shortcuts.py:96
+#: src/shortcuts.py:97
 msgid "Increase Brightness"
 msgstr "Aumentar la luminositat"
 
-#: src/shortcuts.py:97 src/shortcuts.py:98 src/options.blp:448
+#: src/shortcuts.py:98 src/shortcuts.py:99 src/options.blp:448
 #: src/options.blp:471
 msgid "Gamma"
 msgstr "Gamma"
 
-#: src/shortcuts.py:97
+#: src/shortcuts.py:98
 msgid "Decrease Gamma"
 msgstr "Demenir lo gamma"
 
-#: src/shortcuts.py:98
+#: src/shortcuts.py:99
 msgid "Increase Gamma"
 msgstr "Aumentar lo gamma"
 
-#: src/shortcuts.py:99 src/shortcuts.py:100 src/options.blp:502
+#: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:502
 #: src/options.blp:525
 msgid "Saturation"
 msgstr "Saturacion"
 
-#: src/shortcuts.py:99
+#: src/shortcuts.py:100
 msgid "Decrease Saturation"
 msgstr "Demenir la saturacion"
 
-#: src/shortcuts.py:100
+#: src/shortcuts.py:101
 msgid "Increase Saturation"
 msgstr "Aumentar la saturacion"
 
-#: src/shortcuts.py:101 src/shortcuts.py:102 src/shortcuts.py:103
+#: src/shortcuts.py:102 src/shortcuts.py:103 src/shortcuts.py:104
 msgid "Speed"
 msgstr "Velocitat"
 
-#: src/shortcuts.py:101
+#: src/shortcuts.py:102
 msgid "Decrease Playback Speed"
 msgstr "Demenir la velocitat de lectura"
 
-#: src/shortcuts.py:102
+#: src/shortcuts.py:103
 msgid "Increase Playback Speed"
 msgstr "Aumentar la velocitat de lectura"
 
-#: src/shortcuts.py:103 src/options.blp:711
+#: src/shortcuts.py:104 src/options.blp:711
 msgid "Reset Playback Speed"
 msgstr "Reïnicializar la velocitat de lectura"
 
-#: src/shortcuts.py:192
+#: src/shortcuts.py:193
 msgid "Display & Video"
 msgstr "Afichage e Vidèo"
 
-#: src/shortcuts.py:209
+#: src/shortcuts.py:210
 msgid "Audio & Volume"
 msgstr "Àudio e Volum"
 
-#: src/shortcuts.py:210
+#: src/shortcuts.py:211
 msgid "Navigation"
 msgstr "Navigacion"
 
-#: src/shortcuts.py:211
+#: src/shortcuts.py:212
 msgid "Playback"
 msgstr "Lectura"
 
-#: src/shortcuts.py:215 src/shortcuts.py:221
+#: src/shortcuts.py:216 src/shortcuts.py:222
 msgid "Miscellaneous"
 msgstr "Divèrs"
 
@@ -487,7 +491,7 @@ msgstr "Pausa"
 msgid "Play"
 msgstr "Legir"
 
-#: src/window.py:1703
+#: src/window.py:1698
 msgid "Exit Fullscreen"
 msgstr "Sortir de l'ecran complèt"
 

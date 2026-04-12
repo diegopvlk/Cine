@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-10 22:07-0300\n"
+"POT-Creation-Date: 2026-04-12 11:07-0300\n"
 "PO-Revision-Date: 2026-03-17 11:09+0000\n"
 "Last-Translator: 心就在那里 <xjznlonly@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 5.17-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:209 src/mpris.py:146
-#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1831
+#: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1826
 #: src/window.blp:6
 msgid "Cine"
 msgstr "Cine"
@@ -96,7 +96,7 @@ msgstr "未知标题"
 msgid "Original"
 msgstr "原始"
 
-#: src/playlist.py:76 src/window.py:1248 src/window.py:1670
+#: src/playlist.py:76 src/window.py:1248 src/window.py:1665
 msgid "File Error"
 msgstr "文件错误"
 
@@ -127,7 +127,7 @@ msgstr "播放列表"
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
 #: src/shortcuts.py:32 src/shortcuts.py:85 src/shortcuts.py:86
-#: src/window.py:1754 src/window.blp:215
+#: src/window.py:1749 src/window.blp:215
 msgid "Volume"
 msgstr "音量"
 
@@ -148,7 +148,7 @@ msgstr "播放/暂停"
 msgid "Show/Hide Subtitles"
 msgstr "显示/隐藏字幕"
 
-#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:208
+#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:209
 #: src/window.blp:257
 msgid "Subtitles"
 msgstr "字幕"
@@ -197,7 +197,7 @@ msgstr "后退 5 秒"
 msgid "Seek 5s Forward"
 msgstr "前进 5 秒"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1703
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1698
 #: src/window.blp:364
 msgid "Fullscreen"
 msgstr "全屏"
@@ -303,98 +303,102 @@ msgid "Statistics Overlay"
 msgstr "显示统计面板"
 
 #: src/shortcuts.py:92
+msgid "Set/Clear A-B Loop Points"
+msgstr "设置/清除 A-B 循环点"
+
+#: src/shortcuts.py:93
 msgid "Loop"
 msgstr "循环播放"
 
-#: src/shortcuts.py:92 src/window.blp:339
+#: src/shortcuts.py:93 src/window.blp:339
 msgid "Loop File"
 msgstr "单个文件循环"
 
-#: src/shortcuts.py:93 src/shortcuts.py:94 src/options.blp:340
+#: src/shortcuts.py:94 src/shortcuts.py:95 src/options.blp:340
 #: src/options.blp:363
 msgid "Contrast"
 msgstr "对比度"
 
-#: src/shortcuts.py:93
+#: src/shortcuts.py:94
 msgid "Decrease Contrast"
 msgstr "降低对比度"
 
-#: src/shortcuts.py:94
+#: src/shortcuts.py:95
 msgid "Increase Contrast"
 msgstr "增加对比度"
 
-#: src/shortcuts.py:95 src/shortcuts.py:96 src/options.blp:394
+#: src/shortcuts.py:96 src/shortcuts.py:97 src/options.blp:394
 #: src/options.blp:417
 msgid "Brightness"
 msgstr "亮度"
 
-#: src/shortcuts.py:95
+#: src/shortcuts.py:96
 msgid "Decrease Brightness"
 msgstr "降低亮度"
 
-#: src/shortcuts.py:96
+#: src/shortcuts.py:97
 msgid "Increase Brightness"
 msgstr "增加亮度"
 
-#: src/shortcuts.py:97 src/shortcuts.py:98 src/options.blp:448
+#: src/shortcuts.py:98 src/shortcuts.py:99 src/options.blp:448
 #: src/options.blp:471
 msgid "Gamma"
 msgstr "伽马值"
 
-#: src/shortcuts.py:97
+#: src/shortcuts.py:98
 msgid "Decrease Gamma"
 msgstr "降低伽马值"
 
-#: src/shortcuts.py:98
+#: src/shortcuts.py:99
 msgid "Increase Gamma"
 msgstr "增加伽马值"
 
-#: src/shortcuts.py:99 src/shortcuts.py:100 src/options.blp:502
+#: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:502
 #: src/options.blp:525
 msgid "Saturation"
 msgstr "饱和度"
 
-#: src/shortcuts.py:99
+#: src/shortcuts.py:100
 msgid "Decrease Saturation"
 msgstr "降低饱和度"
 
-#: src/shortcuts.py:100
+#: src/shortcuts.py:101
 msgid "Increase Saturation"
 msgstr "增加饱和度"
 
-#: src/shortcuts.py:101 src/shortcuts.py:102 src/shortcuts.py:103
+#: src/shortcuts.py:102 src/shortcuts.py:103 src/shortcuts.py:104
 msgid "Speed"
 msgstr "播放速度"
 
-#: src/shortcuts.py:101
+#: src/shortcuts.py:102
 msgid "Decrease Playback Speed"
 msgstr "减慢播放速度"
 
-#: src/shortcuts.py:102
+#: src/shortcuts.py:103
 msgid "Increase Playback Speed"
 msgstr "加快播放速度"
 
-#: src/shortcuts.py:103 src/options.blp:711
+#: src/shortcuts.py:104 src/options.blp:711
 msgid "Reset Playback Speed"
 msgstr "重置播放速度"
 
-#: src/shortcuts.py:192
+#: src/shortcuts.py:193
 msgid "Display & Video"
 msgstr "显示与视频"
 
-#: src/shortcuts.py:209
+#: src/shortcuts.py:210
 msgid "Audio & Volume"
 msgstr "音频与音量"
 
-#: src/shortcuts.py:210
+#: src/shortcuts.py:211
 msgid "Navigation"
 msgstr "导航"
 
-#: src/shortcuts.py:211
+#: src/shortcuts.py:212
 msgid "Playback"
 msgstr "回放"
 
-#: src/shortcuts.py:215 src/shortcuts.py:221
+#: src/shortcuts.py:216 src/shortcuts.py:222
 msgid "Miscellaneous"
 msgstr "杂项"
 
@@ -476,7 +480,7 @@ msgstr "暂停"
 msgid "Play"
 msgstr "播放"
 
-#: src/window.py:1703
+#: src/window.py:1698
 msgid "Exit Fullscreen"
 msgstr "退出全屏"
 
