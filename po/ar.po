@@ -9,9 +9,8 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-12 11:07-0300\n"
-"PO-Revision-Date: 2026-04-03 15:09+0000\n"
-"Last-Translator: Muhammed Al-Basha "
-"<mu7basha@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-04-17 12:40+0000\n"
+"Last-Translator: Mustafa <mm505ali@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/cine/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.17-dev\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:209 src/mpris.py:146
 #: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1826
@@ -35,7 +34,7 @@ msgstr "شغّل فيديوهاتك"
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
-msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;صوت;فيديو;مقطع;فيلم;مشغل;سيني;لقطة;"
+msgstr "صوت؛فيديو؛فيلم؛تلفاز؛فيلم؛مقطع؛مشغل؛سينما؛mpv؛"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:135
@@ -47,18 +46,20 @@ msgid ""
 "Cine combines a clean interface with a high-performance engine to deliver a "
 "seamless viewing experience."
 msgstr ""
-"سيني يجمع بين واجهة نظيفة ومحرك عالي الأداء لتوفير تجربة مشاهدة لا مثيل لها."
+"يجمع تطبيق Cine بين واجهة استخدام نظيفة ومحرك أداء عالي ليمنحك تجربة مشاهدة "
+"سلسلة ومتكاملة."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:27
 msgid "Simple Design: A refined, distraction-free interface"
-msgstr "تصميم بسيط: واجهة موحَّدة، بلا ازعاج"
+msgstr "تصميم بسيط: واجهة راقية وخالية من المشتتات."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:28
 msgid ""
 "MPV-Based: Leverages the robust power of MPV for great playback and format "
 "support"
 msgstr ""
-"MPV كبنية: مستغلًا قوة MPV لتجربة تشغيل رائعة ودعم جيد لصيغ الفيديو المختلفة"
+"يعتمد على محرك MPV: يستفيد من القوة الجبارة لـ MPV لضمان دعم ممتاز للصيغ "
+"وتشغيل مثالي."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:29
 msgid ""
