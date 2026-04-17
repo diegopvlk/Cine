@@ -25,6 +25,7 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gio", "2.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gdk, GLib, Gio, Gtk
+from gettext import gettext as _
 
 settings = Gio.Settings.new("io.github.diegopvlk.Cine")
 
@@ -42,6 +43,13 @@ def sync_mpv_with_settings(window):
     hwdec_enabled = settings.get_boolean("hwdec")
     norm_enabled = settings.get_boolean("normalize-volume")
 
+    sub_bg = settings.get_boolean("subtitle-bg")
+    player["sub-border-style"] = "background-box" if sub_bg else "outline-and-shadow"
+    player["sub-shadow-offset"] = 8 if sub_bg else 0.6
+    player["sub-back-color"] = (
+        settings.get_string("subtitle-bg-color") if sub_bg else "#97000000"
+    )
+
     if hwdec_enabled:
         player.command_async("vf", "remove", "@hflip")
         player.command_async("vf", "remove", "@vflip")
@@ -58,13 +66,15 @@ class Preferences(Adw.Dialog):
     __gtype_name__ = "Preferences"
 
     open_new_row: Adw.SwitchRow = Gtk.Template.Child()
-    color_dialog_button: Gtk.ColorDialogButton = Gtk.Template.Child()
     sub_color_row: Adw.ActionRow = Gtk.Template.Child()
     reset_sub_color: Gtk.Button = Gtk.Template.Child()
     reset_sub_font: Gtk.Button = Gtk.Template.Child()
     font_row: Adw.ActionRow = Gtk.Template.Child()
     font_label: Gtk.Label = Gtk.Template.Child()
     subtitle_scale_row: Adw.SpinRow = Gtk.Template.Child()
+    sub_color_btn: Gtk.ColorDialogButton = Gtk.Template.Child()
+    sub_bg_color_btn: Gtk.ColorDialogButton = Gtk.Template.Child()
+    subtitle_bg_switch: Gtk.Switch = Gtk.Template.Child()
     subtitle_lang_row: Adw.EntryRow = Gtk.Template.Child()
     audio_lang_row: Adw.EntryRow = Gtk.Template.Child()
     thumb_preview_row: Adw.SwitchRow = Gtk.Template.Child()
@@ -84,20 +94,31 @@ class Preferences(Adw.Dialog):
         font = settings.get_string("subtitle-font")
         self.font_label.set_label(font)
 
-        self.color_dialog_button.connect("notify::rgba", self._on_color_selected)
-        self.reset_sub_color.connect("clicked", self._on_color_reset)
+        self.sub_color_btn.connect("notify::rgba", self._on_sub_color_selected)
+        self.reset_sub_color.connect("clicked", self._on_sub_color_reset)
         self.font_row.connect("activated", self._on_font_activated)
         self.reset_sub_font.connect("clicked", self._on_font_reset)
 
         self.sub_color = Gdk.RGBA()
         self.sub_color.parse(settings.get_string("subtitle-color"))
-        self.color_dialog_button.set_dialog(
-            Gtk.ColorDialog(
-                modal=True,
-                with_alpha=False,
-            )
+        self.sub_color_btn.set_dialog(
+            Gtk.ColorDialog(title=_("Subtitle Color"), modal=True, with_alpha=False)
         )
-        self.color_dialog_button.set_rgba(self.sub_color)
+        self.sub_color_btn.set_rgba(self.sub_color)
+
+        self.sub_bg_color_btn.connect("notify::rgba", self._on_sub_bg_color_selected)
+
+        bg_hex = settings.get_string("subtitle-bg-color").lstrip("#")
+        self.sub_bg_color = Gdk.RGBA()
+        self.sub_bg_color.alpha = int(bg_hex[0:2], 16) / 255
+        self.sub_bg_color.red = int(bg_hex[2:4], 16) / 255
+        self.sub_bg_color.green = int(bg_hex[4:6], 16) / 255
+        self.sub_bg_color.blue = int(bg_hex[6:8], 16) / 255
+
+        self.sub_bg_color_btn.set_dialog(
+            Gtk.ColorDialog(title=_("Subtitle Background"), modal=True, with_alpha=True)
+        )
+        self.sub_bg_color_btn.set_rgba(self.sub_bg_color)
 
         self.connect("closed", self._disconnect_settings)
 
@@ -112,6 +133,12 @@ class Preferences(Adw.Dialog):
             "subtitle-scale",
             self.subtitle_scale_row,
             "value",
+            Gio.SettingsBindFlags.DEFAULT,
+        )
+        settings.bind(
+            "subtitle-bg",
+            self.subtitle_bg_switch,
+            "active",
             Gio.SettingsBindFlags.DEFAULT,
         )
         settings.bind(
@@ -163,6 +190,8 @@ class Preferences(Adw.Dialog):
             "subtitle-scale": self._on_sub_scale_changed,
             "subtitle-font": self._on_sub_font_changed,
             "subtitle-languages": self._on_slang_changed,
+            "subtitle-bg-color": self._on_sub_bg_color_changed,
+            "subtitle-bg": self._on_sub_bg_changed,
             "audio-languages": self._on_alang_changed,
             "thumbnail-preview": self._on_thumb_preview_changed,
             "hwdec": self._on_hwdec_changed,
@@ -182,11 +211,26 @@ class Preferences(Adw.Dialog):
     def _on_sub_color_changed(self, settings, key):
         self.player["sub-color"] = settings.get_string(key)
 
+    def _on_sub_bg_color_changed(self, _settings, key):
+        if settings.get_boolean("subtitle-bg"):
+            self.player["sub-back-color"] = settings.get_string(key)
+
     def _on_sub_scale_changed(self, settings, key):
         self.player["sub-scale"] = settings.get_double(key)
 
     def _on_sub_font_changed(self, settings, key):
         self.player["sub-font"] = settings.get_string(key)
+
+    def _on_sub_bg_changed(self, settings, key):
+        sub_bg = settings.get_boolean(key)
+        if sub_bg:
+            self.player["sub-shadow-offset"] = 8
+            self.player["sub-border-style"] = "background-box"
+            self.player["sub-back-color"] = settings.get_string("subtitle-bg-color")
+        else:
+            self.player["sub-shadow-offset"] = 0.6
+            self.player["sub-border-style"] = "outline-and-shadow"
+            self.player["sub-shadow-color"] = "#97000000"
 
     def _on_slang_changed(self, settings, key):
         self.player["slang"] = settings.get_string(key)
@@ -222,17 +266,28 @@ class Preferences(Adw.Dialog):
         else:
             self.player.command("af", "remove", "@cine_loudnorm")
 
-    def _on_color_selected(self, color_btn, *arg):
+    def _on_sub_color_selected(self, color_btn, *arg):
         rgba = color_btn.get_rgba()
         hex_color = "#{:02x}{:02x}{:02x}".format(
             int(rgba.red * 255), int(rgba.green * 255), int(rgba.blue * 255)
         )
         settings.set_string("subtitle-color", hex_color)
 
-    def _on_color_reset(self, _button):
+    def _on_sub_bg_color_selected(self, color_btn, *arg):
+        rgba = color_btn.get_rgba()
+        # sub-back-color is #AARRGGBB
+        hex_color = "#{:02x}{:02x}{:02x}{:02x}".format(
+            int(rgba.alpha * 255),
+            int(rgba.red * 255),
+            int(rgba.green * 255),
+            int(rgba.blue * 255),
+        )
+        settings.set_string("subtitle-bg-color", hex_color)
+
+    def _on_sub_color_reset(self, _button):
         default_color = "#ebebeb"
         self.sub_color.parse(default_color)
-        self.color_dialog_button.set_rgba(self.sub_color)
+        self.sub_color_btn.set_rgba(self.sub_color)
 
     def _on_font_activated(self, _row):
         dialog = Gtk.FontDialog()

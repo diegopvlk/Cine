@@ -28,6 +28,12 @@
 		<key name="subtitle-color" type="s">
 			<default>"#ebebeb"</default>
 		</key>
+		<key name="subtitle-bg" type="b">
+			<default>false</default>
+		</key>
+		<key name="subtitle-bg-color" type="s">
+			<default>"#97000000"</default>
+		</key>
 		<key name="volume" type="i">
 			<default>100</default>
 		</key>

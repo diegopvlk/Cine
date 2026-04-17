@@ -19,10 +19,10 @@ template $Preferences: Adw.Dialog {
 					Adw.ActionRow sub_color_row {
 						title: _("Subtitle Color");
 						activatable: true;
-						activatable-widget: color_dialog_button;
+						activatable-widget: sub_color_btn;
 
 						[suffix]
-						ColorDialogButton color_dialog_button {
+						ColorDialogButton sub_color_btn {
 							valign: center;
 						}
 
@@ -94,6 +94,23 @@ template $Preferences: Adw.Dialog {
 							upper: 3;
 							step-increment: 0.05;
 						};
+					}
+
+					Adw.ActionRow {
+						title: _("Subtitle Background");
+						activatable-widget: subtitle_bg_switch;
+
+						[suffix]
+						ColorDialogButton sub_bg_color_btn {
+							valign: center;
+							sensitive: bind subtitle_bg_switch.active;
+						}
+
+						[suffix]
+						Switch subtitle_bg_switch {
+							valign: center;
+							margin-start: 8;
+						}
 					}
 
 					Adw.EntryRow subtitle_lang_row {
