@@ -8,205 +8,213 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-17 17:47-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-04-21 12:10+0000\n"
+"Last-Translator: seja-arctic-fox <seja.czstudio@gmail.com>\n"
+"Language-Team: Czech <https://hosted.weblate.org/projects/cine/app/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:209 src/mpris.py:146
 #: src/mpris.py:364 src/window.py:175 src/window.py:292 src/window.py:1826
 #: src/window.blp:6
 msgid "Cine"
-msgstr ""
+msgstr "Cine"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:3
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:23
 msgid "Play your videos"
-msgstr ""
+msgstr "Přehrávejte svá videa"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
-msgstr ""
+msgstr "Zvuk;Video;Film;TV;Klip;Přehrávač;Cine;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:135
 msgid "New Window"
-msgstr ""
+msgstr "Nové okno"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:25
+#, fuzzy
 msgid ""
 "Cine combines a clean interface with a high-performance engine to deliver a "
 "seamless viewing experience."
 msgstr ""
+"Cine poskytuje bezproblémový zážitek ze sledování kombinací čistého rozhraní "
+"s vysokovýkonostním základem."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:27
 msgid "Simple Design: A refined, distraction-free interface"
-msgstr ""
+msgstr "Jednoduchý design: vyladěné rozhraní bez žádných rozptýlení"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:28
 msgid ""
 "MPV-Based: Leverages the robust power of MPV for great playback and format "
 "support"
 msgstr ""
+"Založeno na MPV: využívá robustního výkonu MPV pro skvělé přehrávání a "
+"podporu formátů"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:29
 msgid ""
 "Audio and Subtitles: Control track selection and synchronization for both"
-msgstr ""
+msgstr "Zvuk a titulky: ovládejte volby stop a synchronizaci obojího"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:30
 msgid ""
 "Video Controls: Easily adjust brightness, contrast, zoom, aspect ratio, etc."
 msgstr ""
+"Ovládání videa: jednoduše upravte jas, kontrast, přiblížení, poměr stran atd."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:42
 msgid "Video Playing"
-msgstr ""
+msgstr "Přehrávání videa"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:46 src/preferences.blp:5
 #: src/window.blp:140
 msgid "Preferences"
-msgstr ""
+msgstr "Předvolby"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50
 msgid "Video Options"
-msgstr ""
+msgstr "Možnosti videa"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:54
 msgid "Main Window"
-msgstr ""
+msgstr "Hlavní okno"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:219
 msgid "translator-credits"
-msgstr ""
+msgstr "seja-arctic-fox <seja.czstudio@gmail.com>"
 
 #: src/mpris.py:153 src/mpris.py:221 src/mpris.py:356
 msgid "Unknown title"
-msgstr ""
+msgstr "Neznámý název"
 
 #: src/options.py:193 src/options.blp:79 src/options.blp:137
 msgid "Original"
-msgstr ""
+msgstr "Původní"
 
 #: src/playlist.py:76 src/window.py:1248 src/window.py:1665
 msgid "File Error"
-msgstr ""
+msgstr "Chyba souboru"
 
 #: src/playlist.py:148 src/playlist.py:327 src/playlist.blp:43
+#, fuzzy
 msgid "Save Playlist"
-msgstr ""
+msgstr "Uložit frontu"
 
 #: src/playlist.py:151 src/preferences.blp:156 src/preferences.blp:191
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
-msgstr ""
+msgstr "Vyžaduje oprávnění flatpak ke čtení složky, ve které je video uloženo"
 
 #: src/playlist.py:257
 msgid "Open Item Location"
-msgstr ""
+msgstr "Otevřít umístění položky"
 
 #: src/playlist.py:258
 msgid "Remove from Playlist"
-msgstr ""
+msgstr "Odstranit z fronty"
 
 #: src/playlist.py:322 src/window.py:672 src/playlist.blp:24 src/window.blp:99
 msgid "Add Files"
-msgstr ""
+msgstr "Přidat soubory"
 
 #: src/playlist.py:328 src/playlist.blp:5 src/window.blp:349
 msgid "Playlist"
-msgstr ""
+msgstr "Fronta"
 
 #: src/preferences.py:105 src/preferences.blp:20
 msgid "Subtitle Color"
-msgstr ""
+msgstr "Barva titulků"
 
 #: src/preferences.py:119 src/preferences.blp:100
 msgid "Subtitle Background"
-msgstr ""
+msgstr "Pozadí titulků"
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
 #: src/shortcuts.py:32 src/shortcuts.py:85 src/shortcuts.py:86
 #: src/window.py:1749 src/window.blp:215
 msgid "Volume"
-msgstr ""
+msgstr "Hlasitost"
 
 #: src/shortcuts.py:29
 msgid "Volume Increase"
-msgstr ""
+msgstr "Zvýšení hlasitosti"
 
 #: src/shortcuts.py:30
 msgid "Volume Decrease"
-msgstr ""
+msgstr "Snížení hlasitosti"
 
 #: src/shortcuts.py:33 src/shortcuts.py:34 src/shortcuts.py:35
 #: src/window.blp:198
 msgid "Play/Pause"
-msgstr ""
+msgstr "Přehrát/Pozastavit"
 
 #: src/shortcuts.py:36
 msgid "Show/Hide Subtitles"
-msgstr ""
+msgstr "Ukázat/Skrýt titulky"
 
 #: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:209
 #: src/window.blp:257
 msgid "Subtitles"
-msgstr ""
+msgstr "Titulky"
 
 #: src/shortcuts.py:37
 msgid "Switch to Next Subtitle Track"
-msgstr ""
+msgstr "Přepnout na další stopu titulků"
 
 #: src/shortcuts.py:38
 msgid "Switch to Previous Subtitle Track"
-msgstr ""
+msgstr "Přepnout na předchozí stopu titulků"
 
 #: src/shortcuts.py:39
 msgid "Secondary Subtitles"
-msgstr ""
+msgstr "Sekundární titulky"
 
 #: src/shortcuts.py:39
 msgid "Switch Secondary Subtitle Track"
-msgstr ""
+msgstr "Přepnout na sekundární stopu titulků"
 
 #: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:699 src/window.blp:272
 msgid "Audio"
-msgstr ""
+msgstr "Zvuk"
 
 #: src/shortcuts.py:40
 msgid "Switch to Next Audio Track"
-msgstr ""
+msgstr "Přepnout na další zvukovou stopu"
 
 #: src/shortcuts.py:41
 msgid "Switch to Previous Audio Track"
-msgstr ""
+msgstr "Přepnout na předchozí zvukovou stopu"
 
 #: src/shortcuts.py:42
 msgid "Seek 10s Backward"
-msgstr ""
+msgstr "Posunout o 10 s zpět"
 
 #: src/shortcuts.py:43
 msgid "Seek 10s Forward"
-msgstr ""
+msgstr "Posunout o 10 s vpřed"
 
 #: src/shortcuts.py:44
 msgid "Seek 5s Backward"
-msgstr ""
+msgstr "Posunout o 5 s zpět"
 
 #: src/shortcuts.py:45
 msgid "Seek 5s Forward"
-msgstr ""
+msgstr "Posunout o 5 s vpřed"
 
 #: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1698
 #: src/window.blp:364
 msgid "Fullscreen"
-msgstr ""
+msgstr "Zvětšit na celou obrazovku"
 
 #: src/shortcuts.py:57 src/shortcuts.py:58 src/shortcuts.py:59
 #: src/shortcuts.py:60 src/shortcuts.py:61 src/options.blp:285
