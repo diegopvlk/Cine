@@ -46,5 +46,8 @@
 		<key name="save-session" type="b">
 			<default>false</default>
 		</key>
+		<key name="is-maximized" type="b">
+			<default>false</default>
+		</key>
 	</schema>
 </schemalist>

@@ -208,7 +208,7 @@ class CineWindow(Adw.ApplicationWindow):
             cursor_autohide_fs_only=True,
         )
 
-        if self.mpv["window-maximized"]:
+        if self.mpv["window-maximized"] or settings.get_boolean("is-maximized"):
             self.maximize()
 
         self.conf_hwdec = list(
@@ -427,6 +427,10 @@ class CineWindow(Adw.ApplicationWindow):
         self.motion_controls_separator = Gtk.EventControllerMotion()
         self.controls_separator.add_controller(self.motion_controls_separator)
 
+        self.connect(
+            "notify::maximized",
+            lambda w, _: settings.set_boolean("is-maximized", w.is_maximized()),
+        )
         self.connect("notify::fullscreened", self._set_fs_state)
 
         buttons = [
