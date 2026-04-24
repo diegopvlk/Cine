@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-17 17:47-0300\n"
-"PO-Revision-Date: 2026-04-23 00:12+0000\n"
+"PO-Revision-Date: 2026-04-25 07:09+0000\n"
 "Last-Translator: Ahmer Jamil Khan <ahmer@khan.am>\n"
 "Language-Team: Urdu <https://hosted.weblate.org/projects/cine/app/ur/>\n"
 "Language: ur\n"
@@ -190,27 +190,27 @@ msgstr "آڈیو"
 
 #: src/shortcuts.py:40
 msgid "Switch to Next Audio Track"
-msgstr ""
+msgstr "اگلے آڈیو ٹریک پر جائیں"
 
 #: src/shortcuts.py:41
 msgid "Switch to Previous Audio Track"
-msgstr ""
+msgstr "پچھلے آڈیو ٹریک پر جائیں"
 
 #: src/shortcuts.py:42
 msgid "Seek 10s Backward"
-msgstr ""
+msgstr "10 سیکنڈ پیچھے جائیں"
 
 #: src/shortcuts.py:43
 msgid "Seek 10s Forward"
-msgstr ""
+msgstr "10 سیکنڈ آگے بڑھیں"
 
 #: src/shortcuts.py:44
 msgid "Seek 5s Backward"
-msgstr ""
+msgstr "5 سیکنڈ پیچھے جائیں"
 
 #: src/shortcuts.py:45
 msgid "Seek 5s Forward"
-msgstr ""
+msgstr "5 سیکنڈ آگے بڑھیں"
 
 #: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1698
 #: src/window.blp:364
@@ -262,11 +262,11 @@ msgstr "سب ٹائٹلز کا پیمانہ"
 
 #: src/shortcuts.py:66
 msgid "Increase Subtitle Scale"
-msgstr ""
+msgstr "سب ٹائٹل اسکیل میں اضافہ کریں"
 
 #: src/shortcuts.py:67
 msgid "Decrease Subtitle Scale"
-msgstr ""
+msgstr "سب ٹائٹل اسکیل میں کمی کریں"
 
 #: src/shortcuts.py:68 src/window.blp:226
 msgid "Mute/Unmute"
@@ -295,11 +295,11 @@ msgstr "ایک فریم آگے"
 
 #: src/shortcuts.py:83
 msgid "Seek to the Previous Chapter"
-msgstr ""
+msgstr "پچھلے باب پر جائیں"
 
 #: src/shortcuts.py:84
 msgid "Seek to the Next Chapter"
-msgstr ""
+msgstr "اگلے باب پر جائیں"
 
 #: src/shortcuts.py:88
 msgid "Take Screenshot With Subtitles"
@@ -319,7 +319,7 @@ msgstr "شماریات اوورلے"
 
 #: src/shortcuts.py:92
 msgid "Set/Clear A-B Loop Points"
-msgstr ""
+msgstr "A-B لوپ پوائنٹس سیٹ/کلیئر کریں"
 
 #: src/shortcuts.py:93
 msgid "Loop"
@@ -419,7 +419,7 @@ msgstr "متفرق"
 
 #: src/window.py:549 src/window.py:1240 src/window.blp:114
 msgid "Add Subtitle Track"
-msgstr ""
+msgstr "سب ٹائٹل ٹریک شامل کریں"
 
 #: src/window.py:551 src/window.py:560
 msgid "None"
@@ -427,7 +427,7 @@ msgstr "کچھ نہیں"
 
 #: src/window.py:558 src/window.blp:119
 msgid "Add Audio Track"
-msgstr ""
+msgstr "آڈیو ٹریک شامل کریں"
 
 #: src/window.py:597
 msgid "Track"
