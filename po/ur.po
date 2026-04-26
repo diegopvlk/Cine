@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-17 17:47-0300\n"
-"PO-Revision-Date: 2026-04-25 07:09+0000\n"
+"PO-Revision-Date: 2026-04-26 22:01+0000\n"
 "Last-Translator: Ahmer Jamil Khan <ahmer@khan.am>\n"
 "Language-Team: Urdu <https://hosted.weblate.org/projects/cine/app/ur/>\n"
 "Language: ur\n"
@@ -431,28 +431,28 @@ msgstr "آڈیو ٹریک شامل کریں"
 
 #: src/window.py:597
 msgid "Track"
-msgstr ""
+msgstr "ٹریک"
 
 #: src/window.py:640 src/playlist.blp:30 src/window.blp:104
 msgid "Add Folder"
-msgstr ""
+msgstr "فولڈر شامل کریں"
 
 #: src/window.py:640 src/shortcuts-dialog.blp:21 src/window.blp:89
 #: src/window.blp:466
 msgid "Open Folder"
-msgstr ""
+msgstr "فولڈر کھولیں"
 
 #: src/window.py:669 src/shortcuts-dialog.blp:16 src/window.blp:84
 msgid "Open Files"
-msgstr ""
+msgstr "فائلیں کھولیں"
 
 #: src/window.py:675
 msgid "Add Subtitle"
-msgstr ""
+msgstr "سب ٹائٹل شامل کریں"
 
 #: src/window.py:678
 msgid "Add Audio"
-msgstr ""
+msgstr "آڈیو شامل کریں"
 
 #: src/window.py:694
 msgid "Subtitle"
@@ -497,47 +497,47 @@ msgstr "چلائیں"
 
 #: src/window.py:1698
 msgid "Exit Fullscreen"
-msgstr ""
+msgstr "فل سکرین سے باہر نکلیں"
 
 #: src/options.blp:14
 msgid "Options"
-msgstr ""
+msgstr "اختیارات"
 
 #: src/options.blp:32
 msgid "Reset All"
-msgstr ""
+msgstr "ری سیٹ"
 
 #: src/options.blp:44
 msgid "Reset Aspect Ratio"
-msgstr ""
+msgstr "پہلو کا تناسب ری سیٹ کریں"
 
 #: src/options.blp:54
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "پہلو کا تناسب"
 
 #: src/options.blp:102
 msgid "Reset Crop"
-msgstr ""
+msgstr "ری سیٹ کراپ"
 
 #: src/options.blp:112
 msgid "Crop"
-msgstr ""
+msgstr "کراپ"
 
 #: src/options.blp:161
 msgid "Reset Rotation"
-msgstr ""
+msgstr "گھماؤ بحال کریں"
 
 #: src/options.blp:171
 msgid "Rotate"
-msgstr ""
+msgstr "گھماؤ"
 
 #: src/options.blp:197
 msgid "Rotate Left"
-msgstr ""
+msgstr "بائیں گھمائیں"
 
 #: src/options.blp:205
 msgid "Rotate Right"
-msgstr ""
+msgstr "دائیں گھمائیں"
 
 #: src/options.blp:218
 msgid "Reset Flip"
