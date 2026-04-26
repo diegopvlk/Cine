@@ -127,12 +127,13 @@ template $Preferences: Adw.Dialog {
 						title: _("Progress Bar Thumbnail");
 					}
 
-					Adw.SwitchRow hwdec_row {
-						title: _("Hardware Decoding");
-					}
-
 					Adw.SwitchRow normalize_volume_row {
 						title: _("Normalize Volume");
+					}
+
+					Adw.SwitchRow hwdec_row {
+						title: _("Hardware Acceleration");
+						subtitle: _("Use GPU for video decoding when available");
 					}
 
 					Adw.ActionRow {
