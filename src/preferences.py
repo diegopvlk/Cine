@@ -26,6 +26,7 @@ gi.require_version("Gio", "2.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gdk, GLib, Gio, Gtk
 from gettext import gettext as _
+from .utils import has_host_permission
 
 settings = Gio.Settings.new("io.github.diegopvlk.Cine")
 
@@ -342,5 +343,5 @@ class Preferences(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def _on_btn_warning_realize(self, button):
-        if GLib.getenv("container") != "flatpak":
+        if has_host_permission:
             button.set_visible(False)

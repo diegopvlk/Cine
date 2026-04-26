@@ -36,6 +36,25 @@ LAST_PLAYLIST_FILE = os.path.join(CONFIG_DIR, "last-playlist.m3u8")
 os.makedirs(CONFIG_DIR, exist_ok=True)
 
 
+def get_has_host_permission():
+    if os.environ.get("container") != "flatpak":
+        return True
+
+    try:
+        with open("/.flatpak-info", "r") as f:
+            for line in f:
+                if line.startswith("filesystems="):
+                    perms = line.split("=")[-1].strip().split(";")
+                    return "host" in perms
+    except Exception:
+        pass
+
+    return False
+
+
+has_host_permission = get_has_host_permission()
+
+
 def get_mouse_bindings(mpv):
     bindings = mpv._get_property("input-bindings")
     active_mouse_bindings = {}

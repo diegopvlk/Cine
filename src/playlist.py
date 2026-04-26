@@ -28,7 +28,7 @@ gi.require_version("Gtk", "4.0")
 gi.require_version("GObject", "2.0")
 from gi.repository import Adw, Gio, Gdk, GLib, Gtk, GObject
 from gettext import gettext as _
-from .utils import is_local_path
+from .utils import is_local_path, has_host_permission
 
 
 @Gtk.Template(resource_path="/io/github/diegopvlk/Cine/playlist.ui")
@@ -142,7 +142,7 @@ class Playlist(Adw.Dialog):
             if (
                 self.doc_path in path
                 and self.save_playlist_btn.props.sensitive
-                and GLib.getenv("container") == "flatpak"
+                and not has_host_permission
             ):
                 self.save_playlist_btn.set_tooltip_text(
                     _("Save Playlist")
