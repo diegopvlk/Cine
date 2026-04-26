@@ -41,7 +41,7 @@ from .utils import (
     INPUT_CONF,
 )
 
-DEFAULT_WIDTH, DEFAULT_HEIGHT = 1088, 612
+DEFAULT_WIDTH, DEFAULT_HEIGHT = 1120, 630
 
 from .options import OptionsMenuButton
 from .playlist import Playlist
@@ -165,6 +165,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.pressed_keys: set[int] = set()
         self.key_state: Gdk.ModifierType
         self.hide_timeout_id: int = 0
+        self.is_fs = False
 
         self.mpv_ctx: mpv.MpvRenderContext
 
@@ -1585,19 +1586,21 @@ class CineWindow(Adw.ApplicationWindow):
         if width <= 0 or height <= 0:
             return
 
-        MAX_WIDTH, MAX_HEIGHT = DEFAULT_WIDTH, DEFAULT_HEIGHT
-
         aspect_ratio = width / height
-        new_w = width
-        new_h = height
+        base_size = DEFAULT_HEIGHT
 
-        if new_w > MAX_WIDTH:
-            new_w = MAX_WIDTH
-            new_h = int(new_w / aspect_ratio)
+        if aspect_ratio < 1:
+            new_h = int(base_size / aspect_ratio)
+            new_w = base_size
+        else:
+            new_w = int(base_size * aspect_ratio)
+            new_h = base_size
 
-        if new_h > MAX_HEIGHT:
-            new_h = MAX_HEIGHT
-            new_w = int(new_h * aspect_ratio)
+        MAX_W, MAX_H = 1280, 720
+        if new_w > MAX_W or new_h > MAX_H:
+            scale = min(MAX_W / new_w, MAX_H / new_h)
+            new_w = int(new_w * scale)
+            new_h = int(new_h * scale)
 
         self.set_default_size(new_w, new_h)
 
