@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-26 19:13-0300\n"
-"PO-Revision-Date: 2026-04-15 00:20+0000\n"
+"PO-Revision-Date: 2026-04-28 06:09+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/cine/app/et/>\n"
 "Language: et\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17-dev\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:223 src/mpris.py:146
 #: src/mpris.py:364 src/window.py:176 src/window.py:295 src/window.py:1840
@@ -635,22 +635,20 @@ msgid "Normalize Volume"
 msgstr "Normaliseeri helivaljus"
 
 #: src/preferences.blp:135
-#, fuzzy
-#| msgid "Hardware Decoding"
 msgid "Hardware Acceleration"
-msgstr "Video raudvaraline dekodeerimine"
+msgstr "Video raudvaraline töötlus"
 
 #: src/preferences.blp:136
 msgid "Use GPU for video decoding when available"
-msgstr ""
+msgstr "Kui võimalik, siis kasuta graafikaprotsessorit video dekodeerimiseks"
 
 #: src/preferences.blp:140
 msgid "Restore Saved Session"
-msgstr ""
+msgstr "Taasta salvestatud sessioon"
 
 #: src/preferences.blp:141
 msgid "Pick up where you left off after saving from the menu"
-msgstr ""
+msgstr "Jätka sealt, kus menüüst salvestades pooleli jäid"
 
 #: src/preferences.blp:175
 msgid "Save Video Position on Close"
@@ -697,10 +695,8 @@ msgid "Close Window"
 msgstr "Sulge aken"
 
 #: src/shortcuts-dialog.blp:71 src/window.blp:158
-#, fuzzy
-#| msgid "Save Session on Close"
 msgid "Save Session and Close"
-msgstr "Rakenduse sulgemisel salvesta sessioon"
+msgstr "Salvesta sessioon ja sulge"
 
 #: src/shortcuts-dialog.blp:76
 msgid "Quit"
