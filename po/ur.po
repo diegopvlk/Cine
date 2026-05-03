@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-01 12:31-0300\n"
-"PO-Revision-Date: 2026-05-03 09:43+0000\n"
+"PO-Revision-Date: 2026-05-03 13:21+0000\n"
 "Last-Translator: Ahmer Jamil Khan <ahmer@khan.am>\n"
 "Language-Team: Urdu <https://hosted.weblate.org/projects/cine/app/ur/>\n"
 "Language: ur\n"
@@ -32,7 +32,7 @@ msgstr "اپنے ویڈیوز چلائیں"
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
-msgstr "آڈیو;ویڈیو;فلم;ٹی وی;فلم;کلپ;پلیئر;سنی;mpv;"
+msgstr "آڈیو;ویڈیو;مووی;ٹی وی;فلم;کلپ;پلیئر;سنی;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:136
@@ -92,7 +92,7 @@ msgstr "مین ونڈو"
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:236
 msgid "translator-credits"
-msgstr "Ahmer Jamil Khan https://legumlawfirm.co/our-team/ahmer-jamil-khan"
+msgstr "Ahmer Jamil Khan https://ahmer.co"
 
 #: src/mpris.py:153 src/mpris.py:221 src/mpris.py:356
 msgid "Unknown title"
@@ -315,7 +315,7 @@ msgstr "اعداد و شمار"
 
 #: src/shortcuts.py:91
 msgid "Statistics Overlay"
-msgstr "شماریات اوورلے"
+msgstr "شماریاتی اوورلے"
 
 #: src/shortcuts.py:92
 msgid "Set/Clear A-B Loop Points"
@@ -327,7 +327,7 @@ msgstr "لوپ"
 
 #: src/shortcuts.py:93 src/window.blp:354
 msgid "Loop File"
-msgstr "لوپ فائل"
+msgstr "فائل کو دہرائیں"
 
 #: src/shortcuts.py:94 src/shortcuts.py:95 src/options.blp:340
 #: src/options.blp:363
@@ -371,15 +371,15 @@ msgstr "گاما میں اضافہ کریں"
 #: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:502
 #: src/options.blp:525
 msgid "Saturation"
-msgstr "سنترپتی"
+msgstr "سیرابی"
 
 #: src/shortcuts.py:100
 msgid "Decrease Saturation"
-msgstr "سنترپتی کو کم کریں"
+msgstr "سیرابی کو کم کریں"
 
 #: src/shortcuts.py:101
 msgid "Increase Saturation"
-msgstr "سنترپتی میں اضافہ کریں"
+msgstr "سیرابی میں اضافہ کریں"
 
 #: src/shortcuts.py:102 src/shortcuts.py:103 src/shortcuts.py:104
 msgid "Speed"
@@ -395,7 +395,7 @@ msgstr "پلے بیک کی رفتار میں اضافہ کریں"
 
 #: src/shortcuts.py:104 src/options.blp:711
 msgid "Reset Playback Speed"
-msgstr "پلے بیک کی رفتار کو دوبارہ ترتیب دیں"
+msgstr "پلے بیک رفتار بحال کریں"
 
 #: src/shortcuts.py:193
 msgid "Display & Video"
@@ -505,11 +505,11 @@ msgstr "اختیارات"
 
 #: src/options.blp:32
 msgid "Reset All"
-msgstr "ری سیٹ"
+msgstr "سب کچھ بحال کریں"
 
 #: src/options.blp:44
 msgid "Reset Aspect Ratio"
-msgstr "پہلو کا تناسب ری سیٹ کریں"
+msgstr "پہلو کا تناسب بحال کریں"
 
 #: src/options.blp:54
 msgid "Aspect Ratio"
@@ -517,7 +517,7 @@ msgstr "پہلو کا تناسب"
 
 #: src/options.blp:102
 msgid "Reset Crop"
-msgstr "ری سیٹ کراپ"
+msgstr "کراپ بحال کریں"
 
 #: src/options.blp:112
 msgid "Crop"
@@ -658,7 +658,7 @@ msgstr "بند کرتے وقت ویڈیو کی پوزیشن محفوظ کریں"
 
 #: src/preferences.blp:176
 msgid "Also save options like brightness, subtitle delay, etc."
-msgstr "روشنی، سب ٹائٹل تاخیر وغیرہ جیسی ترتیبات بھی محفوظ کریں."
+msgstr "روشنی، سب ٹائٹل تاخیر وغیرہ جیسی ترتیبات بھی محفوظ کریں۔"
 
 #: src/shortcuts-dialog.blp:8
 msgid "Shortcuts"
