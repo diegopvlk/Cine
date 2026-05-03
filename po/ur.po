@@ -1,22 +1,22 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# URDU TRANSLATION FOR CINE
+# Copyright (C) 2026 The Cine Project
 # This file is distributed under the same license as the io.github.diegopvlk.Cine package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# Ahmer Jamil Khan <ahmer@khan.am>, 2026.
+# <ahmer.khan@legumlawfirm.co>
 msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-01 12:31-0300\n"
-"PO-Revision-Date: 2026-04-30 07:09+0000\n"
-"Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
-"Language-Team: Urdu <https://hosted.weblate.org/projects/cine/app/ur/>\n"
+"PO-Revision-Date: 2026-05-03 09:43+0000\n"
+"Last-Translator: Ahmer Jamil Khan <ahmer@khan.am>\n"
+"Language-Team: Urdu (Ahmer Jamil Khan) <https://hosted.weblate.org/projects/cine/app/ur/>\n"
 "Language: ur\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.17.1-dev\n"
+"X-Generator: Weblate 5.17.1\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:226 src/mpris.py:146
 #: src/mpris.py:364 src/window.py:181 src/window.py:300 src/window.blp:6
@@ -32,7 +32,7 @@ msgstr "اپنے ویڈیوز چلائیں"
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
-msgstr "آڈیو;ویڈیو;فلم;ٹی وی;فلم;کلپ;پلیئر;سنی;mpv;"
+msgstr "آڈیو;ویڈیو;مووی;ٹی وی;فلم;کلپ;پلیئر;سنی;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:136
@@ -92,7 +92,7 @@ msgstr "مین ونڈو"
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:236
 msgid "translator-credits"
-msgstr "Ahmer Jamil Khan https://legumlawfirm.co/our-team/ahmer-jamil-khan"
+msgstr "Ahmer Jamil Khan, <https://ahmer.co>, <https://legumlawfirm.co/our-team/ahmer-jamil-khan>, <ahmer@khan.am>"
 
 #: src/mpris.py:153 src/mpris.py:221 src/mpris.py:356
 msgid "Unknown title"
@@ -315,7 +315,7 @@ msgstr "اعداد و شمار"
 
 #: src/shortcuts.py:91
 msgid "Statistics Overlay"
-msgstr "شماریات اوورلے"
+msgstr "شماریاتی اوورلے"
 
 #: src/shortcuts.py:92
 msgid "Set/Clear A-B Loop Points"
@@ -327,7 +327,7 @@ msgstr "لوپ"
 
 #: src/shortcuts.py:93 src/window.blp:354
 msgid "Loop File"
-msgstr "لوپ فائل"
+msgstr "فائل کو دہرائیں"
 
 #: src/shortcuts.py:94 src/shortcuts.py:95 src/options.blp:340
 #: src/options.blp:363
@@ -371,15 +371,15 @@ msgstr "گاما میں اضافہ کریں"
 #: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:502
 #: src/options.blp:525
 msgid "Saturation"
-msgstr "سنترپتی"
+msgstr "سیرابی"
 
 #: src/shortcuts.py:100
 msgid "Decrease Saturation"
-msgstr "سنترپتی کو کم کریں"
+msgstr "سیرابی کو کم کریں"
 
 #: src/shortcuts.py:101
 msgid "Increase Saturation"
-msgstr "سنترپتی میں اضافہ کریں"
+msgstr "سیرابی میں اضافہ کریں"
 
 #: src/shortcuts.py:102 src/shortcuts.py:103 src/shortcuts.py:104
 msgid "Speed"
@@ -395,7 +395,7 @@ msgstr "پلے بیک کی رفتار میں اضافہ کریں"
 
 #: src/shortcuts.py:104 src/options.blp:711
 msgid "Reset Playback Speed"
-msgstr "پلے بیک کی رفتار کو دوبارہ ترتیب دیں"
+msgstr "پلے بیک رفتار بحال کریں"
 
 #: src/shortcuts.py:193
 msgid "Display & Video"
@@ -505,11 +505,11 @@ msgstr "اختیارات"
 
 #: src/options.blp:32
 msgid "Reset All"
-msgstr "ری سیٹ"
+msgstr "سب کچھ بحال کریں"
 
 #: src/options.blp:44
 msgid "Reset Aspect Ratio"
-msgstr "پہلو کا تناسب ری سیٹ کریں"
+msgstr "پہلو کا تناسب بحال کریں"
 
 #: src/options.blp:54
 msgid "Aspect Ratio"
@@ -517,7 +517,7 @@ msgstr "پہلو کا تناسب"
 
 #: src/options.blp:102
 msgid "Reset Crop"
-msgstr "ری سیٹ کراپ"
+msgstr "کراپ بحال کریں"
 
 #: src/options.blp:112
 msgid "Crop"
@@ -658,39 +658,39 @@ msgstr "بند کرتے وقت ویڈیو کی پوزیشن محفوظ کریں"
 
 #: src/preferences.blp:176
 msgid "Also save options like brightness, subtitle delay, etc."
-msgstr "روشنی، سب ٹائٹل تاخیر وغیرہ جیسی ترتیبات بھی محفوظ کریں."
+msgstr "روشنی، سب ٹائٹل تاخیر وغیرہ جیسی ترتیبات بھی محفوظ کریں۔"
 
 #: src/shortcuts-dialog.blp:8
 msgid "Shortcuts"
-msgstr ""
+msgstr "شارٹ کٹس"
 
 #: src/shortcuts-dialog.blp:31
 msgid "Add Files to Playlist"
-msgstr ""
+msgstr "فائلیں پلے لسٹ میں شامل کریں"
 
 #: src/shortcuts-dialog.blp:36
 msgid "Add Folder to Playlist"
-msgstr ""
+msgstr "فولڈر پلے لسٹ میں شامل کریں"
 
 #: src/shortcuts-dialog.blp:41
 msgid "Add URL to Playlist"
-msgstr ""
+msgstr "یو آر ایل پلے لسٹ میں شامل کریں"
 
 #: src/shortcuts-dialog.blp:46
 msgid "Open Subtitles Menu"
-msgstr ""
+msgstr "سب ٹائٹلز مینو کھولیں"
 
 #: src/shortcuts-dialog.blp:51
 msgid "Open Audio Menu"
-msgstr ""
+msgstr "آڈیو مینو کھولیں"
 
 #: src/shortcuts-dialog.blp:56
 msgid "Open Chapters Menu"
-msgstr ""
+msgstr "ابواب مینو کھولیں"
 
 #: src/shortcuts-dialog.blp:61
 msgid "Show Shortcuts"
-msgstr ""
+msgstr "شارٹ کٹس دکھائیں"
 
 #: src/shortcuts-dialog.blp:66
 msgid "Close Window"
@@ -698,7 +698,7 @@ msgstr "ونڈو بند کریں"
 
 #: src/shortcuts-dialog.blp:71 src/window.blp:158
 msgid "Save Session and Close"
-msgstr ""
+msgstr "سیشن محفوظ کریں اور بند کریں"
 
 #: src/shortcuts-dialog.blp:76
 msgid "Quit"
@@ -710,11 +710,11 @@ msgstr "مین مینو"
 
 #: src/window.blp:146
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "کی بورڈ شارٹ کٹس"
 
 #: src/window.blp:151
 msgid "About Cine"
-msgstr ""
+msgstr "سنی کے بارے میں"
 
 #: src/window.blp:199
 msgid "Previous"
@@ -730,24 +730,24 @@ msgstr "ویڈیو"
 
 #: src/window.blp:313
 msgid "Chapters"
-msgstr ""
+msgstr "ابواب"
 
 #: src/window.blp:330
 msgid "Shuffle Playlist"
-msgstr ""
+msgstr "پلے لسٹ کو بے ترتیب کریں"
 
 #: src/window.blp:342
 msgid "Loop Playlist"
-msgstr ""
+msgstr "پلے لسٹ کو دہرائیں"
 
 #: src/window.blp:414
 msgid "Toggle Elapsed/Remaining"
-msgstr ""
+msgstr "گزرا ہوا/باقی وقت تبدیل کریں"
 
 #: src/window.blp:461
 msgid "Drag and drop files here"
-msgstr ""
+msgstr "فائلیں یہاں گھسیٹ کر چھوڑیں"
 
 #: src/window.blp:474
 msgid "Open…"
-msgstr ""
+msgstr "کھولیں…"
