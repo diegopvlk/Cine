@@ -72,7 +72,7 @@
   </requires>
 
   <releases>
-    <release version="1.3.0" date="2026-05-01">
+    <release version="1.3.1" date="2026-05-06">
       <description translate="no">
         <ul>
           <li>The session is now saved when using the menu or shortcut action, instead of on close, which could lead to acidentally losing a session</li>
