@@ -101,9 +101,9 @@ L                cycle-values loop-file "inf" "no"; show-text "{_("Loop")}: ${{l
 6                add gamma 1; show-text "{_("Gamma")}: ${{gamma}}" #{_("Increase Gamma")}
 7                add saturation -1; show-text "{_("Saturation")}: ${{saturation}}" #{_("Decrease Saturation")}
 8                add saturation 1; show-text "{_("Saturation")}: ${{saturation}}" #{_("Increase Saturation")}
-[                multiply speed 1/1.1; show-text "{_("Speed")}: ${{speed}}x" #{_("Decrease Playback Speed")}
-]                multiply speed 1.1; show-text "{_("Speed")}: ${{speed}}x" #{_("Increase Playback Speed")}
-BS               set speed 1.0; show-text "{_("Speed")}: ${{speed}}x" #{_("Reset Playback Speed")}
+[                nonrepeatable multiply speed 1/1.1; show-text "{_("Speed")}: ${{speed}}×" #{_("Decrease Playback Speed")}
+]                nonrepeatable multiply speed 1.1; show-text "{_("Speed")}: ${{speed}}×" #{_("Increase Playback Speed")}
+BS               set speed 1.0; show-text "{_("Speed")}: ${{speed}}×" #{_("Reset Playback Speed")}
 """
 
 
