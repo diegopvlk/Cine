@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-01 12:31-0300\n"
+"POT-Creation-Date: 2026-05-14 20:05-0300\n"
 "PO-Revision-Date: 2026-02-28 11:40-0300\n"
 "Last-Translator: Vladimir Kosolapov\n"
 "Language-Team: \n"
@@ -99,7 +99,7 @@ msgstr "Название неизвестно"
 msgid "Original"
 msgstr "Оригинал"
 
-#: src/playlist.py:76 src/window.py:1271 src/window.py:1701
+#: src/playlist.py:76 src/window.py:1278 src/window.py:1782
 msgid "File Error"
 msgstr "Ошибка файла"
 
@@ -120,7 +120,7 @@ msgstr "Открыть расположение файла"
 msgid "Remove from Playlist"
 msgstr "Удалить из плейлиста"
 
-#: src/playlist.py:322 src/window.py:691 src/playlist.blp:24 src/window.blp:100
+#: src/playlist.py:322 src/window.py:698 src/playlist.blp:24 src/window.blp:100
 msgid "Add Files"
 msgstr "Добавить файлы"
 
@@ -137,8 +137,8 @@ msgid "Subtitle Background"
 msgstr "Фон субтитров"
 
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
-#: src/shortcuts.py:32 src/shortcuts.py:85 src/shortcuts.py:86
-#: src/window.py:1785 src/window.blp:228
+#: src/shortcuts.py:32 src/shortcuts.py:87 src/shortcuts.py:88
+#: src/window.py:1866 src/window.blp:228
 msgid "Volume"
 msgstr "Громкость"
 
@@ -159,341 +159,345 @@ msgstr "Воспроизведение/Пауза"
 msgid "Show/Hide Subtitles"
 msgstr "Показать/Скрыть субтитры"
 
-#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:209
+#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:211
 #: src/window.blp:270
 msgid "Subtitles"
 msgstr "Субтитры"
 
 #: src/shortcuts.py:37
-msgid "Switch to Next Subtitle Track"
+msgid "Next Subtitle Track"
 msgstr "Следующая дорожка субтитров"
 
 #: src/shortcuts.py:38
-msgid "Switch to Previous Subtitle Track"
+msgid "Previous Subtitle Track"
 msgstr "Предыдущая дорожка субтитров"
 
-#: src/shortcuts.py:39
+#: src/shortcuts.py:39 src/shortcuts.py:40
 msgid "Secondary Subtitles"
 msgstr "Вторичные субтитры"
 
 #: src/shortcuts.py:39
-msgid "Switch Secondary Subtitle Track"
-msgstr "Переключить дорожку вторичных субтитров"
+msgid "Next Secondary Subtitle Track"
+msgstr "Следующая вторичная дорожка субтитров"
 
-#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:718 src/window.blp:285
+#: src/shortcuts.py:40
+msgid "Previous Secondary Subtitle Track"
+msgstr "Предыдущая вторичная дорожка субтитров"
+
+#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:725 src/window.blp:285
 msgid "Audio"
 msgstr "Аудио"
 
-#: src/shortcuts.py:40
-msgid "Switch to Next Audio Track"
+#: src/shortcuts.py:41
+msgid "Next Audio Track"
 msgstr "Следующая аудиодорожка"
 
-#: src/shortcuts.py:41
-msgid "Switch to Previous Audio Track"
+#: src/shortcuts.py:42
+msgid "Previous Audio Track"
 msgstr "Предыдущая аудиодорожка"
 
-#: src/shortcuts.py:42
+#: src/shortcuts.py:43
 msgid "Seek 10s Backward"
 msgstr "Перемотка на 10 сек назад"
 
-#: src/shortcuts.py:43
+#: src/shortcuts.py:44
 msgid "Seek 10s Forward"
 msgstr "Перемотка на 10 сек вперёд"
 
-#: src/shortcuts.py:44
+#: src/shortcuts.py:45
 msgid "Seek 5s Backward"
 msgstr "Перемотка на 5 сек назад"
 
-#: src/shortcuts.py:45
+#: src/shortcuts.py:46
 msgid "Seek 5s Forward"
 msgstr "Перемотка на 5 сек вперёд"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1734
+#: src/shortcuts.py:47 src/shortcuts.py:48 src/window.py:1815
 #: src/window.blp:381
 msgid "Fullscreen"
 msgstr "Полный экран"
 
-#: src/shortcuts.py:57 src/shortcuts.py:58 src/shortcuts.py:59
-#: src/shortcuts.py:60 src/shortcuts.py:61 src/options.blp:285
+#: src/shortcuts.py:49 src/window.py:1815
+msgid "Exit Fullscreen"
+msgstr "Выйти из полноэкранного режима"
+
+#: src/shortcuts.py:59 src/shortcuts.py:60 src/shortcuts.py:61
+#: src/shortcuts.py:62 src/shortcuts.py:63 src/options.blp:285
 #: src/options.blp:309
 msgid "Zoom"
 msgstr "Масштаб"
 
-#: src/shortcuts.py:57 src/shortcuts.py:58 src/shortcuts.py:59
+#: src/shortcuts.py:59 src/shortcuts.py:60 src/shortcuts.py:61
 msgid "Zoom In"
 msgstr "Увеличить масштаб"
 
-#: src/shortcuts.py:60 src/shortcuts.py:61
+#: src/shortcuts.py:62 src/shortcuts.py:63
 msgid "Zoom Out"
 msgstr "Уменьшить масштаб"
 
-#: src/shortcuts.py:62 src/shortcuts.py:63 src/options.blp:611
+#: src/shortcuts.py:64 src/shortcuts.py:65 src/options.blp:611
 #: src/options.blp:635
 msgid "Subtitle Delay"
 msgstr "Задержка субтитров"
 
-#: src/shortcuts.py:62
+#: src/shortcuts.py:64
 msgid "Decrease Subtitle Delay"
 msgstr "Уменьшить задержку субтитров"
 
-#: src/shortcuts.py:63
+#: src/shortcuts.py:65
 msgid "Increase Subtitle Delay"
 msgstr "Увеличить задержку субтитров"
 
-#: src/shortcuts.py:64 src/shortcuts.py:65
+#: src/shortcuts.py:66 src/shortcuts.py:67
 msgid "Subtitle Position"
 msgstr "Позиция субтитров"
 
-#: src/shortcuts.py:64
+#: src/shortcuts.py:66
 msgid "Move Subtitles Up"
 msgstr "Поднять субтитры"
 
-#: src/shortcuts.py:65
+#: src/shortcuts.py:67
 msgid "Move Subtitles Down"
 msgstr "Опустить субтитры"
 
-#: src/shortcuts.py:66 src/shortcuts.py:67 src/preferences.blp:89
+#: src/shortcuts.py:68 src/shortcuts.py:69 src/preferences.blp:89
 msgid "Subtitle Scale"
 msgstr "Масштаб субтитров"
 
-#: src/shortcuts.py:66
+#: src/shortcuts.py:68
 msgid "Increase Subtitle Scale"
 msgstr "Увеличить масштаб субтитров"
 
-#: src/shortcuts.py:67
+#: src/shortcuts.py:69
 msgid "Decrease Subtitle Scale"
 msgstr "Уменьшить масштаб субтитров"
 
-#: src/shortcuts.py:68 src/window.blp:239
+#: src/shortcuts.py:70 src/window.blp:239
 msgid "Mute/Unmute"
 msgstr "Включить/выключить звук"
 
-#: src/shortcuts.py:69 src/shortcuts.py:70 src/shortcuts.py:71
+#: src/shortcuts.py:71 src/shortcuts.py:72 src/shortcuts.py:73
 #: src/options.blp:666 src/options.blp:690
 msgid "Audio Delay"
 msgstr "Задержка аудио"
 
-#: src/shortcuts.py:69
+#: src/shortcuts.py:71
 msgid "Decrease Audio Delay"
 msgstr "Уменьшить задержку аудио"
 
-#: src/shortcuts.py:70 src/shortcuts.py:71
+#: src/shortcuts.py:72 src/shortcuts.py:73
 msgid "Increase Audio Delay"
 msgstr "Увеличить задержку аудио"
 
-#: src/shortcuts.py:81
+#: src/shortcuts.py:83
 msgid "Go Back One Frame"
 msgstr "На кадр назад"
 
-#: src/shortcuts.py:82
+#: src/shortcuts.py:84
 msgid "Advance One Frame"
 msgstr "На кадр вперёд"
 
-#: src/shortcuts.py:83
+#: src/shortcuts.py:85
 msgid "Seek to the Previous Chapter"
 msgstr "Перейти к предыдущей главе"
 
-#: src/shortcuts.py:84
+#: src/shortcuts.py:86
 msgid "Seek to the Next Chapter"
 msgstr "Перейти к следующей главе"
 
-#: src/shortcuts.py:88
+#: src/shortcuts.py:90
 msgid "Take Screenshot With Subtitles"
 msgstr "Сделать снимок с субтитрами"
 
-#: src/shortcuts.py:89
+#: src/shortcuts.py:91
 msgid "Take Screenshot Without Subtitles"
 msgstr "Сделать снимок без субтитров"
 
-#: src/shortcuts.py:90
+#: src/shortcuts.py:92
 msgid "Statistics"
 msgstr "Статистика"
 
-#: src/shortcuts.py:91
+#: src/shortcuts.py:93
 msgid "Statistics Overlay"
 msgstr "Наложение статистики"
 
-#: src/shortcuts.py:92
+#: src/shortcuts.py:94
 msgid "Set/Clear A-B Loop Points"
 msgstr "Установить/сбросить точки петли A-B"
 
-#: src/shortcuts.py:93
+#: src/shortcuts.py:95
 msgid "Loop"
 msgstr "Повтор"
 
-#: src/shortcuts.py:93 src/window.blp:354
+#: src/shortcuts.py:95 src/window.blp:354
 msgid "Loop File"
 msgstr "Повторять файл"
 
-#: src/shortcuts.py:94 src/shortcuts.py:95 src/options.blp:340
+#: src/shortcuts.py:96 src/shortcuts.py:97 src/options.blp:340
 #: src/options.blp:363
 msgid "Contrast"
 msgstr "Контрастность"
 
-#: src/shortcuts.py:94
+#: src/shortcuts.py:96
 msgid "Decrease Contrast"
 msgstr "Уменьшить контрастность"
 
-#: src/shortcuts.py:95
+#: src/shortcuts.py:97
 msgid "Increase Contrast"
 msgstr "Увеличить контрастность"
 
-#: src/shortcuts.py:96 src/shortcuts.py:97 src/options.blp:394
+#: src/shortcuts.py:98 src/shortcuts.py:99 src/options.blp:394
 #: src/options.blp:417
 msgid "Brightness"
 msgstr "Яркость"
 
-#: src/shortcuts.py:96
+#: src/shortcuts.py:98
 msgid "Decrease Brightness"
 msgstr "Уменьшить яркость"
 
-#: src/shortcuts.py:97
+#: src/shortcuts.py:99
 msgid "Increase Brightness"
 msgstr "Увеличить яркость"
 
-#: src/shortcuts.py:98 src/shortcuts.py:99 src/options.blp:448
+#: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:448
 #: src/options.blp:471
 msgid "Gamma"
 msgstr "Гамма"
 
-#: src/shortcuts.py:98
+#: src/shortcuts.py:100
 msgid "Decrease Gamma"
 msgstr "Уменьшить гамму"
 
-#: src/shortcuts.py:99
+#: src/shortcuts.py:101
 msgid "Increase Gamma"
 msgstr "Увеличить гамму"
 
-#: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:502
+#: src/shortcuts.py:102 src/shortcuts.py:103 src/options.blp:502
 #: src/options.blp:525
 msgid "Saturation"
 msgstr "Насыщенность"
 
-#: src/shortcuts.py:100
+#: src/shortcuts.py:102
 msgid "Decrease Saturation"
 msgstr "Уменьшить насыщенность"
 
-#: src/shortcuts.py:101
+#: src/shortcuts.py:103
 msgid "Increase Saturation"
 msgstr "Увеличить насыщенность"
 
-#: src/shortcuts.py:102 src/shortcuts.py:103 src/shortcuts.py:104
+#: src/shortcuts.py:104 src/shortcuts.py:105 src/shortcuts.py:106
 msgid "Speed"
 msgstr "Скорость"
 
-#: src/shortcuts.py:102
+#: src/shortcuts.py:104
 msgid "Decrease Playback Speed"
 msgstr "Уменьшить скорость воспроизведения"
 
-#: src/shortcuts.py:103
+#: src/shortcuts.py:105
 msgid "Increase Playback Speed"
 msgstr "Увеличить скорость воспроизведения"
 
-#: src/shortcuts.py:104 src/options.blp:711
+#: src/shortcuts.py:106 src/options.blp:711
 msgid "Reset Playback Speed"
 msgstr "Сбросить скорость воспроизведения"
 
-#: src/shortcuts.py:193
+#: src/shortcuts.py:195
 msgid "Display & Video"
 msgstr "Отображение и видео"
 
-#: src/shortcuts.py:210
+#: src/shortcuts.py:212
 msgid "Audio & Volume"
 msgstr "Аудио и громкость"
 
-#: src/shortcuts.py:211
+#: src/shortcuts.py:213
 msgid "Navigation"
 msgstr "Навигация"
 
-#: src/shortcuts.py:212
+#: src/shortcuts.py:214
 msgid "Playback"
 msgstr "Воспроизведение"
 
-#: src/shortcuts.py:216 src/shortcuts.py:222
+#: src/shortcuts.py:218 src/shortcuts.py:224
 msgid "Miscellaneous"
 msgstr "Разное"
 
-#: src/window.py:568 src/window.py:1263 src/window.blp:115
+#: src/window.py:575 src/window.py:1270 src/window.blp:115
 msgid "Add Subtitle Track"
 msgstr "Добавить дорожку субтитров"
 
-#: src/window.py:570 src/window.py:579
+#: src/window.py:577 src/window.py:586
 msgid "None"
 msgstr "Нет"
 
-#: src/window.py:577 src/window.blp:120
+#: src/window.py:584 src/window.blp:120
 msgid "Add Audio Track"
 msgstr "Добавить аудиодорожку"
 
-#: src/window.py:616
+#: src/window.py:623
 msgid "Track"
 msgstr "Дорожка"
 
-#: src/window.py:659 src/playlist.blp:30 src/window.blp:105
+#: src/window.py:666 src/playlist.blp:30 src/window.blp:105
 msgid "Add Folder"
 msgstr "Добавить папку"
 
-#: src/window.py:659 src/shortcuts-dialog.blp:21 src/window.blp:90
+#: src/window.py:666 src/shortcuts-dialog.blp:21 src/window.blp:90
 #: src/window.blp:484
 msgid "Open Folder"
 msgstr "Открыть папку"
 
-#: src/window.py:688 src/shortcuts-dialog.blp:16 src/window.blp:85
+#: src/window.py:695 src/shortcuts-dialog.blp:16 src/window.blp:85
 msgid "Open Files"
 msgstr "Открыть файлы"
 
-#: src/window.py:694
+#: src/window.py:701
 msgid "Add Subtitle"
 msgstr "Добавить субтитры"
 
-#: src/window.py:697
+#: src/window.py:704
 msgid "Add Audio"
 msgstr "Добавить аудио"
 
-#: src/window.py:713
+#: src/window.py:720
 msgid "Subtitle"
 msgstr "Субтитры"
 
-#: src/window.py:722
+#: src/window.py:729
 msgid "Media"
 msgstr "Медиа"
 
-#: src/window.py:794 src/playlist.blp:36 src/window.blp:110
+#: src/window.py:801 src/playlist.blp:36 src/window.blp:110
 msgid "Add URL"
 msgstr "Добавить URL"
 
-#: src/window.py:794 src/shortcuts-dialog.blp:26 src/window.blp:95
+#: src/window.py:801 src/shortcuts-dialog.blp:26 src/window.blp:95
 #: src/window.blp:493
 msgid "Open URL"
 msgstr "Открыть URL"
 
-#: src/window.py:807
+#: src/window.py:814
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:815
+#: src/window.py:822
 msgid "Add"
 msgstr "Добавить"
 
-#: src/window.py:815 src/window.blp:79
+#: src/window.py:822 src/window.blp:79
 msgid "Open"
 msgstr "Открыть"
 
-#: src/window.py:992 src/window.py:1104
+#: src/window.py:999 src/window.py:1111
 msgid "Chapter"
 msgstr "Глава"
 
-#: src/window.py:1162
+#: src/window.py:1169
 msgid "Pause"
 msgstr "Пауза"
 
-#: src/window.py:1162 src/window.py:1267
+#: src/window.py:1169 src/window.py:1274
 msgid "Play"
 msgstr "Воспроизведение"
-
-#: src/window.py:1734
-msgid "Exit Fullscreen"
-msgstr "Выйти из полноэкранного режима"
 
 #: src/options.blp:14
 msgid "Options"
@@ -747,6 +751,12 @@ msgstr "Перетащите файлы сюда"
 #: src/window.blp:474
 msgid "Open…"
 msgstr "Открыть…"
+
+#~ msgid "Switch to Next Subtitle Track"
+#~ msgstr "Следующая дорожка субтитров"
+
+#~ msgid "Switch to Next Audio Track"
+#~ msgstr "Следующая аудиодорожка"
 
 #~ msgid "Restore files and auto-play on startup"
 #~ msgstr "Восстанавливать файлы и автовоспроизведение при запуске"

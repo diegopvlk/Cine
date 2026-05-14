@@ -34,12 +34,12 @@ k                cycle pause; #{_("Play/Pause")}
 p                cycle pause; #{_("Play/Pause")}
 SPACE            cycle pause; #{_("Play/Pause")}
 c                nonrepeatable no-osd cycle sub-visibility; no-osd set user-data/show-icon "yes" #{_("Show/Hide Subtitles")}
-z                nonrepeatable cycle sub; show-text "{_("Subtitles")}: ${{sub}}" #{_("Switch to Next Subtitle Track")}
-Z                nonrepeatable cycle sub down; show-text "{_("Subtitles")}: ${{sub}}" #{_("Switch to Previous Subtitle Track")}
-alt+z            nonrepeatable cycle secondary-sid; show-text "{_("Secondary Subtitles")}: ${{secondary-sid}}"; #{_("Switch to Next Secondary Subtitle Track")}
-ctrl+z           nonrepeatable cycle secondary-sid down; show-text "{_("Secondary Subtitles")}: ${{secondary-sid}}"; #{_("Switch to Previous Secondary Subtitle Track")}
-a                nonrepeatable cycle audio; show-text "{_("Audio")}: ${{audio}}" #{_("Switch to Next Audio Track")}
-A                nonrepeatable cycle audio down; show-text "{_("Audio")}: ${{audio}}" #{_("Switch to Previous Audio Track")}
+z                nonrepeatable cycle sub; show-text "{_("Subtitles")}: ${{sub}}" #{_("Next Subtitle Track")}
+Z                nonrepeatable cycle sub down; show-text "{_("Subtitles")}: ${{sub}}" #{_("Previous Subtitle Track")}
+alt+z            nonrepeatable cycle secondary-sid; show-text "{_("Secondary Subtitles")}: ${{secondary-sid}}"; #{_("Next Secondary Subtitle Track")}
+ctrl+z           nonrepeatable cycle secondary-sid down; show-text "{_("Secondary Subtitles")}: ${{secondary-sid}}"; #{_("Previous Secondary Subtitle Track")}
+a                nonrepeatable cycle audio; show-text "{_("Audio")}: ${{audio}}" #{_("Next Audio Track")}
+A                nonrepeatable cycle audio down; show-text "{_("Audio")}: ${{audio}}" #{_("Previous Audio Track")}
 j                seek -10 exact; show-text "⯇⯇" #{_("Seek 10s Backward")}
 l                seek 10 exact; show-text "⯈⯈" #{_("Seek 10s Forward")}
 LEFT             seek -5 exact; show-text "⯇⯇" #{_("Seek 5s Backward")}
