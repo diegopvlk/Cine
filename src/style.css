@@ -101,13 +101,11 @@ scale > trough > slider {
 
 scale > trough > slider {
   border-radius: 100%;
-  min-width: 20px;
-  min-height: 20px;
-  margin: -8px;
+  transform: scale(0.85);
 }
 
 scale trough {
-  background-color: rgba(255, 255, 255, 0.225);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 scale mark {
@@ -213,10 +211,10 @@ statuspage box {
   background-color: rgba(255, 255, 255, 0.12);
 }
 .playlist-list-view row > box:hover {
-  background-color: rgba(255, 255, 255, 0.18);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 .playlist-list-view row > box:active {
-  background-color: rgba(255, 255, 255, 0.23);
+  background-color: rgba(255, 255, 255, 0.25);
 }
 .playlist-list-view row:first-child,
 .playlist-list-view row:first-child > box {
@@ -231,20 +229,8 @@ statuspage box {
 
 .playing-item-playlist {
   background-image: linear-gradient(
-    rgba(255, 255, 255, 0.17),
-    rgba(255, 255, 255, 0.17)
-  );
-}
-.playing-item-playlist:hover {
-  background-image: linear-gradient(
-    rgba(255, 255, 255, 0.22),
-    rgba(255, 255, 255, 0.22)
-  );
-}
-.playing-item-playlist:active {
-  background-image: linear-gradient(
-    rgba(255, 255, 255, 0.27),
-    rgba(255, 255, 255, 0.27)
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.2)
   );
 }
 
