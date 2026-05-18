@@ -101,7 +101,6 @@ scale > trough > slider {
 
 scale > trough > slider {
   border-radius: 100%;
-  transform: scale(0.85);
 }
 
 scale trough {
@@ -208,13 +207,13 @@ statuspage box {
 }
 .playlist-list-view row > box {
   transition: background-color 200ms ease-in-out;
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(245, 245, 255, 0.12);
 }
 .playlist-list-view row > box:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(245, 245, 255, 0.2);
 }
 .playlist-list-view row > box:active {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(245, 245, 255, 0.25);
 }
 .playlist-list-view row:first-child,
 .playlist-list-view row:first-child > box {
@@ -229,8 +228,8 @@ statuspage box {
 
 .playing-item-playlist {
   background-image: linear-gradient(
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0.2)
+    rgba(245, 245, 255, 0.2),
+    rgba(245, 245, 255, 0.2)
   );
 }
 
