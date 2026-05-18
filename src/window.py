@@ -213,7 +213,6 @@ class CineWindow(Adw.ApplicationWindow):
             osd_margin_y=66,
             volume_max=150,
             keep_open=True,
-            keep_open_pause=False,
             ytdl=True,
             ytdl_raw_options="yes-playlist=",
             cursor_autohide_fs_only=True,
@@ -1154,19 +1153,17 @@ class CineWindow(Adw.ApplicationWindow):
                 GLib.Variant("i", self.mpv.chapter)
             )
 
-    def _update_play_pause_icon(self, is_paused):
-        play_icon = "cine-playback-start-symbolic"
-        pause_icon = "cine-playback-pause-symbolic"
+    def _update_play_pause_icon(self, paused):
+        play = "cine-playback-start-symbolic"
+        pause = "cine-playback-pause-symbolic"
 
-        button_icon = play_icon if is_paused else pause_icon
-        indicator_icon = pause_icon if is_paused else play_icon
+        btn_icon = play if paused else pause
+        self.play_pause_button.set_icon_name(btn_icon)
 
-        self.play_pause_button.set_icon_name(button_icon)
-        self.icon_indicator.props.icon_name = indicator_icon
-
-        text = _("Pause") if is_paused else _("Play")
+        text = _("Pause") if paused else _("Play")
         self.play_pause_button.update_property([Gtk.AccessibleProperty.LABEL], [text])
 
+        self.icon_indicator.props.icon_name = pause if paused else play
         self._show_icon_indicator()
 
     def _update_duration(self, duration):
@@ -1946,9 +1943,8 @@ class CineWindow(Adw.ApplicationWindow):
             GLib.idle_add(self._update_play_pause_icon, paused)
 
         @self.mpv.property_observer("eof-reached")
-        def watch_eof(_name, value):
-            # allow to replay at eof, requires keep-open
-            if value:
+        def on_eof_reached(_name, reached):
+            if reached:  # allow to replay at eof, requires keep-open
                 self.mpv.seek(0, reference="absolute")
                 self.mpv.pause = True
 
