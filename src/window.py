@@ -405,24 +405,18 @@ class CineWindow(Adw.ApplicationWindow):
             click_gesture.connect("unpaired-release", self._cancel_click_hold)
             self.video_overlay.add_controller(click_gesture)
 
-        self.connect(
-            "notify::visible-dialog",
-            lambda *_: (
-                self._cancel_click_hold(),
-                self._hide_ui_timeout(),
-                self._key_up_keys(),
-            ),
-        )
+        @self._connect("notify::visible-dialog")
+        def on_vis_dialog_change(*args):
+            self._cancel_click_hold()
+            self._hide_ui_timeout()
+            self._key_up_keys()
 
-        self.connect(
-            "notify::is-active",
-            lambda *_: self.is_active()
-            or (
-                self._set_space_holding(False),
-                setattr(self, "space_holding", False),
-                self._key_up_keys(),
-            ),
-        )
+        @self._connect("notify::is-active")
+        def on_is_active_change(*args):
+            if not self.is_active():
+                self._set_space_holding(False)
+                self.space_holding = False
+                self._key_up_keys()
 
         scroll_controller_overlay = Gtk.EventControllerScroll.new(
             Gtk.EventControllerScrollFlags.BOTH_AXES
@@ -454,10 +448,10 @@ class CineWindow(Adw.ApplicationWindow):
         self.motion_controls_separator = Gtk.EventControllerMotion()
         self.controls_separator.add_controller(self.motion_controls_separator)
 
-        self.connect(
-            "notify::maximized",
-            lambda w, _: settings.set_boolean("is-maximized", w.is_maximized()),
-        )
+        @self._connect("notify::maximized")
+        def on_maximized_change(*args):
+            settings.set_boolean("is-maximized", self.is_maximized())
+
         self.connect("notify::fullscreened", self._set_fs_state)
 
         buttons = [
@@ -2048,3 +2042,6 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.event_callback("shutdown")
         def on_quit(_event):
             GLib.idle_add(self.close)
+
+    def _connect(self, signal_name):
+        return lambda func: self.connect(signal_name, func)
