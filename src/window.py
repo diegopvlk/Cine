@@ -839,6 +839,19 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.loadfile(self.url, mode)
             dialog.close()
 
+        def on_clipboard_read(clipboard, result):
+            text = clipboard.read_text_finish(result)
+
+            if text and (parsed := urlparse(text)):
+                if parsed.scheme in cast(list, self.mpv.protocol_list):
+                    entry_row.insert_text(text, 0)
+
+        if display and (clipboard := display.get_clipboard()):
+            clipboard.read_text_async(
+                None,
+                lambda cb, res: on_clipboard_read(cb, res),
+            )
+
         btn_open.connect("clicked", open_url)
         dialog.present(self)
 
