@@ -72,6 +72,18 @@
   </requires>
 
   <releases>
+    <release version="1.4.0" date="2026-05-21">
+      <description translate="no">
+        <ul>
+          <li>New: Hold space bar to double speed</li>
+          <li>New: It's now possible to search the playlist</li>
+          <li>Improved performance for large playlists</li>
+          <li>The playlist now shows the item count</li>
+          <li>The open url dialog now pre-fills with the clipboard contents</li>
+          <li>Fixed progress bar thumbnail not working in some cases</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.3.1" date="2026-05-06">
       <description translate="no">
         <ul>
