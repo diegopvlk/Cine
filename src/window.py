@@ -847,10 +847,7 @@ class CineWindow(Adw.ApplicationWindow):
                     entry_row.insert_text(text, 0)
 
         if display and (clipboard := display.get_clipboard()):
-            clipboard.read_text_async(
-                None,
-                lambda cb, res: on_clipboard_read(cb, res),
-            )
+            clipboard.read_text_async(None, on_clipboard_read)
 
         btn_open.connect("clicked", open_url)
         dialog.present(self)
