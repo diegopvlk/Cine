@@ -297,7 +297,6 @@ class CineWindow(Adw.ApplicationWindow):
         self.bindings = self.mpv._get_property("input-bindings")
         populate_shortcuts_dialog_mpv(self.shortcuts_dialog, self.bindings)
         self.shortcuts_dialog.present(self)
-        self.set_cursor_from_name(None)
 
     def _setup_elements(self):
         self.set_default_size(DEFAULT_WIDTH, DEFAULT_HEIGHT)
@@ -409,9 +408,12 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self._connect("notify::visible-dialog")
         def on_vis_dialog_change(*args):
-            self._cancel_click_hold()
-            self._hide_ui_timeout()
-            self._key_up_keys()
+            if self.get_visible_dialog():
+                self.set_cursor_from_name(None)
+                self._cancel_click_hold()
+                self._hide_ui_timeout()
+                self.space_holding = False
+                self._key_up_keys()
 
         @self._connect("notify::is-active")
         def on_is_active_change(*args):
