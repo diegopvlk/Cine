@@ -31,8 +31,18 @@ SCREENSHOT_DIR = os.path.join(xdg_pictures, "Cine Screenshots") if xdg_pictures 
 base_config = GLib.get_user_config_dir()
 CONFIG_DIR = os.path.join(base_config, "cine")
 INPUT_CONF = os.path.join(CONFIG_DIR, "input.conf")
-LAST_PLAYLIST_FILE = os.path.join(CONFIG_DIR, "last-playlist.m3u8")
+
+old_last_pl_file = os.path.join(CONFIG_DIR, "last-playlist.m3u8")
+playlist_dir = os.path.join(CONFIG_DIR, "last-playlist")
+LAST_PLAYLIST_FILE = os.path.join(playlist_dir, "last-playlist.m3u8")
+
 os.makedirs(CONFIG_DIR, exist_ok=True)
+os.makedirs(playlist_dir, exist_ok=True)
+
+if os.path.exists(old_last_pl_file):
+    from shutil import move
+
+    move(old_last_pl_file, playlist_dir)
 
 
 def get_has_host_permission():
