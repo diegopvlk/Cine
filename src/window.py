@@ -220,6 +220,8 @@ class CineWindow(Adw.ApplicationWindow):
             ytdl=True,
             ytdl_raw_options="yes-playlist=",
             cursor_autohide_fs_only=True,
+            directory_filter_types="video,audio",
+            autocreate_playlist="filter",
         )
 
         if self.mpv["window-maximized"] or settings.get_boolean("is-maximized"):
