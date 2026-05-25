@@ -33,32 +33,32 @@ settings = Gio.Settings.new("io.github.diegopvlk.Cine")
 
 def sync_mpv_with_settings(window):
     """Apply settings values to the mpv instance"""
-    player = window.mpv
-    player["sub-color"] = settings.get_string("subtitle-color")
-    player["sub-scale"] = settings.get_double("subtitle-scale")
-    player["sub-font"] = settings.get_string("subtitle-font")
-    player["slang"] = settings.get_string("subtitle-languages")
-    player["alang"] = settings.get_string("audio-languages")
-    player["volume"] = settings.get_int("volume")
+    mpv = window.mpv
+    mpv["sub-color"] = settings.get_string("subtitle-color")
+    mpv["sub-scale"] = settings.get_double("subtitle-scale")
+    mpv["sub-font"] = settings.get_string("subtitle-font")
+    mpv["slang"] = settings.get_string("subtitle-languages")
+    mpv["alang"] = settings.get_string("audio-languages")
+    mpv["volume"] = settings.get_int("volume")
     hwdec_enabled = settings.get_boolean("hwdec")
     norm_enabled = settings.get_boolean("normalize-volume")
 
     sub_bg = settings.get_boolean("subtitle-bg")
-    player["sub-border-style"] = "background-box" if sub_bg else "outline-and-shadow"
-    player["sub-shadow-offset"] = 8 if sub_bg else 0.6
-    player["sub-back-color"] = (
+    mpv["sub-border-style"] = "background-box" if sub_bg else "outline-and-shadow"
+    mpv["sub-shadow-offset"] = 8 if sub_bg else 0.6
+    mpv["sub-back-color"] = (
         settings.get_string("subtitle-bg-color") if sub_bg else "#97000000"
     )
 
     if hwdec_enabled:
-        player.command_async("vf", "remove", "@hflip")
-        player.command_async("vf", "remove", "@vflip")
-        player["hwdec"] = window.conf_hwdec + ["auto"]
+        mpv.command_async("vf", "remove", "@hflip")
+        mpv.command_async("vf", "remove", "@vflip")
+        mpv["hwdec"] = window.conf_hwdec + ["auto"]
     else:
-        player["hwdec"] = "no"
+        mpv["hwdec"] = "no"
 
     if norm_enabled:
-        player.command("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
+        mpv.command("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
 
 
 @Gtk.Template(resource_path="/io/github/diegopvlk/Cine/preferences.ui")
@@ -83,10 +83,10 @@ class Preferences(Adw.Dialog):
     save_session_switch: Gtk.Switch = Gtk.Template.Child()
     save_position_switch: Gtk.Switch = Gtk.Template.Child()
 
-    def __init__(self, active_window, **kwargs):
+    def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
-        self.win = active_window
-        self.player = active_window.mpv
+        self.win = window
+        self.mpv = window.mpv
 
         self._bind_ui()
         self._setup_mpv_updates()
@@ -208,59 +208,59 @@ class Preferences(Adw.Dialog):
             settings.disconnect(connection_id)
 
     def _on_sub_color_changed(self, settings, key):
-        self.player["sub-color"] = settings.get_string(key)
+        self.mpv["sub-color"] = settings.get_string(key)
 
     def _on_sub_bg_color_changed(self, _settings, key):
         if settings.get_boolean("subtitle-bg"):
-            self.player["sub-back-color"] = settings.get_string(key)
+            self.mpv["sub-back-color"] = settings.get_string(key)
 
     def _on_sub_scale_changed(self, settings, key):
-        self.player["sub-scale"] = settings.get_double(key)
+        self.mpv["sub-scale"] = settings.get_double(key)
 
     def _on_sub_font_changed(self, settings, key):
-        self.player["sub-font"] = settings.get_string(key)
+        self.mpv["sub-font"] = settings.get_string(key)
 
     def _on_sub_bg_changed(self, settings, key):
         sub_bg = settings.get_boolean(key)
         if sub_bg:
-            self.player["sub-shadow-offset"] = 8
-            self.player["sub-border-style"] = "background-box"
-            self.player["sub-back-color"] = settings.get_string("subtitle-bg-color")
+            self.mpv["sub-shadow-offset"] = 8
+            self.mpv["sub-border-style"] = "background-box"
+            self.mpv["sub-back-color"] = settings.get_string("subtitle-bg-color")
         else:
-            self.player["sub-shadow-offset"] = 0.6
-            self.player["sub-border-style"] = "outline-and-shadow"
-            self.player["sub-shadow-color"] = "#97000000"
+            self.mpv["sub-shadow-offset"] = 0.6
+            self.mpv["sub-border-style"] = "outline-and-shadow"
+            self.mpv["sub-shadow-color"] = "#97000000"
 
     def _on_slang_changed(self, settings, key):
-        self.player["slang"] = settings.get_string(key)
+        self.mpv["slang"] = settings.get_string(key)
 
     def _on_alang_changed(self, settings, key):
-        self.player["alang"] = settings.get_string(key)
+        self.mpv["alang"] = settings.get_string(key)
 
     def _on_thumb_preview_changed(self, settings, key):
         if not settings.get_boolean(key) and self.win.preview_player:
             self.win.preview_player.terminate()
             self.win.preview_player = None
             self.win.thumb_preview.props.visible = False
-        elif not self.player.idle_active:
+        elif not self.mpv.idle_active:
             self.win.thumb_preview.props.visible = True
             self.win.setup_preview_player()
 
     def _on_hwdec_changed(self, settings, key):
         hwdec_enabled = settings.get_boolean(key)
         if hwdec_enabled:
-            self.player.command_async("vf", "remove", "@hflip")
-            self.player.command_async("vf", "remove", "@vflip")
-            self.player["hwdec"] = self.win.conf_hwdec + ["auto"]
+            self.mpv.command_async("vf", "remove", "@hflip")
+            self.mpv.command_async("vf", "remove", "@vflip")
+            self.mpv["hwdec"] = self.win.conf_hwdec + ["auto"]
         else:
-            self.player["hwdec"] = "no"
+            self.mpv["hwdec"] = "no"
 
     def _on_norm_volume_changed(self, settings, key):
         norm_enabled = settings.get_boolean(key)
         if norm_enabled:
-            self.player.command("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
+            self.mpv.command("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
         else:
-            self.player.command("af", "remove", "@cine_loudnorm")
+            self.mpv.command("af", "remove", "@cine_loudnorm")
 
     def _on_sub_color_selected(self, color_btn, *arg):
         rgba = color_btn.get_rgba()
