@@ -361,7 +361,7 @@ class Preferences(Adw.Dialog):
     @Gtk.Template.Callback()
     def _on_warning_header_btn_map(self, button):
         if is_flatpak:
-            l1 = _("Some features requires extra flatpak permission to work:") + "\n\n"
+            l1 = _("Some features require extra flatpak permission to work:") + "\n\n"
             l2 = "• " + _("Auto load subtitle file") + "\n"
             l3 = "• " + _("Auto add files from the same folder to playlist") + "\n"
             l4 = "• " + _("Save Playlist").capitalize() + "\n"
@@ -373,7 +373,7 @@ class Preferences(Adw.Dialog):
                     "Use Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
                 )
             else:
-                l7 = _("Cine has extra permission.")
+                l7 = _("Cine has extra permissions.")
                 self.warning_header_btn.remove_css_class("warning-header-btn")
                 self.about_permissions_label.set_margin_bottom(10)
                 self.cmd_label.set_visible(False)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-22 09:14-0300\n"
+"POT-Creation-Date: 2026-05-25 19:50-0300\n"
 "PO-Revision-Date: 2026-05-03 13:33+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 5.17.1\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:227 src/mpris.py:147
-#: src/mpris.py:365 src/window.py:185 src/window.py:303 src/window.blp:6
+#: src/mpris.py:365 src/window.py:190 src/window.py:310 src/window.blp:6
 #: src/window.blp:461
 msgid "Cine"
 msgstr "Cine"
@@ -75,7 +75,7 @@ msgid "Video Options"
 msgstr "视频选项"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/window.blp:141
+#: src/preferences.blp:77 src/window.blp:141
 msgid "Preferences"
 msgstr "偏好设置"
 
@@ -101,16 +101,16 @@ msgid "Search"
 msgstr "搜索"
 
 #: src/playlist.py:182 src/playlist.py:190 src/playlist.py:475
-#: src/playlist.blp:56
+#: src/preferences.py:367 src/playlist.blp:56
 msgid "Save Playlist"
 msgstr "保存播放列表"
 
-#: src/playlist.py:185 src/preferences.blp:157 src/preferences.blp:192
+#: src/playlist.py:185 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "需要flatpak权限才能读取存储视频的文件夹"
 
-#: src/playlist.py:332 src/window.py:1267 src/window.py:1792
+#: src/playlist.py:332 src/window.py:1276 src/window.py:1817
 msgid "File Error"
 msgstr "文件错误"
 
@@ -132,17 +132,55 @@ msgid "{n} item"
 msgid_plural "{n} items"
 msgstr[0] "{n} 个项目"
 
-#: src/preferences.py:105 src/preferences.blp:20
+#: src/preferences.py:111 src/preferences.blp:170
 msgid "Subtitle Color"
 msgstr "字幕颜色"
 
-#: src/preferences.py:119 src/preferences.blp:100
+#: src/preferences.py:125 src/preferences.blp:250
 msgid "Subtitle Background"
 msgstr "字幕背景"
 
+#: src/preferences.py:364
+msgid "Some features require extra flatpak permission to work:"
+msgstr ""
+
+#: src/preferences.py:365
+msgid "Auto load subtitle file"
+msgstr ""
+
+#: src/preferences.py:366
+msgid "Auto add files from the same folder to playlist"
+msgstr ""
+
+#: src/preferences.py:368 src/preferences.blp:98
+msgid "Restore Saved Session"
+msgstr "恢复已保存的会话"
+
+#: src/preferences.py:369 src/preferences.blp:133
+msgid "Save Video Position on Close"
+msgstr "关闭时保存视频位置"
+
+#: src/preferences.py:373
+msgid ""
+"Use Flatseal for granular folder control, or run this command to grant "
+"access to all folders in the system:"
+msgstr ""
+
+#: src/preferences.py:376
+msgid "Cine has extra permissions."
+msgstr ""
+
+#: src/preferences.py:391
+msgid "Copied"
+msgstr ""
+
+#: src/preferences.py:397 src/preferences.blp:58
+msgid "Copy"
+msgstr ""
+
 #: src/shortcuts.py:29 src/shortcuts.py:30 src/shortcuts.py:31
-#: src/shortcuts.py:32 src/shortcuts.py:87 src/shortcuts.py:88
-#: src/window.py:1886 src/window.blp:228
+#: src/shortcuts.py:32 src/shortcuts.py:89 src/shortcuts.py:90
+#: src/window.py:1911 src/window.blp:228
 msgid "Volume"
 msgstr "音量"
 
@@ -155,7 +193,7 @@ msgid "Volume Decrease"
 msgstr "音量减"
 
 #: src/shortcuts.py:33 src/shortcuts.py:34 src/shortcuts.py:35
-#: src/window.blp:209
+#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:209
 msgid "Play/Pause"
 msgstr "播放/暂停"
 
@@ -163,7 +201,7 @@ msgstr "播放/暂停"
 msgid "Show/Hide Subtitles"
 msgstr "显示/隐藏字幕"
 
-#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:211
+#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:213
 #: src/window.blp:270
 msgid "Subtitles"
 msgstr "字幕"
@@ -188,7 +226,7 @@ msgstr "下一条次要字幕轨道"
 msgid "Previous Secondary Subtitle Track"
 msgstr "上一条次要字幕轨道"
 
-#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:722 src/window.blp:285
+#: src/shortcuts.py:41 src/shortcuts.py:42 src/window.py:731 src/window.blp:285
 msgid "Audio"
 msgstr "音频"
 
@@ -216,18 +254,18 @@ msgstr "后退 5 秒"
 msgid "Seek 5s Forward"
 msgstr "前进 5 秒"
 
-#: src/shortcuts.py:47 src/shortcuts.py:48 src/window.py:1835
+#: src/shortcuts.py:47 src/shortcuts.py:48 src/window.py:1860
 #: src/window.blp:382
 msgid "Fullscreen"
 msgstr "全屏"
 
-#: src/shortcuts.py:49 src/window.py:1835
+#: src/shortcuts.py:49 src/window.py:1860
 msgid "Exit Fullscreen"
 msgstr "退出全屏"
 
 #: src/shortcuts.py:59 src/shortcuts.py:60 src/shortcuts.py:61
-#: src/shortcuts.py:62 src/shortcuts.py:63 src/options.blp:285
-#: src/options.blp:309
+#: src/shortcuts.py:62 src/shortcuts.py:63 src/shortcuts.py:64
+#: src/shortcuts.py:65 src/options.blp:285 src/options.blp:309
 msgid "Zoom"
 msgstr "缩放"
 
@@ -239,271 +277,271 @@ msgstr "放大"
 msgid "Zoom Out"
 msgstr "缩小"
 
-#: src/shortcuts.py:64 src/shortcuts.py:65 src/options.blp:611
+#: src/shortcuts.py:66 src/shortcuts.py:67 src/options.blp:611
 #: src/options.blp:635
 msgid "Subtitle Delay"
 msgstr "字幕延迟"
 
-#: src/shortcuts.py:64
+#: src/shortcuts.py:66
 msgid "Decrease Subtitle Delay"
 msgstr "减少字幕延迟"
 
-#: src/shortcuts.py:65
+#: src/shortcuts.py:67
 msgid "Increase Subtitle Delay"
 msgstr "增加字幕延迟"
 
-#: src/shortcuts.py:66 src/shortcuts.py:67
+#: src/shortcuts.py:68 src/shortcuts.py:69
 msgid "Subtitle Position"
 msgstr "字幕位置"
 
-#: src/shortcuts.py:66
+#: src/shortcuts.py:68
 msgid "Move Subtitles Up"
 msgstr "上移字幕"
 
-#: src/shortcuts.py:67
+#: src/shortcuts.py:69
 msgid "Move Subtitles Down"
 msgstr "下移字幕"
 
-#: src/shortcuts.py:68 src/shortcuts.py:69 src/preferences.blp:89
+#: src/shortcuts.py:70 src/shortcuts.py:71 src/preferences.blp:239
 msgid "Subtitle Scale"
 msgstr "字幕大小"
 
-#: src/shortcuts.py:68
+#: src/shortcuts.py:70
 msgid "Increase Subtitle Scale"
 msgstr "增大字幕"
 
-#: src/shortcuts.py:69
+#: src/shortcuts.py:71
 msgid "Decrease Subtitle Scale"
 msgstr "减小字幕"
 
-#: src/shortcuts.py:70 src/window.blp:239
+#: src/shortcuts.py:72 src/window.blp:239
 msgid "Mute/Unmute"
 msgstr "静音/取消静音"
 
-#: src/shortcuts.py:71 src/shortcuts.py:72 src/shortcuts.py:73
+#: src/shortcuts.py:73 src/shortcuts.py:74 src/shortcuts.py:75
 #: src/options.blp:666 src/options.blp:690
 msgid "Audio Delay"
 msgstr "音频延迟"
 
-#: src/shortcuts.py:71
+#: src/shortcuts.py:73
 msgid "Decrease Audio Delay"
 msgstr "减少音频延迟"
 
-#: src/shortcuts.py:72 src/shortcuts.py:73
+#: src/shortcuts.py:74 src/shortcuts.py:75
 msgid "Increase Audio Delay"
 msgstr "增加音频延迟"
 
-#: src/shortcuts.py:83
+#: src/shortcuts.py:85
 msgid "Go Back One Frame"
 msgstr "上一帧"
 
-#: src/shortcuts.py:84
+#: src/shortcuts.py:86
 msgid "Advance One Frame"
 msgstr "下一帧"
 
-#: src/shortcuts.py:85
+#: src/shortcuts.py:87
 msgid "Seek to the Previous Chapter"
 msgstr "上一章节"
 
-#: src/shortcuts.py:86
+#: src/shortcuts.py:88
 msgid "Seek to the Next Chapter"
 msgstr "下一章节"
 
-#: src/shortcuts.py:90
+#: src/shortcuts.py:92
 msgid "Take Screenshot With Subtitles"
 msgstr "截图（含字幕）"
 
-#: src/shortcuts.py:91
+#: src/shortcuts.py:93
 msgid "Take Screenshot Without Subtitles"
 msgstr "截图（不含字幕）"
 
-#: src/shortcuts.py:92
+#: src/shortcuts.py:94
 msgid "Statistics"
 msgstr "统计信息"
 
-#: src/shortcuts.py:93
+#: src/shortcuts.py:95
 msgid "Statistics Overlay"
 msgstr "显示统计面板"
 
-#: src/shortcuts.py:94
+#: src/shortcuts.py:96
 msgid "Set/Clear A-B Loop Points"
 msgstr "设置/清除 A-B 循环点"
 
-#: src/shortcuts.py:95
+#: src/shortcuts.py:97
 msgid "Loop"
 msgstr "循环播放"
 
-#: src/shortcuts.py:95 src/window.blp:355
+#: src/shortcuts.py:97 src/window.blp:355
 msgid "Loop File"
 msgstr "单个文件循环"
 
-#: src/shortcuts.py:96 src/shortcuts.py:97 src/options.blp:340
+#: src/shortcuts.py:98 src/shortcuts.py:99 src/options.blp:340
 #: src/options.blp:363
 msgid "Contrast"
 msgstr "对比度"
 
-#: src/shortcuts.py:96
+#: src/shortcuts.py:98
 msgid "Decrease Contrast"
 msgstr "降低对比度"
 
-#: src/shortcuts.py:97
+#: src/shortcuts.py:99
 msgid "Increase Contrast"
 msgstr "增加对比度"
 
-#: src/shortcuts.py:98 src/shortcuts.py:99 src/options.blp:394
+#: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:394
 #: src/options.blp:417
 msgid "Brightness"
 msgstr "亮度"
 
-#: src/shortcuts.py:98
+#: src/shortcuts.py:100
 msgid "Decrease Brightness"
 msgstr "降低亮度"
 
-#: src/shortcuts.py:99
+#: src/shortcuts.py:101
 msgid "Increase Brightness"
 msgstr "增加亮度"
 
-#: src/shortcuts.py:100 src/shortcuts.py:101 src/options.blp:448
+#: src/shortcuts.py:102 src/shortcuts.py:103 src/options.blp:448
 #: src/options.blp:471
 msgid "Gamma"
 msgstr "伽马值"
 
-#: src/shortcuts.py:100
+#: src/shortcuts.py:102
 msgid "Decrease Gamma"
 msgstr "降低伽马值"
 
-#: src/shortcuts.py:101
+#: src/shortcuts.py:103
 msgid "Increase Gamma"
 msgstr "增加伽马值"
 
-#: src/shortcuts.py:102 src/shortcuts.py:103 src/options.blp:502
+#: src/shortcuts.py:104 src/shortcuts.py:105 src/options.blp:502
 #: src/options.blp:525
 msgid "Saturation"
 msgstr "饱和度"
 
-#: src/shortcuts.py:102
+#: src/shortcuts.py:104
 msgid "Decrease Saturation"
 msgstr "降低饱和度"
 
-#: src/shortcuts.py:103
+#: src/shortcuts.py:105
 msgid "Increase Saturation"
 msgstr "增加饱和度"
 
-#: src/shortcuts.py:104 src/shortcuts.py:105 src/shortcuts.py:106
+#: src/shortcuts.py:106 src/shortcuts.py:107 src/shortcuts.py:108
 msgid "Speed"
 msgstr "播放速度"
 
-#: src/shortcuts.py:104
+#: src/shortcuts.py:106
 msgid "Decrease Playback Speed"
 msgstr "减慢播放速度"
 
-#: src/shortcuts.py:105
+#: src/shortcuts.py:107
 msgid "Increase Playback Speed"
 msgstr "加快播放速度"
 
-#: src/shortcuts.py:106 src/options.blp:711
+#: src/shortcuts.py:108 src/options.blp:711
 msgid "Reset Playback Speed"
 msgstr "重置播放速度"
 
-#: src/shortcuts.py:195
+#: src/shortcuts.py:197
 msgid "Display & Video"
 msgstr "显示与视频"
 
-#: src/shortcuts.py:212
+#: src/shortcuts.py:214
 msgid "Audio & Volume"
 msgstr "音频与音量"
 
-#: src/shortcuts.py:213
+#: src/shortcuts.py:215
 msgid "Navigation"
 msgstr "导航"
 
-#: src/shortcuts.py:214
+#: src/shortcuts.py:216
 msgid "Playback"
 msgstr "回放"
 
-#: src/shortcuts.py:218 src/shortcuts.py:224
+#: src/shortcuts.py:220 src/shortcuts.py:226
 msgid "Miscellaneous"
 msgstr "杂项"
 
-#: src/window.py:575 src/window.py:1259 src/window.blp:115
+#: src/window.py:584 src/window.py:1268 src/window.blp:115
 msgid "Add Subtitle Track"
 msgstr "添加字幕轨道"
 
-#: src/window.py:577 src/window.py:586
+#: src/window.py:586 src/window.py:595
 msgid "None"
 msgstr "无"
 
-#: src/window.py:584 src/window.blp:120
+#: src/window.py:593 src/window.blp:120
 msgid "Add Audio Track"
 msgstr "添加音频轨道"
 
-#: src/window.py:623
+#: src/window.py:632
 msgid "Track"
 msgstr "轨道"
 
-#: src/window.py:666 src/playlist.blp:35 src/window.blp:105
+#: src/window.py:675 src/playlist.blp:35 src/window.blp:105
 msgid "Add Folder"
 msgstr "添加文件夹"
 
-#: src/window.py:666 src/shortcuts-dialog.blp:21 src/window.blp:90
+#: src/window.py:675 src/shortcuts-dialog.blp:21 src/window.blp:90
 #: src/window.blp:485
 msgid "Open Folder"
 msgstr "打开文件夹"
 
-#: src/window.py:691 src/shortcuts-dialog.blp:16 src/window.blp:85
+#: src/window.py:700 src/shortcuts-dialog.blp:16 src/window.blp:85
 msgid "Open Files"
 msgstr "打开文件"
 
-#: src/window.py:694 src/playlist.blp:30 src/window.blp:100
+#: src/window.py:703 src/playlist.blp:30 src/window.blp:100
 msgid "Add Files"
 msgstr "添加文件"
 
-#: src/window.py:698
+#: src/window.py:707
 msgid "Add Subtitle"
 msgstr "添加字幕"
 
-#: src/window.py:701
+#: src/window.py:710
 msgid "Add Audio"
 msgstr "添加音频"
 
-#: src/window.py:717
+#: src/window.py:726
 msgid "Subtitle"
 msgstr "字幕"
 
-#: src/window.py:726
+#: src/window.py:735
 msgid "Media"
 msgstr "媒体"
 
-#: src/window.py:787 src/playlist.blp:40 src/window.blp:110
+#: src/window.py:796 src/playlist.blp:40 src/window.blp:110
 msgid "Add URL"
 msgstr "添加 URL"
 
-#: src/window.py:787 src/shortcuts-dialog.blp:26 src/window.blp:95
+#: src/window.py:796 src/shortcuts-dialog.blp:26 src/window.blp:95
 #: src/window.blp:494
 msgid "Open URL"
 msgstr "打开 URL"
 
-#: src/window.py:800
+#: src/window.py:809
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:808 src/playlist.blp:26
+#: src/window.py:817 src/playlist.blp:26
 msgid "Add"
 msgstr "添加"
 
-#: src/window.py:808 src/window.blp:79
+#: src/window.py:817 src/window.blp:79
 msgid "Open"
 msgstr "打开"
 
-#: src/window.py:993 src/window.py:1101
+#: src/window.py:1002 src/window.py:1110
 msgid "Chapter"
 msgstr "章节"
 
-#: src/window.py:1157 src/window.py:1263
+#: src/window.py:1166 src/window.py:1272
 msgid "Play"
 msgstr "播放"
 
-#: src/window.py:1157
+#: src/window.py:1166
 msgid "Pause"
 msgstr "暂停"
 
@@ -612,65 +650,85 @@ msgstr "未找到结果"
 msgid "Add to Playlist"
 msgstr "添加到播放列表"
 
-#: src/preferences.blp:16
+#: src/preferences.blp:15
+msgid "About Permissions"
+msgstr ""
+
+#: src/preferences.blp:81
 msgid "Open New Window for New Files"
 msgstr "为新文件打开新窗口"
 
-#: src/preferences.blp:33 src/preferences.blp:79
-msgid "Reset"
-msgstr "重置"
-
-#: src/preferences.blp:43
-msgid "Subtitle Font"
-msgstr "字幕字体"
-
-#: src/preferences.blp:56
-msgid "Some fonts may not work"
-msgstr "某些字体可能无法使用"
-
-#: src/preferences.blp:117
-msgid "Preferred Subtitle Languages"
-msgstr "首选字幕语言"
-
-#: src/preferences.blp:118 src/preferences.blp:123
-msgid "Example: en,es,pt"
-msgstr "示例：zh,en,ja"
-
-#: src/preferences.blp:122
-msgid "Preferred Audio Languages"
-msgstr "首选音频语言"
-
-#: src/preferences.blp:127
+#: src/preferences.blp:85
 msgid "Progress Bar Thumbnail"
 msgstr "进度条缩略图"
 
-#: src/preferences.blp:131
+#: src/preferences.blp:89
 msgid "Normalize Volume"
 msgstr "音量标准化"
 
-#: src/preferences.blp:135
+#: src/preferences.blp:93
 msgid "Hardware Acceleration"
 msgstr "硬件加速"
 
-#: src/preferences.blp:136
+#: src/preferences.blp:94
 msgid "Use GPU for video decoding when available"
 msgstr "可用时使用 GPU 进行视频解码"
 
-#: src/preferences.blp:140
-msgid "Restore Saved Session"
-msgstr "恢复已保存的会话"
-
-#: src/preferences.blp:141
+#: src/preferences.blp:99
 msgid "Pick up where you left off after saving from the menu"
 msgstr "从菜单保存后，从上次中断的地方继续"
 
-#: src/preferences.blp:175
-msgid "Save Video Position on Close"
-msgstr "关闭时保存视频位置"
-
-#: src/preferences.blp:176
+#: src/preferences.blp:134
 msgid "Also save options like brightness, subtitle delay, etc."
 msgstr "也保存像亮度，字幕延迟等选项。"
+
+#: src/preferences.blp:183 src/preferences.blp:229
+msgid "Reset"
+msgstr "重置"
+
+#: src/preferences.blp:193
+msgid "Subtitle Font"
+msgstr "字幕字体"
+
+#: src/preferences.blp:206
+msgid "Some fonts may not work"
+msgstr "某些字体可能无法使用"
+
+#: src/preferences.blp:269
+msgid "Left Click"
+msgstr ""
+
+#: src/preferences.blp:274
+#, fuzzy
+#| msgid "Play/Pause"
+msgid "Focus/Play/Pause"
+msgstr "播放/暂停"
+
+#: src/preferences.blp:275 src/preferences.blp:287
+msgid "Disabled"
+msgstr ""
+
+#: src/preferences.blp:281
+msgid "Right Click"
+msgstr ""
+
+#: src/preferences.blp:286
+#, fuzzy
+#| msgid "Main Menu"
+msgid "Window Menu"
+msgstr "主菜单"
+
+#: src/preferences.blp:295
+msgid "Preferred Subtitle Languages"
+msgstr "首选字幕语言"
+
+#: src/preferences.blp:296 src/preferences.blp:301
+msgid "Example: en,es,pt"
+msgstr "示例：zh,en,ja"
+
+#: src/preferences.blp:300
+msgid "Preferred Audio Languages"
+msgstr "首选音频语言"
 
 #: src/shortcuts-dialog.blp:8
 msgid "General"
