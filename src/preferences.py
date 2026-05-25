@@ -337,6 +337,5 @@ class Preferences(Adw.Dialog):
         self.font_label.set_label(default_font)
 
     @Gtk.Template.Callback()
-    def _on_btn_warning_realize(self, button):
-        if has_host_permission:
-            button.set_visible(False)
+    def _on_btn_warning_map(self, button):
+        button.set_visible(not has_host_permission)
