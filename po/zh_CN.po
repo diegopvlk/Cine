@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:07-0300\n"
+"POT-Creation-Date: 2026-05-27 08:51-0300\n"
 "PO-Revision-Date: 2026-05-03 13:33+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -161,22 +161,18 @@ msgid "Save Video Position on Close"
 msgstr "关闭时保存视频位置"
 
 #: src/preferences.py:376
-msgid ""
-"Use Flatseal for granular folder control, or run this command to grant "
-"access to all folders in the system:"
-msgstr ""
-"使用 Flatseal 进行细粒度文件夹控制，或运行此命令以授予对系统所有文件夹的访问"
-"权限："
+msgid "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+msgstr "如果您想使用这些功能，请安装 Flatseal 以进行细粒度的文件夹控制，或运行此命令以授予对系统中所有文件夹的访问权限："
 
-#: src/preferences.py:379
+#: src/preferences.py:382
 msgid "Extra permission enabled."
 msgstr "已启用额外权限。"
 
-#: src/preferences.py:394
+#: src/preferences.py:397
 msgid "Copied"
 msgstr "已复制"
 
-#: src/preferences.py:400 src/preferences.blp:58
+#: src/preferences.py:403 src/preferences.blp:58
 msgid "Copy"
 msgstr "复制"
 

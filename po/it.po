@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:07-0300\n"
+"POT-Creation-Date: 2026-05-27 08:51-0300\n"
 "PO-Revision-Date: 2026-04-30 07:09+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/cine/app/it/>\n"
@@ -171,22 +171,18 @@ msgid "Save Video Position on Close"
 msgstr "Salva la posizione del video alla chiusura"
 
 #: src/preferences.py:376
-msgid ""
-"Use Flatseal for granular folder control, or run this command to grant "
-"access to all folders in the system:"
-msgstr ""
-"Usa Flatseal per un controllo granulare delle cartelle, oppure esegui questo "
-"comando per concedere l'accesso a tutte le cartelle del sistema:"
+msgid "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+msgstr "Se desideri utilizzare queste funzionalità, installa Flatseal per un controllo granulare delle cartelle, oppure esegui questo comando per concedere l'accesso a tutte le cartelle del sistema:"
 
-#: src/preferences.py:379
+#: src/preferences.py:382
 msgid "Extra permission enabled."
 msgstr "Autorizzazione extra abilitata."
 
-#: src/preferences.py:394
+#: src/preferences.py:397
 msgid "Copied"
 msgstr "Copiato"
 
-#: src/preferences.py:400 src/preferences.blp:58
+#: src/preferences.py:403 src/preferences.blp:58
 msgid "Copy"
 msgstr "Copia"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:07-0300\n"
+"POT-Creation-Date: 2026-05-27 08:51-0300\n"
 "PO-Revision-Date: 2026-02-28 11:40-0300\n"
 "Last-Translator: Heimen Stoffels <vistausss@fastmail.com>\n"
 "Language-Team: \n"
@@ -171,22 +171,18 @@ msgid "Save Video Position on Close"
 msgstr "Videopositie onthouden na sluiten"
 
 #: src/preferences.py:376
-msgid ""
-"Use Flatseal for granular folder control, or run this command to grant "
-"access to all folders in the system:"
-msgstr ""
-"Gebruik Flatseal voor fijnmazig mapbeheer, of voer dit commando uit om "
-"toegang te verlenen til alle mappen op het systeem:"
+msgid "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+msgstr "Als u deze functies wilt gebruiken, installeer dan Flatseal voor gedetailleerd mapbeheer, of voer deze opdracht uit om toegang te verlenen tot alle mappen in het systeem:"
 
-#: src/preferences.py:379
+#: src/preferences.py:382
 msgid "Extra permission enabled."
 msgstr "Extra toestemming ingeschakeld."
 
-#: src/preferences.py:394
+#: src/preferences.py:397
 msgid "Copied"
 msgstr "Kopieerd"
 
-#: src/preferences.py:400 src/preferences.blp:58
+#: src/preferences.py:403 src/preferences.blp:58
 msgid "Copy"
 msgstr "Kopiëren"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:07-0300\n"
+"POT-Creation-Date: 2026-05-27 08:51-0300\n"
 "PO-Revision-Date: 2026-05-03 13:21+0000\n"
 "Last-Translator: Ahmer Jamil Khan <ahmer@khan.am>\n"
 "Language-Team: Urdu <https://hosted.weblate.org/projects/cine/app/ur/>\n"
@@ -169,22 +169,18 @@ msgid "Save Video Position on Close"
 msgstr "بند کرتے وقت ویڈیو کی پوزیشن محفوظ کریں"
 
 #: src/preferences.py:376
-msgid ""
-"Use Flatseal for granular folder control, or run this command to grant "
-"access to all folders in the system:"
-msgstr ""
-"فولڈر پر تفصیلی کنٹرول کے لیے Flatseal کا استعمال کریں، یا سسٹم کے تمام "
-"فولڈرز تک رسائی دینے کے لیے یہ کمانڈ چلائیں:"
+msgid "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+msgstr "اگر آپ ان خصوصیات کو استعمال کرنا چاہتے ہیں، تو فولڈر کے تفصیلی کنٹرول کے لیے Flatseal انسٹال کریں، یا سسٹم کے تمام فولڈرز تک رسائی دینے کے لیے یہ کمانڈ چلائیں:"
 
-#: src/preferences.py:379
+#: src/preferences.py:382
 msgid "Extra permission enabled."
 msgstr "اضافی اجازت فعال کر دی گئی۔"
 
-#: src/preferences.py:394
+#: src/preferences.py:397
 msgid "Copied"
 msgstr "کاپی ہو گیا"
 
-#: src/preferences.py:400 src/preferences.blp:58
+#: src/preferences.py:403 src/preferences.blp:58
 msgid "Copy"
 msgstr "کاپی کریں"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:07-0300\n"
+"POT-Creation-Date: 2026-05-27 08:51-0300\n"
 "PO-Revision-Date: 2026-04-06 11:07+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/cine/app/fi/>\n"
@@ -170,22 +170,18 @@ msgid "Save Video Position on Close"
 msgstr "Tallenna videon tila suljettaessa"
 
 #: src/preferences.py:376
-msgid ""
-"Use Flatseal for granular folder control, or run this command to grant "
-"access to all folders in the system:"
-msgstr ""
-"Käytä Flatseal kansioiden tarkkaan hallintaan, tai suorita tämä komento "
-"salliaksesi pääsyn järjestelmän kaikkiin kansioihin:"
+msgid "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+msgstr "Jos haluat käyttää näitä ominaisuuksia, asenna Flatseal kansioiden hienojakoista hallintaa varten, tai suorita tämä komento antaaksesi pääsyn kaikkiin järjestelmän kansioihin:"
 
-#: src/preferences.py:379
+#: src/preferences.py:382
 msgid "Extra permission enabled."
 msgstr "Lisäoikeus otettu käyttöön."
 
-#: src/preferences.py:394
+#: src/preferences.py:397
 msgid "Copied"
 msgstr "Kopioitu"
 
-#: src/preferences.py:400 src/preferences.blp:58
+#: src/preferences.py:403 src/preferences.blp:58
 msgid "Copy"
 msgstr "Kopioi"
 

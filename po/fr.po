@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:07-0300\n"
+"POT-Creation-Date: 2026-05-27 08:51-0300\n"
 "PO-Revision-Date: 2026-02-28 11:40-0300\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/cine/cine/fr/>\n"
@@ -152,7 +152,9 @@ msgstr "Arrière-plan des sous-titres"
 
 #: src/preferences.py:367
 msgid "Some features require extra permission to work:"
-msgstr "Certaines fonctionnalités nécessitent une permission supplémentaire pour fonctionner :"
+msgstr ""
+"Certaines fonctionnalités nécessitent une permission supplémentaire pour "
+"fonctionner :"
 
 #: src/preferences.py:368
 msgid "Auto load subtitle file"
@@ -172,22 +174,18 @@ msgid "Save Video Position on Close"
 msgstr "Enregistrer la position de la vidéo à la fermeture"
 
 #: src/preferences.py:376
-msgid ""
-"Use Flatseal for granular folder control, or run this command to grant "
-"access to all folders in the system:"
-msgstr ""
-"Utilisez Flatseal pour un contrôle granulaire des dossiers, ou exécutez "
-"cette commande pour accorder l'accès à tous les dossiers du système :"
+msgid "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+msgstr "Si vous souhaitez utiliser ces fonctionnalités, installez Flatseal pour un contrôle granulaire des dossiers, ou exécutez cette commande pour accorder l'accès à tous les dossiers du système :"
 
-#: src/preferences.py:379
+#: src/preferences.py:382
 msgid "Extra permission enabled."
 msgstr "Permission supplémentaire activée."
 
-#: src/preferences.py:394
+#: src/preferences.py:397
 msgid "Copied"
 msgstr "Copié"
 
-#: src/preferences.py:400 src/preferences.blp:58
+#: src/preferences.py:403 src/preferences.blp:58
 msgid "Copy"
 msgstr "Copier"
 

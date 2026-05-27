@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:07-0300\n"
+"POT-Creation-Date: 2026-05-27 08:51-0300\n"
 "PO-Revision-Date: 2026-04-03 15:09+0000\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/cine/app/fa/>\n"
@@ -169,22 +169,18 @@ msgid "Save Video Position on Close"
 msgstr "ذخیره موقعیت ویدیو هنگام بستن"
 
 #: src/preferences.py:376
-msgid ""
-"Use Flatseal for granular folder control, or run this command to grant "
-"access to all folders in the system:"
-msgstr ""
-"از Flatseal برای کنترل دقیق‌تر شاخه‌ها استفاده کنید، یا این فرمان را برای "
-"اعطای دسترسی به تمامی شاخه‌های سیستم اجرا کنید:"
+msgid "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+msgstr "اگر می‌خواهید از این ویژگی‌ها استفاده کنید، Flatseal را برای کنترل دقیق پوشه‌ها نصب کنید، یا این دستور را برای اعطای دسترسی به تمام پوشه‌های سیستم اجرا کنید:"
 
-#: src/preferences.py:379
+#: src/preferences.py:382
 msgid "Extra permission enabled."
 msgstr "مجوز اضافی فعال شد."
 
-#: src/preferences.py:394
+#: src/preferences.py:397
 msgid "Copied"
 msgstr "رونوشت شد"
 
-#: src/preferences.py:400 src/preferences.blp:58
+#: src/preferences.py:403 src/preferences.blp:58
 msgid "Copy"
 msgstr "رونوشت"
 

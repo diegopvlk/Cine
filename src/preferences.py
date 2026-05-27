@@ -373,7 +373,7 @@ class Preferences(Adw.Dialog):
 
             if not has_host_permission:
                 l7 = _(
-                    "Use Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+                    "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
                 ).replace(
                     "Flatseal",
                     '<a href="https://flathub.org/apps/com.github.tchx84.Flatseal">Flatseal</a>',

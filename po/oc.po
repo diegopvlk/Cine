@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-26 10:07-0300\n"
+"POT-Creation-Date: 2026-05-27 08:51-0300\n"
 "PO-Revision-Date: 2026-04-08 23:12+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Occitan <https://hosted.weblate.org/projects/cine/app/oc/>\n"
@@ -174,22 +174,18 @@ msgid "Save Video Position on Close"
 msgstr "Enregistrar la posicion de la vidèo a la tancadura"
 
 #: src/preferences.py:376
-msgid ""
-"Use Flatseal for granular folder control, or run this command to grant "
-"access to all folders in the system:"
-msgstr ""
-"Utilizatz Flatseal per un contraròtle granulari dels dorsièrs, o aviatz "
-"aquesta comanda per acordar l'accès a totes los dorsièrs del sistèma :"
+msgid "If you wish to use those features, install Flatseal for granular folder control, or run this command to grant access to all folders in the system:"
+msgstr "Se volètz utilizar aquestas foncionalitats, installatz Flatseal per un contraròtle granulari dels dorsièrs, o aviatz aquesta comanda per acordar l'accès a totes los dorsièrs del sistèma :"
 
-#: src/preferences.py:379
+#: src/preferences.py:382
 msgid "Extra permission enabled."
 msgstr "Autorizacion suplementària activada."
 
-#: src/preferences.py:394
+#: src/preferences.py:397
 msgid "Copied"
 msgstr "Copiat"
 
-#: src/preferences.py:400 src/preferences.blp:58
+#: src/preferences.py:403 src/preferences.blp:58
 msgid "Copy"
 msgstr "Copiar"
 
