@@ -46,7 +46,7 @@
       <caption>Video Options</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/diegopvlk/Cine/eedf30ef798707f391df7904af124def524da8c4/screenshots/preferences.png</image>
+      <image>https://raw.githubusercontent.com/diegopvlk/Cine/4cd6b0e086dccdedbe1dcfb11dc87f2434ffac70/screenshots/preferences.png</image>
       <caption>Preferences</caption>
     </screenshot>
     <screenshot>
@@ -72,6 +72,16 @@
   </requires>
 
   <releases>
+    <release version="1.4.5" date="2026-05-28">
+      <description translate="no">
+        <ul>
+          <li>The app now auto load files from the same folder to playlist (requires extra permission)</li>
+          <li>Added options to change left/right clicks</li>
+          <li>Fixed styles for subtitles with dark text and light background</li>
+          <li>Added an explanation of permissions to preferences</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.4.1" date="2026-05-22">
       <description translate="no">
         <ul>
