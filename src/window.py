@@ -2014,7 +2014,7 @@ class CineWindow(Adw.ApplicationWindow):
                     self.set_title(title)
                     pos = abs(cast(int, self.mpv.playlist_pos))
                     if obj := cast(PlaylistItemObj, self.playlist_ls.get_item(pos)):
-                        obj.url_title = title
+                        obj.notify("playing")
 
                 self.hide_icon_indicator = False
 

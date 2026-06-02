@@ -38,14 +38,12 @@ from .utils import is_local_path
 class PlaylistItemObj(GObject.Object):
     item = GObject.Property(type=object)
     playing = GObject.Property(type=bool, default=False)
-    url_title = GObject.Property(type=str, default="")
     position = GObject.Property(type=int, default=0)
 
     def __init__(self, item, position):
         super().__init__()
         self.item = item
         self.playing = item.get("playing", False)
-        self.url_title = item.get("title", "")
         self.position = position
 
 
@@ -250,7 +248,7 @@ class Playlist(Adw.Dialog):
 
         if not is_local_path(path):
             content_type = "mpv-url"
-            file_title = item.get("title") or obj.url_title or file_title
+            file_title = item.get("title") or path
         else:
             try:
                 info = Gio.File.new_for_path(path).query_info(
@@ -292,6 +290,10 @@ class Playlist(Adw.Dialog):
                 row.add_css_class("playing-item-playlist")
             else:
                 row.remove_css_class("playing-item-playlist")
+
+            if not is_local_path(path):
+                if url_title := self.mpv.playlist[obj.position].get("title"):
+                    list_item.title.set_text(url_title)
 
         set_playing_item(obj, None)
 
