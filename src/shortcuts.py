@@ -42,10 +42,10 @@ alt+z            nonrepeatable cycle secondary-sid; show-text "{_("Secondary Sub
 ctrl+z           nonrepeatable cycle secondary-sid down; show-text "{_("Secondary Subtitles")}: ${{secondary-sid}}"; #{_("Previous Secondary Subtitle Track")}
 a                nonrepeatable cycle audio; show-text "{_("Audio")}: ${{audio}}" #{_("Next Audio Track")}
 A                nonrepeatable cycle audio down; show-text "{_("Audio")}: ${{audio}}" #{_("Previous Audio Track")}
-j                seek -10 exact; show-text "⯇⯇" #{_("Seek 10s Backward")}
-l                seek 10 exact; show-text "⯈⯈" #{_("Seek 10s Forward")}
-LEFT             seek -5 exact; show-text "⯇⯇" #{_("Seek 5s Backward")}
-RIGHT            seek 5 exact; show-text "⯈⯈" #{_("Seek 5s Forward")}
+j                seek -10; show-text "⯇⯇" #{_("Seek 10s Backward")}
+l                seek 10; show-text "⯈⯈" #{_("Seek 10s Forward")}
+LEFT             seek -5; show-text "⯇⯇" #{_("Seek 5s Backward")}
+RIGHT            seek 5; show-text "⯈⯈" #{_("Seek 5s Forward")}
 F11              cycle fullscreen; #{_("Fullscreen")}
 f                cycle fullscreen; #{_("Fullscreen")}
 ESC              set fullscreen no; #{_("Exit Fullscreen")}
