@@ -20,6 +20,7 @@
 import os
 import gi
 from .utils import LAST_PLAYLIST_FILE, is_local_path
+from .preferences import settings
 
 gi.require_version("GLib", "2.0")
 from gi.repository import GLib
@@ -61,6 +62,9 @@ def restore_last_playlist(window, app, win_mpv):
 
 def is_same_playlist(mpv_playlist):
     """Compares current playlist with the saved file from last session."""
+
+    if not settings.get_boolean("save-session"):
+        return
 
     try:
         with open(LAST_PLAYLIST_FILE, "r", encoding="utf-8") as f:
