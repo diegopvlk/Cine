@@ -198,27 +198,16 @@ class Playlist(Adw.Dialog):
                 obj.playing = is_playing
 
     def _on_factory_setup(self, _factory, list_item):
-        row = Gtk.Box(height_request=52)
+        row = Gtk.Box(height_request=46)
         list_item.icon = Gtk.Image(margin_start=14)
-        inner_box = Gtk.Box(
+        list_item.title = Gtk.Label(
             halign=Gtk.Align.START,
             margin_top=5,
             margin_bottom=5,
             margin_start=12,
             margin_end=12,
-            orientation=Gtk.Orientation.VERTICAL,
             hexpand=True,
             valign=Gtk.Align.CENTER,
-        )
-        list_item.title_dir = Gtk.Label(
-            halign=Gtk.Align.START,
-            ellipsize=Pango.EllipsizeMode.MIDDLE,
-            xalign=0,
-            css_classes=["subtitle"],
-            margin_bottom=3,
-        )
-        list_item.title = Gtk.Label(
-            halign=Gtk.Align.START,
             ellipsize=Pango.EllipsizeMode.END,
             xalign=0,
             css_classes=["title"],
@@ -227,9 +216,7 @@ class Playlist(Adw.Dialog):
             margin_end=14, icon_name="cine-playback-start-symbolic", visible=False
         )
         row.append(list_item.icon)
-        inner_box.append(list_item.title_dir)
-        inner_box.append(list_item.title)
-        row.append(inner_box)
+        row.append(list_item.title)
         row.append(list_item.playing_icon)
 
         gesture = Gtk.GestureClick.new()
@@ -259,8 +246,6 @@ class Playlist(Adw.Dialog):
         parent_dir = os.path.basename(os.path.dirname(path))
         dir = parent_dir if parent_dir else path
 
-        list_item.title_dir.set_text(dir)
-
         icon_name = "cine-applications-multimedia-symbolic"
         file_title = os.path.splitext(name_with_ext)[0]
 
@@ -281,7 +266,6 @@ class Playlist(Adw.Dialog):
             file_title = name_with_ext
             if not os.listdir(path):
                 list_item.icon.set_opacity(0.5)
-                list_item.title_dir.set_opacity(0.5)
                 list_item.title.set_opacity(0.5)
         elif content_type:
             if "video" in content_type:
@@ -298,7 +282,9 @@ class Playlist(Adw.Dialog):
                 icon_name = "cine-warning-symbolic"
 
         list_item.title.set_text(file_title)
-        list_item.title.set_tooltip_text(file_title)
+        dir = GLib.markup_escape_text(dir)
+        file_title = GLib.markup_escape_text(file_title)
+        list_item.title.set_tooltip_markup(f"<b>{dir}</b>\n{file_title}")
         list_item.icon.set_from_icon_name(icon_name)
 
         def set_playing_item(obj, pspec):

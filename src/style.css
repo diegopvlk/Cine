@@ -260,8 +260,8 @@ statuspage box {
 
 .playing-item-playlist {
   background-image: linear-gradient(
-    rgba(245, 245, 255, 0.2),
-    rgba(245, 245, 255, 0.2)
+    rgba(245, 245, 255, 0.15),
+    rgba(245, 245, 255, 0.15)
   );
 }
 
