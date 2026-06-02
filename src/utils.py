@@ -66,13 +66,14 @@ def get_has_host_permission():
 has_host_permission = get_has_host_permission()
 
 
-def get_mouse_bindings(mpv):
-    bindings = mpv._get_property("input-bindings")
+def get_mouse_bindings(bindings):
     active_mouse_bindings = {}
-
-    for b in bindings:
-        if "MBTN" in b["key"]:
-            active_mouse_bindings[b["key"]] = b["cmd"]
+    try:
+        for b in bindings:
+            if "MBTN" in b["key"]:
+                active_mouse_bindings[b["key"]] = b["cmd"]
+    except Exception as e:
+        print("get_mouse_bindings error:", e)
 
     return active_mouse_bindings
 
