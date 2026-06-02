@@ -1382,8 +1382,8 @@ class CineWindow(Adw.ApplicationWindow):
                 GLib.source_remove(self.space_hold_id)
                 self.space_hold_id = 0
 
-            if "space" in self.pressed_keys:
-                self.pressed_keys.remove("space")
+            if "SPACE" in self.pressed_keys:
+                self.pressed_keys.remove("SPACE")
                 try:
                     self.mpv["speed"] = self.prev_speed
                     self.mpv.show_text(f"{self.mpv['speed']:g}×")
@@ -1398,7 +1398,7 @@ class CineWindow(Adw.ApplicationWindow):
         except mpv.ShutdownError:
             pass
 
-    def _on_key_event(self, controller, keyval, _keycode, state, event_type):
+    def _on_key_event(self, _controller, keyval, _keycode, state, event_type):
         key_name = Gdk.keyval_name(keyval)
 
         if self.space_holding and event_type == "keyup":
@@ -1418,27 +1418,25 @@ class CineWindow(Adw.ApplicationWindow):
             self._key_up_keys()
             return
 
-        mpv_key = KEY_REMAP.get(key_name, key_name)
-        mods = []
+        mpv_key = chr(Gdk.keyval_to_unicode(keyval))
+        mpv_key = KEY_REMAP.get(key_name, mpv_key)
 
+        mods = []
         if state & Gdk.ModifierType.CONTROL_MASK:
-            mods.append("ctrl")
+            mods.append("Ctrl")
         if state & Gdk.ModifierType.ALT_MASK:
-            mods.append("alt")
+            mods.append("Alt")
         if state & Gdk.ModifierType.SHIFT_MASK:
-            if len(mpv_key) == 1 and mpv_key.isalpha():
-                mpv_key = mpv_key.upper()
-            else:
-                mods.append("shift")
+            mods.append("Shift")
 
         combo = "+".join(mods + [mpv_key])
 
-        if combo == "space":
+        if combo == "SPACE":
             if event_type == "keydown":
-                if "space" in self.pressed_keys:
+                if "SPACE" in self.pressed_keys:
                     return True
 
-                self.pressed_keys.add("space")
+                self.pressed_keys.add("SPACE")
 
                 self.space_hold_id = GLib.timeout_add(
                     500, self._set_space_holding, True
@@ -1449,9 +1447,9 @@ class CineWindow(Adw.ApplicationWindow):
                     self.space_hold_id = 0
 
                 if not self.space_holding:
-                    self.mpv.command_async("keypress", "space")
-                    if "space" in self.pressed_keys:
-                        self.pressed_keys.remove("space")
+                    self.mpv.command_async("keypress", "SPACE")
+                    if "SPACE" in self.pressed_keys:
+                        self.pressed_keys.remove("SPACE")
 
             self.space_holding = False
             return True
