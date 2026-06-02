@@ -403,8 +403,13 @@ class Playlist(Adw.Dialog):
                 print(f"Error opening location: {e}")
 
         def remove_from_playlist(index):
-            if index > 0 and index == self.mpv.playlist_count - 1:
+            if (
+                index > 0
+                and index == self.mpv.playlist_count - 1
+                and index == self.mpv.playlist_pos
+            ):
                 self.mpv.playlist_pos = index - 1
+
             self.mpv.command("playlist-remove", index)
 
             GLib.timeout_add(
