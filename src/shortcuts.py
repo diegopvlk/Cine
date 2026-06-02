@@ -32,9 +32,9 @@ UP               no-osd add volume 5; show-text "{_("Volume")}: ${{volume}}%" #{
 DOWN             no-osd add volume -5; show-text "{_("Volume")}: ${{volume}}%" #{_("Volume Decrease")}
 WHEEL_UP         no-osd add volume 5; show-text "{_("Volume")}: ${{volume}}%"
 WHEEL_DOWN       no-osd add volume -5; show-text "{_("Volume")}: ${{volume}}%"
-k                cycle pause; #{_("Play/Pause")}
-p                cycle pause; #{_("Play/Pause")}
-SPACE            cycle pause; #{_("Play/Pause")}
+k                nonrepeatable cycle pause; #{_("Play/Pause")}
+p                nonrepeatable cycle pause; #{_("Play/Pause")}
+SPACE            nonrepeatable cycle pause; #{_("Play/Pause")}
 c                nonrepeatable no-osd cycle sub-visibility; no-osd set user-data/show-icon "yes" #{_("Show/Hide Subtitles")}
 z                nonrepeatable cycle sub; show-text "{_("Subtitles")}: ${{sub}}" #{_("Next Subtitle Track")}
 Z                nonrepeatable cycle sub down; show-text "{_("Subtitles")}: ${{sub}}" #{_("Previous Subtitle Track")}
@@ -46,11 +46,11 @@ j                seek -10; show-text "⯇⯇" #{_("Seek 10s Backward")}
 l                seek 10; show-text "⯈⯈" #{_("Seek 10s Forward")}
 LEFT             seek -5; show-text "⯇⯇" #{_("Seek 5s Backward")}
 RIGHT            seek 5; show-text "⯈⯈" #{_("Seek 5s Forward")}
-F11              cycle fullscreen; #{_("Fullscreen")}
-f                cycle fullscreen; #{_("Fullscreen")}
+F11              nonrepeatable cycle fullscreen; #{_("Fullscreen")}
+f                nonrepeatable cycle fullscreen; #{_("Fullscreen")}
 ESC              set fullscreen no; #{_("Exit Fullscreen")}
-MBTN_LEFT_DBL    cycle fullscreen
-MBTN_MID         cycle fullscreen
+MBTN_LEFT_DBL    nonrepeatable cycle fullscreen
+MBTN_MID         nonrepeatable cycle fullscreen
 MBTN_RIGHT       ignore
 MBTN_BACK        playlist-prev; 
 MBTN_FORWARD     playlist-next; 
@@ -75,14 +75,14 @@ ctrl+=           add audio-delay 0.1; show-text "{_("Audio Delay")}: ${{audio-de
 ctrl++           add audio-delay 0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Increase Audio Delay")}
 ctrl+[           frame-step -1 seek; show-text "⯇⯇" #{_("Go Back One Frame")}
 ctrl+]           frame-step 1 seek; show-text "⯈⯈" #{_("Advance One Frame")}
-Ctrl+LEFT        add chapter -1 #{_("Seek to the Previous Chapter")}
-Ctrl+RIGHT       add chapter 1 #{_("Seek to the Next Chapter")}
-s                screenshot #{_("Take Screenshot With Subtitles")}
-S                screenshot video #{_("Take Screenshot Without Subtitles")}
-i                script-binding stats/display-stats #{_("Statistics")}
-I                script-binding stats/display-stats-toggle #{_("Statistics Overlay")}
-ctrl+l           ab-loop #{_("Set/Clear A-B Loop Points")}
-L                cycle-values loop-file "inf" "no"; show-text "{_("Loop")}: ${{loop-file}}" #{_("Loop File")}
+Ctrl+LEFT        nonrepeatable add chapter -1 #{_("Seek to the Previous Chapter")}
+Ctrl+RIGHT       nonrepeatable add chapter 1 #{_("Seek to the Next Chapter")}
+s                nonrepeatable screenshot #{_("Take Screenshot With Subtitles")}
+S                nonrepeatable screenshot video #{_("Take Screenshot Without Subtitles")}
+i                nonrepeatable script-binding stats/display-stats #{_("Statistics")}
+I                nonrepeatable script-binding stats/display-stats-toggle #{_("Statistics Overlay")}
+ctrl+l           nonrepeatable ab-loop #{_("Set/Clear A-B Loop Points")}
+L                nonrepeatable cycle-values loop-file "inf" "no"; show-text "{_("Loop")}: ${{loop-file}}" #{_("Loop File")}
 1                add contrast -1; show-text "{_("Contrast")}: ${{contrast}}" #{_("Decrease Contrast")}
 2                add contrast 1; show-text "{_("Contrast")}: ${{contrast}}" #{_("Increase Contrast")}
 3                add brightness -1; show-text "{_("Brightness")}: ${{brightness}}" #{_("Decrease Brightness")}

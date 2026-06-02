@@ -77,6 +77,24 @@ def get_mouse_bindings(mpv):
     return active_mouse_bindings
 
 
+def parse_nonrepeat_bindings(bindings):
+    non_repeatable = set()
+    try:
+        for b in bindings:
+            key = b.get("key")
+            cmd = b.get("cmd", "")
+
+            if key and "nonrepeatable" in cmd:
+                if len(key) == 1 and key.isupper() and key.isalpha():
+                    key = f"Shift+{key}"
+
+                non_repeatable.add(key)
+    except Exception as e:
+        print("parse_nonrepeat_bindings error:", e)
+
+    return non_repeatable
+
+
 def is_local_path(path):
     parsed = urlparse(str(path))
     if not parsed.scheme or parsed.scheme == "file" or len(parsed.scheme) == 1:

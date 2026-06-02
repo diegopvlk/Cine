@@ -35,6 +35,7 @@ from .save_session import (
 
 from .utils import (
     get_mouse_bindings,
+    parse_nonrepeat_bindings,
     is_local_path,
     get_gpu_vendor,
     format_time,
@@ -164,6 +165,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.startup: bool = True
         self.space_hold_id: int = 0
         self.space_holding: bool = False
+        self.space_pressed: bool = False
         self.click_delay_id: int = 0
         ck_time: int = gtk_setts.props.gtk_double_click_time if gtk_setts else 400
         self.click_time: int = max(ck_time, min(200, 425))
@@ -177,7 +179,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.last_preview_update: float = 0
         self.last_preview_seek: int = 0
         self.error_count: int = 0
-        self.pressed_keys: set[str] = set()
+        self.pressed_combos: set[str] = set()
         self.key_state: Gdk.ModifierType
         self.hide_timeout_id: int = 0
         self.is_fs: bool = False
@@ -249,7 +251,9 @@ class CineWindow(Adw.ApplicationWindow):
         if os.path.exists(INPUT_CONF):
             self.mpv.command("load-input-conf", INPUT_CONF)
 
+        self.bindings = cast(dict, self.mpv._get_property("input-bindings"))
         self.mouse_bindings: dict = get_mouse_bindings(self.mpv)
+        self.nonrepeat_keys = parse_nonrepeat_bindings(self.bindings)
 
         sync_mpv_with_settings(self)
 
@@ -302,7 +306,6 @@ class CineWindow(Adw.ApplicationWindow):
             Adw.ShortcutsDialog,  # pyright: ignore[reportAttributeAccessIssue]
             builder.get_object("shortcuts_dialog"),
         )
-        self.bindings = self.mpv._get_property("input-bindings")
         populate_shortcuts_dialog_mpv(self.shortcuts_dialog, self.bindings)
         self.shortcuts_dialog.present(self)
 
@@ -383,7 +386,7 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _setup_event_handlers(self):
         key_controller = Gtk.EventControllerKey()
-        key_controller.connect("key-pressed", self._on_key_event, "keydown")
+        key_controller.connect("key-pressed", self._on_key_event, "keypress")
         key_controller.connect("key-released", self._on_key_event, "keyup")
         key_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
         self.add_controller(key_controller)
@@ -421,7 +424,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self._cancel_click_hold()
                 self._hide_ui_timeout()
                 self.space_holding = False
-                self._key_up_keys()
+                self._set_space_holding(False)
 
         @self._connect("notify::is-active")
         def on_is_active_change(*args):
@@ -430,7 +433,7 @@ class CineWindow(Adw.ApplicationWindow):
             else:
                 self._set_space_holding(False)
                 self.space_holding = False
-                self._key_up_keys()
+                self._set_space_holding(False)
                 self.is_inactive = True
 
         drop_target = Gtk.DropTarget.new(Gdk.FileList, Gdk.DragAction.COPY)
@@ -1382,21 +1385,13 @@ class CineWindow(Adw.ApplicationWindow):
                 GLib.source_remove(self.space_hold_id)
                 self.space_hold_id = 0
 
-            if "SPACE" in self.pressed_keys:
-                self.pressed_keys.remove("SPACE")
+            if self.space_pressed:
+                self.space_pressed = False
                 try:
                     self.mpv["speed"] = self.prev_speed
                     self.mpv.show_text(f"{self.mpv['speed']:g}×")
                 except mpv.ShutdownError:
                     pass
-
-    def _key_up_keys(self):
-        try:
-            self._set_space_holding(False)
-            for key in self.pressed_keys:
-                self.mpv.command_async("keyup", key)
-        except mpv.ShutdownError:
-            pass
 
     def _on_key_event(self, _controller, keyval, _keycode, state, event_type):
         key_name = Gdk.keyval_name(keyval)
@@ -1407,7 +1402,7 @@ class CineWindow(Adw.ApplicationWindow):
         if key_name in ("Tab", "ISO_Left_Tab", "Return"):
             self.revealer_ui.set_reveal_child(True)
             self._hide_ui_timeout(s=3)
-            self._key_up_keys()
+            self._set_space_holding(False)
             return
 
         self.key_state = state
@@ -1415,7 +1410,7 @@ class CineWindow(Adw.ApplicationWindow):
         accel = Gtk.accelerator_name(keyval, clean_state)
         shortcuts_accel = "<Shift><Control>question"
         if self.app.get_actions_for_accel(accel) or accel == shortcuts_accel:
-            self._key_up_keys()
+            self._set_space_holding(False)
             return
 
         mpv_key = chr(Gdk.keyval_to_unicode(keyval))
@@ -1431,12 +1426,19 @@ class CineWindow(Adw.ApplicationWindow):
 
         combo = "+".join(mods + [mpv_key])
 
+        if event_type == "keypress":
+            if combo in self.nonrepeat_keys and combo in self.pressed_combos:
+                return True
+            self.pressed_combos.add(combo)
+        elif event_type == "keyup":
+            self.pressed_combos.discard(combo)
+
         if combo == "SPACE":
-            if event_type == "keydown":
-                if "SPACE" in self.pressed_keys:
+            if event_type == "keypress":
+                if self.space_pressed:
                     return True
 
-                self.pressed_keys.add("SPACE")
+                self.space_pressed = True
 
                 self.space_hold_id = GLib.timeout_add(
                     500, self._set_space_holding, True
@@ -1448,22 +1450,13 @@ class CineWindow(Adw.ApplicationWindow):
 
                 if not self.space_holding:
                     self.mpv.command_async("keypress", "SPACE")
-                    if "SPACE" in self.pressed_keys:
-                        self.pressed_keys.remove("SPACE")
+                    if self.space_pressed:
+                        self.space_pressed = False
 
             self.space_holding = False
             return True
 
         try:
-            if event_type == "keydown":
-                if combo in self.pressed_keys:
-                    return True
-                self.pressed_keys.add(combo)
-
-            elif event_type == "keyup":
-                if combo in self.pressed_keys:
-                    self.pressed_keys.remove(combo)
-
             self.mpv.command_async(event_type, combo)
             return True
         except mpv.ShutdownError:
