@@ -72,9 +72,10 @@
   </requires>
 
   <releases>
-    <release version="1.5.0" date="2026-06-03">
+    <release version="1.5.1" date="2026-06-04">
       <description translate="no">
         <ul>
+          <li>Performance improvements for playlist</li>
           <li>Changed GSK default renderer to "gl", fixing frame drops on Niri DE and video blackouts on NVIDIA cards</li>
           <li>Fixed playlist not updating sometimes</li>
           <li>Removed the parent folder label from playlist for a cleaner look (still available in file name tooltip)</li>
