@@ -196,7 +196,7 @@ statuspage box {
 }
 
 .chapter-popover label {
-  padding: 7px 11px;
+  padding: 6px 9px;
   margin-bottom: -7px;
 }
 .chapter-popover > contents {
@@ -207,10 +207,11 @@ statuspage box {
   border: 1px solid #212122;
   background: rgba(25, 25, 27, 0.95);
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.33);
-  border-radius: 13px;
+  border-radius: 12px;
+  line-height: 18px;
 }
 .chapter-popover > contents picture {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   border: none;
   box-shadow:
     0px 0px 5px 1px rgba(20, 20, 20, 0.5),
