@@ -961,10 +961,9 @@ class CineWindow(Adw.ApplicationWindow):
         self.last_preview_seek = int(self.hover_time)
 
         try:
-            if self.preview_player:
-                self.preview_player.command_async(
-                    "seek", self.hover_time, "absolute+keyframes"
-                )
+            self.preview_player.command_async(
+                "seek", self.hover_time, "absolute+keyframes"
+            )
         except Exception:
             pass
 
