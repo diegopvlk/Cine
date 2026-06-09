@@ -2077,13 +2077,10 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("aid")
         def on_aid_change(_name, value):
             def set_icon():
-                try:
-                    audio_on = value == "auto" or value
-                    self.audio_tracks_menu_btn.props.icon_name = (
-                        "cine-audio-symbolic" if audio_on else "cine-audio-off-symbolic"
-                    )
-                except mpv.ShutdownError:
-                    pass
+                audio_on = value == "auto" or value
+                self.audio_tracks_menu_btn.props.icon_name = (
+                    "cine-audio-symbolic" if audio_on else "cine-audio-off-symbolic"
+                )
 
             GLib.idle_add(set_icon)
 
