@@ -63,7 +63,7 @@ class CineApplication(Adw.Application):
         self.connect("shutdown", self._on_shutdown)
 
     def do_startup(self):
-        MPRIS(self)
+        self.mpris = MPRIS(self)
 
         Adw.Application.do_startup(self)
         Adw.StyleManager.get_default().props.color_scheme = Adw.ColorScheme.FORCE_DARK

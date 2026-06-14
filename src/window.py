@@ -52,6 +52,7 @@ from .options import OptionsMenuButton
 from .playlist import Playlist, PlaylistItemObj
 from .preferences import settings, sync_mpv_with_settings
 from .shortcuts import INTERNAL_BINDINGS, populate_shortcuts_dialog_mpv
+from .mpris import MPRIS
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -136,7 +137,8 @@ class CineWindow(Adw.ApplicationWindow):
 
     def __init__(self, is_activate=False, **kwargs):
         super().__init__(**kwargs)
-        self.app: Gtk.Application = cast(Gtk.Application, kwargs.get("application"))
+        self.app: Adw.Application = cast(Adw.Application, kwargs.get("application"))
+        self.app_mpris: MPRIS = self.app.mpris  # type: ignore
 
         Gtk.WindowGroup().add_window(self)
 
@@ -1177,6 +1179,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.icon_indicator.props.icon_name = pause if paused else play
         self._show_icon_indicator()
+        self.app_mpris._update_play_pause(paused)
 
     def _update_duration(self, duration):
         self.time_total_label.set_text(format_time(duration))
@@ -1214,6 +1217,8 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.command("playlist-unshuffle")
         self.last_shuffle = not button.props.active
 
+        self.app_mpris._update_shuffle(button.props.active)
+
         if isinstance(self.get_visible_dialog(), Playlist):
             GLib.idle_add(self._splice_playlist)
 
@@ -1248,6 +1253,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.can_go_prev = self.can_always_nav or (has_multiple and pos > 0)
         self.can_go_next = self.can_always_nav or (has_multiple and pos < count - 1)
+
+        self.app_mpris._update_can_prev_next(self.can_go_prev, self.can_go_next)
 
         self.previous_btn.props.sensitive = self.can_go_prev
         self.next_btn.props.sensitive = self.can_go_next
@@ -1865,12 +1872,20 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("loop-playlist")
         def on_loop_playlist_change(_name, value):
-            GLib.idle_add(self.loop_toggle_btn.set_active, value == "inf")
-            GLib.idle_add(self._update_playlist_nav_sensitivity)
+            def update():
+                self.loop_toggle_btn.set_active(value == "inf")
+                self._update_playlist_nav_sensitivity()
+                self.app_mpris._update_loop()
+
+            GLib.idle_add(update)
 
         @self.mpv.property_observer("loop-file")
         def on_loop_file_change(_name, value):
-            GLib.idle_add(self.loop_file_toggle_btn.set_active, value == "inf")
+            def update():
+                self.loop_file_toggle_btn.set_active(value == "inf")
+                self.app_mpris._update_loop()
+
+            GLib.idle_add(update)
 
         @self.mpv.property_observer("fullscreen")
         def on_fs_change(_name, value):
@@ -1891,9 +1906,15 @@ class CineWindow(Adw.ApplicationWindow):
         def on_time_change(_name, value):
             GLib.idle_add(self._update_progress, float(value or 0))
 
+        @self.mpv.property_observer("seeking")
+        def on_seeking_change(_name, _is_seeking):
+            GLib.idle_add(self.app_mpris._update_position)
+
         @self.mpv.property_observer("duration")
         def on_duration_change(_name, value):
             GLib.idle_add(self._update_duration, float(value or 0))
+            if value:
+                GLib.idle_add(self.app_mpris._update_metadata)
 
         @self.mpv.property_observer("mute")
         def on_mute_change(_name, muted):
@@ -1935,6 +1956,7 @@ class CineWindow(Adw.ApplicationWindow):
 
                 self._update_volume_icon()
                 settings.set_int("volume", vol)
+                self.app_mpris._update_volume(vol)
 
             GLib.idle_add(update_icon_and_vol_adj)
 
@@ -2006,6 +2028,8 @@ class CineWindow(Adw.ApplicationWindow):
                     self.hide_icon_indicator = True
                     if isinstance(dialog := self.get_visible_dialog(), Playlist):
                         dialog.close()
+                else:
+                    self.app_mpris._update_props()
 
                 self._sync_inhibit()
 
