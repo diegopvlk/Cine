@@ -1664,17 +1664,14 @@ class CineWindow(Adw.ApplicationWindow):
         self.fbo = ctypes.c_int()
 
     def _on_render_area(self, area, _context):
-        if not self.mpv_ctx:
-            return
         try:
             glGetIntegerv(GL_FRAMEBUFFER_BINDING, self.fbo)
-            scale = area.props.scale_factor
 
             self.mpv_ctx.render(
                 flip_y=True,
                 opengl_fbo={
-                    "w": int(area.get_width() * scale),
-                    "h": int(area.get_height() * scale),
+                    "w": area.get_width() * area.props.scale_factor,
+                    "h": area.get_height() * area.props.scale_factor,
                     "fbo": self.fbo.value,
                 },
             )
