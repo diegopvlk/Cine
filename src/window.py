@@ -435,7 +435,6 @@ class CineWindow(Adw.ApplicationWindow):
             if self.props.is_active:
                 GLib.timeout_add(200, setattr, self, "is_inactive", False)
             else:
-                self._set_space_holding(False)
                 self.space_holding = False
                 self._set_space_holding(False)
                 self.is_inactive = True
