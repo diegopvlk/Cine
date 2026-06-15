@@ -118,18 +118,21 @@ def is_local_path(path):
     return False
 
 
-def get_gpu_vendor(display, libgl):
+def get_gpu_vendor(libgl):
+    if not display:
+        return None
     try:
-        context = display.get_default_seat().get_display().create_gl_context()
-        context.realize()
-        context.make_current()
+        if seat := display.get_default_seat():
+            context = seat.get_display().create_gl_context()
+            context.realize()
+            context.make_current()
 
-        glGetString = libgl.glGetString
-        glGetString.restype = ctypes.c_char_p
-        glGetString.argtypes = [ctypes.c_uint]
+            glGetString = libgl.glGetString
+            glGetString.restype = ctypes.c_char_p
+            glGetString.argtypes = [ctypes.c_uint]
 
-        # GL_VENDOR is 0x1F00
-        return glGetString(0x1F00).decode("utf-8").lower()
+            # GL_VENDOR is 0x1F00
+            return glGetString(0x1F00).decode("utf-8").lower()
     except Exception as e:
         print(f"get_gpu_vendor error: {e}")
         return None

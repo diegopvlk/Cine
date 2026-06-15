@@ -140,7 +140,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.offload: Gtk.GraphicsOffload = Gtk.GraphicsOffload(child=self.gl_area)
         self.offload.set_black_background(True)
 
-        vendor: str | None = get_gpu_vendor(display, libgl)
+        vendor: str | None = get_gpu_vendor(libgl)
         if vendor and "nvidia" in vendor:
             self.offload.set_enabled(Gtk.GraphicsOffloadEnabled.DISABLED)
 
