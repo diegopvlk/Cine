@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-09 17:03-0300\n"
+"POT-Creation-Date: 2026-06-21 14:13-0300\n"
 "PO-Revision-Date: 2026-05-03 13:33+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/cine/app/de/>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.17.1\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:147
-#: src/mpris.py:369 src/window.py:197 src/window.py:316 src/window.blp:6
-#: src/window.blp:469
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:138
+#: src/mpris.py:340 src/window.py:193 src/window.py:316 src/window.blp:6
+#: src/window.blp:474
 msgid "Cine"
 msgstr "Cine"
 
@@ -95,47 +95,43 @@ msgstr "Hauptfenster"
 msgid "translator-credits"
 msgstr "Gryfin92"
 
-#: src/mpris.py:154 src/mpris.py:227 src/mpris.py:362
-msgid "Unknown title"
-msgstr "Unbekannter Titel"
-
 #: src/options.py:193 src/options.blp:79 src/options.blp:137
 msgid "Original"
 msgstr "Original"
 
-#: src/playlist.py:113 src/playlist.blp:49
+#: src/playlist.py:118 src/playlist.blp:49
 msgid "Search"
 msgstr "Suchen"
 
-#: src/playlist.py:178 src/playlist.py:186 src/playlist.py:453
-#: src/preferences.py:370 src/playlist.blp:56
+#: src/playlist.py:183 src/playlist.py:191 src/playlist.py:459
+#: src/preferences.py:381 src/playlist.blp:56
 msgid "Save Playlist"
 msgstr "Wiedergabeliste speichern"
 
-#: src/playlist.py:181 src/preferences.blp:115 src/preferences.blp:150
+#: src/playlist.py:186 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr ""
 "Benötigt Flatpak-Berechtigung, den Ordner zu lesen, in dem das Video "
 "gespeichert ist"
 
-#: src/playlist.py:309 src/window.py:1285 src/window.py:1827
+#: src/playlist.py:315 src/window.py:1296 src/window.py:1812
 msgid "File Error"
 msgstr "Dateifehler"
 
-#: src/playlist.py:413
+#: src/playlist.py:419
 msgid "Open Item Location"
 msgstr "Dateipfad öffnen"
 
-#: src/playlist.py:414
+#: src/playlist.py:420
 msgid "Remove from Playlist"
 msgstr "Aus Wiedergabeliste entfernen"
 
-#: src/playlist.py:454 src/playlist.blp:20 src/window.blp:374
+#: src/playlist.py:460 src/playlist.blp:20 src/window.blp:379
 msgid "Playlist"
 msgstr "Wiedergabeliste"
 
-#: src/playlist.py:474
+#: src/playlist.py:480
 #, python-brace-format
 msgid "{n} item"
 msgid_plural "{n} items"
@@ -150,29 +146,29 @@ msgstr "Untertitelfarbe"
 msgid "Subtitle Background"
 msgstr "Untertitel-Hintergrund"
 
-#: src/preferences.py:367
+#: src/preferences.py:378
 msgid "Some features require extra permission to work:"
 msgstr ""
 "Einige Funktionen erfordern zusätzliche Berechtigungen, um zu funktionieren:"
 
-#: src/preferences.py:368
+#: src/preferences.py:379
 msgid "Auto load subtitle file"
 msgstr "Untertiteldatei automatisch laden"
 
-#: src/preferences.py:369
+#: src/preferences.py:380
 msgid "Auto add files from the same folder to playlist"
 msgstr ""
 "Dateien aus demselben Ordner automatisch zur Wiedergabeliste hinzufügen"
 
-#: src/preferences.py:371 src/preferences.blp:98
+#: src/preferences.py:382 src/preferences.blp:98
 msgid "Restore Saved Session"
 msgstr "Gespeicherte Sitzung wiederherstellen"
 
-#: src/preferences.py:372 src/preferences.blp:133
+#: src/preferences.py:383 src/preferences.blp:133
 msgid "Save Video Position on Close"
 msgstr "Speichere Fortschritt beim Beenden"
 
-#: src/preferences.py:376
+#: src/preferences.py:387
 msgid ""
 "If you wish to use those features, install Flatseal for granular folder "
 "control, or run this command to grant access to all folders in the system:"
@@ -181,20 +177,20 @@ msgstr ""
 "detaillierte Ordnerkontrolle, oder führen Sie diesen Befehl aus, um Zugriff "
 "auf alle Ordner im System zu gewähren:"
 
-#: src/preferences.py:382
+#: src/preferences.py:393
 msgid "Extra permission enabled."
 msgstr "Zusätzliche Berechtigung aktiviert."
 
-#: src/preferences.py:397
+#: src/preferences.py:407
 msgid "Copied"
 msgstr "Kopiert"
 
-#: src/preferences.py:403 src/preferences.blp:58
+#: src/preferences.py:413 src/preferences.blp:58
 msgid "Copy"
 msgstr "Kopieren"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
-#: src/shortcuts.py:34 src/window.py:1934 src/window.blp:236
+#: src/shortcuts.py:34 src/window.py:1930 src/window.blp:241
 msgid "Volume"
 msgstr "Lautstärke"
 
@@ -207,7 +203,7 @@ msgid "Volume Decrease"
 msgstr "Lautstärke verringern"
 
 #: src/shortcuts.py:35 src/shortcuts.py:36 src/shortcuts.py:37
-#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:217
+#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:222
 msgid "Play/Pause"
 msgstr "Wiedergabe/Pause"
 
@@ -216,7 +212,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Untertitel anzeigen/verstecken"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/window.blp:278
+#: src/window.blp:283
 msgid "Subtitles"
 msgstr "Untertitel"
 
@@ -240,7 +236,7 @@ msgstr "Nächste sekundäre Untertitelspur"
 msgid "Previous Secondary Subtitle Track"
 msgstr "Vorherige sekundäre Untertitelspur"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:738 src/window.blp:293
+#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:741 src/window.blp:298
 msgid "Audio"
 msgstr "Audio"
 
@@ -268,18 +264,17 @@ msgstr "Springe 5s rückwärts"
 msgid "Seek 5s Forward"
 msgstr "Springe 5s vorwärts"
 
-#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1883
-#: src/window.blp:390
+#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1875
+#: src/window.blp:395
 msgid "Fullscreen"
 msgstr "Vollbild"
 
-#: src/shortcuts.py:51 src/window.py:1883
+#: src/shortcuts.py:51 src/window.py:1875
 msgid "Exit Fullscreen"
 msgstr "Vollbild verlassen"
 
 #: src/shortcuts.py:61 src/shortcuts.py:62 src/shortcuts.py:63
-#: src/shortcuts.py:64 src/shortcuts.py:65 src/options.blp:285
-#: src/options.blp:309
+#: src/options.blp:285 src/options.blp:309
 msgid "Zoom"
 msgstr "Vergrößerung"
 
@@ -328,7 +323,7 @@ msgstr "Untertitelskalierung erhöhen"
 msgid "Decrease Subtitle Scale"
 msgstr "Untertitelskalierung verringern"
 
-#: src/shortcuts.py:72 src/window.blp:247
+#: src/shortcuts.py:72 src/window.blp:252
 msgid "Mute/Unmute"
 msgstr "Stumm/Laut"
 
@@ -385,7 +380,7 @@ msgstr "A-B Schleifenpunkte setzen/löschen"
 msgid "Loop"
 msgstr "Wiederholen"
 
-#: src/shortcuts.py:85 src/window.blp:363
+#: src/shortcuts.py:85 src/window.blp:368
 msgid "Loop File"
 msgstr "Wiedergabe wiederholen"
 
@@ -477,85 +472,89 @@ msgstr "Wiedergabe"
 msgid "Miscellaneous"
 msgstr "Verschiedenes"
 
-#: src/window.py:590 src/window.py:1277 src/window.blp:123
+#: src/window.py:593 src/window.py:1288 src/window.blp:123
 msgid "Add Subtitle Track"
 msgstr "Untertitelspur hinzufügen"
 
-#: src/window.py:592 src/window.py:601
+#: src/window.py:595 src/window.py:604
 msgid "None"
 msgstr "Keine"
 
-#: src/window.py:599 src/window.blp:128
+#: src/window.py:602 src/window.blp:128
 msgid "Add Audio Track"
 msgstr "Audiospur hinzufügen"
 
-#: src/window.py:638
+#: src/window.py:641
 msgid "Track"
 msgstr "Spur"
 
-#: src/window.py:681 src/playlist.blp:35 src/window.blp:113
+#: src/window.py:684 src/playlist.blp:35 src/window.blp:113
 msgid "Add Folder"
 msgstr "Ordner hinzufügen"
 
-#: src/window.py:681 src/shortcuts-dialog.blp:21 src/window.blp:98
-#: src/window.blp:493
+#: src/window.py:684 src/shortcuts-dialog.blp:21 src/window.blp:98
+#: src/window.blp:498
 msgid "Open Folder"
 msgstr "Ordner öffnen"
 
-#: src/window.py:707 src/shortcuts-dialog.blp:16 src/window.blp:93
+#: src/window.py:710 src/shortcuts-dialog.blp:16 src/window.blp:93
 msgid "Open Files"
 msgstr "Dateien öffnen"
 
-#: src/window.py:710 src/playlist.blp:30 src/window.blp:108
+#: src/window.py:713 src/playlist.blp:30 src/window.blp:108
 msgid "Add Files"
 msgstr "Dateien hinzufügen"
 
-#: src/window.py:714
+#: src/window.py:717
 msgid "Add Subtitle"
 msgstr "Untertitel hinzufügen"
 
-#: src/window.py:717
+#: src/window.py:720
 msgid "Add Audio"
 msgstr "Audio hinzufügen"
 
-#: src/window.py:733
+#: src/window.py:736
 msgid "Subtitle"
 msgstr "Untertitel"
 
-#: src/window.py:742
+#: src/window.py:745
 msgid "Media"
 msgstr "Medien"
 
-#: src/window.py:804 src/playlist.blp:40 src/window.blp:118
+#: src/window.py:804
+msgid "Session Saved"
+msgstr "Sitzung gespeichert"
+
+#: src/window.py:810 src/playlist.blp:40 src/window.blp:118
 msgid "Add URL"
 msgstr "URL hinzufügen"
 
-#: src/window.py:804 src/shortcuts-dialog.blp:26 src/window.blp:103
-#: src/window.blp:502
+#: src/window.py:810 src/shortcuts-dialog.blp:26 src/window.blp:103
+#: src/window.blp:507
 msgid "Open URL"
 msgstr "URL öffnen"
 
-#: src/window.py:817
+#: src/window.py:823
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:825 src/playlist.blp:26
+#: src/window.py:831 src/playlist.blp:26
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: src/window.py:825 src/window.blp:87
+#: src/window.py:831 src/window.blp:87
 msgid "Open"
 msgstr "Öffnen"
 
-#: src/window.py:1011 src/window.py:1119
+#: src/window.py:1017 src/window.py:1125
 msgid "Chapter"
 msgstr "Kapitel"
 
-#: src/window.py:1175 src/window.py:1281
+#: src/window.py:1181 src/window.py:1292
 msgid "Play"
 msgstr "Abspielen"
 
-#: src/window.py:1175
+#: src/window.py:1181
 msgid "Pause"
 msgstr "Pause"
 
@@ -742,6 +741,10 @@ msgstr "Beispiel: en,es,pt"
 msgid "Preferred Audio Languages"
 msgstr "Bevorzugte Audio-Sprache"
 
+#: src/preferences.blp:307
+msgid "Open Config Folder"
+msgstr "Konfigurationsordner öffnen"
+
 #: src/shortcuts-dialog.blp:8
 msgid "General"
 msgstr "Allgemein"
@@ -779,10 +782,14 @@ msgid "Close Window"
 msgstr "Fenster schließen"
 
 #: src/shortcuts-dialog.blp:71 src/window.blp:166
+msgid "Save Session"
+msgstr "Sitzung speichern"
+
+#: src/shortcuts-dialog.blp:76 src/window.blp:171
 msgid "Save Session and Close"
 msgstr "Sitzung speichern und schließen"
 
-#: src/shortcuts-dialog.blp:76
+#: src/shortcuts-dialog.blp:81
 msgid "Quit"
 msgstr "Beenden"
 
@@ -798,41 +805,44 @@ msgstr "Tastaturkürzel"
 msgid "About Cine"
 msgstr "Über Cine"
 
-#: src/window.blp:207
+#: src/window.blp:212
 msgid "Previous"
 msgstr "Vorheriges"
 
-#: src/window.blp:228
+#: src/window.blp:233
 msgid "Next"
 msgstr "Nächstes"
 
-#: src/window.blp:307
+#: src/window.blp:312
 msgid "Video"
 msgstr "Video"
 
-#: src/window.blp:322
+#: src/window.blp:327
 msgid "Chapters"
 msgstr "Kapitel"
 
-#: src/window.blp:339
+#: src/window.blp:344
 msgid "Shuffle Playlist"
 msgstr "Zufallswiedergabe"
 
-#: src/window.blp:351
+#: src/window.blp:356
 msgid "Loop Playlist"
 msgstr "Wiedergabeliste wiederholen"
 
-#: src/window.blp:423
+#: src/window.blp:428
 msgid "Toggle Elapsed/Remaining"
 msgstr "Vergangene/Verbleibende Zeit umschalten"
 
-#: src/window.blp:470
+#: src/window.blp:475
 msgid "Drag and drop files here"
 msgstr "Dateien hier ablegen"
 
-#: src/window.blp:483
+#: src/window.blp:488
 msgid "Open…"
 msgstr "Öffnen…"
+
+#~ msgid "Unknown title"
+#~ msgstr "Unbekannter Titel"
 
 #~ msgid "Shortcuts"
 #~ msgstr "Tastenkürzel"
