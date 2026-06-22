@@ -30,7 +30,7 @@ from gi.repository import Adw, Gio, GLib
 APP_ID = "io.github.diegopvlk.Cine"
 MEDIAPLAYER2_PLAYER = "org.mpris.MediaPlayer2.Player"
 
-# PlaybackStatus, Metadata and CanSeek causes frame drops (too much dbus calls)
+# some gnome extensions can spam properties which can cause frame drops
 INTERFACE = """
 <!DOCTYPE node PUBLIC
 '-//freedesktop//DTD D-BUS Object Introspection 1.0//EN'
@@ -64,11 +64,9 @@ INTERFACE = """
         <signal name='Seeked'>
             <arg name='Position' type='x'/>
         </signal>
-        <!--
         <property name='PlaybackStatus' type='s' access='read'/>
         <property name='Metadata' type='a{sv}' access='read'/>
         <property name='CanSeek' type='b' access='read'/>
-        -->
         <property name='LoopStatus' type='s' access='readwrite'/>
         <property name='Volume' type='d' access='readwrite'/>
         <property name='Position' type='x' access='read'/>
@@ -95,23 +93,29 @@ class MPRIS:
         self._app.connect("notify::active-window", self._update_props)
 
     def _on_bus_acquired(self, _source, res):
-        try:
-            self._con = Gio.bus_get_finish(res)
-            Gio.bus_own_name_on_connection(
-                self._con, self._bus_name, Gio.BusNameOwnerFlags.NONE, None, None
-            )
-
-            node_info = Gio.DBusNodeInfo.new_for_xml(INTERFACE)
-            for interface in node_info.interfaces:
-                self._con.register_object(
-                    object_path=self._path,
-                    interface_info=interface,
-                    method_call_closure=self._on_method_call,
-                    get_property_closure=self._on_get_property,
-                    set_property_closure=self._on_set_property,
+        def register():
+            try:
+                self._con = Gio.bus_get_finish(res)
+                Gio.bus_own_name_on_connection(
+                    self._con, self._bus_name, Gio.BusNameOwnerFlags.NONE, None, None
                 )
-        except Exception as e:
-            print(f"MPRIS Bus Error: {e}")
+
+                node_info = Gio.DBusNodeInfo.new_for_xml(INTERFACE)
+                for interface in node_info.interfaces:
+                    self._con.register_object_with_closures2(
+                        object_path=self._path,
+                        interface_info=interface,
+                        method_call_closure=self._on_method_call,
+                        get_property_closure=self._on_get_property,
+                        set_property_closure=self._on_set_property,
+                    )
+            except Exception as e:
+                print(f"MPRIS Bus Error: {e}")
+
+        # Without idle_add some gnome mpris extensions can freeze the
+        # whole shell for about a minute. Not unique to cine, it can also
+        # happen with other players that uses mpris.
+        GLib.idle_add(register)
 
     def _emit_props_changed(self, changed_props):
         if not self._con:
@@ -126,7 +130,7 @@ class MPRIS:
         )
 
     def _update_props(self, *args):
-        """Notifies D-Bus that properties have changed when the window switches."""
+        """Notifies D-Bus that properties have changed."""
         if not self._con:
             return
 
@@ -141,17 +145,18 @@ class MPRIS:
             status = "Paused" if self._mpv.pause else "Playing"
             vol = self._mpv.volume
             loop = self._get_loop_status()
-            not_idle = not self._mpv.idle_active
 
             self._emit_props_changed(
                 {
                     "PlaybackStatus": GLib.Variant("s", status),
                     "LoopStatus": GLib.Variant("s", loop),
-                    "Metadata": self._get_metadata_variant(),
-                    "CanPlay": GLib.Variant("b", not_idle),
-                    "CanPause": GLib.Variant("b", not_idle),
-                    "CanSeek": GLib.Variant("b", not_idle),
-                    "CanControl": GLib.Variant("b", not_idle),
+                    "Metadata": self._get_metadata_variant()
+                    if not self._mpv.idle_active
+                    else GLib.Variant("a{sv}", {}),
+                    "CanPlay": GLib.Variant("b", True),
+                    "CanPause": GLib.Variant("b", True),
+                    "CanSeek": GLib.Variant("b", True),
+                    "CanControl": GLib.Variant("b", True),
                     "Volume": GLib.Variant("d", float(vol / 100.0)),
                     "CanGoPrevious": GLib.Variant("b", self._can_go_prev),
                     "CanGoNext": GLib.Variant("b", self._can_go_next),
@@ -162,17 +167,17 @@ class MPRIS:
     @property
     def _mpv(self):
         win = self._app.props.active_window
-        return getattr(win, "mpv", None) if win else None
+        return getattr(win, "mpv", None)
 
     @property
     def _can_go_prev(self):
         win = self._app.props.active_window
-        return getattr(win, "can_go_prev", False) if win else False
+        return getattr(win, "can_go_prev", False)
 
     @property
     def _can_go_next(self):
         win = self._app.props.active_window
-        return getattr(win, "can_go_next", False) if win else False
+        return getattr(win, "can_go_next", False)
 
     @property
     def _shuffle(self):
@@ -185,8 +190,8 @@ class MPRIS:
             return "None"
 
         # mpv loop-playlist can be 'inf', 'no', or a number
-        loop_playlist = getattr(p, "loop_playlist", "inf")
-        loop_file = getattr(p, "loop_file", "inf")
+        loop_playlist = getattr(p, "loop_playlist", "no")
+        loop_file = getattr(p, "loop_file", "no")
 
         if loop_file == "inf":
             return "Track"
@@ -217,14 +222,12 @@ class MPRIS:
     def _update_shuffle(self, shuffle_active):
         self._emit_props_changed({"Shuffle": GLib.Variant("b", shuffle_active)})
 
-    def _update_position(self):
-        # this is enough to update 'Position'
-        self._emit_props_changed({"CanSeek": GLib.Variant("b", True)})
-
     def _get_metadata_variant(self):
         """Constructs the MPRIS Metadata dictionary."""
 
-        duration = getattr(self._mpv, "duration") or 0
+        duration = getattr(self._mpv, "duration", 0)
+        if duration is None:
+            duration = 0
 
         metadata = {
             "mpris:trackid": GLib.Variant("o", "/org/mpris/MediaPlayer2/Track/0"),
@@ -275,7 +278,7 @@ class MPRIS:
             self._update_props()
         elif method == "Seek":
             offset_usec = params.get_child_value(0).get_int64()
-            current_pos = getattr(p, "time_pos", 0) or 0
+            current_pos = getattr(p, "time_pos", 0)
             p.time_pos = current_pos + (offset_usec / 1_000_000.0)
             self._emit_seeked()
         elif method == "SetPosition":
@@ -292,7 +295,9 @@ class MPRIS:
     def _emit_seeked(self):
         if not self._con or not self._mpv:
             return
-        raw_pos = getattr(self._mpv, "time_pos", 0) or 0
+        raw_pos = getattr(self._mpv, "time_pos", 0)
+        if raw_pos is None:
+            raw_pos = 0
         pos_usec = int(raw_pos * 1_000_000)
         self._con.emit_signal(
             None,
@@ -310,10 +315,10 @@ class MPRIS:
                 return GLib.Variant("b", self._can_go_prev)
             elif prop == "CanGoNext":
                 return GLib.Variant("b", self._can_go_next)
-            elif prop in ["CanPlay", "CanPause", "CanControl"]:
+            elif prop in ["CanPlay", "CanPause", "CanControl", "CanSeek"]:
                 return GLib.Variant("b", True)
             elif prop == "Volume":
-                vol = getattr(p, "volume", 0) / 100.0 if p else 0.0
+                vol = getattr(p, "volume") / 100.0 if p else 0.0
                 return GLib.Variant("d", float(vol))
             elif prop == "PlaybackStatus":
                 status = "Paused" if (p and p.pause) else "Playing"
@@ -321,7 +326,9 @@ class MPRIS:
             elif prop == "LoopStatus":
                 return GLib.Variant("s", self._get_loop_status())
             elif prop == "Position":
-                raw_pos = getattr(p, "time_pos", 0) or 0
+                raw_pos = getattr(p, "time_pos", 0)
+                if raw_pos is None:
+                    raw_pos = 0
                 pos = int(raw_pos * 1_000_000)
                 return GLib.Variant("x", pos)
             elif prop == "Metadata":

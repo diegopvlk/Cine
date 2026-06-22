@@ -1872,7 +1872,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("seeking")
         def on_seeking_change(_name, _is_seeking):
-            GLib.idle_add(self.app_mpris._update_position)
+            GLib.idle_add(self.app_mpris._emit_seeked)
 
         @self.mpv.property_observer("duration")
         def on_duration_change(_name, value):
@@ -1990,8 +1990,6 @@ class CineWindow(Adw.ApplicationWindow):
                     self.hide_icon_indicator = True
                     if isinstance(dialog := self.get_visible_dialog(), Playlist):
                         dialog.close()
-                else:
-                    self.app_mpris._update_props()
 
                 self._sync_inhibit()
 
@@ -2015,6 +2013,7 @@ class CineWindow(Adw.ApplicationWindow):
                         obj.notify("playing")
 
                 self.hide_icon_indicator = False
+                self.app_mpris._update_props()
 
             if title:
                 GLib.idle_add(set)
