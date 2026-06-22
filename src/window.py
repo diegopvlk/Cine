@@ -1655,10 +1655,7 @@ class CineWindow(Adw.ApplicationWindow):
             **display_param,
         )
 
-        self.mpv_ctx.update_cb = lambda: GLib.idle_add(
-            self.gl_area.queue_render,
-            priority=GLib.PRIORITY_HIGH_IDLE,  # pyright: ignore[reportCallIssue]
-        )
+        self.mpv_ctx.update_cb = lambda: GLib.idle_add(self.gl_area.queue_render)
 
         self.fbo = ctypes.c_int()
 
