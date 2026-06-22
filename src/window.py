@@ -1726,7 +1726,7 @@ class CineWindow(Adw.ApplicationWindow):
         save_pos = settings.get_boolean("save-video-position")
         if same_playlist or save_pos:
             self.mpv.write_watch_later_config()
-        self.mpv.quit()
+        GLib.idle_add(self.mpv.quit)
         return False
 
     def _splice_playlist(self):
