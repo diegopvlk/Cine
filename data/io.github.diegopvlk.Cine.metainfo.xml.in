@@ -72,6 +72,19 @@
   </requires>
 
   <releases>
+    <release version="1.6.0" date="2026-06-22">
+      <description translate="no">
+        <ul>
+          <li>Improvements and fixes for MPRIS</li>
+          <li>Zooming with Ctrl + Scroll Wheel is now cursor-centric</li>
+          <li>Added action to save session without closing the app</li>
+          <li>Added button in preferences to open config folder</li>
+          <li>Fixed mouse back/forward buttons not working</li>
+          <li>Fixed playlist search not working after adding/opening new items</li>
+          <li>Improved file error handling</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.5.4" date="2026-06-10">
       <description translate="no">
         <ul>
