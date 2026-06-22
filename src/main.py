@@ -252,6 +252,11 @@ class CineApplication(Adw.Application):
         )
 
         about.add_link(
+            "Sponsor on GitHub",
+            "https://github.com/sponsors/diegopvlk",
+        )
+
+        about.add_link(
             "Donate (PayPal)",
             "https://www.paypal.com/donate?hosted_button_id=DVL7H35GA66X6",
         )
