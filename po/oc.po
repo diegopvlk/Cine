@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-27 21:01-0300\n"
-"PO-Revision-Date: 2026-04-08 23:12+0000\n"
+"PO-Revision-Date: 2026-06-28 00:44+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Occitan <https://hosted.weblate.org/projects/cine/app/oc/>\n"
 "Language: oc\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.17-dev\n"
+"X-Generator: Weblate 2026.7.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:139
 #: src/mpris.py:357 src/window.py:196 src/window.py:2040 src/window.blp:6
@@ -92,7 +92,7 @@ msgstr "Fenèstra principala"
 
 #: src/history.py:54 src/history.py:58
 msgid "Load All"
-msgstr ""
+msgstr "Cargar tot"
 
 #: src/history.py:134
 msgid "Remove from History"
