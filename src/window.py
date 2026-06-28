@@ -1272,7 +1272,7 @@ class CineWindow(Adw.ApplicationWindow):
             pass
 
     def _on_drop_enter(self, target, _x, _y):
-        GLib.timeout_add(10, self.revealer_drop_indicator.set_reveal_child, True)
+        self.revealer_drop_indicator.set_reveal_child(True)
         drop = target.get_current_drop()
         formats = drop.get_formats()
         target_type = (
@@ -1306,9 +1306,9 @@ class CineWindow(Adw.ApplicationWindow):
         return True
 
     def _on_drop_leave(self, _target):
-        GLib.timeout_add(10, self.revealer_drop_indicator.set_reveal_child, False)
-        GLib.timeout_add(100, self.drop_icon.set_from_icon_name, "")
-        GLib.timeout_add(100, self.drop_label.set_text, "")
+        self.revealer_drop_indicator.set_reveal_child(False)
+        self.drop_icon.set_from_icon_name("")
+        self.drop_label.set_text("")
 
     def _on_drop(self, _target, value, _x, _y):
         first_file = True
