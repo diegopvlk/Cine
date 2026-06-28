@@ -162,7 +162,7 @@ class HistoryDialog(Adw.Dialog):
                         for item in reversed(ordered_entries):
                             f.write(json.dumps(item, ensure_ascii=False) + "\n")
                 except Exception as e:
-                    print(f"Failed to truncate hist file: {e}")
+                    print(f"Failed to save history file: {e}")
                     GLib.idle_add(self._show_toast, f"{repr(e)}")
 
             for day_key in sorted(created_groups.keys(), reverse=True):
