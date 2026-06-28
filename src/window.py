@@ -88,6 +88,7 @@ class CineWindow(Adw.ApplicationWindow):
     start_page: Adw.StatusPage = Gtk.Template.Child()
     revealer_icon_indicator: Gtk.Revealer = Gtk.Template.Child()
     icon_indicator: Gtk.Image = Gtk.Template.Child()
+    title_widget: Adw.WindowTitle = Gtk.Template.Child()
     headerbar: Adw.HeaderBar = Gtk.Template.Child()
     controls_box: Gtk.Box = Gtk.Template.Child()
     controls_wrap_box: Adw.WrapBox = Gtk.Template.Child()
@@ -313,7 +314,6 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _setup_elements(self):
         self.set_default_size(DEFAULT_WIDTH, DEFAULT_HEIGHT)
-        self.set_title(_("Cine"))
 
         for widget in [
             self.controls_wrap_box,
@@ -2011,6 +2011,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.actions["open-sub-menu"].set_enabled(not is_idle)
                 self.actions["open-audio-menu"].set_enabled(not is_idle)
 
+                self.title_widget.set_visible(not is_idle)
                 self.start_page.set_visible(is_idle)
                 self.controls_box.set_visible(not is_idle)
                 self.gl_area.set_visible(not is_idle)
@@ -2018,7 +2019,7 @@ class CineWindow(Adw.ApplicationWindow):
                 if is_idle:
                     self.error_count = 0
                     self.revealer_ui.set_reveal_child(True)
-                    self.set_title("")
+                    self.set_title(_("Cine"))
                     self.hide_icon_indicator = True
                     if isinstance(dialog := self.get_visible_dialog(), Playlist):
                         dialog.close()
@@ -2039,8 +2040,10 @@ class CineWindow(Adw.ApplicationWindow):
                     if title == self.mpv.filename:
                         title_no_ext = os.path.splitext(title)[0]
                         self.set_title(title_no_ext)
+                        self.title_widget.set_title(title_no_ext)
                     else:
                         self.set_title(title)
+                        self.title_widget.set_title(title)
                         pos = abs(cast(int, self.mpv.playlist_pos))
                         if obj := cast(PlaylistItemObj, self.playlist_ls.get_item(pos)):
                             obj.notify("playing")

@@ -76,6 +76,10 @@ template $CineWindow: Adw.ApplicationWindow {
             Adw.HeaderBar headerbar {
               valign: start;
 
+              title-widget: Adw.WindowTitle title_widget {
+                title: _("Cine");
+              };
+
               styles [
                 "osd",
                 "header-bar",
