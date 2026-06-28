@@ -1244,27 +1244,30 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.loop_file = "no"
 
     def _update_playlist_nav_sensitivity(self):
-        count: int = cast(int, self.mpv.playlist_count) or 0
-        pos: int = cast(int, self.mpv.playlist_pos) or 0
-        loop_list_enabled: bool = self.mpv.loop_playlist is not False
-        shuffle_enabled: bool = self.shuffle_toggle_btn.props.active
+        try:
+            count: int = cast(int, self.mpv.playlist_count) or 0
+            pos: int = cast(int, self.mpv.playlist_pos) or 0
+            loop_list_enabled: bool = self.mpv.loop_playlist is not False
+            shuffle_enabled: bool = self.shuffle_toggle_btn.props.active
 
-        has_multiple: bool = count > 1
+            has_multiple: bool = count > 1
 
-        self.can_always_nav: bool = has_multiple and (
-            shuffle_enabled or loop_list_enabled
-        )
+            self.can_always_nav: bool = has_multiple and (
+                shuffle_enabled or loop_list_enabled
+            )
 
-        self.can_go_prev = self.can_always_nav or (has_multiple and pos > 0)
-        self.can_go_next = self.can_always_nav or (has_multiple and pos < count - 1)
+            self.can_go_prev = self.can_always_nav or (has_multiple and pos > 0)
+            self.can_go_next = self.can_always_nav or (has_multiple and pos < count - 1)
 
-        self.app_mpris._update_can_prev_next(self.can_go_prev, self.can_go_next)
+            self.app_mpris._update_can_prev_next(self.can_go_prev, self.can_go_next)
 
-        self.previous_btn.props.sensitive = self.can_go_prev
-        self.next_btn.props.sensitive = self.can_go_next
+            self.previous_btn.props.sensitive = self.can_go_prev
+            self.next_btn.props.sensitive = self.can_go_next
 
-        self.shuffle_toggle_btn.props.visible = has_multiple
-        self.loop_toggle_btn.props.visible = has_multiple
+            self.shuffle_toggle_btn.props.visible = has_multiple
+            self.loop_toggle_btn.props.visible = has_multiple
+        except mpv.ShutdownError:
+            pass
 
     def _on_drop_enter(self, target, _x, _y):
         GLib.timeout_add(10, self.revealer_drop_indicator.set_reveal_child, True)
@@ -1709,7 +1712,10 @@ class CineWindow(Adw.ApplicationWindow):
         self.set_default_size(new_w, new_h)
 
     def _sync_inhibit(self):
-        should_inhibit = not self.mpv.pause and not self.mpv.idle_active
+        try:
+            should_inhibit = not self.mpv.pause and not self.mpv.idle_active
+        except mpv.ShutdownError:
+            should_inhibit = False
 
         if should_inhibit and self.inhibit_id == 0:
             self.inhibit_id = self.app.inhibit(
@@ -1730,11 +1736,16 @@ class CineWindow(Adw.ApplicationWindow):
             GLib.timeout_add(350, self.revealer_icon_indicator.set_reveal_child, False)
 
     def do_close_request(self) -> bool:
-        same_playlist = is_same_playlist(self.mpv.playlist)
-        save_pos = settings.get_boolean("save-video-position")
-        if same_playlist or save_pos:
-            self.mpv.write_watch_later_config()
-        GLib.idle_add(self.mpv.quit)
+        try:
+            same_playlist = is_same_playlist(self.mpv.playlist)
+            save_pos = settings.get_boolean("save-video-position")
+            if same_playlist or save_pos:
+                self.mpv.quit_watch_later()
+            else:
+                self.mpv.quit()
+            self.mpv.wait_for_shutdown()
+        except mpv.ShutdownError:
+            pass
         return False
 
     def _splice_playlist(self):
@@ -1774,20 +1785,23 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.event_callback("file-loaded")
         def on_files_loaded(_event):
             def set():
-                self.spinner.set_visible(False)
-                self.local_path = is_local_path(self.mpv.path)
-                self.start_page.set_sensitive(True)
+                try:
+                    self.spinner.set_visible(False)
+                    self.local_path = is_local_path(self.mpv.path)
+                    self.start_page.set_sensitive(True)
 
-                if settings.get_boolean("thumbnail-preview"):
-                    self.thumb_preview.props.visible = True
-                    self.setup_preview_player()
-                else:
-                    self.thumb_preview.props.visible = False
-                    if self.preview_player:
-                        self.preview_player.terminate()
-                        self.preview_player = None
+                    if settings.get_boolean("thumbnail-preview"):
+                        self.thumb_preview.props.visible = True
+                        self.setup_preview_player()
+                    else:
+                        self.thumb_preview.props.visible = False
+                        if self.preview_player:
+                            self.preview_player.terminate()
+                            self.preview_player = None
 
-                self.app_mpris._update_metadata()
+                    self.app_mpris._update_metadata()
+                except mpv.ShutdownError:
+                    pass
 
             GLib.idle_add(set)
             GLib.timeout_add_seconds(5, setattr, self, "error_count", 0)
@@ -2016,17 +2030,20 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("media-title")
         def on_title_change(_name, title):
             def set():
-                if title == self.mpv.filename:
-                    title_no_ext = os.path.splitext(title)[0]
-                    self.set_title(title_no_ext)
-                else:
-                    self.set_title(title)
-                    pos = abs(cast(int, self.mpv.playlist_pos))
-                    if obj := cast(PlaylistItemObj, self.playlist_ls.get_item(pos)):
-                        obj.notify("playing")
+                try:
+                    if title == self.mpv.filename:
+                        title_no_ext = os.path.splitext(title)[0]
+                        self.set_title(title_no_ext)
+                    else:
+                        self.set_title(title)
+                        pos = abs(cast(int, self.mpv.playlist_pos))
+                        if obj := cast(PlaylistItemObj, self.playlist_ls.get_item(pos)):
+                            obj.notify("playing")
 
-                self.hide_icon_indicator = False
-                self.app_mpris._update_props()
+                    self.hide_icon_indicator = False
+                    self.app_mpris._update_props()
+                except mpv.ShutdownError:
+                    pass
 
             if title:
                 GLib.idle_add(set)

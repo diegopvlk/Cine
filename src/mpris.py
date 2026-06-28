@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import gi
+import mpv
 from gettext import gettext as _
 
 gi.require_version("Adw", "1")
@@ -184,18 +185,22 @@ class MPRIS:
         return win.shuffle_toggle_btn.props.active if win else False  # type: ignore
 
     def _get_loop_status(self):
-        p = self._mpv
-        if not p:
-            return "None"
+        try:
+            p = self._mpv
+            if not p:
+                return "None"
 
-        # mpv loop-playlist can be 'inf', 'no', or a number
-        loop_playlist = getattr(p, "loop_playlist", "no")
-        loop_file = getattr(p, "loop_file", "no")
+            # mpv loop-playlist can be 'inf', 'no', or a number
+            loop_playlist = getattr(p, "loop_playlist", "no")
+            loop_file = getattr(p, "loop_file", "no")
 
-        if loop_file == "inf":
-            return "Track"
-        if loop_playlist == "inf":
-            return "Playlist"
+            if loop_file == "inf":
+                return "Track"
+            if loop_playlist == "inf":
+                return "Playlist"
+        except mpv.ShutdownError:
+            pass
+
         return "None"
 
     def _update_play_pause(self, paused):
@@ -224,26 +229,31 @@ class MPRIS:
     def _get_metadata_variant(self):
         """Constructs the MPRIS Metadata dictionary."""
 
-        duration = getattr(self._mpv, "duration", 0)
-        if duration is None:
-            duration = 0
+        metadata = {}
 
-        metadata = {
-            "mpris:trackid": GLib.Variant("o", "/org/mpris/MediaPlayer2/Track/0"),
-            "mpris:length": GLib.Variant("x", int(duration * 1_000_000)),
-        }
+        try:
+            duration = getattr(self._mpv, "duration", 0)
+            if duration is None:
+                duration = 0
 
-        win = self._app.props.active_window
-        window_title = win.props.title if win else None
-        title = window_title or getattr(self._mpv, "media_title", None)
+            metadata = {
+                "mpris:trackid": GLib.Variant("o", "/org/mpris/MediaPlayer2/Track/0"),
+                "mpris:length": GLib.Variant("x", int(duration * 1_000_000)),
+            }
 
-        if title:
-            metadata["xesam:title"] = GLib.Variant("s", str(title))
+            win = self._app.props.active_window
+            window_title = win.props.title if win else None
+            title = window_title or getattr(self._mpv, "media_title", None)
 
-        md = self._mpv.metadata if self._mpv else {}
+            if title:
+                metadata["xesam:title"] = GLib.Variant("s", str(title))
 
-        if artist := (md or {}).get("artist"):
-            metadata["xesam:artist"] = GLib.Variant("as", [str(artist)])
+            md = self._mpv.metadata if self._mpv else {}
+
+            if artist := (md or {}).get("artist"):
+                metadata["xesam:artist"] = GLib.Variant("as", [str(artist)])
+        except mpv.ShutdownError:
+            pass
 
         return GLib.Variant("a{sv}", metadata)
 
@@ -254,137 +264,155 @@ class MPRIS:
         invocation.return_value(None)
 
     def _handle_method(self, method, params):
-        p = self._mpv
-        if not p:
-            return
+        try:
+            p = self._mpv
+            if not p:
+                return
 
-        if method == "PlayPause":
-            p.pause = not p.pause
-        elif method == "Pause":
-            p.pause = True
-        elif method == "Play":
-            p.pause = False
-        elif method == "Previous":
-            win = self._app.props.active_window
-            if win and win.can_go_prev:  # type: ignore
-                win._on_previous_clicked(win)  # type: ignore
-        elif method == "Next":
-            win = self._app.props.active_window
-            if win and win.can_go_next:  # type: ignore
-                win._on_next_clicked(win)  # type: ignore
-        elif method == "Stop":
-            p.stop()
-            self._update_props()
-        elif method == "Seek":
-            offset_usec = params.get_child_value(0).get_int64()
-            current_pos = getattr(p, "time_pos", 0)
-            p.time_pos = current_pos + (offset_usec / 1_000_000.0)
-            self._emit_seeked()
-        elif method == "SetPosition":
-            pos_usec = params.get_child_value(1).get_int64()
-            p.time_pos = pos_usec / 1_000_000.0
-            self._emit_seeked()
-        elif method == "Raise":
-            win = self._app.props.active_window
-            if win:
-                win.present()
-        elif method == "Quit":
-            self._app.quit()
+            if method == "PlayPause":
+                p.pause = not p.pause
+            elif method == "Pause":
+                p.pause = True
+            elif method == "Play":
+                p.pause = False
+            elif method == "Previous":
+                win = self._app.props.active_window
+                if win and win.can_go_prev:  # type: ignore
+                    win._on_previous_clicked(win)  # type: ignore
+            elif method == "Next":
+                win = self._app.props.active_window
+                if win and win.can_go_next:  # type: ignore
+                    win._on_next_clicked(win)  # type: ignore
+            elif method == "Stop":
+                p.stop()
+                self._update_props()
+            elif method == "Seek":
+                offset_usec = params.get_child_value(0).get_int64()
+                current_pos = getattr(p, "time_pos", 0)
+                p.time_pos = current_pos + (offset_usec / 1_000_000.0)
+                self._emit_seeked()
+            elif method == "SetPosition":
+                pos_usec = params.get_child_value(1).get_int64()
+                p.time_pos = pos_usec / 1_000_000.0
+                self._emit_seeked()
+            elif method == "Raise":
+                win = self._app.props.active_window
+                if win:
+                    win.present()
+            elif method == "Quit":
+                self._app.quit()
+        except mpv.ShutdownError:
+            pass
 
     def _emit_seeked(self):
-        if not self._con or not self._mpv:
-            return
-        raw_pos = getattr(self._mpv, "time_pos", 0)
-        if raw_pos is None:
-            raw_pos = 0
-        pos_usec = int(raw_pos * 1_000_000)
-        self._con.emit_signal(
-            None,
-            self._path,
-            MEDIAPLAYER2_PLAYER,
-            "Seeked",
-            GLib.Variant("(x)", (pos_usec,)),
-        )
+        try:
+            if not self._con or not self._mpv:
+                return
+            raw_pos = getattr(self._mpv, "time_pos", 0)
+            if raw_pos is None:
+                raw_pos = 0
+            pos_usec = int(raw_pos * 1_000_000)
+            self._con.emit_signal(
+                None,
+                self._path,
+                MEDIAPLAYER2_PLAYER,
+                "Seeked",
+                GLib.Variant("(x)", (pos_usec,)),
+            )
+        except mpv.ShutdownError:
+            pass
 
     def _on_get_property(self, _con, _sender, _path, interface, prop):
-        p = self._mpv
+        try:
+            p = self._mpv
 
-        if interface == MEDIAPLAYER2_PLAYER:
-            if prop == "CanGoPrevious":
-                return GLib.Variant("b", self._can_go_prev)
-            elif prop == "CanGoNext":
-                return GLib.Variant("b", self._can_go_next)
-            elif prop in ["CanPlay", "CanPause", "CanControl", "CanSeek"]:
-                return GLib.Variant("b", True)
-            elif prop == "Volume":
-                vol = getattr(p, "volume") / 100.0 if p else 0.0
-                return GLib.Variant("d", float(vol))
-            elif prop == "PlaybackStatus":
-                status = "Paused" if (p and p.pause) else "Playing"
-                return GLib.Variant("s", status)
-            elif prop == "LoopStatus":
-                return GLib.Variant("s", self._get_loop_status())
-            elif prop == "Position":
-                raw_pos = getattr(p, "time_pos", 0)
-                if raw_pos is None:
-                    raw_pos = 0
-                pos = int(raw_pos * 1_000_000)
-                return GLib.Variant("x", pos)
-            elif prop == "Metadata":
-                return self._get_metadata_variant()
-            elif prop == "Shuffle":
-                return GLib.Variant("b", self._shuffle)
+            if interface == MEDIAPLAYER2_PLAYER:
+                if prop == "CanGoPrevious":
+                    return GLib.Variant("b", self._can_go_prev)
+                elif prop == "CanGoNext":
+                    return GLib.Variant("b", self._can_go_next)
+                elif prop in ["CanPlay", "CanPause", "CanControl", "CanSeek"]:
+                    return GLib.Variant("b", True)
+                elif prop == "Volume":
+                    vol = getattr(p, "volume") / 100.0 if p else 0.0
+                    return GLib.Variant("d", float(vol))
+                elif prop == "PlaybackStatus":
+                    status = "Paused" if (p and p.pause) else "Playing"
+                    return GLib.Variant("s", status)
+                elif prop == "LoopStatus":
+                    return GLib.Variant("s", self._get_loop_status())
+                elif prop == "Position":
+                    raw_pos = getattr(p, "time_pos", 0)
+                    if raw_pos is None:
+                        raw_pos = 0
+                    pos = int(raw_pos * 1_000_000)
+                    return GLib.Variant("x", pos)
+                elif prop == "Metadata":
+                    return self._get_metadata_variant()
+                elif prop == "Shuffle":
+                    return GLib.Variant("b", self._shuffle)
 
-        elif interface == "org.mpris.MediaPlayer2":
-            if prop == "Identity":
-                return GLib.Variant("s", _("Cine"))
-            elif prop == "DesktopEntry":
-                return GLib.Variant("s", APP_ID)
-            elif prop in ["CanQuit", "CanRaise"]:
-                return GLib.Variant("b", True)
-            elif prop == "HasTrackList":
-                return GLib.Variant("b", False)
-            elif prop in ["SupportedUriSchemes", "SupportedMimeTypes"]:
-                return GLib.Variant("as", [])
+            elif interface == "org.mpris.MediaPlayer2":
+                if prop == "Identity":
+                    return GLib.Variant("s", _("Cine"))
+                elif prop == "DesktopEntry":
+                    return GLib.Variant("s", APP_ID)
+                elif prop in ["CanQuit", "CanRaise"]:
+                    return GLib.Variant("b", True)
+                elif prop == "HasTrackList":
+                    return GLib.Variant("b", False)
+                elif prop in ["SupportedUriSchemes", "SupportedMimeTypes"]:
+                    return GLib.Variant("as", [])
+        except mpv.ShutdownError:
+            pass
 
         return None
 
     def _on_set_property(self, _con, _sender, _path, interface, prop, value):
-        p = self._mpv
-        if not p:
-            return False
+        try:
+            p = self._mpv
+            if not p:
+                return False
 
-        if interface == MEDIAPLAYER2_PLAYER:
-            if prop == "Volume":
-                new_vol = value.get_double()
-                p.volume = new_vol * 100.0
-                self._emit_props_changed({"Volume": GLib.Variant("d", float(new_vol))})
-                return True
+            if interface == MEDIAPLAYER2_PLAYER:
+                if prop == "Volume":
+                    new_vol = value.get_double()
+                    p.volume = new_vol * 100.0
+                    self._emit_props_changed(
+                        {"Volume": GLib.Variant("d", float(new_vol))}
+                    )
+                    return True
 
-            if prop == "LoopStatus":
-                new_loop = value.get_string()
+                if prop == "LoopStatus":
+                    new_loop = value.get_string()
 
-                if new_loop == "None":
-                    p.loop_playlist = "no"
-                    p.loop_file = "no"
-                elif new_loop == "Track":
-                    p.loop_file = "inf"
-                    p.loop_playlist = "no"
-                elif new_loop == "Playlist":
-                    p.loop_file = "no"
-                    p.loop_playlist = "inf"
+                    if new_loop == "None":
+                        p.loop_playlist = "no"
+                        p.loop_file = "no"
+                    elif new_loop == "Track":
+                        p.loop_file = "inf"
+                        p.loop_playlist = "no"
+                    elif new_loop == "Playlist":
+                        p.loop_file = "no"
+                        p.loop_playlist = "inf"
 
-                self._emit_props_changed({"LoopStatus": GLib.Variant("s", new_loop)})
-                return True
+                    self._emit_props_changed(
+                        {"LoopStatus": GLib.Variant("s", new_loop)}
+                    )
+                    return True
 
-            if prop == "Shuffle":
-                new_shuffle = value.get_boolean()
-                p._shuffle = new_shuffle
-                win = self._app.props.active_window
-                if win:
-                    btn = win.shuffle_toggle_btn  # type: ignore
-                    btn.props.active = new_shuffle
-                self._emit_props_changed({"Shuffle": GLib.Variant("b", new_shuffle)})
-                return True
+                if prop == "Shuffle":
+                    new_shuffle = value.get_boolean()
+                    p._shuffle = new_shuffle
+                    win = self._app.props.active_window
+                    if win:
+                        btn = win.shuffle_toggle_btn  # type: ignore
+                        btn.props.active = new_shuffle
+                    self._emit_props_changed(
+                        {"Shuffle": GLib.Variant("b", new_shuffle)}
+                    )
+                    return True
+        except mpv.ShutdownError:
+            pass
 
         return False
