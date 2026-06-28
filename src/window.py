@@ -1250,16 +1250,11 @@ class CineWindow(Adw.ApplicationWindow):
             count: int = cast(int, self.mpv.playlist_count) or 0
             pos: int = cast(int, self.mpv.playlist_pos) or 0
             loop_list_enabled: bool = self.mpv.loop_playlist is not False
-            shuffle_enabled: bool = self.shuffle_toggle_btn.props.active
 
             has_multiple: bool = count > 1
 
-            self.can_always_nav: bool = has_multiple and (
-                shuffle_enabled or loop_list_enabled
-            )
-
-            self.can_go_prev = self.can_always_nav or (has_multiple and pos > 0)
-            self.can_go_next = self.can_always_nav or (has_multiple and pos < count - 1)
+            self.can_go_prev = loop_list_enabled or (has_multiple and pos > 0)
+            self.can_go_next = loop_list_enabled or (has_multiple and pos < count - 1)
 
             self.app_mpris._update_can_prev_next(self.can_go_prev, self.can_go_next)
 
@@ -1748,7 +1743,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.mpv.quit_watch_later()
             else:
                 self.mpv.quit()
-            self.mpv.wait_for_shutdown()
+            self.mpv.wait_for_shutdown(timeout=3)
         except mpv.ShutdownError:
             pass
         return False
@@ -1815,25 +1810,33 @@ class CineWindow(Adw.ApplicationWindow):
         def on_end_file(event):
             GLib.idle_add(self.spinner.set_visible, False)
             GLib.idle_add(self.start_page.set_sensitive, True)
-            curr_pos = self.mpv.playlist_pos
-            info = event.as_dict()
-            reason = info["reason"]
 
-            if reason == b"error":
-                # Avoid stopping playback on last file/folder error
-                playlist_count = cast(int, self.mpv.playlist_count)
-                if curr_pos == playlist_count - 1:
-                    self.mpv.playlist_pos = 0
+            try:
+                curr_pos = self.mpv.playlist_pos
+                info = event.as_dict()
+                reason = info["reason"]
 
-                self.error_count += 1
-                print(f"File error path: {self.loaded_path}")
-                error = info["file_error"].decode("utf-8")
-                GLib.idle_add(self._show_toast, _("File Error") + f": {error}")
+                if reason == b"error":
+                    # Avoid stopping playback on last file/folder error
+                    playlist_count = cast(int, self.mpv.playlist_count)
+                    if curr_pos == playlist_count - 1:
+                        self.mpv.playlist_pos = 0
 
-                if self.error_count == 20:
-                    self.mpv.stop()
-                    self.shuffle_toggle_btn.set_active(False)
-                    self.error_count = 0
+                    self.error_count += 1
+                    print(f"File error path: {self.loaded_path}")
+                    error = info["file_error"].decode("utf-8")
+                    GLib.idle_add(self._show_toast, _("File Error") + f": {error}")
+
+                    if self.error_count == 20:
+                        self.mpv.stop()
+                        self.shuffle_toggle_btn.set_active(False)
+                        self.error_count = 0
+                elif (
+                    not self.mpv.keep_open and self.mpv.idle_active and not self.startup
+                ):
+                    GLib.idle_add(self.close)
+            except mpv.ShutdownError:
+                pass
 
         @self.mpv.property_observer("path")
         def on_path_change(_name, has_file):
@@ -2025,9 +2028,6 @@ class CineWindow(Adw.ApplicationWindow):
                         dialog.close()
 
                 self._sync_inhibit()
-
-            if not self.mpv.keep_open and is_idle and not self.startup:
-                self.close()
 
             self.startup = False
 
