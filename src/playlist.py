@@ -240,7 +240,6 @@ class Playlist(Adw.Dialog):
             dir = parent_dir if parent_dir else path
 
             icon_name = "cine-applications-multimedia-symbolic"
-            file_title = os.path.splitext(name_with_ext)[0]
 
             if not is_local_path(path):
                 content_type = "mpv-url"
@@ -253,6 +252,7 @@ class Playlist(Adw.Dialog):
                     content_type = info.get_content_type()
                 except Exception:
                     content_type = "error"
+                file_title = os.path.splitext(name_with_ext)[0]
 
             if content_type == "inode/directory":
                 icon_name = "cine-folder-symbolic"
@@ -411,7 +411,7 @@ class Playlist(Adw.Dialog):
             GLib.timeout_add(
                 100,
                 self.playlist_list_view.scroll_to,
-                abs(index - 1),
+                max(0, index - 1),
                 Gtk.ListScrollFlags.FOCUS,
             )
 
