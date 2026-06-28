@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-22 12:44-0300\n"
+"POT-Creation-Date: 2026-06-27 21:01-0300\n"
 "PO-Revision-Date: 2026-06-23 18:26+0000\n"
 "Last-Translator: தமிழ்நேரம் <tamilneram247@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/cine/app/ta/>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2026.7.dev0\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:138
-#: src/mpris.py:340 src/window.py:193 src/window.py:316 src/window.blp:6
-#: src/window.blp:474
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:139
+#: src/mpris.py:357 src/window.py:196 src/window.py:2040 src/window.blp:6
+#: src/window.blp:80 src/window.blp:485
 msgid "Cine"
 msgstr "சினி"
 
@@ -35,7 +35,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "பாடல்;காணொளி;திரைப்படம்;தொக;படம்;வெட்டு;இயக்கி;சினி;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:144
+#: src/window.blp:155
 msgid "New Window"
 msgstr "புதிய சாளரம்"
 
@@ -44,8 +44,8 @@ msgid ""
 "Cine combines a clean interface with a high-performance engine to deliver a "
 "seamless viewing experience."
 msgstr ""
-"Cine ஒரு உயர் செயல்திறன் இயந்திரத்துடன் தூய்மையான இடைமுகத்தை ஒருங்கிணைத்து தடையற்ற பார்வை "
-"அனுபவத்தை வழங்குகிறது."
+"Cine ஒரு உயர் செயல்திறன் இயந்திரத்துடன் தூய்மையான இடைமுகத்தை ஒருங்கிணைத்து தடையற்ற "
+"பார்வை அனுபவத்தை வழங்குகிறது."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:27
 msgid "Simple Design: A refined, distraction-free interface"
@@ -69,7 +69,8 @@ msgstr ""
 msgid ""
 "Video Controls: Easily adjust brightness, contrast, zoom, aspect ratio, etc."
 msgstr ""
-"வீடியோ கட்டுப்பாடுகள்: ஒளி, மாறுபாடு, சூம், விகித விகிதம் போன்றவற்றை எளிதாக சரிசெய்யவும்."
+"வீடியோ கட்டுப்பாடுகள்: ஒளி, மாறுபாடு, சூம், விகித விகிதம் போன்றவற்றை எளிதாக "
+"சரிசெய்யவும்."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:42
 msgid "Video Playing"
@@ -80,13 +81,37 @@ msgid "Video Options"
 msgstr "வீடியோ விருப்பங்கள்"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:149
+#: src/preferences.blp:77 src/window.blp:160
 msgid "Preferences"
 msgstr "விருப்பத்தேர்வுகள்"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:54
 msgid "Main Window"
 msgstr "முதன்மையான சாளரம்"
+
+#: src/history.py:54 src/history.py:58
+msgid "Load All"
+msgstr "அனைத்தையும் ஏற்றவும்"
+
+#: src/history.py:134
+msgid "Remove from History"
+msgstr "வரலாற்றிலிருந்து நீக்கு"
+
+#: src/history.py:204 src/playlist.py:422
+msgid "Open Item Location"
+msgstr "உருப்படி இருப்பிடத்தைத் திறக்கவும்"
+
+#: src/history.py:293
+msgid "Clear Watch History?"
+msgstr "பார்த்த வரலாற்றை அழிக்கவா?"
+
+#: src/history.py:294
+msgid "Cancel"
+msgstr "ரத்துசெய்"
+
+#: src/history.py:295 src/history.blp:16
+msgid "Clear All"
+msgstr "அனைத்தையும் அழி"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:239
@@ -97,94 +122,95 @@ msgstr "மொழிபெயர்ப்பாளர்-வரவுகள்"
 msgid "Original"
 msgstr "அசல்"
 
-#: src/playlist.py:118 src/playlist.blp:49
+#: src/playlist.py:118 src/playlist.blp:45
 msgid "Search"
 msgstr "தேடல்"
 
-#: src/playlist.py:183 src/playlist.py:191 src/playlist.py:459
-#: src/preferences.py:381 src/playlist.blp:56
+#: src/playlist.py:185 src/playlist.py:193 src/playlist.py:462
+#: src/preferences.py:386 src/playlist.blp:52
 msgid "Save Playlist"
 msgstr "பிளேலிச்ட்டை சேமிக்கவும்"
 
-#: src/playlist.py:186 src/preferences.blp:115 src/preferences.blp:150
+#: src/playlist.py:188 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "வீடியோ சேமிக்கப்பட்டுள்ள கோப்புறையைப் படிக்க பிளாட்பாக் இசைவு தேவை"
 
-#: src/playlist.py:315 src/window.py:1296 src/window.py:1812
+#: src/playlist.py:317 src/window.py:1307 src/window.py:1843
 msgid "File Error"
 msgstr "கோப்பு பிழை"
 
-#: src/playlist.py:419
-msgid "Open Item Location"
-msgstr "உருப்படி இருப்பிடத்தைத் திறக்கவும்"
-
-#: src/playlist.py:420
+#: src/playlist.py:423
 msgid "Remove from Playlist"
 msgstr "பிளேலிச்ட்டில் இருந்து அகற்று"
 
-#: src/playlist.py:460 src/playlist.blp:20 src/window.blp:379
+#: src/playlist.py:463 src/playlist.blp:16 src/window.blp:390
 msgid "Playlist"
 msgstr "பிளேலிச்ட்"
 
-#: src/playlist.py:480
+#: src/playlist.py:483
 #, python-brace-format
 msgid "{n} item"
 msgid_plural "{n} items"
 msgstr[0] "{n} உருப்படி"
 msgstr[1] "{n} உருப்படிகள்"
 
-#: src/preferences.py:112 src/preferences.blp:170
+#: src/preferences.py:113 src/preferences.blp:170
 msgid "Subtitle Color"
 msgstr "வசனத்தின் நிறம்"
 
-#: src/preferences.py:126 src/preferences.blp:250
+#: src/preferences.py:127 src/preferences.blp:250
 msgid "Subtitle Background"
 msgstr "வசன பின்னணி"
 
-#: src/preferences.py:378
-msgid "Some features require extra permission to work:"
-msgstr "சில அம்சங்களுக்கு வேலை செய்ய கூடுதல் இசைவு தேவை:"
+#: src/preferences.py:383
+msgid "Some features require extra permission to work properly:"
+msgstr "சில அம்சங்கள் சரியாகச் செயல்பட கூடுதல் அனுமதி தேவை:"
 
-#: src/preferences.py:379
+#: src/preferences.py:384
 msgid "Auto load subtitle file"
 msgstr "வசனக் கோப்பை தானாக ஏற்றவும்"
 
-#: src/preferences.py:380
+#: src/preferences.py:385
 msgid "Auto add files from the same folder to playlist"
 msgstr "பிளேலிச்ட்டில் ஒரே கோப்புறையிலிருந்து கோப்புகளைத் தானாகச் சேர்க்கவும்"
 
-#: src/preferences.py:382 src/preferences.blp:98
+#: src/preferences.py:387 src/preferences.blp:98
 msgid "Restore Saved Session"
 msgstr "சேமித்த அமர்வை மீட்டமை"
 
-#: src/preferences.py:383 src/preferences.blp:133
+#: src/preferences.py:388 src/preferences.blp:133
 msgid "Save Video Position on Close"
 msgstr "வீடியோ நிலையை மூடும்போது சேமிக்கவும்"
 
-#: src/preferences.py:387
+#: src/preferences.py:389 src/history.blp:5 src/shortcuts-dialog.blp:61
+#: src/window.blp:138 src/window.blp:517
+msgid "Watch History"
+msgstr "பார்த்த வரலாறு"
+
+#: src/preferences.py:393
 msgid ""
 "If you wish to use those features, install Flatseal for granular folder "
 "control, or run this command to grant access to all folders in the system:"
 msgstr ""
-"நீங்கள் அந்த அம்சங்களைப் பயன்படுத்த விரும்பினால், கிரானுலர் கோப்புறைக் கட்டுப்பாட்டிற்கு Flatseal "
-"ஐ நிறுவவும் அல்லது கணினியில் உள்ள அனைத்து கோப்புறைகளுக்கும் அணுகலை வழங்க இந்த கட்டளையை "
-"இயக்கவும்:"
+"நீங்கள் அந்த அம்சங்களைப் பயன்படுத்த விரும்பினால், கிரானுலர் கோப்புறைக் கட்டுப்பாட்டிற்கு "
+"Flatseal ஐ நிறுவவும் அல்லது கணினியில் உள்ள அனைத்து கோப்புறைகளுக்கும் அணுகலை வழங்க இந்த "
+"கட்டளையை இயக்கவும்:"
 
-#: src/preferences.py:393
+#: src/preferences.py:399
 msgid "Extra permission enabled."
 msgstr "கூடுதல் இசைவு இயக்கப்பட்டது."
 
-#: src/preferences.py:407
+#: src/preferences.py:415
 msgid "Copied"
 msgstr "நகலெடுக்கப்பட்டது"
 
-#: src/preferences.py:413 src/preferences.blp:58
+#: src/preferences.py:421 src/preferences.blp:58
 msgid "Copy"
 msgstr "நகலெடு"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
-#: src/shortcuts.py:34 src/window.py:1930 src/window.blp:241
+#: src/shortcuts.py:34 src/window.py:1967 src/window.blp:252
 msgid "Volume"
 msgstr "தொகுதி"
 
@@ -197,7 +223,7 @@ msgid "Volume Decrease"
 msgstr "வால்யூம் குறைவு"
 
 #: src/shortcuts.py:35 src/shortcuts.py:36 src/shortcuts.py:37
-#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:222
+#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:233
 msgid "Play/Pause"
 msgstr "விளையாடு/இடைநிறுத்தம்"
 
@@ -206,7 +232,7 @@ msgid "Show/Hide Subtitles"
 msgstr "வசனங்களைக் காட்டு/மறை"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/window.blp:283
+#: src/window.blp:294
 msgid "Subtitles"
 msgstr "வசன வரிகள்"
 
@@ -230,7 +256,7 @@ msgstr "அடுத்த இரண்டாம் நிலை வசன வ�
 msgid "Previous Secondary Subtitle Track"
 msgstr "முந்தைய இரண்டாம் நிலை வசன வரிகள்"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:741 src/window.blp:298
+#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:753 src/window.blp:309
 msgid "Audio"
 msgstr "ஆடியோ"
 
@@ -258,12 +284,12 @@ msgstr "5வி பின்நோக்கி தேடு"
 msgid "Seek 5s Forward"
 msgstr "சீக் 5 வி ஃபார்வர்டு"
 
-#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1875
-#: src/window.blp:395
+#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1912
+#: src/window.blp:406
 msgid "Fullscreen"
 msgstr "முழு திரை"
 
-#: src/shortcuts.py:51 src/window.py:1875
+#: src/shortcuts.py:51 src/window.py:1912
 msgid "Exit Fullscreen"
 msgstr "முழுத்திரையிலிருந்து வெளியேறு"
 
@@ -317,7 +343,7 @@ msgstr "வசன அளவை அதிகரிக்கவும்"
 msgid "Decrease Subtitle Scale"
 msgstr "வசன அளவைக் குறைக்கவும்"
 
-#: src/shortcuts.py:72 src/window.blp:252
+#: src/shortcuts.py:72 src/window.blp:263
 msgid "Mute/Unmute"
 msgstr "ஊமை/அதிருப்தி"
 
@@ -374,7 +400,7 @@ msgstr "A-B லூப் புள்ளிகளை அமைக்கவும
 msgid "Loop"
 msgstr "லூப்"
 
-#: src/shortcuts.py:85 src/window.blp:368
+#: src/shortcuts.py:85 src/window.blp:379
 msgid "Loop File"
 msgstr "லூப் கோப்பு"
 
@@ -466,89 +492,89 @@ msgstr "பின்னணி"
 msgid "Miscellaneous"
 msgstr "மற்றவை"
 
-#: src/window.py:593 src/window.py:1288 src/window.blp:123
+#: src/window.py:604 src/window.py:1299 src/window.blp:127
 msgid "Add Subtitle Track"
 msgstr "சப்டைட்டில் டிராக்கைச் சேர்க்கவும்"
 
-#: src/window.py:595 src/window.py:604
+#: src/window.py:606 src/window.py:615
 msgid "None"
 msgstr "எதுவுமில்லை"
 
-#: src/window.py:602 src/window.blp:128
+#: src/window.py:613 src/window.blp:132
 msgid "Add Audio Track"
 msgstr "ஆடியோ டிராக்கைச் சேர்க்கவும்"
 
-#: src/window.py:641
+#: src/window.py:652
 msgid "Track"
 msgstr "மின்தடம்"
 
-#: src/window.py:684 src/playlist.blp:35 src/window.blp:113
+#: src/window.py:695 src/playlist.blp:31 src/window.blp:117
 msgid "Add Folder"
 msgstr "கோப்புறையைச் சேர்"
 
-#: src/window.py:684 src/shortcuts-dialog.blp:21 src/window.blp:98
-#: src/window.blp:498
+#: src/window.py:695 src/shortcuts-dialog.blp:21 src/window.blp:102
+#: src/window.blp:530
 msgid "Open Folder"
 msgstr "கோப்புறையைத் திறக்கவும்"
 
-#: src/window.py:710 src/shortcuts-dialog.blp:16 src/window.blp:93
+#: src/window.py:722 src/shortcuts-dialog.blp:16 src/window.blp:97
 msgid "Open Files"
 msgstr "கோப்புகளைத் திறக்கவும்"
 
-#: src/window.py:713 src/playlist.blp:30 src/window.blp:108
+#: src/window.py:725 src/playlist.blp:26 src/window.blp:112
 msgid "Add Files"
 msgstr "கோப்புகளைச் சேர்"
 
-#: src/window.py:717
+#: src/window.py:729
 msgid "Add Subtitle"
 msgstr "வசனத்தைச் சேர்க்கவும்"
 
-#: src/window.py:720
+#: src/window.py:732
 msgid "Add Audio"
 msgstr "ஆடியோவைச் சேர்க்கவும்"
 
-#: src/window.py:736
+#: src/window.py:748
 msgid "Subtitle"
 msgstr "உரையாடல்"
 
-#: src/window.py:745
+#: src/window.py:757
 msgid "Media"
 msgstr "ஊடகம்"
 
-#: src/window.py:804
+#: src/window.py:816
 msgid "Session Saved"
-msgstr ""
+msgstr "அமர்வு சேமிக்கப்பட்டது"
 
-#: src/window.py:810 src/playlist.blp:40 src/window.blp:118
+#: src/window.py:822 src/playlist.blp:36 src/window.blp:122
 msgid "Add URL"
 msgstr "கூட்டு முகவரி"
 
-#: src/window.py:810 src/shortcuts-dialog.blp:26 src/window.blp:103
-#: src/window.blp:507
+#: src/window.py:822 src/shortcuts-dialog.blp:26 src/window.blp:107
+#: src/window.blp:539
 msgid "Open URL"
 msgstr "URLஐத் திறக்கவும்"
 
-#: src/window.py:823
+#: src/window.py:835
 msgid "URL"
 msgstr "முகவரி"
 
-#: src/window.py:831 src/playlist.blp:26
+#: src/window.py:843 src/playlist.blp:22
 msgid "Add"
 msgstr "கூட்டு"
 
-#: src/window.py:831 src/window.blp:87
+#: src/window.py:843 src/window.blp:91
 msgid "Open"
 msgstr "திற"
 
-#: src/window.py:1017 src/window.py:1125
+#: src/window.py:1030 src/window.py:1138
 msgid "Chapter"
 msgstr "பாடங்கள்"
 
-#: src/window.py:1181 src/window.py:1292
+#: src/window.py:1194 src/window.py:1303
 msgid "Play"
 msgstr "விளையாடு"
 
-#: src/window.py:1181
+#: src/window.py:1194
 msgid "Pause"
 msgstr "இடைநிறுத்தம்"
 
@@ -649,11 +675,11 @@ msgstr "ஆடியோ தாமதத்தை மீட்டமைக்க�
 msgid "Playback Speed"
 msgstr "பின்னணி விரைவு"
 
-#: src/playlist.blp:97
+#: src/playlist.blp:93
 msgid "No Results Found"
 msgstr "முடிவுகள் எதுவும் கிடைக்கவில்லை"
 
-#: src/playlist.blp:131
+#: src/playlist.blp:127
 msgid "Add to Playlist"
 msgstr "பிளேலிச்ட்டில் சேர்"
 
@@ -735,7 +761,7 @@ msgstr "விருப்பமான ஆடியோ மொழிகள்"
 
 #: src/preferences.blp:307
 msgid "Open Config Folder"
-msgstr ""
+msgstr "உள்ளமைவு கோப்புறையைத் திற"
 
 #: src/shortcuts-dialog.blp:8
 msgid "General"
@@ -765,70 +791,70 @@ msgstr "ஆடியோ மெனுவைத் திறக்கவும்"
 msgid "Open Chapters Menu"
 msgstr "அத்தியாயங்கள் மெனுவைத் திறக்கவும்"
 
-#: src/shortcuts-dialog.blp:61
+#: src/shortcuts-dialog.blp:66
 msgid "Show Shortcuts"
 msgstr "குறுக்குவழிகளைக் காட்டு"
 
-#: src/shortcuts-dialog.blp:66
+#: src/shortcuts-dialog.blp:71
 msgid "Close Window"
 msgstr "சாளரத்தை மூடு"
 
-#: src/shortcuts-dialog.blp:71 src/window.blp:166
+#: src/shortcuts-dialog.blp:76 src/window.blp:177
 msgid "Save Session"
-msgstr ""
+msgstr "அமர்வைச் சேமி"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:171
+#: src/shortcuts-dialog.blp:81 src/window.blp:182
 msgid "Save Session and Close"
 msgstr "அமர்வைச் சேமித்து மூடவும்"
 
-#: src/shortcuts-dialog.blp:81
+#: src/shortcuts-dialog.blp:86
 msgid "Quit"
 msgstr "வெளியேறு"
 
-#: src/window.blp:139
+#: src/window.blp:150
 msgid "Main Menu"
 msgstr "ப்ளே பட்டியல்"
 
-#: src/window.blp:154
+#: src/window.blp:165
 msgid "Keyboard Shortcuts"
 msgstr "விசைப்பலகை குறுக்குவழிகள்"
 
-#: src/window.blp:159
+#: src/window.blp:170
 msgid "About Cine"
 msgstr "சினி பற்றி"
 
-#: src/window.blp:212
+#: src/window.blp:223
 msgid "Previous"
 msgstr "முந்தைய"
 
-#: src/window.blp:233
+#: src/window.blp:244
 msgid "Next"
 msgstr "அடுத்தது"
 
-#: src/window.blp:312
+#: src/window.blp:323
 msgid "Video"
 msgstr "ஒளிதோற்றம்"
 
-#: src/window.blp:327
+#: src/window.blp:338
 msgid "Chapters"
 msgstr "பாடங்கள்"
 
-#: src/window.blp:344
+#: src/window.blp:355
 msgid "Shuffle Playlist"
 msgstr "பிளேலிச்ட்டை கலக்கவும்"
 
-#: src/window.blp:356
+#: src/window.blp:367
 msgid "Loop Playlist"
 msgstr "லூப் பிளேலிச்ட்"
 
-#: src/window.blp:428
+#: src/window.blp:439
 msgid "Toggle Elapsed/Remaining"
 msgstr "கடந்தது/மீதம் உள்ளதை நிலைமாற்று"
 
-#: src/window.blp:475
+#: src/window.blp:486
 msgid "Drag and drop files here"
 msgstr "கோப்புகளை இங்கே இழுத்து விடுங்கள்"
 
-#: src/window.blp:488
+#: src/window.blp:506
 msgid "Open…"
 msgstr "திற…"

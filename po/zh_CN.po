@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-21 14:13-0300\n"
+"POT-Creation-Date: 2026-06-27 21:01-0300\n"
 "PO-Revision-Date: 2026-05-03 13:33+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -19,9 +19,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.17.1\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:138
-#: src/mpris.py:340 src/window.py:193 src/window.py:316 src/window.blp:6
-#: src/window.blp:474
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:139
+#: src/mpris.py:357 src/window.py:196 src/window.py:2040 src/window.blp:6
+#: src/window.blp:80 src/window.blp:485
 msgid "Cine"
 msgstr "Cine"
 
@@ -36,7 +36,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "音频;视频;电影;电视;影片;剪辑;播放器;Cine;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:144
+#: src/window.blp:155
 msgid "New Window"
 msgstr "新建窗口"
 
@@ -75,13 +75,37 @@ msgid "Video Options"
 msgstr "视频选项"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:149
+#: src/preferences.blp:77 src/window.blp:160
 msgid "Preferences"
 msgstr "偏好设置"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:54
 msgid "Main Window"
 msgstr "主窗口"
+
+#: src/history.py:54 src/history.py:58
+msgid "Load All"
+msgstr "加载全部"
+
+#: src/history.py:134
+msgid "Remove from History"
+msgstr "从记录中移除"
+
+#: src/history.py:204 src/playlist.py:422
+msgid "Open Item Location"
+msgstr "打开项目位置"
+
+#: src/history.py:293
+msgid "Clear Watch History?"
+msgstr "清除观看记录吗？"
+
+#: src/history.py:294
+msgid "Cancel"
+msgstr "取消"
+
+#: src/history.py:295 src/history.blp:16
+msgid "Clear All"
+msgstr "清除全部"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:239
@@ -92,71 +116,72 @@ msgstr "心就在那里"
 msgid "Original"
 msgstr "原始"
 
-#: src/playlist.py:118 src/playlist.blp:49
+#: src/playlist.py:118 src/playlist.blp:45
 msgid "Search"
 msgstr "搜索"
 
-#: src/playlist.py:183 src/playlist.py:191 src/playlist.py:459
-#: src/preferences.py:381 src/playlist.blp:56
+#: src/playlist.py:185 src/playlist.py:193 src/playlist.py:462
+#: src/preferences.py:386 src/playlist.blp:52
 msgid "Save Playlist"
 msgstr "保存播放列表"
 
-#: src/playlist.py:186 src/preferences.blp:115 src/preferences.blp:150
+#: src/playlist.py:188 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "需要flatpak权限才能读取存储视频的文件夹"
 
-#: src/playlist.py:315 src/window.py:1296 src/window.py:1812
+#: src/playlist.py:317 src/window.py:1307 src/window.py:1843
 msgid "File Error"
 msgstr "文件错误"
 
-#: src/playlist.py:419
-msgid "Open Item Location"
-msgstr "打开项目位置"
-
-#: src/playlist.py:420
+#: src/playlist.py:423
 msgid "Remove from Playlist"
 msgstr "从播放列表中移除"
 
-#: src/playlist.py:460 src/playlist.blp:20 src/window.blp:379
+#: src/playlist.py:463 src/playlist.blp:16 src/window.blp:390
 msgid "Playlist"
 msgstr "播放列表"
 
-#: src/playlist.py:480
+#: src/playlist.py:483
 #, python-brace-format
 msgid "{n} item"
 msgid_plural "{n} items"
 msgstr[0] "{n} 个项目"
 
-#: src/preferences.py:112 src/preferences.blp:170
+#: src/preferences.py:113 src/preferences.blp:170
 msgid "Subtitle Color"
 msgstr "字幕颜色"
 
-#: src/preferences.py:126 src/preferences.blp:250
+#: src/preferences.py:127 src/preferences.blp:250
 msgid "Subtitle Background"
 msgstr "字幕背景"
 
-#: src/preferences.py:378
-msgid "Some features require extra permission to work:"
-msgstr "某些功能需要额外权限才能工作："
+#: src/preferences.py:383
+msgid "Some features require extra permission to work properly:"
+msgstr "某些功能需要额外权限才能正常工作："
 
-#: src/preferences.py:379
+#: src/preferences.py:384
 msgid "Auto load subtitle file"
 msgstr "自动加载字幕文件"
 
-#: src/preferences.py:380
+#: src/preferences.py:385
 msgid "Auto add files from the same folder to playlist"
 msgstr "自动将同文件夹下的文件添加到播放列表"
 
-#: src/preferences.py:382 src/preferences.blp:98
+#: src/preferences.py:387 src/preferences.blp:98
 msgid "Restore Saved Session"
 msgstr "恢复已保存的会话"
 
-#: src/preferences.py:383 src/preferences.blp:133
+#: src/preferences.py:388 src/preferences.blp:133
 msgid "Save Video Position on Close"
 msgstr "关闭时保存视频位置"
 
-#: src/preferences.py:387
+#: src/preferences.py:389 src/history.blp:5 src/shortcuts-dialog.blp:61
+#: src/window.blp:138 src/window.blp:517
+msgid "Watch History"
+msgstr "观看记录"
+
+#: src/preferences.py:393
 msgid ""
 "If you wish to use those features, install Flatseal for granular folder "
 "control, or run this command to grant access to all folders in the system:"
@@ -164,20 +189,20 @@ msgstr ""
 "如果您想使用这些功能，请安装 Flatseal 以进行细粒度的文件夹控制，或运行此命令"
 "以授予对系统中所有文件夹的访问权限："
 
-#: src/preferences.py:393
+#: src/preferences.py:399
 msgid "Extra permission enabled."
 msgstr "已启用额外权限。"
 
-#: src/preferences.py:407
+#: src/preferences.py:415
 msgid "Copied"
 msgstr "已复制"
 
-#: src/preferences.py:413 src/preferences.blp:58
+#: src/preferences.py:421 src/preferences.blp:58
 msgid "Copy"
 msgstr "复制"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
-#: src/shortcuts.py:34 src/window.py:1930 src/window.blp:241
+#: src/shortcuts.py:34 src/window.py:1967 src/window.blp:252
 msgid "Volume"
 msgstr "音量"
 
@@ -190,7 +215,7 @@ msgid "Volume Decrease"
 msgstr "音量减"
 
 #: src/shortcuts.py:35 src/shortcuts.py:36 src/shortcuts.py:37
-#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:222
+#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:233
 msgid "Play/Pause"
 msgstr "播放/暂停"
 
@@ -199,7 +224,7 @@ msgid "Show/Hide Subtitles"
 msgstr "显示/隐藏字幕"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/window.blp:283
+#: src/window.blp:294
 msgid "Subtitles"
 msgstr "字幕"
 
@@ -223,7 +248,7 @@ msgstr "下一条次要字幕轨道"
 msgid "Previous Secondary Subtitle Track"
 msgstr "上一条次要字幕轨道"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:741 src/window.blp:298
+#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:753 src/window.blp:309
 msgid "Audio"
 msgstr "音频"
 
@@ -251,12 +276,12 @@ msgstr "后退 5 秒"
 msgid "Seek 5s Forward"
 msgstr "前进 5 秒"
 
-#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1875
-#: src/window.blp:395
+#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1912
+#: src/window.blp:406
 msgid "Fullscreen"
 msgstr "全屏"
 
-#: src/shortcuts.py:51 src/window.py:1875
+#: src/shortcuts.py:51 src/window.py:1912
 msgid "Exit Fullscreen"
 msgstr "退出全屏"
 
@@ -310,7 +335,7 @@ msgstr "增大字幕"
 msgid "Decrease Subtitle Scale"
 msgstr "减小字幕"
 
-#: src/shortcuts.py:72 src/window.blp:252
+#: src/shortcuts.py:72 src/window.blp:263
 msgid "Mute/Unmute"
 msgstr "静音/取消静音"
 
@@ -367,7 +392,7 @@ msgstr "设置/清除 A-B 循环点"
 msgid "Loop"
 msgstr "循环播放"
 
-#: src/shortcuts.py:85 src/window.blp:368
+#: src/shortcuts.py:85 src/window.blp:379
 msgid "Loop File"
 msgstr "单个文件循环"
 
@@ -459,89 +484,89 @@ msgstr "回放"
 msgid "Miscellaneous"
 msgstr "杂项"
 
-#: src/window.py:593 src/window.py:1288 src/window.blp:123
+#: src/window.py:604 src/window.py:1299 src/window.blp:127
 msgid "Add Subtitle Track"
 msgstr "添加字幕轨道"
 
-#: src/window.py:595 src/window.py:604
+#: src/window.py:606 src/window.py:615
 msgid "None"
 msgstr "无"
 
-#: src/window.py:602 src/window.blp:128
+#: src/window.py:613 src/window.blp:132
 msgid "Add Audio Track"
 msgstr "添加音频轨道"
 
-#: src/window.py:641
+#: src/window.py:652
 msgid "Track"
 msgstr "轨道"
 
-#: src/window.py:684 src/playlist.blp:35 src/window.blp:113
+#: src/window.py:695 src/playlist.blp:31 src/window.blp:117
 msgid "Add Folder"
 msgstr "添加文件夹"
 
-#: src/window.py:684 src/shortcuts-dialog.blp:21 src/window.blp:98
-#: src/window.blp:498
+#: src/window.py:695 src/shortcuts-dialog.blp:21 src/window.blp:102
+#: src/window.blp:530
 msgid "Open Folder"
 msgstr "打开文件夹"
 
-#: src/window.py:710 src/shortcuts-dialog.blp:16 src/window.blp:93
+#: src/window.py:722 src/shortcuts-dialog.blp:16 src/window.blp:97
 msgid "Open Files"
 msgstr "打开文件"
 
-#: src/window.py:713 src/playlist.blp:30 src/window.blp:108
+#: src/window.py:725 src/playlist.blp:26 src/window.blp:112
 msgid "Add Files"
 msgstr "添加文件"
 
-#: src/window.py:717
+#: src/window.py:729
 msgid "Add Subtitle"
 msgstr "添加字幕"
 
-#: src/window.py:720
+#: src/window.py:732
 msgid "Add Audio"
 msgstr "添加音频"
 
-#: src/window.py:736
+#: src/window.py:748
 msgid "Subtitle"
 msgstr "字幕"
 
-#: src/window.py:745
+#: src/window.py:757
 msgid "Media"
 msgstr "媒体"
 
-#: src/window.py:804
+#: src/window.py:816
 msgid "Session Saved"
 msgstr "会话已保存"
 
-#: src/window.py:810 src/playlist.blp:40 src/window.blp:118
+#: src/window.py:822 src/playlist.blp:36 src/window.blp:122
 msgid "Add URL"
 msgstr "添加 URL"
 
-#: src/window.py:810 src/shortcuts-dialog.blp:26 src/window.blp:103
-#: src/window.blp:507
+#: src/window.py:822 src/shortcuts-dialog.blp:26 src/window.blp:107
+#: src/window.blp:539
 msgid "Open URL"
 msgstr "打开 URL"
 
-#: src/window.py:823
+#: src/window.py:835
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:831 src/playlist.blp:26
+#: src/window.py:843 src/playlist.blp:22
 msgid "Add"
 msgstr "添加"
 
-#: src/window.py:831 src/window.blp:87
+#: src/window.py:843 src/window.blp:91
 msgid "Open"
 msgstr "打开"
 
-#: src/window.py:1017 src/window.py:1125
+#: src/window.py:1030 src/window.py:1138
 msgid "Chapter"
 msgstr "章节"
 
-#: src/window.py:1181 src/window.py:1292
+#: src/window.py:1194 src/window.py:1303
 msgid "Play"
 msgstr "播放"
 
-#: src/window.py:1181
+#: src/window.py:1194
 msgid "Pause"
 msgstr "暂停"
 
@@ -642,11 +667,11 @@ msgstr "重置音频延迟"
 msgid "Playback Speed"
 msgstr "播放速度"
 
-#: src/playlist.blp:97
+#: src/playlist.blp:93
 msgid "No Results Found"
 msgstr "未找到结果"
 
-#: src/playlist.blp:131
+#: src/playlist.blp:127
 msgid "Add to Playlist"
 msgstr "添加到播放列表"
 
@@ -758,71 +783,71 @@ msgstr "打开音频菜单"
 msgid "Open Chapters Menu"
 msgstr "打开章节菜单"
 
-#: src/shortcuts-dialog.blp:61
+#: src/shortcuts-dialog.blp:66
 msgid "Show Shortcuts"
 msgstr "显示快捷键"
 
-#: src/shortcuts-dialog.blp:66
+#: src/shortcuts-dialog.blp:71
 msgid "Close Window"
 msgstr "关闭窗口"
 
-#: src/shortcuts-dialog.blp:71 src/window.blp:166
+#: src/shortcuts-dialog.blp:76 src/window.blp:177
 msgid "Save Session"
 msgstr "保存会话"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:171
+#: src/shortcuts-dialog.blp:81 src/window.blp:182
 msgid "Save Session and Close"
 msgstr "保存会话并关闭"
 
-#: src/shortcuts-dialog.blp:81
+#: src/shortcuts-dialog.blp:86
 msgid "Quit"
 msgstr "退出"
 
-#: src/window.blp:139
+#: src/window.blp:150
 msgid "Main Menu"
 msgstr "主菜单"
 
-#: src/window.blp:154
+#: src/window.blp:165
 msgid "Keyboard Shortcuts"
 msgstr "键盘快捷键"
 
-#: src/window.blp:159
+#: src/window.blp:170
 msgid "About Cine"
 msgstr "关于Cine"
 
-#: src/window.blp:212
+#: src/window.blp:223
 msgid "Previous"
 msgstr "上一个"
 
-#: src/window.blp:233
+#: src/window.blp:244
 msgid "Next"
 msgstr "下一个"
 
-#: src/window.blp:312
+#: src/window.blp:323
 msgid "Video"
 msgstr "视频"
 
-#: src/window.blp:327
+#: src/window.blp:338
 msgid "Chapters"
 msgstr "章节"
 
-#: src/window.blp:344
+#: src/window.blp:355
 msgid "Shuffle Playlist"
 msgstr "随机播放列表"
 
-#: src/window.blp:356
+#: src/window.blp:367
 msgid "Loop Playlist"
 msgstr "列表循环"
 
-#: src/window.blp:428
+#: src/window.blp:439
 msgid "Toggle Elapsed/Remaining"
 msgstr "切换 已播放/剩余时间"
 
-#: src/window.blp:475
+#: src/window.blp:486
 msgid "Drag and drop files here"
 msgstr "将文件拖放至此处"
 
-#: src/window.blp:488
+#: src/window.blp:506
 msgid "Open…"
 msgstr "打开…"
 
