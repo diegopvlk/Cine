@@ -695,6 +695,7 @@ class CineWindow(Adw.ApplicationWindow):
 
                 if not add_mode:
                     self.mpv.stop()
+                    self.mpv.pause = False
                     self.shuffle_toggle_btn.set_active(False)
 
                 path = folder.get_path()
@@ -861,6 +862,7 @@ class CineWindow(Adw.ApplicationWindow):
         def open_url(*args):
             self.mpv.loadfile(self.url, mode)
             if mode == "replace":
+                self.mpv.pause = False
                 self.shuffle_toggle_btn.set_active(False)
             dialog.close()
 
@@ -1323,6 +1325,9 @@ class CineWindow(Adw.ApplicationWindow):
 
         for item in items:
             mode = "replace" if first_file else "append-play"
+
+            if mode == "replace":
+                self.mpv.pause = False
 
             if isinstance(item, Gio.File):
                 path = item.get_path() or item.get_uri()
