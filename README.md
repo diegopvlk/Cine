@@ -26,7 +26,7 @@ Cine combines a clean interface with a high-performance engine to deliver a seam
 <div>
   <details>
     <summary>More Screenshots (Expand):</summary><br>
-      <p align="center"><img src="screenshots/preferences.png" alt="Preferences"/></p>
+      <p align="center"><img height="943" src="screenshots/preferences.png" alt="Preferences"/></p>
       <p align="center"><img src="screenshots/options.png" alt="Video Options"/></p>
       <p align="center"><img src="screenshots/window.png" alt="Main Window"/></p>
   </details>
