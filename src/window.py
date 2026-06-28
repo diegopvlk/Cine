@@ -1721,7 +1721,7 @@ class CineWindow(Adw.ApplicationWindow):
             self.inhibit_id = self.app.inhibit(
                 self,
                 Gtk.ApplicationInhibitFlags.IDLE,
-                "Playing Video",
+                "Playing Media",
             )
         elif not should_inhibit and self.inhibit_id != 0:
             self.app.uninhibit(self.inhibit_id)
@@ -1746,6 +1746,10 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.wait_for_shutdown(timeout=3)
         except mpv.ShutdownError:
             pass
+
+        if self.inhibit_id:
+            self.app.uninhibit(self.inhibit_id)
+
         return False
 
     def _splice_playlist(self):
