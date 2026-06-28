@@ -78,8 +78,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/libass/libass/releases/download/0.17.4/libass-0.17.4.tar.xz",
-                            "sha256": "78f1179b838d025e9c26e8fef33f8092f65611444ffa1bfc0cfac6a33511a05a",
+                            "url": "https://github.com/libass/libass/releases/download/0.17.5/libass-0.17.5.tar.xz",
+                            "sha256": "2dca25c0e0c837ddf00b52011b3f82cac1e4ddd3ad018227806b0c2288864acc",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1560,
@@ -144,8 +144,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/denoland/deno/releases/download/v2.8.3/deno-x86_64-unknown-linux-gnu.zip",
-                            "sha256": "30455b845ffa6082209c3590269c910ad3b7efdf28c9879afd4006c47ae54197",
+                            "url": "https://github.com/denoland/deno/releases/download/v2.9.0/deno-x86_64-unknown-linux-gnu.zip",
+                            "sha256": "96c9c73fc05ea57603bc28d8071d41e861bd40bcf2a9f849dd5969ed1a2c8498",
                             "only-arches": [
                                 "x86_64"
                             ],
@@ -157,8 +157,8 @@
                         },
                         {
                             "type": "archive",
-                            "url": "https://github.com/denoland/deno/releases/download/v2.8.3/deno-aarch64-unknown-linux-gnu.zip",
-                            "sha256": "d4589cc1ffcbf1995c92a0127d932aaf832ac70cfdcc6d5b7bf38043cf303575",
+                            "url": "https://github.com/denoland/deno/releases/download/v2.9.0/deno-aarch64-unknown-linux-gnu.zip",
+                            "sha256": "a0f266eb189af2f27db0c6dcf9eb2f68ba2e8bbff1442c969ace398463f8b2bf",
                             "only-arches": [
                                 "aarch64"
                             ],
