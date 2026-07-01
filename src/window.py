@@ -149,6 +149,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.video_overlay.set_child(self.offload)
 
+        self.visible_dialog: Adw.Dialog | None = None
         self.playlist_ls: Gio.ListStore = Gio.ListStore.new(PlaylistItemObj)
         self.playlist_debounce_id: int = 0
         self.playlist_prev_pos: int
@@ -435,7 +436,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self._connect("notify::visible-dialog")
         def on_vis_dialog_change(*args):
-            if self.get_visible_dialog():
+            if dialog := self.get_visible_dialog():
+                self.visible_dialog = dialog
                 self.set_cursor_from_name(None)
                 self._cancel_click_hold()
                 self._hide_ui_timeout()
@@ -443,6 +445,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self._set_space_holding(False)
             else:
                 self._hide_ui_timeout()
+                self.visible_dialog = None
 
         @self._connect("notify::is-active")
         def on_is_active_change(*args):
@@ -769,8 +772,8 @@ class CineWindow(Adw.ApplicationWindow):
             lambda d, res: self._on_open_response(d, res, mode),
         )
 
-        if isinstance(dialog := self.get_visible_dialog(), Playlist):
-            dialog.spinner.set_visible(True)
+        if isinstance(self.visible_dialog, Playlist):
+            self.visible_dialog.spinner.set_visible(True)
 
     def _on_open_response(self, dialog, result, mode):
         try:
@@ -795,8 +798,8 @@ class CineWindow(Adw.ApplicationWindow):
         except GLib.Error as e:
             print(f"Dialog error: {e.message}")
         finally:
-            if isinstance(dialog := self.get_visible_dialog(), Playlist):
-                dialog.spinner.set_visible(False)
+            if isinstance(self.visible_dialog, Playlist):
+                self.visible_dialog.spinner.set_visible(False)
 
     def _on_open_sub_menu(self, *args):
         self._show_ui()
@@ -1247,7 +1250,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.app_mpris._update_shuffle(button.props.active)
 
-        if isinstance(self.get_visible_dialog(), Playlist):
+        if isinstance(self.visible_dialog, Playlist):
             GLib.idle_add(self._splice_playlist)
 
     def _on_loop_playlist_toggled(self, button):
@@ -1789,9 +1792,9 @@ class CineWindow(Adw.ApplicationWindow):
                 continue
             self.has_some_doc_path = True
 
-        if isinstance(dialog := self.get_visible_dialog(), Playlist):
-            dialog._set_save_btn_playlist()
-            dialog._set_item_count()
+        if isinstance(self.visible_dialog, Playlist):
+            self.visible_dialog._set_save_btn_playlist()
+            self.visible_dialog._set_item_count()
 
         self.playlist_ls.splice(0, self.playlist_ls.get_n_items(), new_items)
         self.last_shuffle = self.shuffle_toggle_btn.props.active
@@ -1872,7 +1875,7 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("playlist-count")
         def on_playlist_count_change(_name, _count):
             self.playlist_changed = True
-            if isinstance(self.get_visible_dialog(), Playlist):
+            if isinstance(self.visible_dialog, Playlist):
                 if self.playlist_debounce_id > 0:
                     GLib.source_remove(self.playlist_debounce_id)
                     self.playlist_debounce_id = 0
@@ -2047,8 +2050,8 @@ class CineWindow(Adw.ApplicationWindow):
                     self.revealer_ui.set_reveal_child(True)
                     self.set_title(_("Cine"))
                     self.hide_icon_indicator = True
-                    if isinstance(dialog := self.get_visible_dialog(), Playlist):
-                        dialog.close()
+                    if isinstance(self.visible_dialog, Playlist):
+                        self.visible_dialog.close()
 
                 self._sync_inhibit()
 
