@@ -439,6 +439,8 @@ class CineWindow(Adw.ApplicationWindow):
                 self._hide_ui_timeout()
                 self.space_holding = False
                 self._set_space_holding(False)
+            else:
+                self._hide_ui_timeout()
 
         @self._connect("notify::is-active")
         def on_is_active_change(*args):
