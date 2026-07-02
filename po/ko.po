@@ -8,842 +8,851 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-27 21:01-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2026-07-02 15:09+0000\n"
+"Last-Translator: JAEHUN JEONG <nisnas@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/cine/app/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 2026.7.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:139
 #: src/mpris.py:357 src/window.py:196 src/window.py:2040 src/window.blp:6
 #: src/window.blp:80 src/window.blp:485
 msgid "Cine"
-msgstr ""
+msgstr "Cine"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:3
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:23
 msgid "Play your videos"
-msgstr ""
+msgstr "보유 영상 재생"
 
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr ""
+"오디오;비디오;동영상;영화;TV;필름;클립;플레이어;Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:155
 msgid "New Window"
-msgstr ""
+msgstr "새 윈도우"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:25
 msgid ""
 "Cine combines a clean interface with a high-performance engine to deliver a "
 "seamless viewing experience."
 msgstr ""
+"Cine는 깔끔한 인터페이스와 고성능 엔진을 결합하여 매끄러운 시청 경험을 "
+"제공합니다."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:27
 msgid "Simple Design: A refined, distraction-free interface"
-msgstr ""
+msgstr "심플한 디자인: 불필요한 요소가 없는 정돈된 인터페이스"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:28
 msgid ""
 "MPV-Based: Leverages the robust power of MPV for great playback and format "
 "support"
 msgstr ""
+"MPV 기반: MPV의 강력한 엔진을 바탕으로 우수한 재생 품질과 다양한 포맷을 "
+"지원합니다"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:29
 msgid ""
 "Audio and Subtitles: Control track selection and synchronization for both"
 msgstr ""
+"오디오 및 자막: 오디오와 자막의 트랙을 선택하고 싱크를 간편하게 조절할 수 "
+"있습니다"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:30
 msgid ""
 "Video Controls: Easily adjust brightness, contrast, zoom, aspect ratio, etc."
-msgstr ""
+msgstr "비디오 제어: 밝기, 명암, 줌, 화면 비율 등을 손쉽게 설정할 수 있습니다."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:42
 msgid "Video Playing"
-msgstr ""
+msgstr "비디오 재생 중"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:46
 msgid "Video Options"
-msgstr ""
+msgstr "비디오 옵션"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
 #: src/preferences.blp:77 src/window.blp:160
 msgid "Preferences"
-msgstr ""
+msgstr "환경설정"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:54
 msgid "Main Window"
-msgstr ""
+msgstr "메인 윈도우"
 
 #: src/history.py:54 src/history.py:58
 msgid "Load All"
-msgstr ""
+msgstr "모두 불러오기"
 
 #: src/history.py:134
 msgid "Remove from History"
-msgstr ""
+msgstr "기록에서 삭제"
 
 #: src/history.py:204 src/playlist.py:422
 msgid "Open Item Location"
-msgstr ""
+msgstr "파일 위치 열기"
 
 #: src/history.py:293
 msgid "Clear Watch History?"
-msgstr ""
+msgstr "시청 기록을 지우시겠습니까?"
 
 #: src/history.py:294
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #: src/history.py:295 src/history.blp:16
 msgid "Clear All"
-msgstr ""
+msgstr "모두 지우기"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
 #: src/main.py:239
 msgid "translator-credits"
-msgstr ""
+msgstr "dingle28 (nisnas@gmail.com)"
 
 #: src/options.py:193 src/options.blp:79 src/options.blp:137
 msgid "Original"
-msgstr ""
+msgstr "원본"
 
 #: src/playlist.py:118 src/playlist.blp:45
 msgid "Search"
-msgstr ""
+msgstr "검색"
 
 #: src/playlist.py:185 src/playlist.py:193 src/playlist.py:462
 #: src/preferences.py:386 src/playlist.blp:52
 msgid "Save Playlist"
-msgstr ""
+msgstr "재생목록 저장"
 
 #: src/playlist.py:188 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
-msgstr ""
+msgstr "동영상이 저장된 폴더를 읽으려면 Flatpak 권한이 필요합니다"
 
 #: src/playlist.py:317 src/window.py:1307 src/window.py:1843
 msgid "File Error"
-msgstr ""
+msgstr "파일 오류"
 
 #: src/playlist.py:423
 msgid "Remove from Playlist"
-msgstr ""
+msgstr "재생 목록에서 제거"
 
 #: src/playlist.py:463 src/playlist.blp:16 src/window.blp:390
 msgid "Playlist"
-msgstr ""
+msgstr "재생목록"
 
 #: src/playlist.py:483
 #, python-brace-format
 msgid "{n} item"
 msgid_plural "{n} items"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{n}개 항목"
 
 #: src/preferences.py:113 src/preferences.blp:170
 msgid "Subtitle Color"
-msgstr ""
+msgstr "자막 색상"
 
 #: src/preferences.py:127 src/preferences.blp:250
 msgid "Subtitle Background"
-msgstr ""
+msgstr "자막 배경"
 
 #: src/preferences.py:383
 msgid "Some features require extra permission to work properly:"
-msgstr ""
+msgstr "일부 기능을 올바르게 사용하려면 추가 권한이 필요합니다:"
 
 #: src/preferences.py:384
 msgid "Auto load subtitle file"
-msgstr ""
+msgstr "자막 파일 자동 불러오기"
 
 #: src/preferences.py:385
 msgid "Auto add files from the same folder to playlist"
-msgstr ""
+msgstr "같은 폴더의 파일을 재생 목록에 자동 추가"
 
 #: src/preferences.py:387 src/preferences.blp:98
 msgid "Restore Saved Session"
-msgstr ""
+msgstr "저장된 세션 복원"
 
 #: src/preferences.py:388 src/preferences.blp:133
 msgid "Save Video Position on Close"
-msgstr ""
+msgstr "종료 시 동영상 재생 위치 저장"
 
 #: src/preferences.py:389 src/history.blp:5 src/shortcuts-dialog.blp:61
 #: src/window.blp:138 src/window.blp:517
 msgid "Watch History"
-msgstr ""
+msgstr "시청 기록"
 
 #: src/preferences.py:393
 msgid ""
 "If you wish to use those features, install Flatseal for granular folder "
 "control, or run this command to grant access to all folders in the system:"
 msgstr ""
+"이 기능을 사용하려면 세부적인 폴더 권한 설정을 위해 Flatseal을 설치하거나, "
+"시스템의 모든 폴더에 대한 접근 권한을 부여하는 다음 명령어를 실행하세요:"
 
 #: src/preferences.py:399
 msgid "Extra permission enabled."
-msgstr ""
+msgstr "추가 권한이 활성화되었습니다."
 
 #: src/preferences.py:415
 msgid "Copied"
-msgstr ""
+msgstr "복사됨"
 
 #: src/preferences.py:421 src/preferences.blp:58
 msgid "Copy"
-msgstr ""
+msgstr "복사"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
 #: src/shortcuts.py:34 src/window.py:1967 src/window.blp:252
 msgid "Volume"
-msgstr ""
+msgstr "음량"
 
 #: src/shortcuts.py:31
 msgid "Volume Increase"
-msgstr ""
+msgstr "음량 증가"
 
 #: src/shortcuts.py:32
 msgid "Volume Decrease"
-msgstr ""
+msgstr "음량 감소"
 
 #: src/shortcuts.py:35 src/shortcuts.py:36 src/shortcuts.py:37
 #: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:233
 msgid "Play/Pause"
-msgstr ""
+msgstr "재생/일시 정지"
 
 #: src/shortcuts.py:38
 msgid "Show/Hide Subtitles"
-msgstr ""
+msgstr "자막 켜기/끄기"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
 #: src/window.blp:294
 msgid "Subtitles"
-msgstr ""
+msgstr "자막"
 
 #: src/shortcuts.py:39
 msgid "Next Subtitle Track"
-msgstr ""
+msgstr "다음 자막 트랙"
 
 #: src/shortcuts.py:40
 msgid "Previous Subtitle Track"
-msgstr ""
+msgstr "이전 자막 트랙"
 
 #: src/shortcuts.py:41 src/shortcuts.py:42
 msgid "Secondary Subtitles"
-msgstr ""
+msgstr "두 번째 자막"
 
 #: src/shortcuts.py:41
 msgid "Next Secondary Subtitle Track"
-msgstr ""
+msgstr "다음 두 번째 자막 트랙"
 
 #: src/shortcuts.py:42
 msgid "Previous Secondary Subtitle Track"
-msgstr ""
+msgstr "이전 두 번째 자막 트랙"
 
 #: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:753 src/window.blp:309
 msgid "Audio"
-msgstr ""
+msgstr "오디오"
 
 #: src/shortcuts.py:43
 msgid "Next Audio Track"
-msgstr ""
+msgstr "다음 오디오 트랙"
 
 #: src/shortcuts.py:44
 msgid "Previous Audio Track"
-msgstr ""
+msgstr "이전 오디오 트랙"
 
 #: src/shortcuts.py:45
 msgid "Seek 10s Backward"
-msgstr ""
+msgstr "10초 뒤로 이동"
 
 #: src/shortcuts.py:46
 msgid "Seek 10s Forward"
-msgstr ""
+msgstr "10초 앞으로 이동"
 
 #: src/shortcuts.py:47
 msgid "Seek 5s Backward"
-msgstr ""
+msgstr "5초 뒤로 이동"
 
 #: src/shortcuts.py:48
 msgid "Seek 5s Forward"
-msgstr ""
+msgstr "5초 앞으로 이동"
 
 #: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1912
 #: src/window.blp:406
 msgid "Fullscreen"
-msgstr ""
+msgstr "전체화면"
 
 #: src/shortcuts.py:51 src/window.py:1912
 msgid "Exit Fullscreen"
-msgstr ""
+msgstr "전체화면 종료"
 
 #: src/shortcuts.py:61 src/shortcuts.py:62 src/shortcuts.py:63
 #: src/options.blp:285 src/options.blp:309
 msgid "Zoom"
-msgstr ""
+msgstr "확대/축소"
 
 #: src/shortcuts.py:61 src/shortcuts.py:62
 msgid "Zoom In"
-msgstr ""
+msgstr "확대"
 
 #: src/shortcuts.py:63
 msgid "Zoom Out"
-msgstr ""
+msgstr "축소"
 
 #: src/shortcuts.py:66 src/shortcuts.py:67 src/options.blp:611
 #: src/options.blp:635
 msgid "Subtitle Delay"
-msgstr ""
+msgstr "자막 지연"
 
 #: src/shortcuts.py:66
 msgid "Decrease Subtitle Delay"
-msgstr ""
+msgstr "자막 지연 감소"
 
 #: src/shortcuts.py:67
 msgid "Increase Subtitle Delay"
-msgstr ""
+msgstr "자막 지연 증가"
 
 #: src/shortcuts.py:68 src/shortcuts.py:69
 msgid "Subtitle Position"
-msgstr ""
+msgstr "자막 위치"
 
 #: src/shortcuts.py:68
 msgid "Move Subtitles Up"
-msgstr ""
+msgstr "자막 위치 올리기"
 
 #: src/shortcuts.py:69
 msgid "Move Subtitles Down"
-msgstr ""
+msgstr "자막 위치 내리기"
 
 #: src/shortcuts.py:70 src/shortcuts.py:71 src/preferences.blp:239
 msgid "Subtitle Scale"
-msgstr ""
+msgstr "자막 크기"
 
 #: src/shortcuts.py:70
 msgid "Increase Subtitle Scale"
-msgstr ""
+msgstr "자막 크기 증가"
 
 #: src/shortcuts.py:71
 msgid "Decrease Subtitle Scale"
-msgstr ""
+msgstr "자막 크기 감소"
 
 #: src/shortcuts.py:72 src/window.blp:263
 msgid "Mute/Unmute"
-msgstr ""
+msgstr "음소거/해제"
 
 #: src/shortcuts.py:73 src/shortcuts.py:74 src/shortcuts.py:75
 #: src/options.blp:666 src/options.blp:690
 msgid "Audio Delay"
-msgstr ""
+msgstr "오디오 지연"
 
 #: src/shortcuts.py:73
 msgid "Decrease Audio Delay"
-msgstr ""
+msgstr "오디오 지연 감소"
 
 #: src/shortcuts.py:74 src/shortcuts.py:75
 msgid "Increase Audio Delay"
-msgstr ""
+msgstr "오디오 지연 증가"
 
 #: src/shortcuts.py:76
 msgid "Go Back One Frame"
-msgstr ""
+msgstr "이전 프레임으로 이동"
 
 #: src/shortcuts.py:77
 msgid "Advance One Frame"
-msgstr ""
+msgstr "다음 프레임으로 이동"
 
 #: src/shortcuts.py:78
 msgid "Seek to the Previous Chapter"
-msgstr ""
+msgstr "이전 챕터로 이동"
 
 #: src/shortcuts.py:79
 msgid "Seek to the Next Chapter"
-msgstr ""
+msgstr "다음 챕터로 이동"
 
 #: src/shortcuts.py:80
 msgid "Take Screenshot With Subtitles"
-msgstr ""
+msgstr "화면 캡쳐(자막 포함)"
 
 #: src/shortcuts.py:81
 msgid "Take Screenshot Without Subtitles"
-msgstr ""
+msgstr "화면 캡쳐 (자막 없음)"
 
 #: src/shortcuts.py:82
 msgid "Statistics"
-msgstr ""
+msgstr "통계"
 
 #: src/shortcuts.py:83
 msgid "Statistics Overlay"
-msgstr ""
+msgstr "통계 화면 표시"
 
 #: src/shortcuts.py:84
 msgid "Set/Clear A-B Loop Points"
-msgstr ""
+msgstr "A-B 구간 반복 설정/해제"
 
 #: src/shortcuts.py:85
 msgid "Loop"
-msgstr ""
+msgstr "반복재생"
 
 #: src/shortcuts.py:85 src/window.blp:379
 msgid "Loop File"
-msgstr ""
+msgstr "파일 반복"
 
 #: src/shortcuts.py:86 src/shortcuts.py:87 src/options.blp:340
 #: src/options.blp:363
 msgid "Contrast"
-msgstr ""
+msgstr "대비"
 
 #: src/shortcuts.py:86
 msgid "Decrease Contrast"
-msgstr ""
+msgstr "대비 감소"
 
 #: src/shortcuts.py:87
 msgid "Increase Contrast"
-msgstr ""
+msgstr "대비 증가"
 
 #: src/shortcuts.py:88 src/shortcuts.py:89 src/options.blp:394
 #: src/options.blp:417
 msgid "Brightness"
-msgstr ""
+msgstr "밝기"
 
 #: src/shortcuts.py:88
 msgid "Decrease Brightness"
-msgstr ""
+msgstr "밝기 감소"
 
 #: src/shortcuts.py:89
 msgid "Increase Brightness"
-msgstr ""
+msgstr "밝기 증가"
 
 #: src/shortcuts.py:90 src/shortcuts.py:91 src/options.blp:448
 #: src/options.blp:471
 msgid "Gamma"
-msgstr ""
+msgstr "감마"
 
 #: src/shortcuts.py:90
 msgid "Decrease Gamma"
-msgstr ""
+msgstr "감마 감소"
 
 #: src/shortcuts.py:91
 msgid "Increase Gamma"
-msgstr ""
+msgstr "감마 증가"
 
 #: src/shortcuts.py:92 src/shortcuts.py:93 src/options.blp:502
 #: src/options.blp:525
 msgid "Saturation"
-msgstr ""
+msgstr "채도"
 
 #: src/shortcuts.py:92
 msgid "Decrease Saturation"
-msgstr ""
+msgstr "채도 감소"
 
 #: src/shortcuts.py:93
 msgid "Increase Saturation"
-msgstr ""
+msgstr "채도 증가"
 
 #: src/shortcuts.py:94 src/shortcuts.py:95 src/shortcuts.py:96
 msgid "Speed"
-msgstr ""
+msgstr "속도"
 
 #: src/shortcuts.py:94
 msgid "Decrease Playback Speed"
-msgstr ""
+msgstr "재생 속도 감소"
 
 #: src/shortcuts.py:95
 msgid "Increase Playback Speed"
-msgstr ""
+msgstr "재생 속도 증가"
 
 #: src/shortcuts.py:96 src/options.blp:711
 msgid "Reset Playback Speed"
-msgstr ""
+msgstr "재생 속도 초기화"
 
 #: src/shortcuts.py:153
 msgid "Display & Video"
-msgstr ""
+msgstr "디스플레이 및 비디오"
 
 #: src/shortcuts.py:170
 msgid "Audio & Volume"
-msgstr ""
+msgstr "오디오 및 음량"
 
 #: src/shortcuts.py:171
 msgid "Navigation"
-msgstr ""
+msgstr "탬색"
 
 #: src/shortcuts.py:172
 msgid "Playback"
-msgstr ""
+msgstr "재생"
 
 #: src/shortcuts.py:176 src/shortcuts.py:182
 msgid "Miscellaneous"
-msgstr ""
+msgstr "기타"
 
 #: src/window.py:604 src/window.py:1299 src/window.blp:127
 msgid "Add Subtitle Track"
-msgstr ""
+msgstr "자막 트랙 추가"
 
 #: src/window.py:606 src/window.py:615
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #: src/window.py:613 src/window.blp:132
 msgid "Add Audio Track"
-msgstr ""
+msgstr "오디오 트랙 추가"
 
 #: src/window.py:652
 msgid "Track"
-msgstr ""
+msgstr "트랙"
 
 #: src/window.py:695 src/playlist.blp:31 src/window.blp:117
 msgid "Add Folder"
-msgstr ""
+msgstr "폴더 추가"
 
 #: src/window.py:695 src/shortcuts-dialog.blp:21 src/window.blp:102
 #: src/window.blp:530
 msgid "Open Folder"
-msgstr ""
+msgstr "폴더 열기"
 
 #: src/window.py:722 src/shortcuts-dialog.blp:16 src/window.blp:97
 msgid "Open Files"
-msgstr ""
+msgstr "파일 열기"
 
 #: src/window.py:725 src/playlist.blp:26 src/window.blp:112
 msgid "Add Files"
-msgstr ""
+msgstr "파일 추가"
 
 #: src/window.py:729
 msgid "Add Subtitle"
-msgstr ""
+msgstr "자막 추가"
 
 #: src/window.py:732
 msgid "Add Audio"
-msgstr ""
+msgstr "오디오 추가"
 
 #: src/window.py:748
 msgid "Subtitle"
-msgstr ""
+msgstr "자막"
 
 #: src/window.py:757
 msgid "Media"
-msgstr ""
+msgstr "미디어"
 
 #: src/window.py:816
 msgid "Session Saved"
-msgstr ""
+msgstr "세션 저장됨"
 
 #: src/window.py:822 src/playlist.blp:36 src/window.blp:122
 msgid "Add URL"
-msgstr ""
+msgstr "URL 추가"
 
 #: src/window.py:822 src/shortcuts-dialog.blp:26 src/window.blp:107
 #: src/window.blp:539
 msgid "Open URL"
-msgstr ""
+msgstr "URL 열기"
 
 #: src/window.py:835
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: src/window.py:843 src/playlist.blp:22
 msgid "Add"
-msgstr ""
+msgstr "추가"
 
 #: src/window.py:843 src/window.blp:91
 msgid "Open"
-msgstr ""
+msgstr "열기"
 
 #: src/window.py:1030 src/window.py:1138
 msgid "Chapter"
-msgstr ""
+msgstr "챕터"
 
 #: src/window.py:1194 src/window.py:1303
 msgid "Play"
-msgstr ""
+msgstr "재생"
 
 #: src/window.py:1194
 msgid "Pause"
-msgstr ""
+msgstr "일시 정지"
 
 #: src/options.blp:14
 msgid "Options"
-msgstr ""
+msgstr "옵션"
 
 #: src/options.blp:32
 msgid "Reset All"
-msgstr ""
+msgstr "모두 초기화"
 
 #: src/options.blp:44
 msgid "Reset Aspect Ratio"
-msgstr ""
+msgstr "화면 비율 초기화"
 
 #: src/options.blp:54
 msgid "Aspect Ratio"
-msgstr ""
+msgstr "화면 비율"
 
 #: src/options.blp:102
 msgid "Reset Crop"
-msgstr ""
+msgstr "자르기 초기화"
 
 #: src/options.blp:112
 msgid "Crop"
-msgstr ""
+msgstr "자르기"
 
 #: src/options.blp:161
 msgid "Reset Rotation"
-msgstr ""
+msgstr "회전 초기화"
 
 #: src/options.blp:171
 msgid "Rotate"
-msgstr ""
+msgstr "회전"
 
 #: src/options.blp:197
 msgid "Rotate Left"
-msgstr ""
+msgstr "왼쪽으로 회전"
 
 #: src/options.blp:205
 msgid "Rotate Right"
-msgstr ""
+msgstr "오른쪽으로 회전"
 
 #: src/options.blp:218
 msgid "Reset Flip"
-msgstr ""
+msgstr "반전 초기화"
 
 #: src/options.blp:228
 msgid "Flip"
-msgstr ""
+msgstr "반전"
 
 #: src/options.blp:254
 msgid "Flip Horizontally"
-msgstr ""
+msgstr "좌우 반전"
 
 #: src/options.blp:262
 msgid "Flip Vertically"
-msgstr ""
+msgstr "상하 반전"
 
 #: src/options.blp:275
 msgid "Reset Zoom"
-msgstr ""
+msgstr "확대/축소 초기화"
 
 #: src/options.blp:330
 msgid "Reset Contrast"
-msgstr ""
+msgstr "대비 초기화"
 
 #: src/options.blp:384
 msgid "Reset Brightness"
-msgstr ""
+msgstr "밝기 초기화"
 
 #: src/options.blp:438
 msgid "Reset Gamma"
-msgstr ""
+msgstr "감마 초기화"
 
 #: src/options.blp:492
 msgid "Reset Saturation"
-msgstr ""
+msgstr "채도 초기화"
 
 #: src/options.blp:546
 msgid "Reset Hue"
-msgstr ""
+msgstr "색조 초기화"
 
 #. TRANSLATORS: Do not use "Color" or "Temperature", those are different things
 #: src/options.blp:557 src/options.blp:580
 msgid "Hue"
-msgstr ""
+msgstr "색조"
 
 #: src/options.blp:601
 msgid "Reset Subtitle Delay"
-msgstr ""
+msgstr "자막 지연 초기화"
 
 #: src/options.blp:656
 msgid "Reset Audio Delay"
-msgstr ""
+msgstr "오디오 지연 초기화"
 
 #: src/options.blp:721 src/options.blp:745
 msgid "Playback Speed"
-msgstr ""
+msgstr "재생 속도"
 
 #: src/playlist.blp:93
 msgid "No Results Found"
-msgstr ""
+msgstr "검색 결과 없음"
 
 #: src/playlist.blp:127
 msgid "Add to Playlist"
-msgstr ""
+msgstr "재생목록에 추가"
 
 #: src/preferences.blp:15
 msgid "About Permissions"
-msgstr ""
+msgstr "권한 정보"
 
 #: src/preferences.blp:81
 msgid "Open New Window for New Files"
-msgstr ""
+msgstr "새 파일 열기 시 새 윈도우 사용"
 
 #: src/preferences.blp:85
 msgid "Progress Bar Thumbnail"
-msgstr ""
+msgstr "탐색시 화면 미리보기"
 
 #: src/preferences.blp:89
 msgid "Normalize Volume"
-msgstr ""
+msgstr "음량 평준화"
 
 #: src/preferences.blp:93
 msgid "Hardware Acceleration"
-msgstr ""
+msgstr "하드웨어 가속"
 
 #: src/preferences.blp:94
 msgid "Use GPU for video decoding when available"
-msgstr ""
+msgstr "가능한 경우 비디오 디코딩에 GPU 사용"
 
 #: src/preferences.blp:99
 msgid "Pick up where you left off after saving from the menu"
-msgstr ""
+msgstr "메뉴에서 저장한 지점부터 이어서 시작"
 
 #: src/preferences.blp:134
 msgid "Also save options like brightness, subtitle delay, etc."
-msgstr ""
+msgstr "밝기, 자막 지연 시간 등의 설정도 함께 저장."
 
 #: src/preferences.blp:183 src/preferences.blp:229
 msgid "Reset"
-msgstr ""
+msgstr "초기화"
 
 #: src/preferences.blp:193
 msgid "Subtitle Font"
-msgstr ""
+msgstr "자막 폰트"
 
 #: src/preferences.blp:206
 msgid "Some fonts may not work"
-msgstr ""
+msgstr "일부 폰트는 지원되지 않을 수 있음"
 
 #: src/preferences.blp:269
 msgid "Left Click"
-msgstr ""
+msgstr "왼쪽 클릭"
 
 #: src/preferences.blp:274
 msgid "Focus/Play/Pause"
-msgstr ""
+msgstr "포커스/재생/일시 정지"
 
 #: src/preferences.blp:275 src/preferences.blp:287
 msgid "Disabled"
-msgstr ""
+msgstr "비활성화됨"
 
 #: src/preferences.blp:281
 msgid "Right Click"
-msgstr ""
+msgstr "오른쪽 클릭"
 
 #: src/preferences.blp:286
 msgid "Window Menu"
-msgstr ""
+msgstr "윈도우 메뉴"
 
 #: src/preferences.blp:295
 msgid "Preferred Subtitle Languages"
-msgstr ""
+msgstr "선호하는 자막 언어"
 
 #: src/preferences.blp:296 src/preferences.blp:301
 msgid "Example: en,es,pt"
-msgstr ""
+msgstr "예시: en,es,pt"
 
 #: src/preferences.blp:300
 msgid "Preferred Audio Languages"
-msgstr ""
+msgstr "선호하는 오디오 언어"
 
 #: src/preferences.blp:307
 msgid "Open Config Folder"
-msgstr ""
+msgstr "설정 폴더 열기"
 
 #: src/shortcuts-dialog.blp:8
 msgid "General"
-msgstr ""
+msgstr "일반"
 
 #: src/shortcuts-dialog.blp:31
 msgid "Add Files to Playlist"
-msgstr ""
+msgstr "재생목록에 파일 추가"
 
 #: src/shortcuts-dialog.blp:36
 msgid "Add Folder to Playlist"
-msgstr ""
+msgstr "재생목록에 폴더 추가"
 
 #: src/shortcuts-dialog.blp:41
 msgid "Add URL to Playlist"
-msgstr ""
+msgstr "재생목록에 URL 추가"
 
 #: src/shortcuts-dialog.blp:46
 msgid "Open Subtitles Menu"
-msgstr ""
+msgstr "자막 메뉴 열기"
 
 #: src/shortcuts-dialog.blp:51
 msgid "Open Audio Menu"
-msgstr ""
+msgstr "오디오 메뉴 열기"
 
 #: src/shortcuts-dialog.blp:56
 msgid "Open Chapters Menu"
-msgstr ""
+msgstr "챕터 메뉴 열기"
 
 #: src/shortcuts-dialog.blp:66
 msgid "Show Shortcuts"
-msgstr ""
+msgstr "단축키 보기"
 
 #: src/shortcuts-dialog.blp:71
 msgid "Close Window"
-msgstr ""
+msgstr "윈도우 닫기"
 
 #: src/shortcuts-dialog.blp:76 src/window.blp:177
 msgid "Save Session"
-msgstr ""
+msgstr "세션 저장"
 
 #: src/shortcuts-dialog.blp:81 src/window.blp:182
 msgid "Save Session and Close"
-msgstr ""
+msgstr "세션 저장 후 닫기"
 
 #: src/shortcuts-dialog.blp:86
 msgid "Quit"
-msgstr ""
+msgstr "나가기"
 
 #: src/window.blp:150
 msgid "Main Menu"
-msgstr ""
+msgstr "메인 메뉴"
 
 #: src/window.blp:165
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "키보드 단축키"
 
 #: src/window.blp:170
 msgid "About Cine"
-msgstr ""
+msgstr "Cine에 대해"
 
 #: src/window.blp:223
 msgid "Previous"
-msgstr ""
+msgstr "이전"
 
 #: src/window.blp:244
 msgid "Next"
-msgstr ""
+msgstr "다음"
 
 #: src/window.blp:323
 msgid "Video"
-msgstr ""
+msgstr "비디오"
 
 #: src/window.blp:338
 msgid "Chapters"
-msgstr ""
+msgstr "챕터"
 
 #: src/window.blp:355
 msgid "Shuffle Playlist"
-msgstr ""
+msgstr "재생목록 무작위 재생"
 
 #: src/window.blp:367
 msgid "Loop Playlist"
-msgstr ""
+msgstr "반복 재생"
 
 #: src/window.blp:439
 msgid "Toggle Elapsed/Remaining"
-msgstr ""
+msgstr "재생 시간/남은 시간 전환"
 
 #: src/window.blp:486
 msgid "Drag and drop files here"
-msgstr ""
+msgstr "여기에 파일을 끌어다 놓으세요"
 
 #: src/window.blp:506
 msgid "Open…"
-msgstr ""
+msgstr "열기…"
