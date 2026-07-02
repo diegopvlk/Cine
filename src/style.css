@@ -115,7 +115,7 @@ button:hover:not(.close):not(.maximize):not(.minimize):not(.pill):not(
 menubutton
   button:checked:not(.close):not(.maximize):not(.minimize):not(.pill):not(
     .suggested-action
-  ) {
+  ):not(.toggle-mute) {
   background: rgb(from currentColor r g b / calc(alpha * 0.2));
 }
 button:active:not(.close):not(.maximize):not(.minimize):not(.pill):not(
