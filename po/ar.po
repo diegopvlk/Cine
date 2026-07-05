@@ -9,8 +9,9 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-06-27 21:01-0300\n"
-"PO-Revision-Date: 2026-04-23 00:12+0000\n"
-"Last-Translator: Ahmer Jamil Khan <ahmer@khan.am>\n"
+"PO-Revision-Date: 2026-07-06 10:01+0000\n"
+"Last-Translator: Muhammed Al-Basha "
+"<mu7basha@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/cine/app/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 5.17.1-dev\n"
+"X-Generator: Weblate 2026.7.1.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:139
 #: src/mpris.py:357 src/window.py:196 src/window.py:2040 src/window.blp:6
@@ -134,7 +135,7 @@ msgstr "حفظ قائمة التشغيل"
 #: src/playlist.py:188 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
-msgstr "يتطلب صلاحية من فلاتباك لقراءة المجلد الذي يتواجد فيه الفيديو"
+msgstr "تتطلب قراءة المجلد الذي يتواجد فيه الفيديو أذن من Flatpak"
 
 #: src/playlist.py:317 src/window.py:1307 src/window.py:1843
 msgid "File Error"
@@ -688,7 +689,7 @@ msgstr "اضِف لقائمة التشغيل"
 
 #: src/preferences.blp:15
 msgid "About Permissions"
-msgstr "حول الصلاحيات"
+msgstr "حول الأذونات"
 
 #: src/preferences.blp:81
 msgid "Open New Window for New Files"
