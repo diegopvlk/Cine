@@ -131,6 +131,22 @@ def idle_add_once(function, *args, **kwargs) -> int:
     return GLib.idle_add(wrapper)
 
 
+def timeout_add_once(interval: int, function, *args, **kwargs) -> int:
+    def wrapper():
+        function(*args, **kwargs)
+        return GLib.SOURCE_REMOVE
+
+    return GLib.timeout_add(interval, wrapper)
+
+
+def timeout_add_seconds_once(interval: int, function, *args, **kwargs) -> int:
+    def wrapper():
+        function(*args, **kwargs)
+        return GLib.SOURCE_REMOVE
+
+    return GLib.timeout_add_seconds(interval, wrapper)
+
+
 def get_gpu_vendor(libgl):
     if not display:
         return None

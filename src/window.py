@@ -41,6 +41,8 @@ from .utils import (
     format_time,
     get_display_param,
     idle_add_once,
+    timeout_add_once,
+    timeout_add_seconds_once,
     display,
     has_host_permission,
     MBTN_MAP,
@@ -457,7 +459,7 @@ class CineWindow(Adw.ApplicationWindow):
         @self._connect("notify::is-active")
         def on_is_active_change(*args):
             if self.props.is_active:
-                GLib.timeout_add(200, setattr, self, "is_inactive", False)
+                timeout_add_once(200, setattr, self, "is_inactive", False)
             else:
                 self.space_holding = False
                 self._set_space_holding(False)
@@ -566,7 +568,7 @@ class CineWindow(Adw.ApplicationWindow):
     def _hide_ui_timeout(self, *args, s=2):
         if self.hide_timeout_id:
             GLib.source_remove(self.hide_timeout_id)
-        self.hide_timeout_id = GLib.timeout_add_seconds(s, self._hide_ui)
+        self.hide_timeout_id = timeout_add_seconds_once(s, self._hide_ui)
 
     def _hide_ui(self, *args):
         try:
@@ -1022,7 +1024,7 @@ class CineWindow(Adw.ApplicationWindow):
         if self.late_preview_id > 0:
             GLib.source_remove(self.late_preview_id)
 
-        self.late_preview_id = GLib.timeout_add(120, self._late_update_preview)
+        self.late_preview_id = timeout_add_once(120, self._late_update_preview)
 
         width = self.video_progress_scale.get_width()
         duration = self.video_progress_adj.props.upper
@@ -1491,7 +1493,7 @@ class CineWindow(Adw.ApplicationWindow):
 
                 self.space_pressed = True
 
-                self.space_hold_id = GLib.timeout_add(
+                self.space_hold_id = timeout_add_once(
                     500, self._set_space_holding, True
                 )
             elif event_type == "keyup":
@@ -1542,7 +1544,7 @@ class CineWindow(Adw.ApplicationWindow):
             if self.click_hold_id:
                 GLib.source_remove(self.click_hold_id)
 
-            self.click_hold_id = GLib.timeout_add(500, self._on_click_hold, gesture)
+            self.click_hold_id = timeout_add_once(500, self._on_click_hold, gesture)
 
         self._show_ui()
         self._hide_ui_timeout()
@@ -1598,7 +1600,7 @@ class CineWindow(Adw.ApplicationWindow):
                     self.mpv.command_async("cycle", "pause")
                     self.click_delay_id = 0
 
-                self.click_delay_id = GLib.timeout_add(self.click_time, click)
+                self.click_delay_id = timeout_add_once(self.click_time, click)
 
             elif button == "MBTN_RIGHT" and self.right_clk == 0:
                 self.mpv.command_async("cycle", "pause")
@@ -1619,7 +1621,7 @@ class CineWindow(Adw.ApplicationWindow):
         if self.click_holding:
             self.mpv["speed"] = self.prev_speed
             self.mpv.show_text(f"{self.mpv['speed']:g}×")
-            GLib.timeout_add(self.click_time, setattr, self, "click_holding", False)
+            timeout_add_once(self.click_time, setattr, self, "click_holding", False)
 
     def _on_mouse_scroll(self, controller, dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
@@ -1765,7 +1767,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         if not self.hide_icon_indicator:
             self.revealer_icon_indicator.set_reveal_child(True)
-            GLib.timeout_add(350, self.revealer_icon_indicator.set_reveal_child, False)
+            timeout_add_once(350, self.revealer_icon_indicator.set_reveal_child, False)
 
     def do_close_request(self) -> bool:
         try:
@@ -1840,7 +1842,7 @@ class CineWindow(Adw.ApplicationWindow):
                     pass
 
             idle_add_once(update)
-            GLib.timeout_add_seconds(5, setattr, self, "error_count", 0)
+            timeout_add_seconds_once(5, setattr, self, "error_count", 0)
 
         @self.mpv.event_callback("end-file")
         def on_end_file(event):
@@ -1886,7 +1888,7 @@ class CineWindow(Adw.ApplicationWindow):
                 if self.playlist_debounce_id > 0:
                     GLib.source_remove(self.playlist_debounce_id)
                     self.playlist_debounce_id = 0
-                self.playlist_debounce_id = GLib.timeout_add(75, self._splice_playlist)
+                self.playlist_debounce_id = timeout_add_once(75, self._splice_playlist)
             idle_add_once(self._update_playlist_nav_sensitivity)
 
         @self.mpv.property_observer("playlist-pos")

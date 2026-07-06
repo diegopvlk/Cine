@@ -32,7 +32,7 @@ from gi.repository import Adw, Gio, Gdk, GLib, Gtk, GObject, Pango
 
 from gettext import gettext as _
 from gettext import ngettext
-from .utils import is_local_path, idle_add_once
+from .utils import is_local_path, idle_add_once, timeout_add_once
 
 
 class PlaylistItemObj(GObject.Object):
@@ -411,7 +411,7 @@ class Playlist(Adw.Dialog):
             self.mpv.command("playlist-remove", index)
 
             if index > 0:
-                GLib.timeout_add(
+                timeout_add_once(
                     100,
                     self.playlist_list_view.scroll_to,
                     index,
