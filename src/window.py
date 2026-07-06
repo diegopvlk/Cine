@@ -893,11 +893,11 @@ class CineWindow(Adw.ApplicationWindow):
         entry_row.connect("notify::text", on_text_changed)
 
         def open_url(*args):
+            dialog.close()
             self.mpv.loadfile(self.url, mode)
             if mode == "replace":
                 self.mpv.pause = False
                 self.shuffle_toggle_btn.set_active(False)
-            dialog.close()
 
         def on_clipboard_read(clipboard, result):
             text = clipboard.read_text_finish(result)
