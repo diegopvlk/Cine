@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="svg5" width="16px" height="16px" version="1.1" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
- <path id="path6" transform="translate(0,1)" d="m7.9961-1c-0.55078 0-1 0.48047-1 1.0703v13.859c0 0.58984 0.44922 1.0703 1 1.0703 0.55078 0 1-0.48047 1-1.0703v-13.859c0-0.58984-0.44922-1.0703-1-1.0703zm-3 3c-0.55078 0-1 0.44922-1 1v8c0 0.55078 0.44922 1 1 1 0.55078 0 1-0.44922 1-1v-8c0-0.55078-0.44922-1-1-1zm6 0c-0.55078 0-1 0.44922-1 1v8c-1e-7 0.55078 0.44922 1 1 1 0.55078 0 1-0.44922 1-1v-8c0-0.55078-0.44922-1-1-1zm-8.9961 3c-0.55078 0-1 0.44922-1 1v2c0 0.55078 0.44922 1 1 1 0.55078 0 1-0.44922 1-1v-2c0-0.55078-0.44922-1-1-1zm12 0c-0.55078 0-1 0.44922-1 1v2c0 0.55078 0.44922 1 1 1 0.55078 0 1-0.44922 1-1v-2c0-0.55078-0.44922-1-1-1z"/>
+<svg width="16" height="16" gpa:state="0" gpa:state-names="outline state5 empty" gpa:version="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <path id="sound" class="transparent-fill foreground-stroke" d="m2 8.9862v-1.9724m12-0.027586v2.0276m-3-5.0138v8m-3-11v14m-3-11v8" fill="none" stroke="url(#gpa:foreground) #000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:fill="none" gpa:states="outline state5" gpa:stroke="foreground" gpa:stroke-maxwidth="150%" gpa:stroke-minwidth="25%"/>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work>
+    <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"/>
+    <dc:subject>
+     <rdf:Bag>
+      <rdf:li>audio sound clip</rdf:li>
+     </rdf:Bag>
+    </dc:subject>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Jakub Steiner</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
 </svg>

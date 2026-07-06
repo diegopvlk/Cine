@@ -1,10 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16" height="16" gpa:keywords="multimedia-volume-control audio-volume-high sound loud audio speaker volume" gpa:state="1" gpa:version="1" xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa">
- <style type="text/css">.not-initial-state {
-      display: none;
-    }</style>
- <path id="outline" class="foreground-stroke transparent-fill not-initial-state" d="m6 3v10l-3-3h-2v-4h2z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:states="0" gpa:stroke="foreground"/>
- <path id="wave1" class="foreground-stroke transparent-fill" d="m10.185 4.9594c1.0863 1.8815 1.0863 4.1997 0 6.0812" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:animation-type="automatic" gpa:origin="0.5" gpa:states="0 1" gpa:stroke="foreground" gpa:transition-type="animate"/>
- <path id="wave2" class="foreground-stroke transparent-fill" d="m13.579 3c1.7863 3.094 1.7863 6.906 0 10" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:animation-type="automatic" gpa:origin="0.5" gpa:states="0 1" gpa:stroke="foreground" gpa:transition-type="animate"/>
- <path id="fill" class="foreground-stroke foreground-fill" d="m6 3v10l-3-3h-2v-4h2z" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:fill="foreground" gpa:states="1" gpa:stroke="foreground"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="16" height="16" gpa:version="1" gpa:state="0" gpa:state-names="outline state1 empty">
+<path d="M 6 3 L 6 13 L 3 10 L 1 10 L 1 6 L 3 6 Z" id="outline" gpa:states="outline" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="url(&quot;#gpa:foreground&quot;) rgb(0,0,0)" fill-opacity="1"  class="foreground-stroke foreground-fill" gpa:stroke="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <path d="M 10.1852732 4.95939684 C 11.2715759 6.84092855, 11.2715759 9.15907097, 10.1852732 11.0406027" id="wave1" gpa:states="outline state1" gpa:animation-type="automatic" gpa:transition-type="animate" gpa:origin="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="none" class="foreground-stroke transparent-fill" gpa:stroke="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <path d="M 13.5790482 2.99999976 C 15.3653765 6.09401035, 15.3653765 9.90598965, 13.5790482 13" id="wave2" gpa:states="outline state1" gpa:animation-type="automatic" gpa:transition-type="animate" gpa:origin="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="none" class="foreground-stroke transparent-fill" gpa:stroke="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <path visibility="hidden" d="M 6 3 L 6 13 L 3 10 L 1 10 L 1 6 L 3 6 Z" id="fill" gpa:states="state1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill-rule="nonzero" fill="rgb(0,0,0)" class="foreground-stroke foreground-fill" gpa:stroke="foreground" gpa:fill="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"></cc:license>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>multimedia-volume-control audio-volume-high sound loud audio speaker volume</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jakub Steiner</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
 </svg>

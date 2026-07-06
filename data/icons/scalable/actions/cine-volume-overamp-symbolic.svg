@@ -1,9 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16" height="16" gpa:keywords="audio-speakers audio-volume-overamplified sound audio volume high loud" gpa:state="1" gpa:version="1" xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa">
- <style type="text/css">.not-initial-state {
-      display: none;
-    }</style>
- <path id="outline" class="foreground-stroke transparent-fill not-initial-state" d="m6 3v10l-3-3h-2v-4h2z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:states="0" gpa:stroke="foreground"/>
- <path id="fill" class="foreground-stroke foreground-fill" d="m6 3v10l-3-3h-2v-4h2z" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:fill="foreground" gpa:states="1" gpa:stroke="foreground"/>
- <path id="path2" class="foreground-stroke transparent-fill" d="m14 1v14m-4-11v8" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="16" height="16" gpa:version="1" gpa:state="0" gpa:state-names="outline filled empty">
+<path d="M 6 3 L 6 13 L 3 10 L 1 10 L 1 6 L 3 6 Z" id="outline" gpa:states="outline" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="url(&quot;#gpa:foreground&quot;) rgb(0,0,0)" fill-opacity="1"  class="foreground-stroke foreground-fill" gpa:stroke="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <path visibility="hidden" d="M 6 3 L 6 13 L 3 10 L 1 10 L 1 6 L 3 6 Z" id="fill" gpa:states="filled" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill-rule="nonzero" fill="rgb(0,0,0)" class="foreground-stroke foreground-fill" gpa:stroke="foreground" gpa:fill="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <path d="M 14 1 L 14 15 M 10 4 L 10 12" id="path2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="none" class="foreground-stroke transparent-fill" gpa:states="outline filled" gpa:stroke="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>audio-speakers audio-volume-overamplified sound audio volume high loud</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jakub Steiner</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
 </svg>

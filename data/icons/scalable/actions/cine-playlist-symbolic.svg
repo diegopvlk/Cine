@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="svg1" width="16" height="16" gpa:keywords="view-list-bullet" gpa:state="0" gpa:version="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa">
- <style id="style1" type="text/css">.not-initial-state {
-      display: none;
-    }</style>
- <path id="path16" d="m7 12c-0.55228 0-1 0.44772-1 1s0.44772 1 1 1h7c0.55228 0 1-0.44772 1-1s-0.44772-1-1-1z" stop-color="#000000"/>
- <path id="path14" d="m7 7c-0.55228 0-1 0.44772-1 1s0.44772 1 1 1h7c0.55228 0 1-0.44772 1-1s-0.44772-1-1-1z" stop-color="#000000"/>
- <path id="path12" d="m7 2c-0.55228 0-1 0.44772-1 1s0.44772 1 1 1h7c0.55228 0 1-0.44772 1-1s-0.44772-1-1-1z" stop-color="#000000"/>
- <path id="path3" d="m2.9883 1a1.9883 1.9883 0 0 0-1.9883 1.9883 1.9883 1.9883 0 0 0 1.9883 1.9883h0.023301a1.9883 1.9883 0 0 0 1.9883-1.9883 1.9883 1.9883 0 0 0-1.9883-1.9883z" stop-color="#000000" stroke-width="1.9884"/>
- <path id="path3-5" d="m2.9883 6a1.9883 1.9883 0 0 0-1.9883 1.9883 1.9883 1.9883 0 0 0 1.9883 1.9883h0.023301a1.9883 1.9883 0 0 0 1.9883-1.9883 1.9883 1.9883 0 0 0-1.9883-1.9883z" stop-color="#000000" stroke-width="1.9884"/>
- <path id="path3-2" d="m2.9883 11a1.9883 1.9883 0 0 0-1.9883 1.9883 1.9883 1.9883 0 0 0 1.9883 1.9883h0.023301a1.9883 1.9883 0 0 0 1.9883-1.9883 1.9883 1.9883 0 0 0-1.9883-1.9883z" stop-color="#000000" stroke-width="1.9884"/>
+<svg width="16" height="16" gpa:state="0" gpa:state-names="outline empty" gpa:version="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <metadata>
+  <rdf:RDF>
+   <cc:Work>
+    <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"/>
+    <dc:subject>
+     <rdf:Bag>
+      <rdf:li>view-list bullet</rdf:li>
+     </rdf:Bag>
+    </dc:subject>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Jakub Steiner</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <path d="m3.5957 13c-2e-7 0.32898-0.26668 0.59568-0.59567 0.5957-0.32898 2e-5 -0.5957-0.26665-0.59574-0.59563-4.01e-5 -0.32898 0.26661-0.59572 0.59559-0.59578 0.32898-6.1e-5 0.59573 0.26657 0.59581 0.59556l-0.5957 1.47e-4zm0-5c0 0.32898-0.26668 0.59568-0.59567 0.5957s-0.5957-0.26665-0.59574-0.59563 0.26661-0.59572 0.59559-0.59578 0.59573 0.26657 0.59581 0.59556l-0.5957 1.464e-4zm0-5c0 0.32898-0.26668 0.59568-0.59567 0.5957s-0.5957-0.26665-0.59574-0.59563 0.26661-0.59572 0.59559-0.59578 0.59573 0.26657 0.59581 0.59556l-0.5957 1.464e-4zm3.4043 10h7m-7-5h7m-7-5h7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="none" class="foreground-stroke transparent-fill" gpa:states="outline" gpa:stroke="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%"/>
 </svg>

@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg id="svg1" width="16" height="16" gpa:keywords="media-playback-start play triangle" gpa:state="1" gpa:version="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa">
- <style id="style1" type="text/css">.not-initial-state {
-      display: none;
-    }</style>
- <path id="path2" d="m3.7773 1.0078c-0.32911 0.016513-0.65376 0.1194-0.92969 0.30664-0.55107 0.37395-0.84604 0.99007-0.8457 1.6309h-0.0019531v0.0019531 10.109c2.265e-4 0.641 0.2979 1.2555 0.84961 1.6289 0.55169 0.37335 1.2953 0.41276 1.8828 0.091797h0.0019531l9.291-5.0859c0.63085-0.34583 0.98047-1.0038 0.98047-1.6914s-0.34957-1.3456-0.98047-1.6914l-9.291-5.0859-0.0019531-0.0019531c-0.29411-0.16069-0.62596-0.2294-0.95508-0.21289z" stop-color="#000000"/>
+<svg width="16" height="16" gpa:state="0" gpa:state-names="outline filled empty" gpa:version="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <path class="foreground-fill" d="m3 3.348v9.304c1.1158e-4 0.28854 0.14953 0.55647 0.39495 0.7082 0.24542 0.15173 0.55188 0.16565 0.81005 0.0368l9.358-4.679c0.2718-0.13611 0.44344-0.41403 0.44344-0.718 0-0.30397-0.17164-0.58189-0.44344-0.718l-9.358-4.68c-0.25849-0.12901-0.56536-0.11489-0.8109 0.037326-0.24554 0.15221-0.39468 0.42078-0.3941 0.70967" visibility="hidden" gpa:fill="foreground" gpa:states="filled" gpa:transition-duration="200ms" gpa:transition-type="fade"/>
+ <path class="foreground-stroke foreground-fill" d="m3 2.8375v10.325c1.116e-4 0.28854 0.14953 0.55647 0.39495 0.7082 0.24542 0.15173 0.55188 0.16565 0.81005 0.0368l9.358-5.1895c0.2718-0.13611 0.44344-0.41403 0.44344-0.718 0-0.30397-0.17164-0.58189-0.44344-0.718l-9.358-5.1905c-0.25849-0.12901-0.56536-0.11489-0.8109 0.037326-0.24554 0.15221-0.39468 0.42078-0.3941 0.70967" fill="url(&quot;#gpa:foreground&quot;) rgb(0,0,0)" fill-opacity="1" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" gpa:states="outline" gpa:stroke="foreground" gpa:stroke-maxwidth="150%" gpa:stroke-minwidth="25%" gpa:transition-duration="200ms" gpa:transition-type="fade"/>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work>
+    <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"/>
+    <dc:subject>
+     <rdf:Bag>
+      <rdf:li>media-playback-start play triangle</rdf:li>
+     </rdf:Bag>
+    </dc:subject>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Jakub Steiner</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
 </svg>

@@ -1,8 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="16" height="16" gpa:keywords="media-playlist-shuffle" gpa:state="0" gpa:version="1" xmlns="http://www.w3.org/2000/svg" xmlns:gpa="https://www.gtk.org/grappa">
- <style type="text/css">.not-initial-state {
-      display: none;
-    }</style>
- <path id="path5" class="foreground-stroke transparent-fill" d="m13 6 2-2-2-2m0 12 2-2-2-2" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
- <path id="path7" class="foreground-stroke transparent-fill" d="m15 4h-5.622c-0.84453-2.4e-7 -1.6166 0.47715-1.9943 1.2325l-2.7675 5.535c-0.37768 0.75537-1.1497 1.2325-1.9943 1.2325h-2.622m15 0h-5.622c-0.84453 0-1.6166-0.47715-1.9943-1.2325l-2.7675-5.535c-0.37768-0.75537-1.1497-1.2325-1.9943-1.2325h-2.622" fill="none" stroke="#000" stroke-linejoin="round" stroke-width="2"/>
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" width="16" height="16" gpa:version="1" gpa:state="0" gpa:state-names="outline empty">
+<path d="M 13 6 L 15 4 L 13 2 M 13 14 L 15 12 L 13 10" id="path5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="none" class="foreground-stroke transparent-fill" gpa:states="outline" gpa:stroke="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <path d="M 15 4 L 9.3779974 4 C 8.5334692 3.99999976, 7.76142502 4.47714949, 7.3837409 5.2325182 L 4.6162591 10.7674818 C 4.23857498 11.52285, 3.46653056 12, 2.62200284 12 L 0 12 M 15 12 L 9.3779974 12 C 8.5334692 12, 7.76142502 11.522851, 7.3837409 10.7674818 L 4.6162591 5.2325182 C 4.23857498 4.47714949, 3.46653056 4, 2.62200284 4 L 0 4" id="path7" stroke-width="2" stroke-linecap="butt" stroke-linejoin="round" stroke="rgb(0,0,0)" fill="none" class="foreground-stroke transparent-fill" gpa:states="outline" gpa:stroke="foreground" gpa:stroke-minwidth="25%" gpa:stroke-maxwidth="150%" >
+    </path>
+  <metadata>
+    <rdf:RDF>
+      <cc:Work>
+        <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>media-playlist-shuffle</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Jakub Steiner</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
 </svg>
