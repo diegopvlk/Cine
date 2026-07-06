@@ -159,7 +159,8 @@ class CineWindow(Adw.ApplicationWindow):
         self.has_some_doc_path: bool = False
         self.can_go_prev: bool = False
         self.can_go_next: bool = False
-        self.current_chapters: list = []
+        self.chapters: list = []
+        self.curr_chapter_time = None
         self.actions: dict[str, Gio.SimpleAction] = {}
         self.prev_motion_xy: tuple = (0, 0)
         self.hover_time: float = 0.0
@@ -372,13 +373,13 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.video_progress_adj.connect("value-changed", self._on_progress_adjusted)
 
-        self.chapter_popover = Gtk.Popover()
-        self.chapter_popover.set_position(Gtk.PositionType.TOP)
+        self.time_popover = Gtk.Popover()
+        self.time_popover.set_position(Gtk.PositionType.TOP)
         # video_progress_scale can be different heights because of marks, use a box instead
-        self.chapter_popover.set_parent(self.vid_progress_scale_box)
-        self.chapter_popover.set_autohide(False)
-        self.chapter_popover.set_has_arrow(False)
-        self.chapter_popover.add_css_class("chapter-popover")
+        self.time_popover.set_parent(self.vid_progress_scale_box)
+        self.time_popover.set_autohide(False)
+        self.time_popover.set_has_arrow(False)
+        self.time_popover.add_css_class("chapter-popover")
 
         self.popover_content_box = Gtk.Box()
         self.popover_content_box.props.orientation = Gtk.Orientation.VERTICAL
@@ -389,15 +390,16 @@ class CineWindow(Adw.ApplicationWindow):
         self.thumb_preview.set_halign(Gtk.Align.CENTER)
         self.popover_content_box.append(self.thumb_preview)
 
-        self.chapter_popover_label = Gtk.Label()
-        self.chapter_popover_label.set_use_markup(True)
-        self.chapter_popover_label.set_justify(Gtk.Justification.CENTER)
-        self.chapter_popover_label.set_xalign(0.5)
-        self.chapter_popover_label.add_css_class("numeric")
-        self.chapter_popover_label.set_halign(Gtk.Align.CENTER)
+        self.time_popover_rect = Gdk.Rectangle()
+        self.time_popover_label = Gtk.Label()
+        self.time_popover_label.set_use_markup(True)
+        self.time_popover_label.set_justify(Gtk.Justification.CENTER)
+        self.time_popover_label.set_xalign(0.5)
+        self.time_popover_label.add_css_class("numeric")
+        self.time_popover_label.set_halign(Gtk.Align.CENTER)
 
-        self.popover_content_box.append(self.chapter_popover_label)
-        self.chapter_popover.set_child(self.popover_content_box)
+        self.popover_content_box.append(self.time_popover_label)
+        self.time_popover.set_child(self.popover_content_box)
 
         self.gl_area.connect("realize", self._on_realize_area)
         self.gl_area.connect("render", self._on_render_area)
@@ -411,8 +413,12 @@ class CineWindow(Adw.ApplicationWindow):
 
         progress_hover = Gtk.EventControllerMotion()
         progress_hover.connect("motion", self._on_progress_motion)
-        progress_hover.connect("leave", lambda *a: self.chapter_popover.popdown())
+        progress_hover.connect("leave", lambda *a: self.time_popover.popdown())
         self.video_progress_scale.add_controller(progress_hover)
+
+        prog_mid_click = Gtk.GestureClick(button=2)
+        prog_mid_click.connect("pressed", self._go_to_chapter_start)
+        self.video_progress_scale.add_controller(prog_mid_click)
 
         ecs_flags = Gtk.EventControllerScrollFlags
 
@@ -583,7 +589,7 @@ class CineWindow(Adw.ApplicationWindow):
             )
             if not active_or_hover:
                 self.revealer_ui.set_reveal_child(False)
-                self.chapter_popover.popdown()
+                self.time_popover.popdown()
 
             if (
                 (self.is_fs or not self.mpv["cursor-autohide-fs-only"])
@@ -1026,33 +1032,33 @@ class CineWindow(Adw.ApplicationWindow):
         percentage = max(0, min(1, x / width))
         self.hover_time = percentage * duration
 
-        target_chapter = None
-        if self.current_chapters:
-            for chapter in self.current_chapters:
-                if chapter.get("time", 0) <= self.hover_time:
-                    target_chapter = chapter
-                else:
-                    break
+        self.curr_chapter_time = None
+        curr_chapter = None
+
+        for chapter in self.chapters:
+            c_time = chapter.get("time", 0)
+            if c_time <= self.hover_time:
+                curr_chapter = chapter
+                self.curr_chapter_time = c_time
+            else:
+                break
 
         time_str = format_time(self.hover_time)
-        if target_chapter:
-            title = target_chapter.get("title") or _("Chapter")
+        if curr_chapter:
+            title = curr_chapter.get("title", _("Chapter"))
             title = GLib.markup_escape_text(title)
             markup = f"<b>{title}</b>\n{time_str}"
         else:
             markup = f"{time_str}"
 
-        self.chapter_popover_label.set_markup(markup)
+        self.time_popover_label.set_markup(markup)
 
         clamped_x = max(2, min(x, width - 2))
-
-        rect = Gdk.Rectangle()
-        rect.x = clamped_x
-        rect.y = 0
-        rect.width = 41
-
-        self.chapter_popover.set_pointing_to(rect)
-        self.chapter_popover.popup()
+        self.time_popover_rect.x = clamped_x
+        self.time_popover_rect.y = 0
+        self.time_popover_rect.width = 41
+        self.time_popover.set_pointing_to(self.time_popover_rect)
+        self.time_popover.popup()
 
         if not settings.get_boolean("thumbnail-preview") or not self.is_local_path:
             return
@@ -1067,6 +1073,10 @@ class CineWindow(Adw.ApplicationWindow):
         """Update preview when the cursor is stopped"""
         self.late_preview_id = 0
         idle_add_once(self._update_video_preview)
+
+    def _go_to_chapter_start(self, *args):
+        if self.curr_chapter_time is not None:
+            self.mpv.command_async("seek", self.curr_chapter_time, "absolute")
 
     def _on_progress_scroll(self, controller, _dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
@@ -1218,7 +1228,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         if duration == 0:
             self.video_progress_scale.set_sensitive(False)
-            self.chapter_popover.popdown()
+            self.time_popover.popdown()
             return
 
         self.video_progress_scale.set_sensitive(True)
@@ -2017,10 +2027,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("chapter-list")
         def on_chapter_list_change(_name, chapters):
-            self.current_chapters = (
-                sorted(chapters, key=lambda c: c.get("time", 0)) if chapters else []
-            )
-            idle_add_once(self._update_chapter_marks_and_menu, chapters)
+            self.chapters = sorted(chapters, key=lambda c: c.get("time", 0))
+            idle_add_once(self._update_chapter_marks_and_menu, self.chapters)
 
         @self.mpv.property_observer("chapter")
         def on_chapter_change(_name, chapter_idx):
