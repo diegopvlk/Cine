@@ -1357,9 +1357,6 @@ class CineWindow(Adw.ApplicationWindow):
         for item in items:
             mode = "replace" if first_file else "append-play"
 
-            if mode == "replace":
-                self.mpv.pause = False
-
             if isinstance(item, Gio.File):
                 path = item.get_path() or item.get_uri()
 
@@ -1392,7 +1389,7 @@ class CineWindow(Adw.ApplicationWindow):
 
                 name = cast(str, item.get_basename()).lower()
                 if name.endswith(SUB_EXTS):
-                    if not self.mpv.idle_active:
+                    if not self.mpv.core_idle:
                         self.mpv.command("sub-add", path, "select")
                     continue
 
@@ -1403,6 +1400,9 @@ class CineWindow(Adw.ApplicationWindow):
             elif isinstance(item, str):  # URL string
                 self.mpv.loadfile(item, mode)
                 first_file = False
+
+            if mode == "replace":
+                self.mpv.command_async("set", "pause", "no")
 
     def _sync_fullscreen(self, mpv_is_fs):
         self.is_fs = mpv_is_fs
