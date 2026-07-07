@@ -18,6 +18,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import os
+from gettext import gettext as _
 from .utils import LAST_PLAYLIST_FILE, is_local_path, idle_add_once
 from .preferences import settings
 
@@ -57,6 +58,7 @@ def restore_last_playlist(window, app, win_mpv):
 
     if os.path.exists(LAST_PLAYLIST_FILE):
         window.start_page.set_sensitive(False)
+        window._show_toast(_("Restoring Session…"), force_dismiss=True)
         idle_add_once(win_mpv.loadfile, LAST_PLAYLIST_FILE, "replace")
 
 

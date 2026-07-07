@@ -1809,10 +1809,12 @@ class CineWindow(Adw.ApplicationWindow):
         self.prev_shuffle = self.shuffle_toggle_btn.props.active
         self.playlist_changed = False
 
-    def _show_toast(self, label: str):
+    def _show_toast(self, label, force_dismiss=False):
         toast = Adw.Toast(title=label, timeout=2)
         self.toast_overlay.dismiss_all()
         self.toast_overlay.add_toast(toast)
+        if force_dismiss:
+            timeout_add_seconds_once(2, toast.dismiss)
 
     def _setup_observers(self):
         @self.mpv.event_callback("start-file")
