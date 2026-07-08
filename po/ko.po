@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-07 17:37-0300\n"
-"PO-Revision-Date: 2026-07-03 12:50+0000\n"
+"PO-Revision-Date: 2026-07-09 03:01+0000\n"
 "Last-Translator: JAEHUN JEONG <nisnas@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/cine/app/ko/>\n"
 "Language: ko\n"
@@ -205,10 +205,8 @@ msgid "Copy"
 msgstr "복사"
 
 #: src/save_session.py:61
-#, fuzzy
-#| msgid "Restore Saved Session"
 msgid "Restoring Session…"
-msgstr "저장된 세션 복원"
+msgstr "세션 복원…"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
 #: src/shortcuts.py:34 src/window.py:1994 src/window.blp:254
