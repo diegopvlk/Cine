@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 17:37-0300\n"
+"POT-Creation-Date: 2026-07-09 19:42-0300\n"
 "PO-Revision-Date: 2026-04-03 15:09+0000\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/cine/app/fa/>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "X-Generator: Weblate 5.17-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:140
-#: src/mpris.py:358 src/window.py:204 src/window.py:2062 src/window.blp:6
-#: src/window.blp:81 src/window.blp:488
+#: src/mpris.py:358 src/window.py:204 src/window.py:2071 src/window.blp:6
+#: src/window.blp:81 src/window.blp:494
 msgid "Cine"
 msgstr "سین"
 
@@ -96,7 +96,7 @@ msgstr "بارگذاری همه"
 msgid "Remove from History"
 msgstr "حذف از تاریخچه"
 
-#: src/history.py:206 src/playlist.py:422
+#: src/history.py:206 src/playlist.py:421
 msgid "Open Item Location"
 msgstr "گشودن مکان مورد"
 
@@ -123,29 +123,29 @@ msgstr ""
 msgid "Search"
 msgstr "جستجو"
 
-#: src/playlist.py:185 src/playlist.py:193 src/playlist.py:462
+#: src/playlist.py:181 src/playlist.py:189 src/playlist.py:461
 #: src/preferences.py:331 src/playlist.blp:52
 msgid "Save Playlist"
 msgstr "ذخیرهٔ سیاههٔ پخش"
 
-#: src/playlist.py:188 src/preferences.blp:115 src/preferences.blp:150
+#: src/playlist.py:184 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "نیازمند اجازهٔ فلت‌پک برای خواندن شاخهٔ محل ذخیرهٔ ویدیو"
 
-#: src/playlist.py:317 src/window.py:1346 src/window.py:1869
+#: src/playlist.py:316 src/window.py:1355 src/window.py:1878
 msgid "File Error"
 msgstr "خطای پرونده"
 
-#: src/playlist.py:423
+#: src/playlist.py:422
 msgid "Remove from Playlist"
 msgstr "برداشتن از سیاههٔ پخش"
 
-#: src/playlist.py:463 src/playlist.blp:16 src/window.blp:393
+#: src/playlist.py:462 src/playlist.blp:16 src/window.blp:399
 msgid "Playlist"
 msgstr "سیاههٔ پخش"
 
-#: src/playlist.py:483
+#: src/playlist.py:482
 #, python-brace-format
 msgid "{n} item"
 msgid_plural "{n} items"
@@ -181,7 +181,7 @@ msgid "Save Video Position on Close"
 msgstr "ذخیره موقعیت ویدیو هنگام بستن"
 
 #: src/preferences.py:334 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:140 src/window.blp:520
+#: src/window.blp:140 src/window.blp:526
 msgid "Watch History"
 msgstr "تاریخچه تماشا"
 
@@ -206,13 +206,11 @@ msgid "Copy"
 msgstr "رونوشت"
 
 #: src/save_session.py:61
-#, fuzzy
-#| msgid "Restore Saved Session"
 msgid "Restoring Session…"
-msgstr "بازیابی نشست ذخیره شده"
+msgstr "در حال بازیابی نشست…"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
-#: src/shortcuts.py:34 src/window.py:1994 src/window.blp:254
+#: src/shortcuts.py:34 src/window.py:2003 src/window.blp:257
 msgid "Volume"
 msgstr "حجم صدا"
 
@@ -225,7 +223,7 @@ msgid "Volume Decrease"
 msgstr "کاهش حجم صدا"
 
 #: src/shortcuts.py:35 src/shortcuts.py:36 src/shortcuts.py:37
-#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:235
+#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:236
 msgid "Play/Pause"
 msgstr "پخش یا مکث"
 
@@ -234,7 +232,7 @@ msgid "Show/Hide Subtitles"
 msgstr "نمایش یا نهفتن زیرنویس‌ها"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:297
+#: src/shortcuts.py:233 src/window.blp:300
 msgid "Subtitles"
 msgstr "زیرنویس‌ها"
 
@@ -258,7 +256,7 @@ msgstr "ترک زیرنویس ثانویه بعدی"
 msgid "Previous Secondary Subtitle Track"
 msgstr "ترک زیرنویس ثانویه قبلی"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:776 src/window.blp:312
+#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:773 src/window.blp:315
 msgid "Audio"
 msgstr "صوت"
 
@@ -286,12 +284,12 @@ msgstr "۵ ثانیه به پیش"
 msgid "Seek 5s Forward"
 msgstr "۵ ثانیه به پس"
 
-#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1938
-#: src/window.blp:409
+#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1947
+#: src/window.blp:415
 msgid "Fullscreen"
 msgstr "تمام‌صفحه"
 
-#: src/shortcuts.py:51 src/window.py:1938
+#: src/shortcuts.py:51 src/window.py:1947
 msgid "Exit Fullscreen"
 msgstr "خروج از تمام‌صفحه"
 
@@ -345,7 +343,7 @@ msgstr "افزایش مقیاس زیرنویس"
 msgid "Decrease Subtitle Scale"
 msgstr "کاهش مقیاس زیرنویس"
 
-#: src/shortcuts.py:72 src/window.blp:265
+#: src/shortcuts.py:72 src/window.blp:268
 msgid "Mute/Unmute"
 msgstr "خموشی یا ناخموشی"
 
@@ -402,7 +400,7 @@ msgstr "تنظیم/پاک کردن نقاط تکرار A-B"
 msgid "Loop"
 msgstr "حلقه"
 
-#: src/shortcuts.py:85 src/window.blp:382
+#: src/shortcuts.py:85 src/window.blp:387
 msgid "Loop File"
 msgstr "حلقه کردن پرونده"
 
@@ -495,89 +493,89 @@ msgstr "پخش"
 msgid "Miscellaneous"
 msgstr "متفرقه"
 
-#: src/window.py:627 src/window.py:1338 src/window.blp:129
+#: src/window.py:624 src/window.py:1347 src/window.blp:129
 msgid "Add Subtitle Track"
 msgstr "افزودن قطعه زیرنویس"
 
-#: src/window.py:629 src/window.py:638
+#: src/window.py:626 src/window.py:635
 msgid "None"
 msgstr "هیچ"
 
-#: src/window.py:636 src/window.blp:134
+#: src/window.py:633 src/window.blp:134
 msgid "Add Audio Track"
 msgstr "افزودن قطعه صوتی"
 
-#: src/window.py:675
+#: src/window.py:672
 msgid "Track"
 msgstr "قطعه"
 
-#: src/window.py:718 src/playlist.blp:31 src/window.blp:119
+#: src/window.py:715 src/playlist.blp:31 src/window.blp:119
 msgid "Add Folder"
 msgstr "افزودن شاخه"
 
-#: src/window.py:718 src/shortcuts-dialog.blp:21 src/window.blp:104
-#: src/window.blp:533
+#: src/window.py:715 src/shortcuts-dialog.blp:21 src/window.blp:104
+#: src/window.blp:539
 msgid "Open Folder"
 msgstr "گشودن شاخه"
 
-#: src/window.py:745 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.py:742 src/shortcuts-dialog.blp:16 src/window.blp:99
 msgid "Open Files"
 msgstr "گشودن پرونده‌ها"
 
-#: src/window.py:748 src/playlist.blp:26 src/window.blp:114
+#: src/window.py:745 src/playlist.blp:26 src/window.blp:114
 msgid "Add Files"
 msgstr "افزودن پرونده‌ها"
 
-#: src/window.py:752
+#: src/window.py:749
 msgid "Add Subtitle"
 msgstr "افزودن زیرنویس"
 
-#: src/window.py:755
+#: src/window.py:752
 msgid "Add Audio"
 msgstr "افزودن صوت"
 
-#: src/window.py:771
+#: src/window.py:768
 msgid "Subtitle"
 msgstr "زیرنویس"
 
-#: src/window.py:780
+#: src/window.py:777
 msgid "Media"
 msgstr "رسانه"
 
-#: src/window.py:839
+#: src/window.py:836
 msgid "Session Saved"
 msgstr "نشست ذخیره شد"
 
-#: src/window.py:845 src/playlist.blp:36 src/window.blp:124
+#: src/window.py:842 src/playlist.blp:36 src/window.blp:124
 msgid "Add URL"
 msgstr "افزودن لینک"
 
-#: src/window.py:845 src/shortcuts-dialog.blp:26 src/window.blp:109
-#: src/window.blp:542
+#: src/window.py:842 src/shortcuts-dialog.blp:26 src/window.blp:109
+#: src/window.blp:548
 msgid "Open URL"
 msgstr "باز کردن لینک"
 
-#: src/window.py:858
+#: src/window.py:855
 msgid "URL"
 msgstr "لینک"
 
-#: src/window.py:866 src/playlist.blp:22
+#: src/window.py:863 src/playlist.blp:22
 msgid "Add"
 msgstr "افزودن"
 
-#: src/window.py:866 src/window.blp:93
+#: src/window.py:863 src/window.blp:93
 msgid "Open"
 msgstr "گشودن"
 
-#: src/window.py:1059 src/window.py:1177
+#: src/window.py:1056 src/window.py:1180
 msgid "Chapter"
 msgstr "فصل"
 
-#: src/window.py:1230 src/window.py:1342
+#: src/window.py:1235 src/window.py:1351
 msgid "Play"
 msgstr "پخش"
 
-#: src/window.py:1230
+#: src/window.py:1235
 msgid "Pause"
 msgstr "مکث"
 
@@ -682,11 +680,11 @@ msgstr "بازنشانی تأخیر صوت"
 msgid "Playback Speed"
 msgstr "سرعت پخش"
 
-#: src/playlist.blp:90
+#: src/playlist.blp:94
 msgid "No Results Found"
 msgstr "هیچ نتیجه‌ای یافت نشد"
 
-#: src/playlist.blp:124
+#: src/playlist.blp:128
 msgid "Add to Playlist"
 msgstr "افزودن به سیاههٔ پخش"
 
@@ -834,35 +832,35 @@ msgstr "دربارهٔ سین"
 msgid "Previous"
 msgstr "پیشین"
 
-#: src/window.blp:246
+#: src/window.blp:248
 msgid "Next"
 msgstr "بعدی"
 
-#: src/window.blp:326
+#: src/window.blp:329
 msgid "Video"
 msgstr "ویدیو"
 
-#: src/window.blp:341
+#: src/window.blp:344
 msgid "Chapters"
 msgstr "فصل‌ها"
 
-#: src/window.blp:358
+#: src/window.blp:361
 msgid "Shuffle Playlist"
 msgstr "بُر زدن سیاههٔ پخش"
 
-#: src/window.blp:370
+#: src/window.blp:374
 msgid "Loop Playlist"
 msgstr "حلقه کردن سیاههٔ پخش"
 
-#: src/window.blp:442
+#: src/window.blp:448
 msgid "Toggle Elapsed/Remaining"
 msgstr "تغییر وضعیت رفته و مانده"
 
-#: src/window.blp:489
+#: src/window.blp:495
 msgid "Drag and drop files here"
 msgstr "کشیدن و رها کردن پرونده‌ها در این‌جا"
 
-#: src/window.blp:509
+#: src/window.blp:515
 msgid "Open…"
 msgstr "گشودن…"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 17:37-0300\n"
+"POT-Creation-Date: 2026-07-09 19:42-0300\n"
 "PO-Revision-Date: 2026-07-07 20:07+0000\n"
 "Last-Translator: Димко <Dymkovych@proton.me>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/cine/app/uk/>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "X-Generator: Weblate 2026.7.1.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:140
-#: src/mpris.py:358 src/window.py:204 src/window.py:2062 src/window.blp:6
-#: src/window.blp:81 src/window.blp:488
+#: src/mpris.py:358 src/window.py:204 src/window.py:2071 src/window.blp:6
+#: src/window.blp:81 src/window.blp:494
 msgid "Cine"
 msgstr "Кіно"
 
@@ -98,7 +98,7 @@ msgstr "Завантажити все"
 msgid "Remove from History"
 msgstr "Видалити з історії"
 
-#: src/history.py:206 src/playlist.py:422
+#: src/history.py:206 src/playlist.py:421
 msgid "Open Item Location"
 msgstr "Відкрити місце розташування"
 
@@ -123,29 +123,29 @@ msgstr "Victor Butko https://social.net.ua/users/vicbutko"
 msgid "Search"
 msgstr "Пошук"
 
-#: src/playlist.py:185 src/playlist.py:193 src/playlist.py:462
+#: src/playlist.py:181 src/playlist.py:189 src/playlist.py:461
 #: src/preferences.py:331 src/playlist.blp:52
 msgid "Save Playlist"
 msgstr "Зберегти Список відтворення"
 
-#: src/playlist.py:188 src/preferences.blp:115 src/preferences.blp:150
+#: src/playlist.py:184 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "Потрібен дозвіл flatpak для читання теки, в якій зберігається відео"
 
-#: src/playlist.py:317 src/window.py:1346 src/window.py:1869
+#: src/playlist.py:316 src/window.py:1355 src/window.py:1878
 msgid "File Error"
 msgstr "Помилка файла"
 
-#: src/playlist.py:423
+#: src/playlist.py:422
 msgid "Remove from Playlist"
 msgstr "Видалити зі списку відтворення"
 
-#: src/playlist.py:463 src/playlist.blp:16 src/window.blp:393
+#: src/playlist.py:462 src/playlist.blp:16 src/window.blp:399
 msgid "Playlist"
 msgstr "Список відтворення"
 
-#: src/playlist.py:483
+#: src/playlist.py:482
 #, python-brace-format
 msgid "{n} item"
 msgid_plural "{n} items"
@@ -182,7 +182,7 @@ msgid "Save Video Position on Close"
 msgstr "Зберегти позицію відео при закритті"
 
 #: src/preferences.py:334 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:140 src/window.blp:520
+#: src/window.blp:140 src/window.blp:526
 msgid "Watch History"
 msgstr "Історія переглядів"
 
@@ -208,13 +208,11 @@ msgid "Copy"
 msgstr "Копіювати"
 
 #: src/save_session.py:61
-#, fuzzy
-#| msgid "Restore Saved Session"
 msgid "Restoring Session…"
-msgstr "Відновити збережену сесію"
+msgstr "Відновлення сеансу…"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
-#: src/shortcuts.py:34 src/window.py:1994 src/window.blp:254
+#: src/shortcuts.py:34 src/window.py:2003 src/window.blp:257
 msgid "Volume"
 msgstr "Гучність"
 
@@ -227,7 +225,7 @@ msgid "Volume Decrease"
 msgstr "Тихіше"
 
 #: src/shortcuts.py:35 src/shortcuts.py:36 src/shortcuts.py:37
-#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:235
+#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:236
 msgid "Play/Pause"
 msgstr "Відтворювати/Призупинити"
 
@@ -236,7 +234,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Показати/Сховати субтитри"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:297
+#: src/shortcuts.py:233 src/window.blp:300
 msgid "Subtitles"
 msgstr "Субтитри"
 
@@ -260,7 +258,7 @@ msgstr "Наступна доріжка вторинних субтитрів"
 msgid "Previous Secondary Subtitle Track"
 msgstr "Попередня доріжка вторинних субтитрів"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:776 src/window.blp:312
+#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:773 src/window.blp:315
 msgid "Audio"
 msgstr "Звук"
 
@@ -288,12 +286,12 @@ msgstr "Назад на 5с"
 msgid "Seek 5s Forward"
 msgstr "Вперед на 5с"
 
-#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1938
-#: src/window.blp:409
+#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1947
+#: src/window.blp:415
 msgid "Fullscreen"
 msgstr "На повний екран"
 
-#: src/shortcuts.py:51 src/window.py:1938
+#: src/shortcuts.py:51 src/window.py:1947
 msgid "Exit Fullscreen"
 msgstr "Вихід з повного екрану"
 
@@ -347,7 +345,7 @@ msgstr "Збільшити масштаб субтитрів"
 msgid "Decrease Subtitle Scale"
 msgstr "Зменшити масштаб субтитрів"
 
-#: src/shortcuts.py:72 src/window.blp:265
+#: src/shortcuts.py:72 src/window.blp:268
 msgid "Mute/Unmute"
 msgstr "Вимкнути/увімкнути звук"
 
@@ -404,7 +402,7 @@ msgstr "Встановити/Очистити точки циклу A-B"
 msgid "Loop"
 msgstr "Повторити"
 
-#: src/shortcuts.py:85 src/window.blp:382
+#: src/shortcuts.py:85 src/window.blp:387
 msgid "Loop File"
 msgstr "Повторити файл"
 
@@ -497,89 +495,89 @@ msgstr "Відтворення"
 msgid "Miscellaneous"
 msgstr "Різне"
 
-#: src/window.py:627 src/window.py:1338 src/window.blp:129
+#: src/window.py:624 src/window.py:1347 src/window.blp:129
 msgid "Add Subtitle Track"
 msgstr "Додати доріжку субтитрів"
 
-#: src/window.py:629 src/window.py:638
+#: src/window.py:626 src/window.py:635
 msgid "None"
 msgstr "Нічого"
 
-#: src/window.py:636 src/window.blp:134
+#: src/window.py:633 src/window.blp:134
 msgid "Add Audio Track"
 msgstr "Додати звукову доріжку"
 
-#: src/window.py:675
+#: src/window.py:672
 msgid "Track"
 msgstr "Доріжка"
 
-#: src/window.py:718 src/playlist.blp:31 src/window.blp:119
+#: src/window.py:715 src/playlist.blp:31 src/window.blp:119
 msgid "Add Folder"
 msgstr "Додати теку"
 
-#: src/window.py:718 src/shortcuts-dialog.blp:21 src/window.blp:104
-#: src/window.blp:533
+#: src/window.py:715 src/shortcuts-dialog.blp:21 src/window.blp:104
+#: src/window.blp:539
 msgid "Open Folder"
 msgstr "Відкрити теку"
 
-#: src/window.py:745 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.py:742 src/shortcuts-dialog.blp:16 src/window.blp:99
 msgid "Open Files"
 msgstr "Відкрити файли"
 
-#: src/window.py:748 src/playlist.blp:26 src/window.blp:114
+#: src/window.py:745 src/playlist.blp:26 src/window.blp:114
 msgid "Add Files"
 msgstr "Додати файли"
 
-#: src/window.py:752
+#: src/window.py:749
 msgid "Add Subtitle"
 msgstr "Додати субтитри"
 
-#: src/window.py:755
+#: src/window.py:752
 msgid "Add Audio"
 msgstr "Додати звук"
 
-#: src/window.py:771
+#: src/window.py:768
 msgid "Subtitle"
 msgstr "Субтитр"
 
-#: src/window.py:780
+#: src/window.py:777
 msgid "Media"
 msgstr "Медіа"
 
-#: src/window.py:839
+#: src/window.py:836
 msgid "Session Saved"
 msgstr "Сесія збережена"
 
-#: src/window.py:845 src/playlist.blp:36 src/window.blp:124
+#: src/window.py:842 src/playlist.blp:36 src/window.blp:124
 msgid "Add URL"
 msgstr "Додати посилання"
 
-#: src/window.py:845 src/shortcuts-dialog.blp:26 src/window.blp:109
-#: src/window.blp:542
+#: src/window.py:842 src/shortcuts-dialog.blp:26 src/window.blp:109
+#: src/window.blp:548
 msgid "Open URL"
 msgstr "Відкрити посилання"
 
-#: src/window.py:858
+#: src/window.py:855
 msgid "URL"
 msgstr "Посилання"
 
-#: src/window.py:866 src/playlist.blp:22
+#: src/window.py:863 src/playlist.blp:22
 msgid "Add"
 msgstr "Додати"
 
-#: src/window.py:866 src/window.blp:93
+#: src/window.py:863 src/window.blp:93
 msgid "Open"
 msgstr "Відкрити"
 
-#: src/window.py:1059 src/window.py:1177
+#: src/window.py:1056 src/window.py:1180
 msgid "Chapter"
 msgstr "Розділ"
 
-#: src/window.py:1230 src/window.py:1342
+#: src/window.py:1235 src/window.py:1351
 msgid "Play"
 msgstr "Відтворити"
 
-#: src/window.py:1230
+#: src/window.py:1235
 msgid "Pause"
 msgstr "Призупинити"
 
@@ -684,11 +682,11 @@ msgstr "Скинути затримку звуку"
 msgid "Playback Speed"
 msgstr "Швидкість відтворення"
 
-#: src/playlist.blp:90
+#: src/playlist.blp:94
 msgid "No Results Found"
 msgstr "Результатів не знайдено"
 
-#: src/playlist.blp:124
+#: src/playlist.blp:128
 msgid "Add to Playlist"
 msgstr "Додати до списку відтворення"
 
@@ -836,34 +834,34 @@ msgstr "Про Кіно"
 msgid "Previous"
 msgstr "Попередній"
 
-#: src/window.blp:246
+#: src/window.blp:248
 msgid "Next"
 msgstr "Наступний"
 
-#: src/window.blp:326
+#: src/window.blp:329
 msgid "Video"
 msgstr "Відео"
 
-#: src/window.blp:341
+#: src/window.blp:344
 msgid "Chapters"
 msgstr "Розділи"
 
-#: src/window.blp:358
+#: src/window.blp:361
 msgid "Shuffle Playlist"
 msgstr "Перемішати список відтворення"
 
-#: src/window.blp:370
+#: src/window.blp:374
 msgid "Loop Playlist"
 msgstr "Зациклити список відтворення"
 
-#: src/window.blp:442
+#: src/window.blp:448
 msgid "Toggle Elapsed/Remaining"
 msgstr "Перемкнути Пройшло/Залишилось"
 
-#: src/window.blp:489
+#: src/window.blp:495
 msgid "Drag and drop files here"
 msgstr "Перетягнути файли сюди"
 
-#: src/window.blp:509
+#: src/window.blp:515
 msgid "Open…"
 msgstr "Відкрити…"

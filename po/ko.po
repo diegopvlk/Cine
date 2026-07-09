@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-07 17:37-0300\n"
+"POT-Creation-Date: 2026-07-09 19:42-0300\n"
 "PO-Revision-Date: 2026-07-09 03:01+0000\n"
 "Last-Translator: JAEHUN JEONG <nisnas@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/cine/app/ko/>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "X-Generator: Weblate 2026.7.1.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:140
-#: src/mpris.py:358 src/window.py:204 src/window.py:2062 src/window.blp:6
-#: src/window.blp:81 src/window.blp:488
+#: src/mpris.py:358 src/window.py:204 src/window.py:2071 src/window.blp:6
+#: src/window.blp:81 src/window.blp:494
 msgid "Cine"
 msgstr "Cine"
 
@@ -98,7 +98,7 @@ msgstr "모두 불러오기"
 msgid "Remove from History"
 msgstr "기록에서 삭제"
 
-#: src/history.py:206 src/playlist.py:422
+#: src/history.py:206 src/playlist.py:421
 msgid "Open Item Location"
 msgstr "파일 위치 열기"
 
@@ -123,29 +123,29 @@ msgstr "dingle28 (nisnas@gmail.com)"
 msgid "Search"
 msgstr "검색"
 
-#: src/playlist.py:185 src/playlist.py:193 src/playlist.py:462
+#: src/playlist.py:181 src/playlist.py:189 src/playlist.py:461
 #: src/preferences.py:331 src/playlist.blp:52
 msgid "Save Playlist"
 msgstr "재생목록 저장"
 
-#: src/playlist.py:188 src/preferences.blp:115 src/preferences.blp:150
+#: src/playlist.py:184 src/preferences.blp:115 src/preferences.blp:150
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "동영상이 저장된 폴더를 읽으려면 Flatpak 권한이 필요합니다"
 
-#: src/playlist.py:317 src/window.py:1346 src/window.py:1869
+#: src/playlist.py:316 src/window.py:1355 src/window.py:1878
 msgid "File Error"
 msgstr "파일 오류"
 
-#: src/playlist.py:423
+#: src/playlist.py:422
 msgid "Remove from Playlist"
 msgstr "재생 목록에서 제거"
 
-#: src/playlist.py:463 src/playlist.blp:16 src/window.blp:393
+#: src/playlist.py:462 src/playlist.blp:16 src/window.blp:399
 msgid "Playlist"
 msgstr "재생목록"
 
-#: src/playlist.py:483
+#: src/playlist.py:482
 #, python-brace-format
 msgid "{n} item"
 msgid_plural "{n} items"
@@ -180,7 +180,7 @@ msgid "Save Video Position on Close"
 msgstr "종료 시 동영상 재생 위치 저장"
 
 #: src/preferences.py:334 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:140 src/window.blp:520
+#: src/window.blp:140 src/window.blp:526
 msgid "Watch History"
 msgstr "시청 기록"
 
@@ -209,7 +209,7 @@ msgid "Restoring Session…"
 msgstr "세션 복원…"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
-#: src/shortcuts.py:34 src/window.py:1994 src/window.blp:254
+#: src/shortcuts.py:34 src/window.py:2003 src/window.blp:257
 msgid "Volume"
 msgstr "음량"
 
@@ -222,7 +222,7 @@ msgid "Volume Decrease"
 msgstr "음량 감소"
 
 #: src/shortcuts.py:35 src/shortcuts.py:36 src/shortcuts.py:37
-#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:235
+#: src/preferences.blp:273 src/preferences.blp:285 src/window.blp:236
 msgid "Play/Pause"
 msgstr "재생/일시 정지"
 
@@ -231,7 +231,7 @@ msgid "Show/Hide Subtitles"
 msgstr "자막 켜기/끄기"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:297
+#: src/shortcuts.py:233 src/window.blp:300
 msgid "Subtitles"
 msgstr "자막"
 
@@ -255,7 +255,7 @@ msgstr "다음 보조 자막 트랙"
 msgid "Previous Secondary Subtitle Track"
 msgstr "이전 보조 자막 트랙"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:776 src/window.blp:312
+#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:773 src/window.blp:315
 msgid "Audio"
 msgstr "오디오"
 
@@ -283,12 +283,12 @@ msgstr "5초 뒤로 이동"
 msgid "Seek 5s Forward"
 msgstr "5초 앞으로 이동"
 
-#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1938
-#: src/window.blp:409
+#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1947
+#: src/window.blp:415
 msgid "Fullscreen"
 msgstr "전체화면"
 
-#: src/shortcuts.py:51 src/window.py:1938
+#: src/shortcuts.py:51 src/window.py:1947
 msgid "Exit Fullscreen"
 msgstr "전체화면 종료"
 
@@ -342,7 +342,7 @@ msgstr "자막 크기 증가"
 msgid "Decrease Subtitle Scale"
 msgstr "자막 크기 감소"
 
-#: src/shortcuts.py:72 src/window.blp:265
+#: src/shortcuts.py:72 src/window.blp:268
 msgid "Mute/Unmute"
 msgstr "음소거/해제"
 
@@ -399,7 +399,7 @@ msgstr "A-B 구간 반복 설정/해제"
 msgid "Loop"
 msgstr "반복재생"
 
-#: src/shortcuts.py:85 src/window.blp:382
+#: src/shortcuts.py:85 src/window.blp:387
 msgid "Loop File"
 msgstr "파일 반복"
 
@@ -492,89 +492,89 @@ msgstr "재생"
 msgid "Miscellaneous"
 msgstr "기타"
 
-#: src/window.py:627 src/window.py:1338 src/window.blp:129
+#: src/window.py:624 src/window.py:1347 src/window.blp:129
 msgid "Add Subtitle Track"
 msgstr "자막 트랙 추가"
 
-#: src/window.py:629 src/window.py:638
+#: src/window.py:626 src/window.py:635
 msgid "None"
 msgstr "없음"
 
-#: src/window.py:636 src/window.blp:134
+#: src/window.py:633 src/window.blp:134
 msgid "Add Audio Track"
 msgstr "오디오 트랙 추가"
 
-#: src/window.py:675
+#: src/window.py:672
 msgid "Track"
 msgstr "트랙"
 
-#: src/window.py:718 src/playlist.blp:31 src/window.blp:119
+#: src/window.py:715 src/playlist.blp:31 src/window.blp:119
 msgid "Add Folder"
 msgstr "폴더 추가"
 
-#: src/window.py:718 src/shortcuts-dialog.blp:21 src/window.blp:104
-#: src/window.blp:533
+#: src/window.py:715 src/shortcuts-dialog.blp:21 src/window.blp:104
+#: src/window.blp:539
 msgid "Open Folder"
 msgstr "폴더 열기"
 
-#: src/window.py:745 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.py:742 src/shortcuts-dialog.blp:16 src/window.blp:99
 msgid "Open Files"
 msgstr "파일 열기"
 
-#: src/window.py:748 src/playlist.blp:26 src/window.blp:114
+#: src/window.py:745 src/playlist.blp:26 src/window.blp:114
 msgid "Add Files"
 msgstr "파일 추가"
 
-#: src/window.py:752
+#: src/window.py:749
 msgid "Add Subtitle"
 msgstr "자막 추가"
 
-#: src/window.py:755
+#: src/window.py:752
 msgid "Add Audio"
 msgstr "오디오 추가"
 
-#: src/window.py:771
+#: src/window.py:768
 msgid "Subtitle"
 msgstr "자막"
 
-#: src/window.py:780
+#: src/window.py:777
 msgid "Media"
 msgstr "미디어"
 
-#: src/window.py:839
+#: src/window.py:836
 msgid "Session Saved"
 msgstr "세션 저장됨"
 
-#: src/window.py:845 src/playlist.blp:36 src/window.blp:124
+#: src/window.py:842 src/playlist.blp:36 src/window.blp:124
 msgid "Add URL"
 msgstr "URL 추가"
 
-#: src/window.py:845 src/shortcuts-dialog.blp:26 src/window.blp:109
-#: src/window.blp:542
+#: src/window.py:842 src/shortcuts-dialog.blp:26 src/window.blp:109
+#: src/window.blp:548
 msgid "Open URL"
 msgstr "URL 열기"
 
-#: src/window.py:858
+#: src/window.py:855
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:866 src/playlist.blp:22
+#: src/window.py:863 src/playlist.blp:22
 msgid "Add"
 msgstr "추가"
 
-#: src/window.py:866 src/window.blp:93
+#: src/window.py:863 src/window.blp:93
 msgid "Open"
 msgstr "열기"
 
-#: src/window.py:1059 src/window.py:1177
+#: src/window.py:1056 src/window.py:1180
 msgid "Chapter"
 msgstr "챕터"
 
-#: src/window.py:1230 src/window.py:1342
+#: src/window.py:1235 src/window.py:1351
 msgid "Play"
 msgstr "재생"
 
-#: src/window.py:1230
+#: src/window.py:1235
 msgid "Pause"
 msgstr "일시 정지"
 
@@ -679,11 +679,11 @@ msgstr "오디오 지연 초기화"
 msgid "Playback Speed"
 msgstr "재생 속도"
 
-#: src/playlist.blp:90
+#: src/playlist.blp:94
 msgid "No Results Found"
 msgstr "검색 결과 없음"
 
-#: src/playlist.blp:124
+#: src/playlist.blp:128
 msgid "Add to Playlist"
 msgstr "재생목록에 추가"
 
@@ -831,34 +831,34 @@ msgstr "Cine에 대해"
 msgid "Previous"
 msgstr "이전"
 
-#: src/window.blp:246
+#: src/window.blp:248
 msgid "Next"
 msgstr "다음"
 
-#: src/window.blp:326
+#: src/window.blp:329
 msgid "Video"
 msgstr "비디오"
 
-#: src/window.blp:341
+#: src/window.blp:344
 msgid "Chapters"
 msgstr "챕터"
 
-#: src/window.blp:358
+#: src/window.blp:361
 msgid "Shuffle Playlist"
 msgstr "재생목록 무작위 재생"
 
-#: src/window.blp:370
+#: src/window.blp:374
 msgid "Loop Playlist"
 msgstr "반복 재생"
 
-#: src/window.blp:442
+#: src/window.blp:448
 msgid "Toggle Elapsed/Remaining"
 msgstr "재생 시간/남은 시간 전환"
 
-#: src/window.blp:489
+#: src/window.blp:495
 msgid "Drag and drop files here"
 msgstr "여기에 파일을 끌어다 놓으세요"
 
-#: src/window.blp:509
+#: src/window.blp:515
 msgid "Open…"
 msgstr "열기…"
