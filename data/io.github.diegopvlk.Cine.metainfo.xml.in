@@ -72,6 +72,15 @@
   </requires>
 
   <releases>
+    <release version="1.7.2" date="2026-07-10">
+      <description translate="no">
+        <ul>
+          <li>New: middle click mute icon to toggle mute</li>
+          <li>A toast is now displayed when restoring session</li>
+          <li>Fixed a crash occurring when closing the video options menu</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.7.1" date="2026-07-07">
       <description translate="no">
         <ul>
