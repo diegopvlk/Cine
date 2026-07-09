@@ -1081,6 +1081,12 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _on_progress_scroll(self, controller, _dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
+
+        self.key_state = event.get_modifier_state()
+
+        if self.key_state & Gdk.ModifierType.CONTROL_MASK:
+            return True
+
         direction: Gdk.ScrollDirection = event.get_direction()
         rel_dir: Gdk.ScrollRelativeDirection = event.get_relative_direction()  # type: ignore
         is_natural: bool = rel_dir == Gdk.ScrollRelativeDirection.INVERTED  # type: ignore
