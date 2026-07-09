@@ -332,6 +332,7 @@ cine-list-view row {
 }
 cine-list-view row > box {
   transition: background-color 200ms ease-in-out;
+  color: var(--card-fg-color);
   background-color: var(--card-bg-color);
   margin-bottom: -1px;
   border: 1px solid rgba(0, 0, 0, 0.5);
