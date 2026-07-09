@@ -351,6 +351,13 @@ class CineWindow(Adw.ApplicationWindow):
             "toggled", lambda btn: setattr(self.mpv, "mute", btn.get_active())
         )
 
+        vol_mid_click = Gtk.GestureClick(button=2)
+        vol_mid_click.connect(
+            "pressed",
+            lambda *a: setattr(self.mpv, "mute", not self.mpv.mute),
+        )
+        self.volume_menu_btn.add_controller(vol_mid_click)
+
         self.fullscreen_btn.connect(
             "clicked",
             lambda *a: setattr(self.mpv, "fullscreen", not self.is_fs),
