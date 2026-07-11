@@ -35,34 +35,40 @@ from gi.repository import (
 gtk = ctypes.CDLL("libgtk-4.so.1")
 display = Gdk.Display.get_default()
 
-xdg_pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
-SCREENSHOT_DIR = os.path.join(xdg_pictures, "Cine Screenshots") if xdg_pictures else ""
+try:
+    xdg_pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
+    SCREENSHOT_DIR = (
+        os.path.join(xdg_pictures, "Cine Screenshots") if xdg_pictures else ""
+    )
 
-base_config = GLib.get_user_config_dir()
-CONFIG_DIR = os.path.join(base_config, "cine")
-INPUT_CONF = os.path.join(CONFIG_DIR, "input.conf")
-MPV_CONF = os.path.join(CONFIG_DIR, "mpv.conf")
-WATCH_HISTORY_JSONL = os.path.join(CONFIG_DIR, "watch_history.jsonl")
+    base_config = GLib.get_user_config_dir()
+    CONFIG_DIR = os.path.join(base_config, "cine")
+    INPUT_CONF = os.path.join(CONFIG_DIR, "input.conf")
+    MPV_CONF = os.path.join(CONFIG_DIR, "mpv.conf")
+    WATCH_HISTORY_JSONL = os.path.join(CONFIG_DIR, "watch_history.jsonl")
 
-old_last_pl_file = os.path.join(CONFIG_DIR, "last-playlist.m3u8")
-playlist_dir = os.path.join(CONFIG_DIR, "last-playlist")
-LAST_PLAYLIST_FILE = os.path.join(playlist_dir, "last-playlist.m3u8")
+    old_last_pl_file = os.path.join(CONFIG_DIR, "last-playlist.m3u8")
+    playlist_dir = os.path.join(CONFIG_DIR, "last-playlist")
+    LAST_PLAYLIST_FILE = os.path.join(playlist_dir, "last-playlist.m3u8")
 
-os.makedirs(CONFIG_DIR, exist_ok=True)
-os.makedirs(playlist_dir, exist_ok=True)
+    os.makedirs(CONFIG_DIR, exist_ok=True)
+    os.makedirs(playlist_dir, exist_ok=True)
 
-for file in [
-    INPUT_CONF,
-    MPV_CONF,
-    WATCH_HISTORY_JSONL,
-]:
-    if not os.path.exists(file):
-        open(file, "w").close()
+    for file in [
+        INPUT_CONF,
+        MPV_CONF,
+        WATCH_HISTORY_JSONL,
+    ]:
+        if not os.path.exists(file):
+            open(file, "w").close()
 
-if os.path.exists(old_last_pl_file):
-    from shutil import move
+    if os.path.exists(old_last_pl_file):
+        from shutil import move
 
-    move(old_last_pl_file, playlist_dir)
+        move(old_last_pl_file, playlist_dir)
+
+except Exception as e:
+    print("Error creating files/folders", repr(e))
 
 is_flatpak = os.environ.get("container") == "flatpak"
 

@@ -259,8 +259,11 @@ class CineWindow(Adw.ApplicationWindow):
         self._setup_widgets()
         self._setup_observers()
 
-        self.mpv.command("load-input-conf", f"memory://{INTERNAL_BINDINGS}")
-        self.mpv.command("load-input-conf", INPUT_CONF)
+        try:
+            self.mpv.command("load-input-conf", f"memory://{INTERNAL_BINDINGS}")
+            self.mpv.command("load-input-conf", INPUT_CONF)
+        except Exception as e:
+            print("load-input-conf error:", repr(e))
 
         self.bindings = cast(dict, self.mpv._get_property("input-bindings"))
         self.mouse_bindings: dict = get_mouse_bindings(self.bindings)
