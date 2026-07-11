@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-09 19:42-0300\n"
+"POT-Creation-Date: 2026-07-11 10:52-0300\n"
 "PO-Revision-Date: 2026-02-28 11:40-0300\n"
 "Last-Translator: Diego Povliuk <diegopvlk@gmail.com>\n"
 "Language-Team: English (United Kingdom)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:140
-#: src/mpris.py:358 src/window.py:204 src/window.py:2071 src/window.blp:6
+#: src/mpris.py:358 src/window.py:204 src/window.py:2074 src/window.blp:6
 #: src/window.blp:81 src/window.blp:494
 msgid "Cine"
 msgstr "Cine"
@@ -131,7 +131,7 @@ msgid ""
 msgstr ""
 "Requires flatpak permission to read the folder where the video is stored"
 
-#: src/playlist.py:316 src/window.py:1355 src/window.py:1878
+#: src/playlist.py:316 src/window.py:1358 src/window.py:1881
 msgid "File Error"
 msgstr "File Error"
 
@@ -203,12 +203,12 @@ msgstr "Copied"
 msgid "Copy"
 msgstr "Copy"
 
-#: src/save_session.py:61
+#: src/save_session.py:66
 msgid "Restoring Session…"
 msgstr "Restoring Session…"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
-#: src/shortcuts.py:34 src/window.py:2003 src/window.blp:257
+#: src/shortcuts.py:34 src/window.py:2006 src/window.blp:257
 msgid "Volume"
 msgstr "Volume"
 
@@ -254,7 +254,7 @@ msgstr "Next Secondary Subtitle Track"
 msgid "Previous Secondary Subtitle Track"
 msgstr "Previous Secondary Subtitle Track"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:773 src/window.blp:315
+#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:776 src/window.blp:315
 msgid "Audio"
 msgstr "Audio"
 
@@ -282,12 +282,12 @@ msgstr "Seek 5s Backward"
 msgid "Seek 5s Forward"
 msgstr "Seek 5s Forward"
 
-#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1947
+#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1950
 #: src/window.blp:415
 msgid "Fullscreen"
 msgstr "Full Screen"
 
-#: src/shortcuts.py:51 src/window.py:1947
+#: src/shortcuts.py:51 src/window.py:1950
 msgid "Exit Fullscreen"
 msgstr "Exit Fullscreen"
 
@@ -491,89 +491,89 @@ msgstr "Playback"
 msgid "Miscellaneous"
 msgstr "Miscellaneous"
 
-#: src/window.py:624 src/window.py:1347 src/window.blp:129
+#: src/window.py:627 src/window.py:1350 src/window.blp:129
 msgid "Add Subtitle Track"
 msgstr "Add Subtitle Track"
 
-#: src/window.py:626 src/window.py:635
+#: src/window.py:629 src/window.py:638
 msgid "None"
 msgstr "None"
 
-#: src/window.py:633 src/window.blp:134
+#: src/window.py:636 src/window.blp:134
 msgid "Add Audio Track"
 msgstr "Add Audio Track"
 
-#: src/window.py:672
+#: src/window.py:675
 msgid "Track"
 msgstr "Track"
 
-#: src/window.py:715 src/playlist.blp:31 src/window.blp:119
+#: src/window.py:718 src/playlist.blp:31 src/window.blp:119
 msgid "Add Folder"
 msgstr "Add Folder"
 
-#: src/window.py:715 src/shortcuts-dialog.blp:21 src/window.blp:104
+#: src/window.py:718 src/shortcuts-dialog.blp:21 src/window.blp:104
 #: src/window.blp:539
 msgid "Open Folder"
 msgstr "Open Folder"
 
-#: src/window.py:742 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.py:745 src/shortcuts-dialog.blp:16 src/window.blp:99
 msgid "Open Files"
 msgstr "Open Files"
 
-#: src/window.py:745 src/playlist.blp:26 src/window.blp:114
+#: src/window.py:748 src/playlist.blp:26 src/window.blp:114
 msgid "Add Files"
 msgstr "Add Files"
 
-#: src/window.py:749
+#: src/window.py:752
 msgid "Add Subtitle"
 msgstr "Add Subtitle"
 
-#: src/window.py:752
+#: src/window.py:755
 msgid "Add Audio"
 msgstr "Add Audio"
 
-#: src/window.py:768
+#: src/window.py:771
 msgid "Subtitle"
 msgstr "Subtitle"
 
-#: src/window.py:777
+#: src/window.py:780
 msgid "Media"
 msgstr "Media"
 
-#: src/window.py:836
+#: src/window.py:839
 msgid "Session Saved"
 msgstr "Session Saved"
 
-#: src/window.py:842 src/playlist.blp:36 src/window.blp:124
+#: src/window.py:845 src/playlist.blp:36 src/window.blp:124
 msgid "Add URL"
 msgstr "Add URL"
 
-#: src/window.py:842 src/shortcuts-dialog.blp:26 src/window.blp:109
+#: src/window.py:845 src/shortcuts-dialog.blp:26 src/window.blp:109
 #: src/window.blp:548
 msgid "Open URL"
 msgstr "Open URL"
 
-#: src/window.py:855
+#: src/window.py:858
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:863 src/playlist.blp:22
+#: src/window.py:866 src/playlist.blp:22
 msgid "Add"
 msgstr "Add"
 
-#: src/window.py:863 src/window.blp:93
+#: src/window.py:866 src/window.blp:93
 msgid "Open"
 msgstr "Open"
 
-#: src/window.py:1056 src/window.py:1180
+#: src/window.py:1059 src/window.py:1183
 msgid "Chapter"
 msgstr "Chapter"
 
-#: src/window.py:1235 src/window.py:1351
+#: src/window.py:1238 src/window.py:1354
 msgid "Play"
 msgstr "Play"
 
-#: src/window.py:1235
+#: src/window.py:1238
 msgid "Pause"
 msgstr "Pause"
 

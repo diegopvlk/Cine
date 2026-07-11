@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-09 19:42-0300\n"
+"POT-Creation-Date: 2026-07-11 10:52-0300\n"
 "PO-Revision-Date: 2026-06-29 16:01+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/cine/app/ta/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Weblate 2026.7.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:229 src/mpris.py:140
-#: src/mpris.py:358 src/window.py:204 src/window.py:2071 src/window.blp:6
+#: src/mpris.py:358 src/window.py:204 src/window.py:2074 src/window.blp:6
 #: src/window.blp:81 src/window.blp:494
 msgid "Cine"
 msgstr "சினி"
@@ -132,7 +132,7 @@ msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "வீடியோ சேமிக்கப்பட்டுள்ள கோப்புறையைப் படிக்க பிளாட்பாக் இசைவு தேவை"
 
-#: src/playlist.py:316 src/window.py:1355 src/window.py:1878
+#: src/playlist.py:316 src/window.py:1358 src/window.py:1881
 msgid "File Error"
 msgstr "கோப்பு பிழை"
 
@@ -205,12 +205,12 @@ msgstr "நகலெடுக்கப்பட்டது"
 msgid "Copy"
 msgstr "நகலெடு"
 
-#: src/save_session.py:61
+#: src/save_session.py:66
 msgid "Restoring Session…"
 msgstr "அமர்வு மீட்டமைக்கப்படுகிறது…"
 
 #: src/shortcuts.py:31 src/shortcuts.py:32 src/shortcuts.py:33
-#: src/shortcuts.py:34 src/window.py:2003 src/window.blp:257
+#: src/shortcuts.py:34 src/window.py:2006 src/window.blp:257
 msgid "Volume"
 msgstr "தொகுதி"
 
@@ -256,7 +256,7 @@ msgstr "அடுத்த இரண்டாம் நிலை வசன வ�
 msgid "Previous Secondary Subtitle Track"
 msgstr "முந்தைய இரண்டாம் நிலை வசன வரிகள்"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:773 src/window.blp:315
+#: src/shortcuts.py:43 src/shortcuts.py:44 src/window.py:776 src/window.blp:315
 msgid "Audio"
 msgstr "ஆடியோ"
 
@@ -284,12 +284,12 @@ msgstr "5வி பின்நோக்கி தேடு"
 msgid "Seek 5s Forward"
 msgstr "சீக் 5 வி ஃபார்வர்டு"
 
-#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1947
+#: src/shortcuts.py:49 src/shortcuts.py:50 src/window.py:1950
 #: src/window.blp:415
 msgid "Fullscreen"
 msgstr "முழு திரை"
 
-#: src/shortcuts.py:51 src/window.py:1947
+#: src/shortcuts.py:51 src/window.py:1950
 msgid "Exit Fullscreen"
 msgstr "முழுத்திரையிலிருந்து வெளியேறு"
 
@@ -493,89 +493,89 @@ msgstr "பின்னணி"
 msgid "Miscellaneous"
 msgstr "மற்றவை"
 
-#: src/window.py:624 src/window.py:1347 src/window.blp:129
+#: src/window.py:627 src/window.py:1350 src/window.blp:129
 msgid "Add Subtitle Track"
 msgstr "சப்டைட்டில் டிராக்கைச் சேர்க்கவும்"
 
-#: src/window.py:626 src/window.py:635
+#: src/window.py:629 src/window.py:638
 msgid "None"
 msgstr "எதுவுமில்லை"
 
-#: src/window.py:633 src/window.blp:134
+#: src/window.py:636 src/window.blp:134
 msgid "Add Audio Track"
 msgstr "ஆடியோ டிராக்கைச் சேர்க்கவும்"
 
-#: src/window.py:672
+#: src/window.py:675
 msgid "Track"
 msgstr "மின்தடம்"
 
-#: src/window.py:715 src/playlist.blp:31 src/window.blp:119
+#: src/window.py:718 src/playlist.blp:31 src/window.blp:119
 msgid "Add Folder"
 msgstr "கோப்புறையைச் சேர்"
 
-#: src/window.py:715 src/shortcuts-dialog.blp:21 src/window.blp:104
+#: src/window.py:718 src/shortcuts-dialog.blp:21 src/window.blp:104
 #: src/window.blp:539
 msgid "Open Folder"
 msgstr "கோப்புறையைத் திறக்கவும்"
 
-#: src/window.py:742 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.py:745 src/shortcuts-dialog.blp:16 src/window.blp:99
 msgid "Open Files"
 msgstr "கோப்புகளைத் திறக்கவும்"
 
-#: src/window.py:745 src/playlist.blp:26 src/window.blp:114
+#: src/window.py:748 src/playlist.blp:26 src/window.blp:114
 msgid "Add Files"
 msgstr "கோப்புகளைச் சேர்"
 
-#: src/window.py:749
+#: src/window.py:752
 msgid "Add Subtitle"
 msgstr "வசனத்தைச் சேர்க்கவும்"
 
-#: src/window.py:752
+#: src/window.py:755
 msgid "Add Audio"
 msgstr "ஆடியோவைச் சேர்க்கவும்"
 
-#: src/window.py:768
+#: src/window.py:771
 msgid "Subtitle"
 msgstr "உரையாடல்"
 
-#: src/window.py:777
+#: src/window.py:780
 msgid "Media"
 msgstr "ஊடகம்"
 
-#: src/window.py:836
+#: src/window.py:839
 msgid "Session Saved"
 msgstr "அமர்வு சேமிக்கப்பட்டது"
 
-#: src/window.py:842 src/playlist.blp:36 src/window.blp:124
+#: src/window.py:845 src/playlist.blp:36 src/window.blp:124
 msgid "Add URL"
 msgstr "கூட்டு முகவரி"
 
-#: src/window.py:842 src/shortcuts-dialog.blp:26 src/window.blp:109
+#: src/window.py:845 src/shortcuts-dialog.blp:26 src/window.blp:109
 #: src/window.blp:548
 msgid "Open URL"
 msgstr "URLஐத் திறக்கவும்"
 
-#: src/window.py:855
+#: src/window.py:858
 msgid "URL"
 msgstr "முகவரி"
 
-#: src/window.py:863 src/playlist.blp:22
+#: src/window.py:866 src/playlist.blp:22
 msgid "Add"
 msgstr "கூட்டு"
 
-#: src/window.py:863 src/window.blp:93
+#: src/window.py:866 src/window.blp:93
 msgid "Open"
 msgstr "திற"
 
-#: src/window.py:1056 src/window.py:1180
+#: src/window.py:1059 src/window.py:1183
 msgid "Chapter"
 msgstr "பாடங்கள்"
 
-#: src/window.py:1235 src/window.py:1351
+#: src/window.py:1238 src/window.py:1354
 msgid "Play"
 msgstr "விளையாடு"
 
-#: src/window.py:1235
+#: src/window.py:1238
 msgid "Pause"
 msgstr "இடைநிறுத்தம்"
 
