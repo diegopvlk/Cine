@@ -72,6 +72,13 @@
   </requires>
 
   <releases>
+    <release version="1.7.3" date="2026-07-11">
+      <description translate="no">
+        <ul>
+          <li>Fixed a crash occurring when restoring session</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.7.2" date="2026-07-10">
       <description translate="no">
         <ul>
