@@ -27,7 +27,7 @@ def save_last_playlist_file(win_mpv):
     """Saves the current playlist to a m3u8 file."""
 
     try:
-        win_mpv["save-position-on-quit"] = True
+        win_mpv.write_watch_later_config()
         with open(LAST_PLAYLIST_FILE, "w", encoding="utf-8") as f:
             if win_mpv.idle_active:
                 f.write("")
