@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: 2026-07-09 03:01+0000\n"
 "Last-Translator: JAEHUN JEONG <nisnas@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/cine/app/ko/>\n"
@@ -231,7 +231,7 @@ msgid "Show/Hide Subtitles"
 msgstr "자막 켜기/끄기"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr "자막"
 
@@ -532,10 +532,6 @@ msgstr "자막 추가"
 #: src/window.py:755
 msgid "Add Audio"
 msgstr "오디오 추가"
-
-#: src/window.py:771
-msgid "Subtitle"
-msgstr "자막"
 
 #: src/window.py:780
 msgid "Media"
@@ -862,3 +858,6 @@ msgstr "여기에 파일을 끌어다 놓으세요"
 #: src/window.blp:515
 msgid "Open…"
 msgstr "열기…"
+
+#~ msgid "Subtitle"
+#~ msgstr "자막"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: 2026-06-29 16:01+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/cine/app/ta/>\n"
@@ -232,7 +232,7 @@ msgid "Show/Hide Subtitles"
 msgstr "வசனங்களைக் காட்டு/மறை"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr "வசன வரிகள்"
 
@@ -533,10 +533,6 @@ msgstr "வசனத்தைச் சேர்க்கவும்"
 #: src/window.py:755
 msgid "Add Audio"
 msgstr "ஆடியோவைச் சேர்க்கவும்"
-
-#: src/window.py:771
-msgid "Subtitle"
-msgstr "உரையாடல்"
 
 #: src/window.py:780
 msgid "Media"
@@ -863,3 +859,6 @@ msgstr "கோப்புகளை இங்கே இழுத்து வி
 #: src/window.blp:515
 msgid "Open…"
 msgstr "திற…"
+
+#~ msgid "Subtitle"
+#~ msgstr "உரையாடல்"

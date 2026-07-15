@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -222,7 +222,7 @@ msgid "Show/Hide Subtitles"
 msgstr ""
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr ""
 
@@ -522,10 +522,6 @@ msgstr ""
 
 #: src/window.py:755
 msgid "Add Audio"
-msgstr ""
-
-#: src/window.py:771
-msgid "Subtitle"
 msgstr ""
 
 #: src/window.py:780

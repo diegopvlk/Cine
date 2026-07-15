@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: 2026-04-03 15:09+0000\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/cine/app/fa/>\n"
@@ -232,7 +232,7 @@ msgid "Show/Hide Subtitles"
 msgstr "نمایش یا نهفتن زیرنویس‌ها"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr "زیرنویس‌ها"
 
@@ -533,10 +533,6 @@ msgstr "افزودن زیرنویس"
 #: src/window.py:755
 msgid "Add Audio"
 msgstr "افزودن صوت"
-
-#: src/window.py:771
-msgid "Subtitle"
-msgstr "زیرنویس"
 
 #: src/window.py:780
 msgid "Media"
@@ -863,6 +859,9 @@ msgstr "کشیدن و رها کردن پرونده‌ها در این‌جا"
 #: src/window.blp:515
 msgid "Open…"
 msgstr "گشودن…"
+
+#~ msgid "Subtitle"
+#~ msgstr "زیرنویس"
 
 #~ msgid "Unknown title"
 #~ msgstr "عنوان ناشناخته"

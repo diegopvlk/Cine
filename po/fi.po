@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: 2026-04-06 11:07+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/cine/app/fi/>\n"
@@ -234,7 +234,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Näytä/piilota tekstitys"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr "Tekstitys"
 
@@ -535,10 +535,6 @@ msgstr "Lisää tekstitys"
 #: src/window.py:755
 msgid "Add Audio"
 msgstr "Lisää ääni"
-
-#: src/window.py:771
-msgid "Subtitle"
-msgstr "Tekstitys"
 
 #: src/window.py:780
 msgid "Media"
@@ -865,6 +861,9 @@ msgstr "Vedä ja pudota tiedostot tähän"
 #: src/window.blp:515
 msgid "Open…"
 msgstr "Avaa…"
+
+#~ msgid "Subtitle"
+#~ msgstr "Tekstitys"
 
 #~ msgid "Unknown title"
 #~ msgstr "Tuntematon otsikko"

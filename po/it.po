@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: 2026-04-30 07:09+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/cine/app/it/>\n"
@@ -236,7 +236,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Mostra/Nascondi sottotitoli"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr "Sottotitoli"
 
@@ -537,10 +537,6 @@ msgstr "Aggiungi sottotitoli"
 #: src/window.py:755
 msgid "Add Audio"
 msgstr "Aggiungi audio"
-
-#: src/window.py:771
-msgid "Subtitle"
-msgstr "Sottotitoli"
 
 #: src/window.py:780
 msgid "Media"
@@ -869,6 +865,9 @@ msgstr "Trascina i file qui"
 #: src/window.blp:515
 msgid "Open…"
 msgstr "Apri…"
+
+#~ msgid "Subtitle"
+#~ msgstr "Sottotitoli"
 
 #~ msgid "Unknown title"
 #~ msgstr "Titolo sconosciuto"

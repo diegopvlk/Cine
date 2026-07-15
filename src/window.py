@@ -768,7 +768,7 @@ class CineWindow(Adw.ApplicationWindow):
             dialog.set_initial_folder(Gio.File.new_for_path(folder_path))
 
         if mode == "sub-add":
-            filter.set_name(_("Subtitle"))
+            filter.set_name(_("Subtitles"))
             for sub in SUB_EXTS:
                 s = sub.lstrip(".")
                 filter.add_suffix(s)

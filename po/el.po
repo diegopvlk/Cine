@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: 2026-06-30 00:38+0000\n"
 "Last-Translator: Hazel L <hazeltwink@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/cine/app/el/>\n"
@@ -234,7 +234,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Εμφάνιση/απόκρυψη υποτίτλων"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr "Υπότιτλοι"
 
@@ -535,10 +535,6 @@ msgstr "Προσθήκη υποτίτλων"
 #: src/window.py:755
 msgid "Add Audio"
 msgstr "Προσθήκη ήχου"
-
-#: src/window.py:771
-msgid "Subtitle"
-msgstr "Υπότιτλοι"
 
 #: src/window.py:780
 msgid "Media"
@@ -867,3 +863,6 @@ msgstr "Σύρετε και αφήστε αρχεία εδώ"
 #: src/window.blp:515
 msgid "Open…"
 msgstr "Άνοιγμα…"
+
+#~ msgid "Subtitle"
+#~ msgstr "Υπότιτλοι"

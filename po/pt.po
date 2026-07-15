@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: 2026-04-03 15:09+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/cine/app/pt/"
@@ -237,7 +237,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Mostrar/Ocultar Legendas"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr "Legendas"
 
@@ -538,10 +538,6 @@ msgstr "Adicionar Legendas"
 #: src/window.py:755
 msgid "Add Audio"
 msgstr "Adicionar Áudio"
-
-#: src/window.py:771
-msgid "Subtitle"
-msgstr "Legenda"
 
 #: src/window.py:780
 msgid "Media"
@@ -868,6 +864,9 @@ msgstr "Arraste e largue ficheiros aqui"
 #: src/window.blp:515
 msgid "Open…"
 msgstr "Abrir…"
+
+#~ msgid "Subtitle"
+#~ msgstr "Legenda"
 
 #~ msgid "Unknown title"
 #~ msgstr "Título desconhecido"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-11 10:52-0300\n"
+"POT-Creation-Date: 2026-07-14 21:49-0300\n"
 "PO-Revision-Date: 2026-07-09 03:01+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/cine/app/et/>\n"
@@ -232,7 +232,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Näita/peida subtiitrid"
 
 #: src/shortcuts.py:39 src/shortcuts.py:40 src/shortcuts.py:169
-#: src/shortcuts.py:233 src/window.blp:300
+#: src/shortcuts.py:233 src/window.py:771 src/window.blp:300
 msgid "Subtitles"
 msgstr "Subtiitrid"
 
@@ -533,10 +533,6 @@ msgstr "Lisa subtiitrid"
 #: src/window.py:755
 msgid "Add Audio"
 msgstr "Lisa heli"
-
-#: src/window.py:771
-msgid "Subtitle"
-msgstr "Subtiiter"
 
 #: src/window.py:780
 msgid "Media"
@@ -863,6 +859,9 @@ msgstr "Lohista failid siia"
 #: src/window.blp:515
 msgid "Open…"
 msgstr "Ava…"
+
+#~ msgid "Subtitle"
+#~ msgstr "Subtiiter"
 
 #~ msgid "Unknown title"
 #~ msgstr "Teadmata pealkiri"
