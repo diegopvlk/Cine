@@ -95,51 +95,17 @@ template $CineWindow: Adw.ApplicationWindow {
                 always-show-arrow: true;
 
                 menu-model: menu {
-                  item {
-                    label: _("Open Files");
-                    action: "win.clear-and-add";
-                  }
-
-                  item {
-                    label: _("Open Folder");
-                    action: "win.open-folder";
-                  }
-
-                  item {
-                    label: _("Open URL");
-                    action: "win.open-url";
-                  }
-
-                  item {
-                    label: _("Add Files");
-                    action: "win.add-playlist-files";
-                  }
-
-                  item {
-                    label: _("Add Folder");
-                    action: "win.add-playlist-folder";
-                  }
-
-                  item {
-                    label: _("Add URL");
-                    action: "win.add-url";
-                  }
-
-                  item {
-                    label: _("Add Subtitle Track");
-                    action: "win.add-sub-tracks";
-                  }
-
-                  item {
-                    label: _("Add Audio Track");
-                    action: "win.add-audio-tracks";
-                  }
+                  item (_("Open Files"), "win.clear-and-add")
+                  item (_("Open Folder"), "win.open-folder")
+                  item (_("Open URL"), "win.open-url")
+                  item (_("Add Files"), "win.add-playlist-files")
+                  item (_("Add Folder"), "win.add-playlist-folder")
+                  item (_("Add URL"), "win.add-url")
+                  item (_("Add Subtitle Track"), "win.add-sub-tracks")
+                  item (_("Add Audio Track"), "win.add-audio-tracks")
 
                   section {
-                    item {
-                      label: _("Watch History");
-                      action: "win.open-history";
-                    }
+                    item (_("Watch History"), "win.open-history")
                   }
                 };
               }
@@ -153,37 +119,15 @@ template $CineWindow: Adw.ApplicationWindow {
 
                 menu-model: menu primary_menu {
                   section {
-                    item {
-                      label: _("New Window");
-                      action: "app.new-window";
-                    }
-
-                    item {
-                      label: _("Preferences");
-                      action: "app.preferences";
-                    }
-
-                    item {
-                      label: _("Keyboard Shortcuts");
-                      action: "win.custom-shortcuts";
-                    }
-
-                    item {
-                      label: _("About Cine");
-                      action: "app.about";
-                    }
+                    item (_("New Window"), "app.new-window")
+                    item (_("Preferences"), "app.preferences")
+                    item (_("Keyboard Shortcuts"), "win.custom-shortcuts")
+                    item (_("About Cine"), "app.about")
                   }
 
                   section {
-                    item {
-                      label: _("Save Session");
-                      action: "win.save-session";
-                    }
-
-                    item {
-                      label: _("Save Session and Close");
-                      action: "win.save-session-close";
-                    }
+                    item (_("Save Session"), "win.save-session")
+                    item (_("Save Session and Close"), "win.save-session-close")
                   }
                 };
               }
