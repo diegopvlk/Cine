@@ -45,6 +45,8 @@ from .utils import (
     timeout_add_seconds_once,
     display,
     has_host_permission,
+    PrimaryClick,
+    SecondaryClick,
     MBTN_MAP,
     KEY_REMAP,
     SUB_EXTS,
@@ -105,6 +107,7 @@ class CineWindow(Adw.ApplicationWindow):
     drop_label: Gtk.Label = Gtk.Template.Child()
     drop_icon: Gtk.Image = Gtk.Template.Child()
     spinner: Adw.Spinner = Gtk.Template.Child()
+    context_popover_menu: Gtk.PopoverMenu = Gtk.Template.Child()
 
     open_menu_btn: Gtk.MenuButton = Gtk.Template.Child()
     primary_menu_btn: Gtk.MenuButton = Gtk.Template.Child()
@@ -317,6 +320,10 @@ class CineWindow(Adw.ApplicationWindow):
         self._create_action("custom-shortcuts", self._present_shortcuts)
         self.app.set_accels_for_action("win.custom-shortcuts", ["<primary>question"])
         self.app.set_accels_for_action("app.shortcuts", [])
+
+        self._create_action("play-pause", self._on_play_pause_clicked)
+        self._create_action("previous", self._on_previous_clicked)
+        self._create_action("next", self._on_next_clicked)
 
     def _present_shortcuts(self, *args):
         builder = Gtk.Builder.new_from_resource(
@@ -1266,7 +1273,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.time_elapsed_label.set_width_chars(chars)
 
     @Gtk.Template.Callback()
-    def _on_play_pause_clicked(self, _button):
+    def _on_play_pause_clicked(self, *args):
         self.mpv.pause = not self.mpv.pause
 
     def _on_progress_adjusted(self, adjustment):
@@ -1322,6 +1329,9 @@ class CineWindow(Adw.ApplicationWindow):
 
             self.previous_btn.props.sensitive = self.can_go_prev
             self.next_btn.props.sensitive = self.can_go_next
+
+            self.actions["previous"].props.enabled = self.can_go_prev
+            self.actions["next"].props.enabled = self.can_go_next
 
             self.shuffle_toggle_btn.props.visible = has_multiple
             self.loop_playlist_btn.props.visible = has_multiple
@@ -1539,19 +1549,26 @@ class CineWindow(Adw.ApplicationWindow):
         except mpv.ShutdownError:
             pass
 
-    def _on_click_pressed(self, gesture, _n_press, _x, _y):
+    def _on_click_pressed(self, gesture, _n_press, x, y):
         button = MBTN_MAP.get(gesture.get_button())
         self.left_clk = settings.get_int("left-click")
         self.right_clk = settings.get_int("right-click")
 
-        if button == "MBTN_RIGHT" and self.right_clk == 1:
+        if not button or self._is_hovering():
             return
+
+        if button == "MBTN_RIGHT" and self.right_clk == SecondaryClick.CONTEXT_MENU:
+            if not self.mpv.idle_active:
+                rect = Gdk.Rectangle()
+                rect.x = x
+                rect.y = y
+                self.context_popover_menu.set_pointing_to(rect)
+                self.context_popover_menu.popup()
+                gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+                return
 
         if button != "MBTN_LEFT":
             gesture.set_state(Gtk.EventSequenceState.CLAIMED)
-
-        if not button or self._is_hovering():
-            return
 
         # Back and forward dont trigger _on_click_released when video is playing (??)
         if button in ("MBTN_BACK", "MBTN_FORWARD"):
@@ -1583,7 +1600,11 @@ class CineWindow(Adw.ApplicationWindow):
         button = MBTN_MAP.get(gesture.get_button())
 
         ignored_btn = not button or button in ("MBTN_BACK", "MBTN_FORWARD")
-        ignore_left = self.is_inactive and button == "MBTN_LEFT" and self.left_clk == 1
+        ignore_left = (
+            self.is_inactive
+            and button == "MBTN_LEFT"
+            and self.left_clk == PrimaryClick.FOCUS_PLAY_PAUSE
+        )
 
         if ignored_btn or ignore_left or self._is_hovering():
             return
@@ -1603,7 +1624,7 @@ class CineWindow(Adw.ApplicationWindow):
         if n_press == 1 and not self.click_holding:
             cmd_str = str(self.mouse_bindings.get(button))
 
-            if button == "MBTN_LEFT" and self.left_clk <= 1:
+            if button == "MBTN_LEFT" and self.left_clk != PrimaryClick.BYPASS:
 
                 def click():
                     self.mpv.command_async("cycle", "pause")
@@ -1611,7 +1632,7 @@ class CineWindow(Adw.ApplicationWindow):
 
                 self.click_delay_id = timeout_add_once(self.click_time, click)
 
-            elif button == "MBTN_RIGHT" and self.right_clk == 0:
+            elif button == "MBTN_RIGHT" and self.right_clk == SecondaryClick.PLAY_PAUSE:
                 self.mpv.command_async("cycle", "pause")
 
             else:

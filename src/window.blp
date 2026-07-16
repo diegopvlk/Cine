@@ -531,6 +531,32 @@ template $CineWindow: Adw.ApplicationWindow {
             }
           }
         }
+
+        [overlay]
+        PopoverMenu context_popover_menu {
+          has-arrow: false;
+          halign: start;
+
+          menu-model: menu {
+            section {
+              item (_("Play/Pause"), "win.play-pause")
+              item (_("Previous"), "win.previous")
+              item (_("Next"), "win.next")
+            }
+
+            section {
+              item (_("Open Files"), "win.clear-and-add")
+              item (_("Open Folder"), "win.open-folder")
+              item (_("Open URL"), "win.open-url")
+            }
+
+            section {
+              item (_("Preferences"), "app.preferences")
+              item (_("Watch History"), "win.open-history")
+              item (_("Playlist"), "win.open-playlist-dialog")
+            }
+          };
+        }
       }
     }
   };

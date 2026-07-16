@@ -220,6 +220,18 @@ def format_time(seconds):
         return f"{m}:{s:02d}"
 
 
+class PrimaryClick:
+    PLAY_PAUSE = 0
+    FOCUS_PLAY_PAUSE = 1
+    BYPASS = 2
+
+
+class SecondaryClick:
+    PLAY_PAUSE = 0
+    CONTEXT_MENU = 1
+    BYPASS = 2
+
+
 MBTN_MAP: dict = {
     1: "MBTN_LEFT",
     2: "MBTN_MID",

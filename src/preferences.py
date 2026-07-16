@@ -85,8 +85,8 @@ class Preferences(Adw.Dialog):
     subtitle_scale_row: Adw.SpinRow = Gtk.Template.Child()
     sub_color_btn: Gtk.ColorDialogButton = Gtk.Template.Child()
     sub_bg_color_btn: Gtk.ColorDialogButton = Gtk.Template.Child()
-    left_click_row: Adw.ComboRow = Gtk.Template.Child()
-    right_click_row: Adw.ComboRow = Gtk.Template.Child()
+    primary_click_row: Adw.ComboRow = Gtk.Template.Child()
+    secondary_click_row: Adw.ComboRow = Gtk.Template.Child()
     subtitle_bg_switch: Gtk.Switch = Gtk.Template.Child()
     subtitle_lang_row: Adw.EntryRow = Gtk.Template.Child()
     audio_lang_row: Adw.EntryRow = Gtk.Template.Child()
@@ -140,8 +140,8 @@ class Preferences(Adw.Dialog):
             ("save-video-position", self.save_position_switch, "active"),
             ("subtitle-scale", self.subtitle_scale_row, "value"),
             ("subtitle-bg", self.subtitle_bg_switch, "active"),
-            ("left-click", self.left_click_row, "selected"),
-            ("right-click", self.right_click_row, "selected"),
+            ("left-click", self.primary_click_row, "selected"),
+            ("right-click", self.secondary_click_row, "selected"),
             ("subtitle-languages", self.subtitle_lang_row, "text"),
             ("audio-languages", self.audio_lang_row, "text"),
         ]

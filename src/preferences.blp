@@ -265,26 +265,26 @@ template $Preferences: Adw.Dialog {
 			}
 
 			Adw.PreferencesGroup {
-				Adw.ComboRow left_click_row {
-					title: _("Left Click");
+				Adw.ComboRow primary_click_row {
+					title: _("Primary Click");
 
 					model: StringList {
 						strings [
 							_("Play/Pause"),
 							_("Focus/Play/Pause"),
-							_("Disabled"),
+							_("Bypass"),
 						]
 					};
 				}
 
-				Adw.ComboRow right_click_row {
-					title: _("Right Click");
+				Adw.ComboRow secondary_click_row {
+					title: _("Secondary Click");
 
 					model: StringList {
 						strings [
 							_("Play/Pause"),
-							_("Window Menu"),
-							_("Disabled"),
+							_("Context Menu"),
+							_("Bypass"),
 						]
 					};
 				}
