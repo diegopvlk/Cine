@@ -32,7 +32,7 @@ from gi.repository import Adw, Gio, Gdk, GLib, Gtk, GObject, Pango
 
 from gettext import gettext as _
 from gettext import ngettext
-from .utils import is_local_path, idle_add_once, timeout_add_once
+from .utils import logger, is_local_path, idle_add_once, timeout_add_once
 
 
 class PlaylistItemObj(GObject.Object):
@@ -397,7 +397,7 @@ class Playlist(Adw.Dialog):
             try:
                 launcher.open_containing_folder_finish(result)
             except Exception as e:
-                print(f"Error opening location: {e}")
+                logger.warning(f"Error opening location: {e}")
 
         def remove_from_playlist(index):
             if (
@@ -473,7 +473,7 @@ class Playlist(Adw.Dialog):
                 path = file.get_path()
                 self._write_m3u_file(self.mpv, path)
             except Exception as e:
-                print(f"Save playlist error: {e}")
+                logger.warning(f"Save playlist error: {e}", exc_info=True)
 
         dialog.save(self.win, None, on_save)
 

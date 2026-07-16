@@ -34,6 +34,7 @@ from .save_session import (
 )
 
 from .utils import (
+    logger,
     get_mouse_bindings,
     parse_nonrepeat_bindings,
     is_local_path,
@@ -266,7 +267,7 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.command("load-input-conf", f"memory://{INTERNAL_BINDINGS}")
             self.mpv.command("load-input-conf", INPUT_CONF)
         except Exception as e:
-            print("load-input-conf error:", repr(e))
+            logger.error(f"load-input-conf error: {e}", exc_info=True)
 
         self.bindings = cast(dict, self.mpv._get_property("input-bindings"))
         self.mouse_bindings: dict = get_mouse_bindings(self.bindings)
@@ -743,7 +744,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.mpv.loadfile(path, "append-play")
 
             except GLib.Error as e:
-                print(f"Dialog error: {e.message}")
+                logger.warning(f"Dialog error: {e}")
 
         dialog.select_folder(self, None, on_open_response)
         return Gdk.EVENT_STOP  # so "<shift><primary>i" doesn't trigger inspector
@@ -818,7 +819,7 @@ class CineWindow(Adw.ApplicationWindow):
             if mode == "clear-and-add":
                 self.mpv.pause = False
         except GLib.Error as e:
-            print(f"Dialog error: {e.message}")
+            logger.warning(f"Dialog error: {e}")
         finally:
             if isinstance(self.visible_dialog, Playlist):
                 self.visible_dialog.spinner.set_visible(False)
@@ -1029,7 +1030,7 @@ class CineWindow(Adw.ApplicationWindow):
             )
         except Exception as e:
             self.thumb_preview.props.visible = False
-            print(f"Preview texture error: {e}")
+            logger.error(f"Preview texture error: {e}")
 
     def _on_progress_motion(self, _controller, x, y):
         if (x, y) == self.prev_prog_motion_xy:
@@ -1364,7 +1365,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.drop_label.props.label = _("Play")
 
             except GLib.Error as e:
-                print(f"File error path: {self.loaded_path}")
+                logger.warning(f"File error path: {self.loaded_path}")
                 idle_add_once(self._show_toast, _("File Error") + f": {e.message}")
                 self.spinner.set_visible(False)
                 return
@@ -1410,7 +1411,7 @@ class CineWindow(Adw.ApplicationWindow):
                             None,
                         )
                     except Exception as e:
-                        print("Drop error:", repr(e))
+                        logger.error(f"Drop error: {e}", exc_info=True)
                         idle_add_once(self._show_toast, str(e))
                         return
 
@@ -1753,7 +1754,7 @@ class CineWindow(Adw.ApplicationWindow):
                 },
             )
         except Exception as e:
-            print(f"Render error: {e}")
+            logger.error(f"Render error: {e}", exc_info=True)
             return
 
     def _set_window_size(self, width, height):
@@ -1897,7 +1898,7 @@ class CineWindow(Adw.ApplicationWindow):
                         self.mpv.playlist_pos = 0
 
                     self.error_count += 1
-                    print(f"File error path: {self.loaded_path}")
+                    logger.warning(f"File error path: {self.loaded_path}")
                     error = info["file_error"].decode("utf-8")
                     idle_add_once(self._show_toast, _("File Error") + f": {error}")
 

@@ -20,6 +20,7 @@
 import gi
 import os
 import ctypes
+import logging
 from urllib.parse import urlparse
 
 gi.require_version("Gdk", "4.0")
@@ -32,27 +33,31 @@ from gi.repository import (
     GdkWayland,  # pyright: ignore[reportAttributeAccessIssue]
 )
 
+logger = logging.getLogger("cine")
+logging.basicConfig(format="%(levelname)s: [%(filename)s:%(lineno)d] %(message)s")
+
 gtk = ctypes.CDLL("libgtk-4.so.1")
 display = Gdk.Display.get_default()
 
 try:
-    xdg_pictures = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
-    SCREENSHOT_DIR = (
-        os.path.join(xdg_pictures, "Cine Screenshots") if xdg_pictures else ""
-    )
+    join = os.path.join
 
-    base_config = GLib.get_user_config_dir()
-    CONFIG_DIR = os.path.join(base_config, "cine")
-    INPUT_CONF = os.path.join(CONFIG_DIR, "input.conf")
-    MPV_CONF = os.path.join(CONFIG_DIR, "mpv.conf")
-    WATCH_HISTORY_JSONL = os.path.join(CONFIG_DIR, "watch_history.jsonl")
+    XDG_PICTURES = GLib.get_user_special_dir(GLib.UserDirectory.DIRECTORY_PICTURES)
+    SCREENSHOT_DIR = join(XDG_PICTURES, "Cine Screenshots") if XDG_PICTURES else ""
 
-    old_last_pl_file = os.path.join(CONFIG_DIR, "last-playlist.m3u8")
-    playlist_dir = os.path.join(CONFIG_DIR, "last-playlist")
-    LAST_PLAYLIST_FILE = os.path.join(playlist_dir, "last-playlist.m3u8")
+    BASE_CONFIG = GLib.get_user_config_dir()
+
+    CONFIG_DIR = join(BASE_CONFIG, "cine")
+    INPUT_CONF = join(CONFIG_DIR, "input.conf")
+    MPV_CONF = join(CONFIG_DIR, "mpv.conf")
+    WATCH_HISTORY_JSONL = join(CONFIG_DIR, "watch_history.jsonl")
+
+    OLD_PL_FILE = join(CONFIG_DIR, "last-playlist.m3u8")
+    PLAYLIST_DIR = join(CONFIG_DIR, "last-playlist")
+    LAST_PLAYLIST_FILE = join(PLAYLIST_DIR, "last-playlist.m3u8")
 
     os.makedirs(CONFIG_DIR, exist_ok=True)
-    os.makedirs(playlist_dir, exist_ok=True)
+    os.makedirs(PLAYLIST_DIR, exist_ok=True)
 
     for file in [
         INPUT_CONF,
@@ -62,13 +67,13 @@ try:
         if not os.path.exists(file):
             open(file, "w").close()
 
-    if os.path.exists(old_last_pl_file):
+    if os.path.exists(OLD_PL_FILE):
         from shutil import move
 
-        move(old_last_pl_file, playlist_dir)
-
+        move(OLD_PL_FILE, PLAYLIST_DIR)
 except Exception as e:
-    print("Error creating files/folders", repr(e))
+    logger.error(f"Error creating files/folders: {e}", exc_info=True)
+
 
 is_flatpak = os.environ.get("container") == "flatpak"
 
@@ -99,7 +104,7 @@ def get_mouse_bindings(bindings):
             if "MBTN" in b["key"]:
                 active_mouse_bindings[b["key"]] = b["cmd"]
     except Exception as e:
-        print("get_mouse_bindings error:", e)
+        logger.error(f"get_mouse_bindings error: {e}", exc_info=True)
 
     return active_mouse_bindings
 
@@ -117,7 +122,7 @@ def parse_nonrepeat_bindings(bindings):
 
                 non_repeatable.add(key)
     except Exception as e:
-        print("parse_nonrepeat_bindings error:", e)
+        logger.error(f"parse_nonrepeat_bindings error: {e}", exc_info=True)
 
     return non_repeatable
 
@@ -169,7 +174,7 @@ def get_gpu_vendor(libgl):
             # GL_VENDOR is 0x1F00
             return glGetString(0x1F00).decode("utf-8").lower()
     except Exception as e:
-        print(f"get_gpu_vendor error: {e}")
+        logger.error(f"get_gpu_vendor error: {e}", exc_info=True)
         return None
 
 
@@ -197,7 +202,7 @@ def get_display_param():
             if ptr:
                 param["x11_display"] = ptr
     except Exception as e:
-        print(f"Error getting display param: {e}")
+        logger.error(f"Error getting display param: {e}", exc_info=True)
 
     return param
 

@@ -34,6 +34,7 @@ from .window import CineWindow
 from .preferences import Preferences, settings
 from .mpris import MPRIS
 from .save_session import is_same_playlist
+from .utils import logger
 
 os.environ["GSK_RENDERER"] = "gl"
 
@@ -133,7 +134,7 @@ class CineApplication(Adw.Application):
 
                         win._set_window_size(w, h)
                 except Exception as e:
-                    print(f"Metadata probe failed: {e}")
+                    logger.error(f"Metadata probe failed: {e}", exc_info=True)
             win.present()
         else:
             win.present()
@@ -212,7 +213,7 @@ class CineApplication(Adw.Application):
             if options.contains("new-window"):
                 return -1
 
-            print("Cine is runnning, to open a new window, run with --new-window.")
+            print("Cine is running, to open a new window, run with --new-window.")
             return 0
 
         return -1

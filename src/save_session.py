@@ -19,7 +19,7 @@
 
 import os
 from gettext import gettext as _
-from .utils import LAST_PLAYLIST_FILE, is_local_path, idle_add_once
+from .utils import logger, LAST_PLAYLIST_FILE, is_local_path, idle_add_once
 from .preferences import settings
 
 
@@ -47,7 +47,7 @@ def save_last_playlist_file(win_mpv):
                 f.write(f"{path}\n")
 
     except Exception as e:
-        print(f"Error saving last playlist file: {e}")
+        logger.error(f"Error saving last playlist file: {e}", exc_info=True)
 
 
 def restore_last_playlist(window, app, win_mpv):
@@ -66,7 +66,7 @@ def restore_last_playlist(window, app, win_mpv):
         window._show_toast(_("Restoring Session…"), force_dismiss=True)
         idle_add_once(win_mpv.loadfile, LAST_PLAYLIST_FILE, "replace")
     except Exception as e:
-        print(f"Error restoring last playlist file: {e}")
+        logger.error(f"Error restoring last playlist file: {e}", exc_info=True)
 
 
 def is_same_playlist(mpv_playlist):
@@ -86,5 +86,5 @@ def is_same_playlist(mpv_playlist):
         return saved_filenames == curr_filenames
 
     except Exception as e:
-        print(f"Error reading last playlist file: {e}")
+        logger.error(f"Error reading last playlist file: {e}", exc_info=True)
         return False

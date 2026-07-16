@@ -26,7 +26,7 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gio", "2.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gdk, Gio, Gtk
-from .utils import CONFIG_DIR, display, has_host_permission, is_flatpak
+from .utils import logger, CONFIG_DIR, display, has_host_permission, is_flatpak
 
 settings = Gio.Settings.new("io.github.diegopvlk.Cine")
 
@@ -298,7 +298,7 @@ class Preferences(Adw.Dialog):
                 self.font_label.set_label(font_full)
 
             except Exception as e:
-                print(f"Features selection error: {e}")
+                logger.warning(f"Features selection error: {e}")
 
         dialog.choose_face(self.win, None, None, callback)
 
@@ -313,7 +313,7 @@ class Preferences(Adw.Dialog):
             try:
                 launcher.launch_finish(task)
             except Exception as e:
-                print(f"Failed to open folder: {e}")
+                logger.warning(f"Failed to open folder: {e}")
 
         f_launcher = Gtk.FileLauncher.new(Gio.File.new_for_path(CONFIG_DIR))
         f_launcher.launch(self.win, None, on_launch_finished, None)

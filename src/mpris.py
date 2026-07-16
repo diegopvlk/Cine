@@ -20,7 +20,7 @@
 import gi
 import mpv
 from gettext import gettext as _
-from .utils import idle_add_once
+from .utils import logger, idle_add_once
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -111,7 +111,7 @@ class MPRIS:
                         set_property_closure=self._on_set_property,
                     )
             except Exception as e:
-                print(f"MPRIS Bus Error: {e}")
+                logger.error(f"MPRIS Bus Error: {e}", exc_info=True)
 
         # Without idle_add some gnome mpris extensions can freeze the
         # whole shell for about a minute. Not unique to cine, it can also

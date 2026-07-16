@@ -22,7 +22,7 @@ import os
 import json
 import datetime
 from gettext import gettext as _
-from .utils import is_local_path, idle_add_once
+from .utils import logger, is_local_path, idle_add_once
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -164,7 +164,7 @@ class HistoryDialog(Adw.Dialog):
                         for item in reversed(ordered_entries):
                             f.write(json.dumps(item, ensure_ascii=False) + "\n")
                 except Exception as e:
-                    print(f"Failed to save history file: {e}")
+                    logger.error(f"Failed to save history file: {e}")
                     idle_add_once(self._show_toast, f"{repr(e)}")
 
             for day_key in sorted(created_groups.keys(), reverse=True):
@@ -194,7 +194,7 @@ class HistoryDialog(Adw.Dialog):
             try:
                 launcher.open_containing_folder_finish(result)
             except Exception as e:
-                print("Error opening location:", repr(e))
+                logger.error(f"Error opening location: {e}")
                 idle_add_once(self._show_toast, f"{repr(e)}")
 
         def show_in_folder():
@@ -231,7 +231,7 @@ class HistoryDialog(Adw.Dialog):
             self._win.mpv.pause = False
             self.close()
         except Exception as e:
-            print(f"Error playing {file_path}: {e}")
+            logger.error(f"Error playing {file_path}: {e}")
             idle_add_once(self._show_toast, f"{repr(e)}")
 
     def _rm_entry_from_hist(self, row, file_path, day_key, timestamp):
@@ -282,7 +282,7 @@ class HistoryDialog(Adw.Dialog):
                         self._populate_history()
 
         except Exception as e:
-            print(f"Failed to remove item from history: {e}")
+            logger.error(f"Failed to remove item from history: {e}", exc_info=True)
             idle_add_once(self._show_toast, f"{repr(e)}")
 
     def _show_toast(self, label: str):
@@ -304,7 +304,9 @@ class HistoryDialog(Adw.Dialog):
                         with open(self._hist_path, "w"):
                             pass
                     except Exception as e:
-                        print(f"Failed to clear history file: {e}")
+                        logger.error(
+                            f"Failed to clear history file: {e}", exc_info=True
+                        )
                         self._show_toast(f"{repr(e)}")
                     self._populate_history()
 
