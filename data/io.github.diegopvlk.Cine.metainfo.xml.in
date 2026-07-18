@@ -72,6 +72,14 @@
   </requires>
 
   <releases>
+    <release version="1.7.4" date="2026-07-18">
+      <description translate="no">
+        <ul>
+          <li>New: Changed window menu to context menu for secondary click option</li>
+          <li>Window menu still accessible via secondary click on title bar or controls</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.7.3" date="2026-07-11">
       <description translate="no">
         <ul>
@@ -82,7 +90,7 @@
     <release version="1.7.2" date="2026-07-10">
       <description translate="no">
         <ul>
-          <li>New: middle click mute icon to toggle mute</li>
+          <li>New: middle click volume icon to toggle mute</li>
           <li>A toast is now displayed when restoring session</li>
           <li>Fixed a crash occurring when closing the video options menu</li>
         </ul>
