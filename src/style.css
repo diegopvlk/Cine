@@ -280,18 +280,18 @@ cine-spinbutton {
   box-shadow: none;
 }
 
-time-popover picture,
-time-popover label {
+time-tooltip picture,
+time-tooltip label {
   margin: 6px;
-  border-radius: 12px;
+  border-radius: 13px;
 }
-time-popover picture {
-  margin-bottom: 0;
+time-tooltip picture {
+  margin-bottom: 12px;
   box-shadow:
     0px 0px 5px 1px rgba(20, 20, 20, 0.5),
     0px 0px 0px 1px rgba(144, 144, 144, 0.3);
 }
-time-popover label {
+time-tooltip label {
   border: 1px solid
     color-mix(
       in srgb,
@@ -300,7 +300,7 @@ time-popover label {
     );
   background: var(--popover-bg-color);
   color: var(--popover-fg-color);
-  padding: 6px 9px;
+  padding: 7px 10px;
   margin-bottom: 1px;
   line-height: 18px;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.33);
@@ -410,12 +410,12 @@ cine-list-view row:last-child > box {
     border: 1px solid var(--border-color);
   }
 
-  time-popover label,
+  time-tooltip label,
   cine-list-view row > box {
     border: 1px solid var(--border-color);
   }
 
-  time-popover picture {
+  time-tooltip picture {
     border: 1px solid white;
   }
 
