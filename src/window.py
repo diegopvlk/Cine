@@ -1254,11 +1254,12 @@ class CineWindow(Adw.ApplicationWindow):
         self.time_total_label.set_text(format_time(duration))
 
         if duration == 0:
-            self.video_progress_scale.set_sensitive(False)
-            self.time_popover.popdown()
+            self.video_progress_scale.set_can_target(False)
+            self.video_progress_scale.set_can_focus(False)
             return
 
-        self.video_progress_scale.set_sensitive(True)
+        self.video_progress_scale.set_can_target(True)
+        self.video_progress_scale.set_can_focus(True)
 
         self.video_progress_adj.set_upper(duration)
 
