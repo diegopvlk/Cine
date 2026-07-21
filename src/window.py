@@ -1555,7 +1555,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.left_clk = settings.get_int("left-click")
         self.right_clk = settings.get_int("right-click")
 
-        if not button or self._is_hovering():
+        if not button or self._is_hovering() and not button == "MBTN_MID":
             return
 
         if button == "MBTN_RIGHT" and self.right_clk == SecondaryClick.CONTEXT_MENU:
