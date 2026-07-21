@@ -1177,21 +1177,21 @@ class CineWindow(Adw.ApplicationWindow):
             self.chapters_menu_btn.set_visible(False)
             return
 
-        for chapter in chapters:
+        self.chapters = sorted(chapters, key=lambda c: c.get("time", 0))
+        self.chapters_menu_btn.set_visible(True)
+        self.chapters_menu.remove_all()
+
+        for i, chapter in enumerate(self.chapters):
+            title = chapter.get("title") or _("Chapter") + f" {i + 1}"
+            item = Gio.MenuItem.new(title, None)
+            item.set_action_and_target_value("win.select-chapter", GLib.Variant("i", i))
+            self.chapters_menu.append_item(item)
+
             time_pos = chapter.get("time")
             if time_pos is not None:
                 self.video_progress_scale.add_mark(
                     float(time_pos), Gtk.PositionType.TOP, None
                 )
-
-        self.chapters_menu_btn.set_visible(True)
-        self.chapters_menu.remove_all()
-
-        for i, chapter in enumerate(chapters):
-            title = chapter.get("title") or _("Chapter") + f" {i + 1}"
-            item = Gio.MenuItem.new(title, None)
-            item.set_action_and_target_value("win.select-chapter", GLib.Variant("i", i))
-            self.chapters_menu.append_item(item)
 
     def _navigate_playlist(self, direction: int):
         pos = int(self.mpv.playlist_pos or 0)
@@ -2063,8 +2063,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("chapter-list")
         def on_chapter_list_change(_name, chapters):
-            self.chapters = sorted(chapters, key=lambda c: c.get("time", 0))
-            idle_add_once(self._update_chapter_marks_and_menu, self.chapters)
+            self.chapters = []
+            idle_add_once(self._update_chapter_marks_and_menu, chapters)
 
         @self.mpv.property_observer("chapter")
         def on_chapter_change(_name, chapter_idx):
