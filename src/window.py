@@ -1678,10 +1678,14 @@ class CineWindow(Adw.ApplicationWindow):
             run_command(cmd_str)
 
     def _cancel_click_hold(self, *args):
-        if self.click_holding:
+        if not self.click_holding:
+            return
+        try:
             self.mpv["speed"] = self.prev_speed
             self.mpv.show_text(f"{self.mpv['speed']:g}×")
             self.click_holding = False
+        except mpv.ShutdownError:
+            pass
 
     def _on_mouse_scroll(self, controller, dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
