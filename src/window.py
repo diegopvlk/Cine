@@ -1306,7 +1306,7 @@ class CineWindow(Adw.ApplicationWindow):
 
     @Gtk.Template.Callback()
     def _on_play_pause_clicked(self, *args):
-        self.mpv.pause = not self.mpv.pause
+        self.mpv.command_async("cycle", "pause")
 
     def _on_progress_adjusted(self, adjustment):
         self.mpv.command_async("seek", adjustment.props.value, "absolute")
