@@ -1023,6 +1023,7 @@ class CineWindow(Adw.ApplicationWindow):
             f"scale={width}:{height}:force_original_aspect_ratio=decrease,format=bgra"
         )
         idle_add_once(self._update_video_preview, True)
+        self._hide_time_tooltip()
 
     def _update_video_preview(self, force_render=False):
         if (
@@ -1104,11 +1105,8 @@ class CineWindow(Adw.ApplicationWindow):
             layer.move(revealer, x, 0)
             revealer.set_reveal_child(True)
 
-        def show_tooltip():
-            reveal(self.tooltip_label_revealer, self.tooltip_label_layer, x)
-            reveal(self.tooltip_thumb_revealer, self.tooltip_thumb_layer, x)
-
-        idle_add_once(show_tooltip)
+        reveal(self.tooltip_label_revealer, self.tooltip_label_layer, x)
+        reveal(self.tooltip_thumb_revealer, self.tooltip_thumb_layer, x)
 
         if not settings.get_boolean("thumbnail-preview"):
             return
