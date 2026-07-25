@@ -111,22 +111,28 @@ def get_mouse_bindings(bindings):
     return active_mouse_bindings
 
 
-def parse_nonrepeat_bindings(bindings):
+def parse_bindings(bindings):
     non_repeatable = set()
+    has_enter, has_kp_enter = False, False
     try:
         for b in bindings:
             key = b.get("key")
-            cmd = b.get("cmd", "")
+            cmd = b.get("cmd", "ignore")
+
+            if key == "ENTER" and cmd != "ignore":
+                has_enter = True
+
+            if key == "KP_ENTER" and cmd != "ignore":
+                has_kp_enter = True
 
             if key and "nonrepeatable" in cmd:
                 if len(key) == 1 and key.isupper() and key.isalpha():
                     key = f"Shift+{key}"
-
                 non_repeatable.add(key)
     except Exception:
         logger.exception("parse_nonrepeat_bindings failed")
 
-    return non_repeatable
+    return (non_repeatable, has_enter, has_kp_enter)
 
 
 def is_local_path(path):
@@ -248,6 +254,7 @@ KEY_REMAP: dict = {
     "F19": "F19",
     "F20": "F20",
     "Escape": "ESC",
+    "Return": "ENTER",
     "BackSpace": "BS",
     "Page_Up": "PGUP",
     "Page_Down": "PGDWN",
@@ -274,6 +281,7 @@ KEY_REMAP: dict = {
     "KP_7": "KP7",
     "KP_8": "KP8",
     "KP_9": "KP9",
+    "KP_Enter": "KP_ENTER",
     "KP_End": "KP_END",
     "KP_Down": "KP_DOWN",
     "KP_Page_Down": "KP_PGDWN",

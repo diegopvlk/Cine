@@ -66,7 +66,7 @@ from .utils import (
     has_host_permission,
     idle_add_once,
     is_local_path,
-    parse_nonrepeat_bindings,
+    parse_bindings,
     timeout_add_once,
     timeout_add_seconds_once,
 )
@@ -214,7 +214,7 @@ class CineWindow(Adw.ApplicationWindow):
             screenshot_template="cine_%n",
             config=True,
             config_dir=CONFIG_DIR,
-            input_default_bindings=False,
+            input_builtin_bindings=False,
             input_vo_keyboard=True,
             load_scripts=True,
             audio_display="embedded-first",
@@ -275,7 +275,9 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.bindings = cast(dict, self.mpv._get_property("input-bindings"))
         self.mouse_bindings: dict = get_mouse_bindings(self.bindings)
-        self.nonrepeat_keys = parse_nonrepeat_bindings(self.bindings)
+        self.nonrepeat_keys, self.has_enter_binding, self.has_kp_enter_binding = (
+            parse_bindings(self.bindings)
+        )
 
         sync_mpv_with_settings(self)
 
@@ -1547,7 +1549,10 @@ class CineWindow(Adw.ApplicationWindow):
         if self.space_holding and event_type == "keyup":
             self._set_space_holding(False)
 
-        if key_name in ("Tab", "ISO_Left_Tab", "Return"):
+        enter = key_name == "Return" and not self.has_enter_binding
+        kp_enter = key_name == "KP_Enter" and not self.has_kp_enter_binding
+
+        if key_name in ("Tab", "ISO_Left_Tab") or (enter or kp_enter):
             self.revealer_ui.set_reveal_child(True)
             self._hide_ui_timeout(s=3)
             self._set_space_holding(False)
