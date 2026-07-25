@@ -1615,7 +1615,7 @@ class CineWindow(Adw.ApplicationWindow):
             return
 
         if button == "MBTN_RIGHT" and self.right_clk == SecondaryClick.CONTEXT_MENU:
-            if not self.mpv.idle_active:
+            if not self.start_page.props.visible:
                 rect = Gdk.Rectangle()
                 rect.x = x
                 rect.y = y
@@ -1630,7 +1630,6 @@ class CineWindow(Adw.ApplicationWindow):
         # Back and forward dont trigger _on_click_released when video is playing (??)
         if button in ("MBTN_BACK", "MBTN_FORWARD"):
             self.mpv.command_async("keypress", button)
-            gesture.set_state(Gtk.EventSequenceState.CLAIMED)
             return
 
         self._show_ui()
