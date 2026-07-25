@@ -1,0 +1,3 @@
+[tool.pyright]
+typeCheckingMode = "standard"
+reportMissingModuleSource = "none"

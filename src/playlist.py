@@ -17,9 +17,13 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import gi
+import logging
 import os
 import unicodedata
+from gettext import gettext as _
+from gettext import ngettext
+
+import gi
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -28,11 +32,11 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
 gi.require_version("GObject", "2.0")
 gi.require_version("Pango", "1.0")
-from gi.repository import Adw, Gio, Gdk, GLib, Gtk, GObject, Pango
+from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk, Pango
 
-from gettext import gettext as _
-from gettext import ngettext
-from .utils import logger, is_local_path, idle_add_once, timeout_add_once
+from .utils import idle_add_once, is_local_path, timeout_add_once
+
+logger = logging.getLogger(__name__)
 
 
 class PlaylistItemObj(GObject.Object):
@@ -251,6 +255,7 @@ class Playlist(Adw.Dialog):
                     )
                     content_type = info.get_content_type()
                 except Exception:
+                    logger.exception("Failed to get content_type")
                     content_type = "error"
                 file_title = os.path.splitext(name_with_ext)[0]
 
@@ -396,7 +401,7 @@ class Playlist(Adw.Dialog):
         def on_launch_finished(launcher, result):
             try:
                 launcher.open_containing_folder_finish(result)
-            except Exception as e:
+            except GLib.Error as e:
                 logger.warning(f"Error opening location: {e}")
 
         def remove_from_playlist(index):
@@ -471,8 +476,8 @@ class Playlist(Adw.Dialog):
                 file = dialog.save_finish(result)
                 path = file.get_path()
                 self._write_m3u_file(self.mpv, path)
-            except Exception as e:
-                logger.warning(f"Save playlist error: {e}", exc_info=True)
+            except Exception:
+                logger.exception("Save playlist failed")
 
         dialog.save(self.win, None, on_save)
 

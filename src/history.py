@@ -17,19 +17,24 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import gi
-import os
 import json
-import datetime
+import logging
+import os
+from datetime import datetime
 from gettext import gettext as _
-from .utils import logger, is_local_path, idle_add_once
+
+import gi
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
 gi.require_version("Gdk", "4.0")
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
-from gi.repository import Adw, Gio, Gdk, GLib, Gtk
+from gi.repository import Adw, Gdk, Gio, GLib, Gtk
+
+from .utils import idle_add_once, is_local_path
+
+logger = logging.getLogger(__name__)
 
 
 @Gtk.Template(resource_path="/io/github/diegopvlk/Cine/history.ui")
@@ -85,8 +90,10 @@ class HistoryDialog(Adw.Dialog):
                         file_path = entry.get("path")
                         timestamp = entry.get("time")
 
-                        dt_object = datetime.datetime.fromtimestamp(timestamp)
-                        day_key = dt_object.strftime("%Y-%m-%d")
+                        date = datetime.fromtimestamp(
+                            timestamp, tz=datetime.now().astimezone().tzinfo
+                        )
+                        day_key = date.strftime("%Y-%m-%d")
 
                         dedup_key = (day_key, file_path)
                         unique_entries.pop(dedup_key, None)
@@ -108,8 +115,10 @@ class HistoryDialog(Adw.Dialog):
                 path = item.get("path")
                 timestamp = item.get("time")
 
-                dt_object = datetime.datetime.fromtimestamp(timestamp)
-                day_key = dt_object.strftime("%Y-%m-%d")
+                date = datetime.fromtimestamp(
+                    timestamp, tz=datetime.now().astimezone().tzinfo
+                )
+                day_key = date.strftime("%Y-%m-%d")
 
                 if is_local_path(path):
                     name_with_ext = os.path.basename(path)
@@ -118,7 +127,7 @@ class HistoryDialog(Adw.Dialog):
                     file_title = item.get("title") or path
 
                 if day_key not in created_groups:
-                    dt_title = dt_object.strftime("%x")
+                    dt_title = date.strftime("%x")
                     group = Adw.PreferencesGroup(title=dt_title)
                     created_groups[day_key] = group
                 else:
@@ -164,8 +173,8 @@ class HistoryDialog(Adw.Dialog):
                         for item in reversed(ordered_entries):
                             f.write(json.dumps(item, ensure_ascii=False) + "\n")
                 except Exception as e:
-                    logger.error(f"Failed to save history file: {e}")
-                    idle_add_once(self._show_toast, f"{repr(e)}")
+                    logger.exception("Failed to save history file")
+                    idle_add_once(self._show_toast, f"{e}")
 
             for day_key in sorted(created_groups.keys(), reverse=True):
                 group = created_groups[day_key]
@@ -193,9 +202,9 @@ class HistoryDialog(Adw.Dialog):
         def on_launch_finished(launcher, result):
             try:
                 launcher.open_containing_folder_finish(result)
-            except Exception as e:
-                logger.error(f"Error opening location: {e}")
-                idle_add_once(self._show_toast, f"{repr(e)}")
+            except GLib.Error as e:
+                logger.warning("Failed to open location")
+                idle_add_once(self._show_toast, f"{e}")
 
         def show_in_folder():
             gfile = Gio.File.new_for_path(path)
@@ -230,8 +239,8 @@ class HistoryDialog(Adw.Dialog):
             self._win.mpv.pause = False
             self.close()
         except Exception as e:
-            logger.error(f"Error playing {file_path}: {e}")
-            idle_add_once(self._show_toast, f"{repr(e)}")
+            logger.exception(f"Failed to play {file_path}")
+            idle_add_once(self._show_toast, f"{e}")
 
     def _rm_entry_from_hist(self, row, file_path, day_key, timestamp):
         try:
@@ -261,16 +270,17 @@ class HistoryDialog(Adw.Dialog):
                     row_to_scroll.grab_focus()
 
                 if not group.get_row(0):
-                    if prev_group := group.get_prev_sibling():
-                        if isinstance(prev_group, Adw.PreferencesGroup):
-                            last_row = None
-                            i = 0
-                            while curr_row := prev_group.get_row(i):  # type: ignore
-                                last_row = curr_row
-                                i += 1
+                    if (prev_group := group.get_prev_sibling()) and isinstance(
+                        prev_group, Adw.PreferencesGroup
+                    ):
+                        last_row = None
+                        i = 0
+                        while curr_row := prev_group.get_row(i):  # type: ignore
+                            last_row = curr_row
+                            i += 1
 
-                            if isinstance(last_row, Adw.ActionRow):
-                                last_row.grab_focus()
+                        if isinstance(last_row, Adw.ActionRow):
+                            last_row.grab_focus()
 
                     if group != self._load_all_group:
                         self.history_prefs_page.remove(group)
@@ -281,8 +291,8 @@ class HistoryDialog(Adw.Dialog):
                         self._populate_history()
 
         except Exception as e:
-            logger.error(f"Failed to remove item from history: {e}", exc_info=True)
-            idle_add_once(self._show_toast, f"{repr(e)}")
+            logger.exception("Failed to remove item from history")
+            idle_add_once(self._show_toast, f"{e}")
 
     def _show_toast(self, label: str):
         toast = Adw.Toast(title=label)
@@ -297,17 +307,14 @@ class HistoryDialog(Adw.Dialog):
         dialog.set_response_appearance("clear", Adw.ResponseAppearance.DESTRUCTIVE)
 
         def on_response(_dialog, response):
-            if response == "clear":
-                if os.path.exists(self._hist_path):
-                    try:
-                        with open(self._hist_path, "w"):
-                            pass
-                    except Exception as e:
-                        logger.error(
-                            f"Failed to clear history file: {e}", exc_info=True
-                        )
-                        self._show_toast(f"{repr(e)}")
-                    self._populate_history()
+            if response == "clear" and os.path.exists(self._hist_path):
+                try:
+                    with open(self._hist_path, "w"):
+                        pass
+                except Exception as e:
+                    logger.exception("Failed to clear history file")
+                    self._show_toast(f"{e}")
+                self._populate_history()
 
         dialog.connect("response", on_response)
         dialog.present(self)

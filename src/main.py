@@ -17,12 +17,14 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
 import os
-import gi
-import sys
 import subprocess
-from typing import cast
+import sys
 from gettext import gettext as _
+from typing import cast
+
+import gi
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -30,11 +32,12 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gio, GLib, Gtk
 
-from .window import CineWindow
-from .preferences import Preferences, settings
 from .mpris import MPRIS
+from .preferences import Preferences, settings
 from .save_session import is_same_playlist
-from .utils import logger
+from .window import CineWindow
+
+logger = logging.getLogger(__name__)
 
 os.environ["GSK_RENDERER"] = "gl"
 
@@ -123,6 +126,7 @@ class CineApplication(Adw.Application):
                         try:
                             rotation = int(parts[2]) if len(parts) > 2 else 0
                         except Exception:
+                            logger.exception("Failed to get rotation")
                             rotation = 0
 
                         if abs(rotation) in (90, 270):
@@ -133,8 +137,8 @@ class CineApplication(Adw.Application):
                             h = height
 
                         win._set_window_size(w, h)
-                except Exception as e:
-                    logger.error(f"Metadata probe failed: {e}", exc_info=True)
+                except Exception:
+                    logger.exception("Metadata probe failed")
             win.present()
         else:
             win.present()
@@ -201,7 +205,7 @@ class CineApplication(Adw.Application):
                     if found:
                         return found
         except Exception:
-            pass
+            logger.exception("find_first_file failed")
         return None
 
     # From showtime
@@ -225,7 +229,7 @@ class CineApplication(Adw.Application):
 
     def _on_about_action(self, *args):
         """Callback for the app.about action."""
-        APP_VERSION = getattr(sys.modules["__main__"], "VERSION")
+        APP_VERSION = sys.modules["__main__"].VERSION
         about = Adw.AboutDialog(
             application_name=_("Cine"),
             application_icon="io.github.diegopvlk.Cine",

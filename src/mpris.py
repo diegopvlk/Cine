@@ -17,16 +17,20 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
+from gettext import gettext as _
+
 import gi
 import mpv
-from gettext import gettext as _
-from .utils import logger, idle_add_once
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
 gi.require_version("GLib", "2.0")
 from gi.repository import Adw, Gio, GLib
 
+from .utils import idle_add_once
+
+logger = logging.getLogger(__name__)
 
 APP_ID = "io.github.diegopvlk.Cine"
 MEDIAPLAYER2_PLAYER = "org.mpris.MediaPlayer2.Player"
@@ -110,8 +114,8 @@ class MPRIS:
                         get_property_closure=self._on_get_property,
                         set_property_closure=self._on_set_property,
                     )
-            except Exception as e:
-                logger.error(f"MPRIS Bus Error: {e}", exc_info=True)
+            except Exception:
+                logger.exception("MPRIS Bus failed")
 
         # Without idle_add some gnome mpris extensions can freeze the
         # whole shell for about a minute. Not unique to cine, it can also
@@ -335,7 +339,7 @@ class MPRIS:
                 elif prop in ["CanPlay", "CanPause", "CanControl", "CanSeek"]:
                     return GLib.Variant("b", True)
                 elif prop == "Volume":
-                    vol = getattr(p, "volume") / 100.0 if p else 0.0
+                    vol = p.volume / 100.0 if p else 0.0
                     return GLib.Variant("d", float(vol))
                 elif prop == "PlaybackStatus":
                     status = "Paused" if (p and p.pause) else "Playing"

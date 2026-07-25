@@ -17,10 +17,14 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import logging
 import os
 from gettext import gettext as _
-from .utils import logger, LAST_PLAYLIST_FILE, is_local_path, idle_add_once
+
 from .preferences import settings
+from .utils import LAST_PLAYLIST_FILE, idle_add_once, is_local_path
+
+logger = logging.getLogger(__name__)
 
 
 def save_last_playlist_file(win_mpv):
@@ -46,8 +50,8 @@ def save_last_playlist_file(win_mpv):
                 f.write(f"#EXTINF:{-1},{title}\n")
                 f.write(f"{path}\n")
 
-    except Exception as e:
-        logger.error(f"Error saving last playlist file: {e}", exc_info=True)
+    except Exception:
+        logger.exception("Failed to save last playlist file")
 
 
 def restore_last_playlist(window, app, win_mpv):
@@ -65,8 +69,8 @@ def restore_last_playlist(window, app, win_mpv):
         window.start_page.set_sensitive(False)
         window._show_toast(_("Restoring Session…"), force_dismiss=True)
         idle_add_once(win_mpv.loadfile, LAST_PLAYLIST_FILE, "replace")
-    except Exception as e:
-        logger.error(f"Error restoring last playlist file: {e}", exc_info=True)
+    except Exception:
+        logger.exception("Failed to restore last playlist file")
 
 
 def is_same_playlist(mpv_playlist):
@@ -85,6 +89,6 @@ def is_same_playlist(mpv_playlist):
 
         return saved_filenames == curr_filenames
 
-    except Exception as e:
-        logger.error(f"Error reading last playlist file: {e}", exc_info=True)
+    except Exception:
+        logger.exception("Failed to read last playlist file")
         return False

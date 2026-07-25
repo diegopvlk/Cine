@@ -18,52 +18,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import bisect
+import ctypes
+import logging
 import os
+import shlex
+from gettext import gettext as _
+from time import time
+from typing import cast
+from urllib.parse import urlparse
+
 import gi
 import mpv
-import ctypes
-from typing import cast
-from gettext import gettext as _
-from urllib.parse import urlparse
-from time import time
-import shlex
-
-from .save_session import (
-    save_last_playlist_file,
-    restore_last_playlist,
-    is_same_playlist,
-)
-
-from .utils import (
-    logger,
-    get_mouse_bindings,
-    parse_nonrepeat_bindings,
-    is_local_path,
-    get_gpu_vendor,
-    format_time,
-    get_display_param,
-    idle_add_once,
-    timeout_add_once,
-    timeout_add_seconds_once,
-    display,
-    has_host_permission,
-    PrimaryClick,
-    SecondaryClick,
-    MBTN_MAP,
-    KEY_REMAP,
-    SUB_EXTS,
-    SCREENSHOT_DIR,
-    CONFIG_DIR,
-    INPUT_CONF,
-    WATCH_HISTORY_JSONL,
-)
-
-from .history import HistoryDialog
-from .options import OptionsMenuButton
-from .playlist import Playlist, PlaylistItemObj
-from .preferences import settings, sync_mpv_with_settings
-from .shortcuts import INTERNAL_BINDINGS, populate_shortcuts_dialog_mpv
-from .mpris import MPRIS
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -71,7 +36,43 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
 gi.require_version("GObject", "2.0")
-from gi.repository import Adw, Gio, Gdk, GLib, Gtk, GObject
+from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
+
+from .history import HistoryDialog
+from .mpris import MPRIS
+from .options import OptionsMenuButton
+from .playlist import Playlist, PlaylistItemObj
+from .preferences import settings, sync_mpv_with_settings
+from .save_session import (
+    is_same_playlist,
+    restore_last_playlist,
+    save_last_playlist_file,
+)
+from .shortcuts import INTERNAL_BINDINGS, populate_shortcuts_dialog_mpv
+from .utils import (
+    CONFIG_DIR,
+    INPUT_CONF,
+    KEY_REMAP,
+    MBTN_MAP,
+    SCREENSHOT_DIR,
+    SUB_EXTS,
+    WATCH_HISTORY_JSONL,
+    PrimaryClick,
+    SecondaryClick,
+    display,
+    format_time,
+    get_display_param,
+    get_gpu_vendor,
+    get_mouse_bindings,
+    has_host_permission,
+    idle_add_once,
+    is_local_path,
+    parse_nonrepeat_bindings,
+    timeout_add_once,
+    timeout_add_seconds_once,
+)
+
+logger = logging.getLogger(__name__)
 
 libegl = ctypes.CDLL("libEGL.so.1")
 egl_get_proc_address = libegl.eglGetProcAddress
@@ -269,8 +270,8 @@ class CineWindow(Adw.ApplicationWindow):
         try:
             self.mpv.command("load-input-conf", f"memory://{INTERNAL_BINDINGS}")
             self.mpv.command("load-input-conf", INPUT_CONF)
-        except Exception as e:
-            logger.error(f"load-input-conf error: {e}", exc_info=True)
+        except Exception:
+            logger.exception("load-input-conf failed")
 
         self.bindings = cast(dict, self.mpv._get_property("input-bindings"))
         self.mouse_bindings: dict = get_mouse_bindings(self.bindings)
@@ -425,6 +426,7 @@ class CineWindow(Adw.ApplicationWindow):
         )
 
         self._set_time_margin()
+        self._set_time_tooltip()
 
         self.gl_area.connect("realize", self._on_realize_area)
         self.gl_area.connect("render", self._on_render_area)
@@ -466,7 +468,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.volume_scale.add_controller(volume_ecs)
         volume_ecs.connect("scroll", self._on_mouse_scroll_volume)
 
-        for btn_num in MBTN_MAP.keys():
+        for btn_num in MBTN_MAP:
             click_gesture = Gtk.GestureClick(button=btn_num)
             click_gesture.connect("pressed", self._on_click_pressed)
             click_gesture.connect("released", self._on_click_released)
@@ -743,7 +745,7 @@ class CineWindow(Adw.ApplicationWindow):
         playlist.present(self)
 
     def _on_open_folder_dialog(self, action, *args):
-        add_mode = False if action.props.name == "open-folder" else True
+        add_mode = action.props.name != "open-folder"
         title = _("Add Folder") if add_mode else _("Open Folder")
         dialog = Gtk.FileDialog(title=title)
         curr_path = self.mpv.path
@@ -905,10 +907,9 @@ class CineWindow(Adw.ApplicationWindow):
         def is_valid_input(text):
             url = text.strip()
             parsed = urlparse(url)
-            if parsed.scheme in cast(list, self.mpv.protocol_list):
-                self.url = url
-                return True
-            elif os.path.exists(url):
+            protocol_list = cast(list, self.mpv.protocol_list)
+            path_exists = os.path.exists(url)
+            if parsed.scheme in protocol_list or path_exists:
                 self.url = url
                 return True
             elif url:
@@ -932,12 +933,12 @@ class CineWindow(Adw.ApplicationWindow):
             except mpv.ShutdownError:
                 pass
 
-        def on_clipboard_read(clipboard, result):
-            text = clipboard.read_text_finish(result)
+        def on_clipboard_read(clipboard: Gdk.Clipboard, result):
+            if not (text := clipboard.read_text_finish(result)):
+                return
 
-            if text and (parsed := urlparse(text)):
-                if parsed.scheme in cast(list, self.mpv.protocol_list):
-                    entry_row.insert_text(text, 0)
+            if urlparse(text).scheme in cast(list, self.mpv.protocol_list):
+                entry_row.insert_text(text, 0)
 
         if display and (clipboard := display.get_clipboard()):
             clipboard.read_text_async(None, on_clipboard_read)
@@ -955,6 +956,7 @@ class CineWindow(Adw.ApplicationWindow):
             v_width = params.get("w") or 1920
             v_height = params.get("h") or 1080
         except Exception:
+            logger.exception("v_width and v_height failed")
             v_width, v_height = 1920, 1080
 
         if v_width >= v_height:
@@ -1034,7 +1036,7 @@ class CineWindow(Adw.ApplicationWindow):
                 "seek", self.hover_time, "absolute+keyframes"
             )
         except Exception:
-            pass
+            logger.exception("_update_video_preview failed")
 
     def _apply_preview_texture(self, res):
         try:
@@ -1045,9 +1047,9 @@ class CineWindow(Adw.ApplicationWindow):
                 GLib.Bytes.new(res["data"]),
                 res["stride"],
             )
-        except Exception as e:
+        except Exception:
+            logger.exception("_apply_preview_texture failed")
             self._hide_time_tooltip()
-            logger.error(f"Preview texture error: {e}")
 
     def _hide_time_tooltip(self, *args):
         self.prev_reveal = False
@@ -1322,6 +1324,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.skip_obs_count += 1
                 self.mpv._set_property("pause", True)
         except Exception:
+            logger.exception("_on_progress_pressed failed")
             self.skip_obs_count = 0
 
     def _on_progress_released(self, *args):
@@ -1331,6 +1334,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.playing_on_press = False
                 self.mpv._set_property("pause", False)
         except Exception:
+            logger.exception("_on_progress_released failed")
             self.skip_obs_count = 0
 
     def _on_progress_adjusted(self, adjustment):
@@ -1467,7 +1471,7 @@ class CineWindow(Adw.ApplicationWindow):
                             None,
                         )
                     except Exception as e:
-                        logger.error(f"Drop error: {e}", exc_info=True)
+                        logger.exception("Drop failed")
                         idle_add_once(self._show_toast, str(e))
                         return
 
@@ -1611,18 +1615,21 @@ class CineWindow(Adw.ApplicationWindow):
         self.left_clk = settings.get_int("left-click")
         self.right_clk = settings.get_int("right-click")
 
-        if not button or self._is_hovering() and not button == "MBTN_MID":
+        if not button or self._is_hovering() and button != "MBTN_MID":
             return
 
-        if button == "MBTN_RIGHT" and self.right_clk == SecondaryClick.CONTEXT_MENU:
-            if not self.start_page.props.visible:
-                rect = Gdk.Rectangle()
-                rect.x = x
-                rect.y = y
-                self.context_popover_menu.set_pointing_to(rect)
-                self.context_popover_menu.popup()
-                gesture.set_state(Gtk.EventSequenceState.CLAIMED)
-                return
+        if (
+            button == "MBTN_RIGHT"
+            and self.right_clk == SecondaryClick.CONTEXT_MENU
+            and not self.start_page.props.visible
+        ):
+            rect = Gdk.Rectangle()
+            rect.x = x
+            rect.y = y
+            self.context_popover_menu.set_pointing_to(rect)
+            self.context_popover_menu.popup()
+            gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+            return
 
         if button != "MBTN_LEFT":
             gesture.set_state(Gtk.EventSequenceState.CLAIMED)
@@ -1675,11 +1682,9 @@ class CineWindow(Adw.ApplicationWindow):
                     args = shlex.split(sub_cmd.strip())
                     self.mpv.command_async(*args)
             except Exception:
-                pass
+                logger.exception("run_command failed")
 
         if n_press == 1 and not self.click_holding:
-            cmd_str = str(self.mouse_bindings.get(button))
-
             if button == "MBTN_LEFT" and self.left_clk != PrimaryClick.BYPASS:
 
                 def click():
@@ -1691,13 +1696,13 @@ class CineWindow(Adw.ApplicationWindow):
             elif button == "MBTN_RIGHT" and self.right_clk == SecondaryClick.PLAY_PAUSE:
                 self.mpv.command_async("cycle", "pause")
 
-            else:
+            elif cmd_str := self.mouse_bindings.get(button):
                 run_command(cmd_str)
 
         elif n_press == 2:
             button_dbl = f"{button}_DBL"
-            cmd_str = self.mouse_bindings.get(button_dbl)
-            run_command(cmd_str)
+            if cmd_str_dbl := self.mouse_bindings.get(button_dbl):
+                run_command(cmd_str_dbl)
 
     def _cancel_click_hold(self, *args):
         if not self.click_holding:
@@ -1812,8 +1817,8 @@ class CineWindow(Adw.ApplicationWindow):
                     "fbo": self.fbo.value,
                 },
             )
-        except Exception as e:
-            logger.error(f"Render error: {e}", exc_info=True)
+        except Exception:
+            logger.exception("_on_render_area failed")
             return
 
     def _set_window_size(self, width, height):
@@ -2106,7 +2111,7 @@ class CineWindow(Adw.ApplicationWindow):
 
             idle_add_once(set_track)
 
-        for prop in track_map.keys():
+        for prop in track_map:
             self.mpv.property_observer(prop)(on_track_change)
 
         @self.mpv.property_observer("track-list")

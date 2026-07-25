@@ -18,13 +18,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 
-import gi
+import logging
 from typing import cast
 
-from .preferences import settings
+import gi
 
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk
+
+from .preferences import settings
+
+logger = logging.getLogger(__name__)
 
 RATIOS = [
     None,
@@ -147,6 +151,7 @@ class OptionsMenuButton(Gtk.MenuButton):
                     num, den = map(float, item_str.split(":"))
                     mapped_val = num / den
                 except Exception:
+                    logger.exception("Failed to get aspect val")
                     mapped_val = -1.0
 
             if abs(mapped_val - target_val) < 0.001:
@@ -204,6 +209,7 @@ class OptionsMenuButton(Gtk.MenuButton):
                     self.crop_dropdown.set_selected(i)
                     break
         except Exception:
+            logger.exception("Failed to get crop")
             self.crop_dropdown.set_selected(0)
             self.crop_reset_btn.set_sensitive(False)
 

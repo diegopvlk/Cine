@@ -17,8 +17,10 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import gi
+import logging
 from gettext import gettext as _
+
+import gi
 
 gi.require_version("Adw", "1")
 gi.require_version("Gdk", "4.0")
@@ -26,8 +28,10 @@ gi.require_version("GLib", "2.0")
 gi.require_version("Gio", "2.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gdk, Gio, Gtk
-from .utils import logger, CONFIG_DIR, display, has_host_permission, is_flatpak
 
+from .utils import CONFIG_DIR, display, has_host_permission, is_flatpak
+
+logger = logging.getLogger(__name__)
 settings = Gio.Settings.new("io.github.diegopvlk.Cine")
 
 
@@ -235,20 +239,13 @@ class Preferences(Adw.Dialog):
 
     def _on_sub_color_selected(self, color_btn, *arg):
         rgba = color_btn.get_rgba()
-        hex_color = "#{:02x}{:02x}{:02x}".format(
-            int(rgba.red * 255), int(rgba.green * 255), int(rgba.blue * 255)
-        )
+        hex_color = f"#{''.join(f'{int(c * 255):02x}' for c in (rgba.red, rgba.green, rgba.blue))}"
         settings.set_string("subtitle-color", hex_color)
 
     def _on_sub_bg_color_selected(self, color_btn, *arg):
         rgba = color_btn.get_rgba()
         # sub-back-color is #AARRGGBB
-        hex_color = "#{:02x}{:02x}{:02x}{:02x}".format(
-            int(rgba.alpha * 255),
-            int(rgba.red * 255),
-            int(rgba.green * 255),
-            int(rgba.blue * 255),
-        )
+        hex_color = f"#{''.join(f'{int(c * 255):02x}' for c in (rgba.alpha, rgba.red, rgba.green, rgba.blue))}"
         settings.set_string("subtitle-bg-color", hex_color)
 
     def _on_sub_color_reset(self, _button):
@@ -297,8 +294,8 @@ class Preferences(Adw.Dialog):
                 settings.set_string("subtitle-font", font_full)
                 self.font_label.set_label(font_full)
 
-            except Exception as e:
-                logger.warning(f"Features selection error: {e}")
+            except Exception:
+                logger.exception("Features selection failed")
 
         dialog.choose_face(self.win, None, None, callback)
 
@@ -312,8 +309,8 @@ class Preferences(Adw.Dialog):
         def on_launch_finished(launcher, task, *args):
             try:
                 launcher.launch_finish(task)
-            except Exception as e:
-                logger.warning(f"Failed to open folder: {e}")
+            except Exception:
+                logger.exception("Failed to open folder")
 
         f_launcher = Gtk.FileLauncher.new(Gio.File.new_for_path(CONFIG_DIR))
         f_launcher.launch(self.win, None, on_launch_finished, None)

@@ -17,15 +17,17 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import gi
 import re
 from gettext import gettext as _
-from .utils import KEY_REMAP
+
+import gi
 
 gi.require_version("Adw", "1")
 gi.require_version("Gdk", "4.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import Adw, Gdk, Gtk
+
+from .utils import KEY_REMAP
 
 INTERNAL_BINDINGS = f"""\
 UP               no-osd add volume 5; show-text "{_("Volume")}: ${{volume}}%" #{_("Volume Increase")}

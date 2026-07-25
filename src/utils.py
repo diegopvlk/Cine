@@ -17,24 +17,26 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-import gi
-import os
 import ctypes
 import logging
+import os
 from urllib.parse import urlparse
+
+import gi
 
 gi.require_version("Gdk", "4.0")
 gi.require_version("GLib", "2.0")
 gi.require_version("GdkX11", "4.0")
 gi.require_version("GdkWayland", "4.0")
-from gi.repository import Gdk, GLib
 from gi.repository import (
-    GdkX11,
+    Gdk,
     GdkWayland,  # pyright: ignore[reportAttributeAccessIssue]
+    GdkX11,
+    GLib,
 )
 
-logger = logging.getLogger("cine")
 logging.basicConfig(format="%(levelname)s: [%(filename)s:%(lineno)d] %(message)s")
+logger = logging.getLogger(__name__)
 
 gtk = ctypes.CDLL("libgtk-4.so.1")
 display = Gdk.Display.get_default()
@@ -71,8 +73,8 @@ try:
         from shutil import move
 
         move(OLD_PL_FILE, PLAYLIST_DIR)
-except Exception as e:
-    logger.error(f"Error creating files/folders: {e}", exc_info=True)
+except Exception:
+    logger.exception("Failed to create files/folders")
 
 
 is_flatpak = os.environ.get("container") == "flatpak"
@@ -89,7 +91,7 @@ def get_has_host_permission():
                     perms = line.split("=")[-1].strip().split(";")
                     return "host" in perms
     except Exception:
-        pass
+        logger.exception("get_has_host_permission failed")
 
     return False
 
@@ -103,8 +105,8 @@ def get_mouse_bindings(bindings):
         for b in bindings:
             if "MBTN" in b["key"]:
                 active_mouse_bindings[b["key"]] = b["cmd"]
-    except Exception as e:
-        logger.error(f"get_mouse_bindings error: {e}", exc_info=True)
+    except Exception:
+        logger.exception("get_mouse_bindings failed")
 
     return active_mouse_bindings
 
@@ -121,17 +123,15 @@ def parse_nonrepeat_bindings(bindings):
                     key = f"Shift+{key}"
 
                 non_repeatable.add(key)
-    except Exception as e:
-        logger.error(f"parse_nonrepeat_bindings error: {e}", exc_info=True)
+    except Exception:
+        logger.exception("parse_nonrepeat_bindings failed")
 
     return non_repeatable
 
 
 def is_local_path(path):
     parsed = urlparse(str(path))
-    if not parsed.scheme or parsed.scheme == "file" or len(parsed.scheme) == 1:
-        return True
-    return False
+    return bool(not parsed.scheme or parsed.scheme == "file" or len(parsed.scheme) == 1)
 
 
 def idle_add_once(function, *args, **kwargs) -> int:
@@ -173,8 +173,8 @@ def get_gpu_vendor(libgl):
 
             # GL_VENDOR is 0x1F00
             return glGetString(0x1F00).decode("utf-8").lower()
-    except Exception as e:
-        logger.error(f"get_gpu_vendor error: {e}", exc_info=True)
+    except Exception:
+        logger.exception("get_gpu_vendor failed")
         return None
 
 
@@ -201,8 +201,8 @@ def get_display_param():
             ptr = gtk.gdk_x11_display_get_xdisplay(get_pointer(display))
             if ptr:
                 param["x11_display"] = ptr
-    except Exception as e:
-        logger.error(f"Error getting display param: {e}", exc_info=True)
+    except Exception:
+        logger.exception("get_display_param failed")
 
     return param
 
