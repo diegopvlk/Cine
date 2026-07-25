@@ -1,19 +1,26 @@
-@define-color window_bg_color rgba(5, 5, 6, 0.925);
+@define-color window_bg_color rgb(5, 5, 6);
 @define-color window_fg_color #e5e5e5;
 @define-color headerbar_bg_color @window_bg_color;
 @define-color card_bg_color rgba(60, 60, 62, 0.66);
 @define-color popover_bg_color rgba(25, 25, 27, 0.975);
+@define-color popover_fg_color @window_fg_color;
 @define-color dialog_bg_color @window_bg_color;
 
 window {
   --cine-grey: #e5e5e5;
-  --window-bg-color: rgba(5, 5, 6, 0.925);
+  --window-bg-color: rgb(5, 5, 6);
   --window-fg-color: var(--cine-grey);
   --headerbar-bg-color: var(--window-bg-color);
   --card-bg-color: rgba(60, 60, 62, 0.66);
   --popover-bg-color: rgba(25, 25, 27, 0.975);
   --popover-fg-color: var(--cine-grey);
   --dialog-bg-color: var(--window-bg-color);
+}
+
+sheet {
+  background-color: rgb(
+    from var(--window-bg-color) r g b / calc(alpha * 0.925)
+  );
 }
 
 label.link {
