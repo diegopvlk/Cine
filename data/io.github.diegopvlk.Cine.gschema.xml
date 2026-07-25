@@ -19,6 +19,9 @@
 		<key name="audio-languages" type="s">
 			<default>""</default>
 		</key>
+		<key name="graphics-offload" type="b">
+			<default>false</default>
+		</key>
 		<key name="hwdec" type="b">
 			<default>false</default>
 		</key>

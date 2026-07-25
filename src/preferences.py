@@ -77,6 +77,7 @@ class Preferences(Adw.Dialog):
     copy_cmd_button: Gtk.Button = Gtk.Template.Child()
     open_new_row: Adw.SwitchRow = Gtk.Template.Child()
     thumb_preview_row: Adw.SwitchRow = Gtk.Template.Child()
+    offload_row: Adw.SwitchRow = Gtk.Template.Child()
     hwdec_row: Adw.SwitchRow = Gtk.Template.Child()
     normalize_volume_row: Adw.SwitchRow = Gtk.Template.Child()
     save_session_switch: Gtk.Switch = Gtk.Template.Child()
@@ -139,6 +140,7 @@ class Preferences(Adw.Dialog):
             ("open-new-windows", self.open_new_row, "active"),
             ("thumbnail-preview", self.thumb_preview_row, "active"),
             ("normalize-volume", self.normalize_volume_row, "active"),
+            ("graphics-offload", self.offload_row, "active"),
             ("hwdec", self.hwdec_row, "active"),
             ("save-session", self.save_session_switch, "active"),
             ("save-video-position", self.save_position_switch, "active"),
@@ -163,6 +165,7 @@ class Preferences(Adw.Dialog):
             "subtitle-bg": self._on_sub_bg_changed,
             "audio-languages": self._on_alang_changed,
             "thumbnail-preview": self._on_thumb_preview_changed,
+            "graphics-offload": self._on_offload_changed,
             "hwdec": self._on_hwdec_changed,
             "normalize-volume": self._on_norm_volume_changed,
             "save-video-position": self._on_save_pos_changed,
@@ -217,6 +220,13 @@ class Preferences(Adw.Dialog):
         elif not self.mpv.idle_active:
             self.win.thumb_preview.props.visible = True
             self.win.setup_preview_player()
+
+    def _on_offload_changed(self, settings, key):
+        self.win.offload.set_enabled(
+            Gtk.GraphicsOffloadEnabled.ENABLED
+            if settings.get_boolean(key)
+            else Gtk.GraphicsOffloadEnabled.DISABLED
+        )
 
     def _on_hwdec_changed(self, settings, key):
         hwdec_enabled = settings.get_boolean(key)

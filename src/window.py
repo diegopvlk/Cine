@@ -62,7 +62,6 @@ from .utils import (
     display,
     format_time,
     get_display_param,
-    get_gpu_vendor,
     get_mouse_bindings,
     has_host_permission,
     idle_add_once,
@@ -152,12 +151,13 @@ class CineWindow(Adw.ApplicationWindow):
         self.gl_area: Gtk.GLArea = Gtk.GLArea()
         self.offload: Gtk.GraphicsOffload = Gtk.GraphicsOffload(child=self.gl_area)
         self.offload.set_black_background(True)
-
-        vendor: str | None = get_gpu_vendor(libgl)
-        if vendor and "nvidia" in vendor:
-            self.offload.set_enabled(Gtk.GraphicsOffloadEnabled.DISABLED)
-
         self.video_overlay.set_child(self.offload)
+
+        self.offload.set_enabled(
+            Gtk.GraphicsOffloadEnabled.ENABLED
+            if settings.get_boolean("graphics-offload")
+            else Gtk.GraphicsOffloadEnabled.DISABLED
+        )
 
         self.visible_dialog: Adw.Dialog | None = None
         self.playlist_ls: Gio.ListStore = Gio.ListStore.new(PlaylistItemObj)

@@ -158,26 +158,6 @@ def timeout_add_seconds_once(interval: int, function, *args, **kwargs) -> int:
     return GLib.timeout_add_seconds(interval, wrapper)
 
 
-def get_gpu_vendor(libgl):
-    if not display:
-        return None
-    try:
-        if seat := display.get_default_seat():
-            context = seat.get_display().create_gl_context()
-            context.realize()
-            context.make_current()
-
-            glGetString = libgl.glGetString
-            glGetString.restype = ctypes.c_char_p
-            glGetString.argtypes = [ctypes.c_uint]
-
-            # GL_VENDOR is 0x1F00
-            return glGetString(0x1F00).decode("utf-8").lower()
-    except Exception:
-        logger.exception("get_gpu_vendor failed")
-        return None
-
-
 def get_display_param():
     param = {}
 

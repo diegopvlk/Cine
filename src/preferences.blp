@@ -89,6 +89,11 @@ template $Preferences: Adw.Dialog {
 					title: _("Normalize Volume");
 				}
 
+				Adw.SwitchRow offload_row {
+					title: _("Graphics Offload");
+					subtitle: _("Reduces resource usage; disable if you encounter playback issues");
+				}
+
 				Adw.SwitchRow hwdec_row {
 					title: _("Hardware Acceleration");
 					subtitle: _("Use GPU for video decoding when available");
