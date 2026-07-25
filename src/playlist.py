@@ -424,7 +424,6 @@ class Playlist(Adw.Dialog):
         popover = Gtk.PopoverMenu.new_from_model(menu)
         popover.set_parent(row)
         popover.set_has_arrow(False)
-        popover.set_autohide(True)
         row.connect("unrealize", lambda *_: (popover.unrealize(), popover.unparent()))
 
         action_group = Gio.SimpleActionGroup.new()
