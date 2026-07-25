@@ -17,6 +17,7 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import bisect
 import os
 import gi
 import mpv
@@ -194,7 +195,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.late_preview_id: int = 0
         self.is_local_path: bool = True
         self.last_preview_update: float = 0
-        self.last_preview_seek: float = 0
+        self.prog_fine_tune: bool = False
         self.error_count: int = 0
         self.pressed_combos: set[str] = set()
         self.key_state: Gdk.ModifierType = Gdk.ModifierType.NO_MODIFIER_MASK
@@ -390,7 +391,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.thumb_preview = Gtk.Picture()
         self.thumb_preview.set_valign(Gtk.Align.START)
-        self.thumb_preview.set_content_fit(Gtk.ContentFit.SCALE_DOWN)
+        self.thumb_preview.set_content_fit(Gtk.ContentFit.COVER)
         self.thumb_preview.set_halign(Gtk.Align.CENTER)
         self.thumb_preview.set_can_shrink(False)
 
@@ -435,6 +436,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.add_controller(key_controller)
 
         progress_hover = Gtk.EventControllerMotion()
+        progress_hover.connect("enter", self._set_time_tooltip)
         progress_hover.connect("motion", self._on_progress_motion)
         progress_hover.connect("leave", self._hide_time_tooltip)
         self.video_progress_scale.add_controller(progress_hover)
@@ -447,6 +449,9 @@ class CineWindow(Adw.ApplicationWindow):
             if isinstance(c, Gtk.GestureDrag):
                 c.connect("drag-begin", self._on_progress_pressed)
                 c.connect("drag-end", self._on_progress_released)
+            if isinstance(c, Gtk.GestureLongPress):
+                c.connect("pressed", lambda *a: setattr(self, "prog_fine_tune", True))
+                c.connect("end", lambda *a: setattr(self, "prog_fine_tune", False))
 
         ecs_flags = Gtk.EventControllerScrollFlags
 
@@ -590,13 +595,6 @@ class CineWindow(Adw.ApplicationWindow):
             layout = "close:" if "close" in left_side else ":close"
 
         self.headerbar.set_decoration_layout(layout)
-
-    def _hide_time_tooltip(self, *args):
-        def hide():
-            self.tooltip_thumb_revealer.set_reveal_child(False)
-            self.tooltip_label_revealer.set_reveal_child(False)
-
-        idle_add_once(hide)
 
     def _show_ui(self):
         self.set_cursor_from_name(None)
@@ -952,10 +950,6 @@ class CineWindow(Adw.ApplicationWindow):
         return Gdk.EVENT_STOP
 
     def setup_preview_player(self):
-        if not self.is_local_path:
-            self.thumb_preview.props.visible = False
-            return
-
         try:
             params = cast(dict, self.mpv.video_params)
             v_width = params.get("w") or 1920
@@ -976,6 +970,7 @@ class CineWindow(Adw.ApplicationWindow):
             width = int((v_width / v_height) * height)
 
         self.thumb_preview.set_size_request(width, height)
+        self.thumb_w = width + 12
 
         if self.preview_player is None:
             self.preview_player = mpv.MPV(
@@ -1010,38 +1005,29 @@ class CineWindow(Adw.ApplicationWindow):
 
             @self.preview_player.property_observer("time-pos")
             def pos_observer(_name, pos):
-                if pos and pos >= 0:
+                if pos is None:
+                    self._hide_time_tooltip()
+                    return
 
-                    def on_screenshot_ready(_, result):
-                        if result is None:
-                            self.thumb_preview.props.visible = False
-                            return
+                def on_screenshot_ready(_none, result):
+                    if result:
+                        idle_add_once(self._apply_preview_texture, result)
 
-                        self._apply_preview_texture(result)
-
-                    if self.preview_player:
-                        self.preview_player.command_async(
-                            "screenshot-raw",
-                            callback=on_screenshot_ready,
-                        )
+                if p := self.preview_player:
+                    p.command_async("screenshot-raw", callback=on_screenshot_ready)
 
         self.preview_player.loadfile(self.mpv.path, "replace")
         self.preview_player["vf"] = (
             f"scale={width}:{height}:force_original_aspect_ratio=decrease,format=bgra"
         )
-        idle_add_once(self._update_video_preview, True)
-        self._hide_time_tooltip()
+        self._set_time_tooltip()
 
-    def _update_video_preview(self, force_render=False):
-        if (
-            self.preview_player is None
-            or not self.preview_player.path
-            or self.last_preview_seek == round(self.hover_time, 1)
-            and not force_render
-        ):
+    def _update_video_preview(self):
+        if self.preview_player is None or not self.preview_player.path:
             return
 
-        self.last_preview_seek = round(self.hover_time, 1)
+        if self.hover_time == 0:
+            self.hover_time = 0.1
 
         try:
             self.preview_player.command_async(
@@ -1059,70 +1045,80 @@ class CineWindow(Adw.ApplicationWindow):
                 GLib.Bytes.new(res["data"]),
                 res["stride"],
             )
-            self.thumb_preview.props.visible = True
         except Exception as e:
-            self.thumb_preview.props.visible = False
+            self._hide_time_tooltip()
             logger.error(f"Preview texture error: {e}")
+
+    def _hide_time_tooltip(self, *args):
+        self.prev_reveal = False
+        self.tooltip_thumb_revealer.set_reveal_child(False)
+        self.tooltip_label_revealer.set_reveal_child(False)
+
+    def _set_time_tooltip(self, *args):
+        self.prev_prog_motion_xy = (-1, -1)  # triggers _on_progress_motion
+        self.width = self.get_width()
+        self.prog_width = self.video_progress_scale.get_width()
+        self.duration = float(self.mpv.duration or 0)
+        self.prev_reveal = False
+        self.show_thumb_preview = (
+            settings.get_boolean("thumbnail-preview") and self.is_local_path
+        )
+
+    def _move_time_tooltip(self, revealer, layer: Gtk.Fixed, x, tooltip_w):
+        x_pos = max(0, min(x - (tooltip_w / 2) + 23, self.width - tooltip_w))
+        layer.move(revealer, x_pos, 0)
 
     def _on_progress_motion(self, _controller, x, y):
         if (x, y) == self.prev_prog_motion_xy:
             return
-
         self.prev_prog_motion_xy = (x, y)
+
+        if self.prog_fine_tune:
+            self._hide_time_tooltip()
+            return
+
+        if not self.prev_reveal:
+            self.tooltip_thumb_revealer.set_reveal_child(self.show_thumb_preview)
+            self.tooltip_label_revealer.set_reveal_child(True)
+            self.prev_reveal = True
 
         if self.late_preview_id > 0:
             GLib.source_remove(self.late_preview_id)
 
         self.late_preview_id = timeout_add_once(120, self._late_update_preview)
 
-        width = self.video_progress_scale.get_width()
-        duration = self.video_progress_adj.props.upper
-        if width <= 0 or duration <= 0:
+        if self.prog_width <= 0:
             return
 
-        percentage = max(0, min(1, x / width))
-        self.hover_time = percentage * duration
+        percentage = max(0, min(1, x / self.prog_width))
+        self.hover_time = percentage * self.duration
 
-        self.curr_chapter_time = None
-        curr_chapter = None
-
-        for chapter in self.chapters:
-            c_time = chapter.get("time", 0)
-            if c_time <= self.hover_time:
-                curr_chapter = chapter
-                self.curr_chapter_time = c_time
-            else:
-                break
+        title = None
+        if self.chapters:
+            idx = bisect.bisect_right(self.chapter_times, self.hover_time) - 1
+            if idx >= 0:
+                self.curr_chapter_time = self.chapter_times[idx]
+                title = self.chapter_titles[idx]
+        else:
+            self.curr_chapter_time = None
 
         time_str = format_time(self.hover_time)
-        if curr_chapter:
-            title = curr_chapter.get("title", _("Chapter"))
-            title = GLib.markup_escape_text(title)
-            markup = f"{time_str} ‐ <b>{title}</b>"
-        else:
-            markup = time_str
+        text = f"{time_str} ‐ <b>{title}</b>" if title else time_str
+        self.time_tooltip_label.set_markup(text)
+        label_w = self.tooltip_label_revealer.get_preferred_size()[1].width
 
-        self.time_tooltip_label.set_markup(markup)
+        self._move_time_tooltip(
+            self.tooltip_label_revealer, self.tooltip_label_layer, x, label_w
+        )
 
-        def reveal(revealer: Gtk.Revealer, layer: Gtk.Fixed, x):
-            tooltip_w = revealer.get_preferred_size()[1].width
-            container_w = self.get_width()
-            x = x - (tooltip_w / 2)
-            x = max(0, min(x + 23, container_w - tooltip_w))
-            layer.move(revealer, x, 0)
-            revealer.set_reveal_child(True)
-
-        reveal(self.tooltip_label_revealer, self.tooltip_label_layer, x)
-        reveal(self.tooltip_thumb_revealer, self.tooltip_thumb_layer, x)
-
-        if not settings.get_boolean("thumbnail-preview"):
-            return
-
-        curr_time = time()
-
-        if curr_time - self.last_preview_update > 0.3:
-            self.last_preview_update = curr_time
-            idle_add_once(self._update_video_preview)
+        if self.show_thumb_preview:
+            self._move_time_tooltip(
+                self.tooltip_thumb_revealer, self.tooltip_thumb_layer, x, self.thumb_w
+            )
+            curr_time = time()
+            if curr_time - self.last_preview_update > 0.3:
+                self.last_preview_update = curr_time
+                idle_add_once(self._update_video_preview)
 
     def _late_update_preview(self):
         """Update preview when the cursor is stopped"""
@@ -1214,6 +1210,8 @@ class CineWindow(Adw.ApplicationWindow):
             return
 
         self.chapters = sorted(chapters, key=lambda c: c.get("time", 0))
+        self.chapter_times, self.chapter_titles = [], []
+
         self.chapters_menu_btn.set_visible(True)
         self.chapters_menu.remove_all()
 
@@ -1228,6 +1226,9 @@ class CineWindow(Adw.ApplicationWindow):
                 self.video_progress_scale.add_mark(
                     float(time_pos), Gtk.PositionType.TOP, None
                 )
+
+            self.chapter_times.append(chapter.get("time"))
+            self.chapter_titles.append(GLib.markup_escape_text(title))
 
     def _navigate_playlist(self, direction: int):
         pos = int(self.mpv.playlist_pos or 0)
@@ -1292,7 +1293,6 @@ class CineWindow(Adw.ApplicationWindow):
         if duration == 0:
             self.video_progress_scale.set_can_target(False)
             self.video_progress_scale.set_can_focus(False)
-            self._hide_time_tooltip()
             return
 
         self.video_progress_scale.set_can_target(True)
@@ -1925,13 +1925,10 @@ class CineWindow(Adw.ApplicationWindow):
                     self._hide_ui_timeout()
 
                     if settings.get_boolean("thumbnail-preview") and self.is_local_path:
-                        self.thumb_preview.props.visible = True
                         self.setup_preview_player()
-                    else:
-                        self.thumb_preview.props.visible = False
-                        if self.preview_player:
-                            self.preview_player.terminate()
-                            self.preview_player = None
+                    elif self.preview_player:
+                        self.preview_player.terminate()
+                        self.preview_player = None
 
                     self.app_mpris._update_metadata()
                 except mpv.ShutdownError:
