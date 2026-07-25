@@ -188,6 +188,8 @@ class CineWindow(Adw.ApplicationWindow):
         self.wheel_accum_x: float = 0.0
         self.wheel_accum_y: float = 0.0
         self.hide_icon_indicator: bool = True
+        self.skip_obs_count: int = 0
+        self.playing_on_press: bool = False
         self.preview_player: mpv.MPV | None = None
         self.late_preview_id: int = 0
         self.is_local_path: bool = True
@@ -440,6 +442,11 @@ class CineWindow(Adw.ApplicationWindow):
         prog_mid_click = Gtk.GestureClick(button=2)
         prog_mid_click.connect("pressed", self._go_to_chapter_start)
         self.video_progress_scale.add_controller(prog_mid_click)
+
+        for c in self.video_progress_scale.observe_controllers():
+            if isinstance(c, Gtk.GestureDrag):
+                c.connect("drag-begin", self._on_progress_pressed)
+                c.connect("drag-end", self._on_progress_released)
 
         ecs_flags = Gtk.EventControllerScrollFlags
 
@@ -1308,6 +1315,24 @@ class CineWindow(Adw.ApplicationWindow):
     def _on_play_pause_clicked(self, *args):
         self.mpv.command_async("cycle", "pause")
 
+    def _on_progress_pressed(self, *args):
+        try:
+            self.playing_on_press = not self.mpv._get_property("pause")
+            if self.playing_on_press:
+                self.skip_obs_count += 1
+                self.mpv._set_property("pause", True)
+        except Exception:
+            self.skip_obs_count = 0
+
+    def _on_progress_released(self, *args):
+        try:
+            if self.playing_on_press:
+                self.skip_obs_count += 1
+                self.playing_on_press = False
+                self.mpv._set_property("pause", False)
+        except Exception:
+            self.skip_obs_count = 0
+
     def _on_progress_adjusted(self, adjustment):
         self.mpv.command_async("seek", adjustment.props.value, "absolute")
 
@@ -2108,6 +2133,10 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("pause")
         def on_pause_change(_name, paused):
+            if self.skip_obs_count > 0:
+                self.skip_obs_count -= 1
+                return
+
             if self.mpv.eof_reached:  # allow to replay at eof, requires keep-open
                 self.mpv.seek(0, reference="absolute")
 
