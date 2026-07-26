@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-25 15:23-0300\n"
-"PO-Revision-Date: 2026-06-28 15:00+0000\n"
+"PO-Revision-Date: 2026-07-27 21:01+0000\n"
 "Last-Translator: Mimolet <themimolet@proton.me>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/cine/app/fr/>\n"
 "Language: fr\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2026.7.dev0\n"
+"X-Generator: Weblate 2026.8.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:234 src/mpris.py:144
 #: src/mpris.py:362 src/window.py:213 src/window.py:2166 src/window.blp:6
@@ -32,7 +32,7 @@ msgstr "Visionnez vos vidéos"
 #. TRANSLATORS: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/io.github.diegopvlk.Cine.desktop.in:10
 msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
-msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;Vidéo;Lecteur;Media;mpv;"
+msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;Vidéo;Lecteur;Media;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:122
@@ -558,7 +558,7 @@ msgstr "Ajouter une URL"
 #: src/window.py:879 src/shortcuts-dialog.blp:26 src/window.blp:100
 #: src/window.blp:491 src/window.blp:549
 msgid "Open URL"
-msgstr "Ouvrir l'URL"
+msgstr "Ouvrir une URL"
 
 #: src/window.py:892
 msgid "URL"
@@ -725,12 +725,12 @@ msgstr "Accélération matérielle"
 
 #: src/preferences.blp:99
 msgid "Use GPU for video decoding when available"
-msgstr "Utiliser le GPU pour le décodage vidéo si disponible"
+msgstr "Utilise le GPU pour le décodage vidéo si disponible"
 
 #: src/preferences.blp:104
 msgid "Pick up where you left off after saving from the menu"
 msgstr ""
-"Reprenez là où vous vous étiez arrêté après avoir enregistré via le menu"
+"Reprend là où vous vous étiez arrêté après avoir enregistré depuis le menu"
 
 #: src/preferences.blp:139
 msgid "Also save options like brightness, subtitle delay, etc."
@@ -772,7 +772,7 @@ msgstr "Menu contextuel"
 
 #: src/preferences.blp:300
 msgid "Preferred Subtitle Languages"
-msgstr "Langues préférées pour les sous-titres"
+msgstr "Langues de sous-titres préférées"
 
 #: src/preferences.blp:301 src/preferences.blp:306
 msgid "Example: en,es,pt"
