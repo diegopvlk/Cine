@@ -1851,8 +1851,11 @@ class CineWindow(Adw.ApplicationWindow):
             self.inhibit_cookie = 0
 
     def _show_icon_indicator(self):
-        if self.mpv.idle_active or self.click_delay_id:
-            return
+        try:
+            if self.mpv.idle_active or self.click_delay_id:
+                return
+        except mpv.ShutdownError:
+            pass
 
         if not self.hide_icon_indicator:
             self.revealer_icon_indicator.set_reveal_child(True)
