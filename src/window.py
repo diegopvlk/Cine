@@ -200,7 +200,6 @@ class CineWindow(Adw.ApplicationWindow):
         self.prog_fine_tune: bool = False
         self.error_count: int = 0
         self.pressed_combos: set[str] = set()
-        self.key_state: Gdk.ModifierType = Gdk.ModifierType.NO_MODIFIER_MASK
         self.hide_timeout_id: int = 0
         self.is_fs: bool = False
         self.is_inactive: bool = False
@@ -647,14 +646,13 @@ class CineWindow(Adw.ApplicationWindow):
             if (x, y) == self.prev_motion_xy or self.click_holding:
                 return
 
-            if self.key_state & Gdk.ModifierType.CONTROL_MASK:
-                mpv_x = int(x * self.props.scale_factor)
-                mpv_y = int(y * self.props.scale_factor)
-                self.mpv.command_async("mouse", mpv_x, mpv_y)
-
             self.prev_motion_xy = (x, y)
             self._show_ui()
             self._hide_ui_timeout()
+
+            mpv_x = int(x * self.props.scale_factor)
+            mpv_y = int(y * self.props.scale_factor)
+            self.mpv.command_async("mouse", mpv_x, mpv_y)
 
     def _update_track_menus(self, track_list):
         self.subtitles_menu.remove_all()
@@ -1136,10 +1134,9 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _on_progress_scroll(self, controller, _dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
+        state = event.get_modifier_state()
 
-        self.key_state = event.get_modifier_state()
-
-        if self.key_state & Gdk.ModifierType.CONTROL_MASK:
+        if state & Gdk.ModifierType.CONTROL_MASK:
             return True
 
         direction: Gdk.ScrollDirection = event.get_direction()
@@ -1559,8 +1556,7 @@ class CineWindow(Adw.ApplicationWindow):
             self._set_space_holding(False)
             return
 
-        self.key_state = state
-        clean_state = self.key_state & Gtk.accelerator_get_default_mod_mask()
+        clean_state = state & Gtk.accelerator_get_default_mod_mask()
         accel = Gtk.accelerator_name(keyval, clean_state)
         shortcuts_accel = "<Shift><Control>question"
         if self.app.get_actions_for_accel(accel) or accel == shortcuts_accel:
@@ -1571,7 +1567,7 @@ class CineWindow(Adw.ApplicationWindow):
         mpv_key = KEY_REMAP.get(key_name, mpv_key)
 
         mods = []
-        append_modifiers(self.key_state, mods)
+        append_modifiers(state, mods)
 
         combo = "+".join(mods + [mpv_key])
 
@@ -1717,6 +1713,7 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _on_mouse_scroll(self, controller, dx, dy):
         event: Gdk.ScrollEvent = controller.get_current_event()
+        state = event.get_modifier_state()
 
         if event.get_unit() == Gdk.ScrollUnit.SURFACE:  # Touchpad
             # Scale it down so it doesn't fire rapidly
@@ -1734,10 +1731,8 @@ class CineWindow(Adw.ApplicationWindow):
         RIGHT: str = "WHEEL_LEFT" if is_natural else "WHEEL_RIGHT"
         wheel: str | None = None
 
-        self.key_state = event.get_modifier_state()
-
         mods = []
-        append_modifiers(self.key_state, mods)
+        append_modifiers(state, mods)
 
         # Only trigger if scrolled a full 'unit'
         if abs(self.wheel_accum_y) >= 1:
