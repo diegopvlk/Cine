@@ -183,6 +183,8 @@ class CineWindow(Adw.ApplicationWindow):
         self.space_hold_id: int = 0
         self.space_holding: bool = False
         self.space_pressed: bool = False
+        self.left_clk = settings.get_int("left-click")
+        self.right_clk = settings.get_int("right-click")
         self.click_delay_id: int = 0
         ck_time: int = gtk_setts.props.gtk_double_click_time if gtk_setts else 400
         self.click_time: int = max(ck_time, min(200, 425))
@@ -470,10 +472,11 @@ class CineWindow(Adw.ApplicationWindow):
         self.volume_scale.add_controller(volume_ecs)
         volume_ecs.connect("scroll", self._on_mouse_scroll_volume)
 
-        for btn_num in MBTN_MAP:
+        self.clk_rect = Gdk.Rectangle()
+        for btn_num, MBTN in MBTN_MAP.items():
             click_gesture = Gtk.GestureClick(button=btn_num)
-            click_gesture.connect("pressed", self._on_click_pressed)
-            click_gesture.connect("released", self._on_click_released)
+            click_gesture.connect("pressed", self._on_click_pressed, MBTN)
+            click_gesture.connect("released", self._on_click_released, MBTN)
             self.video_overlay.add_controller(click_gesture)
 
         long_press = Gtk.GestureLongPress.new()
@@ -1607,29 +1610,26 @@ class CineWindow(Adw.ApplicationWindow):
         except mpv.ShutdownError:
             pass
 
-    def _on_click_pressed(self, gesture, _n_press, x, y):
-        button = MBTN_MAP.get(gesture.get_button())
-        self.left_clk = settings.get_int("left-click")
-        self.right_clk = settings.get_int("right-click")
-
-        if not button or self._is_hovering() and button != "MBTN_MID":
-            return
-
-        if (
-            button == "MBTN_RIGHT"
-            and self.right_clk == SecondaryClick.CONTEXT_MENU
-            and not self.start_page.props.visible
-        ):
-            rect = Gdk.Rectangle()
-            rect.x = x
-            rect.y = y
-            self.context_popover_menu.set_pointing_to(rect)
-            self.context_popover_menu.popup()
-            gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+    def _on_click_pressed(self, gesture, _n_press, x, y, button):
+        if self._is_hovering() and button != "MBTN_MID":
             return
 
         if button != "MBTN_LEFT":
             gesture.set_state(Gtk.EventSequenceState.CLAIMED)
+
+        if button == "MBTN_LEFT":
+            self.left_clk = settings.get_int("left-click")
+        elif button == "MBTN_RIGHT":
+            self.right_clk = settings.get_int("right-click")
+            if (
+                self.right_clk == SecondaryClick.CONTEXT_MENU
+                and not self.start_page.props.visible
+            ):
+                self.clk_rect.x = x
+                self.clk_rect.y = y
+                self.context_popover_menu.set_pointing_to(self.clk_rect)
+                self.context_popover_menu.popup()
+                return
 
         # Back and forward dont trigger _on_click_released when video is playing (??)
         if button in ("MBTN_BACK", "MBTN_FORWARD"):
@@ -1654,32 +1654,29 @@ class CineWindow(Adw.ApplicationWindow):
         except mpv.ShutdownError:
             pass
 
-    def _on_click_released(self, gesture, n_press, _x, _y):
+    def _run_command(self, cmd):
+        try:
+            for sub_cmd in cmd.split(";"):
+                args = shlex.split(sub_cmd.strip())
+                self.mpv.command_async(*args)
+        except Exception:
+            logger.exception("_run_command failed")
+
+    def _on_click_released(self, gesture, n_press, _x, _y, button):
         gesture.set_state(Gtk.EventSequenceState.CLAIMED)
-
-        button = MBTN_MAP.get(gesture.get_button())
-
-        ignored_btn = not button or button in ("MBTN_BACK", "MBTN_FORWARD")
+        ignored_btn = button in ("MBTN_BACK", "MBTN_FORWARD")
         ignore_left = (
             self.is_inactive
             and button == "MBTN_LEFT"
             and self.left_clk == PrimaryClick.FOCUS_PLAY_PAUSE
         )
 
-        if ignored_btn or ignore_left or self._is_hovering():
+        if ignored_btn or ignore_left or self._is_hovering() or n_press > 2:
             return
 
         if self.click_delay_id:
             GLib.source_remove(self.click_delay_id)
             self.click_delay_id = 0
-
-        def run_command(cmd):
-            try:
-                for sub_cmd in cmd.split(";"):
-                    args = shlex.split(sub_cmd.strip())
-                    self.mpv.command_async(*args)
-            except Exception:
-                logger.exception("run_command failed")
 
         if n_press == 1 and not self.click_holding:
             if button == "MBTN_LEFT" and self.left_clk != PrimaryClick.BYPASS:
@@ -1694,12 +1691,12 @@ class CineWindow(Adw.ApplicationWindow):
                 self.mpv.command_async("cycle", "pause")
 
             elif cmd_str := self.mouse_bindings.get(button):
-                run_command(cmd_str)
+                self._run_command(cmd_str)
 
         elif n_press == 2:
             button_dbl = f"{button}_DBL"
             if cmd_str_dbl := self.mouse_bindings.get(button_dbl):
-                run_command(cmd_str_dbl)
+                self._run_command(cmd_str_dbl)
 
     def _cancel_click_hold(self, *args):
         if not self.click_holding:
@@ -2136,7 +2133,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.mpv.seek(0, reference="absolute")
 
             idle_add_once(self._sync_inhibit)
-            idle_add_once(self._update_play_pause_icon, paused)
+            self._update_play_pause_icon(paused)
 
         @self.mpv.property_observer("idle-active")
         def on_idle_change(_name, is_idle):
