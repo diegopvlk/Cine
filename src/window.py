@@ -59,6 +59,7 @@ from .utils import (
     WATCH_HISTORY_JSONL,
     PrimaryClick,
     SecondaryClick,
+    append_modifiers,
     display,
     format_time,
     get_display_param,
@@ -1559,7 +1560,7 @@ class CineWindow(Adw.ApplicationWindow):
             return
 
         self.key_state = state
-        clean_state = state & Gtk.accelerator_get_default_mod_mask()
+        clean_state = self.key_state & Gtk.accelerator_get_default_mod_mask()
         accel = Gtk.accelerator_name(keyval, clean_state)
         shortcuts_accel = "<Shift><Control>question"
         if self.app.get_actions_for_accel(accel) or accel == shortcuts_accel:
@@ -1570,12 +1571,7 @@ class CineWindow(Adw.ApplicationWindow):
         mpv_key = KEY_REMAP.get(key_name, mpv_key)
 
         mods = []
-        if state & Gdk.ModifierType.CONTROL_MASK:
-            mods.append("Ctrl")
-        if state & Gdk.ModifierType.ALT_MASK:
-            mods.append("Alt")
-        if state & Gdk.ModifierType.SHIFT_MASK:
-            mods.append("Shift")
+        append_modifiers(self.key_state, mods)
 
         combo = "+".join(mods + [mpv_key])
 
@@ -1741,12 +1737,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.key_state = event.get_modifier_state()
 
         mods = []
-        if self.key_state & Gdk.ModifierType.CONTROL_MASK:
-            mods.append("ctrl")
-        if self.key_state & Gdk.ModifierType.ALT_MASK:
-            mods.append("alt")
-        if self.key_state & Gdk.ModifierType.SHIFT_MASK:
-            mods.append("shift")
+        append_modifiers(self.key_state, mods)
 
         # Only trigger if scrolled a full 'unit'
         if abs(self.wheel_accum_y) >= 1:

@@ -211,6 +211,18 @@ def format_time(seconds):
         return f"{m}:{s:02d}"
 
 
+def append_modifiers(key_state, mods: list):
+    """Adds Ctrl/Alt/Shift/Meta"""
+    if key_state & Gdk.ModifierType.CONTROL_MASK:
+        mods.append("Ctrl")
+    if key_state & Gdk.ModifierType.ALT_MASK:
+        mods.append("Alt")
+    if key_state & Gdk.ModifierType.SHIFT_MASK:
+        mods.append("Shift")
+    if key_state & Gdk.ModifierType.META_MASK:
+        mods.append("Meta")
+
+
 class PrimaryClick:
     PLAY_PAUSE = 0
     FOCUS_PLAY_PAUSE = 1
@@ -253,9 +265,15 @@ KEY_REMAP: dict = {
     "F18": "F18",
     "F19": "F19",
     "F20": "F20",
+    "F21": "F21",
+    "F22": "F22",
+    "F23": "F23",
+    "F24": "F24",
     "Escape": "ESC",
     "Return": "ENTER",
     "BackSpace": "BS",
+    "Tab": "TAB",
+    "ISO_Left_Tab": "TAB",
     "Page_Up": "PGUP",
     "Page_Down": "PGDWN",
     "Left": "LEFT",
@@ -267,6 +285,9 @@ KEY_REMAP: dict = {
     "Insert": "INS",
     "Delete": "DEL",
     "Pause": "PAUSE",
+    "Print": "PRINT",
+    "Sys_Req": "PRINT",
+    "Menu": "MENU",
     "space": "SPACE",
     "KP_Add": "KP_ADD",
     "KP_Subtract": "KP_SUBTRACT",
@@ -281,25 +302,36 @@ KEY_REMAP: dict = {
     "KP_7": "KP7",
     "KP_8": "KP8",
     "KP_9": "KP9",
+    "KP_0": "KP0",
+    "KP_Decimal": "KP_DEC",
+    "KP_Delete": "KP_DEL",
+    "KP_Separator": "KP_SEPARATOR",
+    "KP_Insert": "KP_INS",
     "KP_Enter": "KP_ENTER",
     "KP_End": "KP_END",
     "KP_Down": "KP_DOWN",
     "KP_Page_Down": "KP_PGDWN",
+    "KP_Next": "KP_PGDWN",
     "KP_Left": "KP_LEFT",
     "KP_Begin": "KP_BEGIN",
     "KP_Right": "KP_RIGHT",
     "KP_Home": "KP_HOME",
     "KP_Up": "KP_UP",
     "KP_Page_Up": "KP_PGUP",
-    "XF86AudioRaiseVolume": "VOLUME_UP",
-    "XF86AudioLowerVolume": "VOLUME_DOWN",
-    "XF86AudioMute": "MUTE",
-    "XF86PowerOff": "POWER",
-    "XF86AudioPlay": "PLAY",
-    "XF86AudioPause": "PAUSE",
-    "XF86AudioStop": "STOP",
-    "XF86AudioNext": "NEXT",
-    "XF86AudioPrev": "PREV",
+    "KP_Prior": "KP_PGUP",
+    "AudioRaiseVolume": "VOLUME_UP",
+    "AudioLowerVolume": "VOLUME_DOWN",
+    "AudioMute": "MUTE",
+    "PowerOff": "POWER",
+    "AudioPlay": "PLAY",
+    "AudioPause": "PAUSE",
+    "AudioStop": "STOP",
+    "AudioNext": "NEXT",
+    "AudioPrev": "PREV",
+    "AudioRewind": "PREV",
+    "AudioForward": "NEXT",
+    "AudioMedia": "MEDIA",
+    "AudioMicMute": "MUTE",
     "ZoomIn": "ZOOMIN",
     "ZoomOut": "ZOOMOUT",
 }
