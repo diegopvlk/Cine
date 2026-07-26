@@ -20,20 +20,20 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Terminal output**
+Run `flatpak run io.github.diegopvlk.Cine` in your terminal and share the output or error messages here when the issue occurs.
 
 **Desktop (please complete the following information):**
 - OS:
 - Desktop environment:
-- If GNOME, any extensions? 
+- If GNOME and the issue is related to crashes or stutters, any extensions? 
 - Wayland or X11:
 - Installation method:
-- App version: 
-- Hardware info (CPU/GPU/etc): 
+- App version:
+- Hardware info (CPU/GPU/etc):
 
-**Terminal output**
-Add any errors when executing `flatpak run io.github.diegopvlk.Cine`.
+**Screenshots**
+If applicable, add screenshots to help explain your problem.
 
 **Additional context**
 Add any other context about the problem here.
