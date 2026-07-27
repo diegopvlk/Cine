@@ -18,7 +18,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import bisect
-import ctypes
 import logging
 import os
 import shlex
@@ -40,12 +39,7 @@ from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
 
 from .history import HistoryDialog
 from .mpris import MPRIS
-from .mpv_gl_area import (
-    GL_FRAMEBUFFER_BINDING,
-    ThumbPreviewGLArea,
-    egl_get_proc_address,
-    glGetIntegerv,
-)
+from .mpv_gl_area import ThumbPreviewGLArea, VideoGLArea
 from .options import OptionsMenuButton
 from .playlist import Playlist, PlaylistItemObj
 from .preferences import settings, sync_mpv_with_settings
@@ -68,7 +62,6 @@ from .utils import (
     append_modifiers,
     display,
     format_time,
-    get_display_param,
     get_mouse_bindings,
     has_host_permission,
     idle_add_once,
@@ -144,17 +137,6 @@ class CineWindow(Adw.ApplicationWindow):
         self.app_mpris: MPRIS = self.app.mpris  # type: ignore
 
         Gtk.WindowGroup().add_window(self)
-
-        self.gl_area: Gtk.GLArea = Gtk.GLArea()
-        self.offload: Gtk.GraphicsOffload = Gtk.GraphicsOffload(child=self.gl_area)
-        self.offload.set_black_background(True)
-        self.video_overlay.set_child(self.offload)
-
-        self.offload.set_enabled(
-            Gtk.GraphicsOffloadEnabled.ENABLED
-            if settings.get_boolean("graphics-offload")
-            else Gtk.GraphicsOffloadEnabled.DISABLED
-        )
 
         self.visible_dialog: Adw.Dialog | None = None
         self.playlist_ls: Gio.ListStore = Gio.ListStore.new(PlaylistItemObj)
@@ -246,6 +228,17 @@ class CineWindow(Adw.ApplicationWindow):
             autocreate_playlist="filter",
             save_watch_history=True,
             watch_history_path=WATCH_HISTORY_JSONL,
+        )
+
+        self.video_area = VideoGLArea(self.mpv)
+        self.offload: Gtk.GraphicsOffload = Gtk.GraphicsOffload(child=self.video_area)
+        self.offload.set_black_background(True)
+        self.video_overlay.set_child(self.offload)
+
+        self.offload.set_enabled(
+            Gtk.GraphicsOffloadEnabled.ENABLED
+            if settings.get_boolean("graphics-offload")
+            else Gtk.GraphicsOffloadEnabled.DISABLED
         )
 
         if self.mpv["window-maximized"] or settings.get_boolean("is-maximized"):
@@ -424,9 +417,6 @@ class CineWindow(Adw.ApplicationWindow):
 
         self._set_time_margin()
         self._set_time_tooltip()
-
-        self.gl_area.connect("realize", self._on_realize_area)
-        self.gl_area.connect("render", self._on_render_area)
 
         key_controller = Gtk.EventControllerKey()
         key_controller.connect("key-pressed", self._on_key_event, "keypress")
@@ -1685,44 +1675,6 @@ class CineWindow(Adw.ApplicationWindow):
         hovering = (controls_hover or header_hover) and not separator_hover
         return hovering
 
-    def _on_realize_area(self, area):
-        area.make_current()
-
-        proc_address_fn = mpv.MpvGlGetProcAddressFn(
-            lambda _inst, name: egl_get_proc_address(name)
-        )
-
-        display_param = get_display_param()
-
-        self.mpv_ctx = mpv.MpvRenderContext(
-            self.mpv,
-            "opengl",
-            opengl_init_params={
-                "get_proc_address": proc_address_fn,
-            },
-            **display_param,
-        )
-
-        self.mpv_ctx.update_cb = lambda: idle_add_once(self.gl_area.queue_render)
-
-        self.fbo = ctypes.c_int()
-
-    def _on_render_area(self, area, _context):
-        try:
-            glGetIntegerv(GL_FRAMEBUFFER_BINDING, self.fbo)
-
-            self.mpv_ctx.render(
-                flip_y=True,
-                opengl_fbo={
-                    "w": area.get_width() * area.props.scale_factor,
-                    "h": area.get_height() * area.props.scale_factor,
-                    "fbo": self.fbo.value,
-                },
-            )
-        except Exception:
-            logger.exception("_on_render_area failed")
-            return
-
     def _set_window_size(self, width, height):
         if width <= 0 or height <= 0:
             return
@@ -2067,7 +2019,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.title_widget.set_visible(not is_idle)
                 self.start_page.set_visible(is_idle)
                 self.controls_box.set_visible(not is_idle)
-                self.gl_area.set_visible(not is_idle)
+                self.video_area.set_visible(not is_idle)
 
                 if is_idle:
                     self.error_count = 0
@@ -2159,7 +2111,7 @@ class CineWindow(Adw.ApplicationWindow):
             idle_add_once(self.audio_only_icon.set_visible, not bool(value))
             if not value:
                 # clear the last frame, which sometimes can still be present
-                idle_add_once(self.gl_area.queue_render)
+                idle_add_once(self.video_area.queue_render)
 
         @self.mpv.property_observer("video-zoom")
         def on_zoom_change(_name, value):
