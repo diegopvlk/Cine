@@ -546,7 +546,7 @@ class CineWindow(Adw.ApplicationWindow):
             popover = btn.props.popover
             popover.connect("closed", self._hide_ui_timeout)
 
-            if btn in (self.primary_menu_btn, self.open_menu_btn):
+            if btn == self.open_menu_btn:
 
                 def on_popv_closed(*args):
                     if is_same_playlist(self.mpv.playlist):
@@ -1442,12 +1442,11 @@ class CineWindow(Adw.ApplicationWindow):
         self.drop_label.set_text("")
 
     def _on_drop(self, _target, value, _x, _y):
-        first_file = True
+        items: list[Gio.File] | list[str] = []
+        playable_items: list[str] = []
 
         if is_same_playlist(self.mpv.playlist):
             self.mpv.write_watch_later_config()
-
-        items: list[Gio.File] | list[str] = []
 
         if isinstance(value, Gdk.FileList):
             items = value.get_files()
@@ -1455,53 +1454,44 @@ class CineWindow(Adw.ApplicationWindow):
             items = [value]
 
         for item in items:
-            mode = "replace" if first_file else "append-play"
+            if isinstance(item, str):
+                playable_items.append(item)
+                continue
 
-            if isinstance(item, Gio.File):
-                path = item.get_path() or item.get_uri()
+            path = item.get_path() or item.get_uri()
+            if not is_local_path(path):
+                playable_items.append(path)
+                continue
 
-                is_url = not is_local_path(path)  # URL Thumbnail
+            try:
+                info = item.query_info(
+                    "standard::content-type,standard::type",
+                    Gio.FileQueryInfoFlags.NONE,
+                    None,
+                )
+            except Exception as e:
+                logger.exception("Drop failed")
+                idle_add_once(self._show_toast, str(e))
+                return
 
-                if is_url:
-                    self.mpv.loadfile(path, mode)
-                    first_file = False
-                    continue
-                else:
-                    try:
-                        info = item.query_info(
-                            "standard::content-type,standard::type",
-                            Gio.FileQueryInfoFlags.NONE,
-                            None,
-                        )
-                    except Exception as e:
-                        logger.exception("Drop failed")
-                        idle_add_once(self._show_toast, str(e))
-                        return
+            name = (item.get_basename() or "").lower()
+            if name.endswith(SUB_EXTS):
+                if not self.mpv.idle_active:
+                    self.mpv.command("sub-add", path, "select")
+                continue
 
-                file_type = info.get_file_type()
-                mime_type = info.get_content_type() or ""
+            mime = info.get_content_type() or ""
+            if info.get_file_type() == Gio.FileType.DIRECTORY or mime.startswith(
+                ("video/", "audio/", "image/")
+            ):
+                playable_items.append(path)
 
-                if file_type == Gio.FileType.DIRECTORY:
-                    self.mpv.loadfile(path, mode)
-                    first_file = False
-                    continue
+        for idx, source in enumerate(playable_items):
+            mode = "replace" if idx == 0 else "append-play"
+            self.mpv.loadfile(source, mode)
 
-                name = cast(str, item.get_basename()).lower()
-                if name.endswith(SUB_EXTS):
-                    if not self.mpv.core_idle:
-                        self.mpv.command("sub-add", path, "select")
-                    continue
-
-                if mime_type.startswith(("video/", "audio/", "image/")) or is_url:
-                    self.mpv.loadfile(path, mode)
-                    first_file = False
-
-            elif isinstance(item, str):  # URL string
-                self.mpv.loadfile(item, mode)
-                first_file = False
-
-            if mode == "replace":
-                self.mpv.command_async("set", "pause", "no")
+        if playable_items:
+            self.mpv.command_async("set", "pause", "no")
 
     def _sync_fullscreen(self, mpv_is_fs: bool):
         self.is_fs = mpv_is_fs
