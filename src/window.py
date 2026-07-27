@@ -40,6 +40,12 @@ from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk
 
 from .history import HistoryDialog
 from .mpris import MPRIS
+from .mpv_gl_area import (
+    GL_FRAMEBUFFER_BINDING,
+    ThumbPreviewGLArea,
+    egl_get_proc_address,
+    glGetIntegerv,
+)
 from .options import OptionsMenuButton
 from .playlist import Playlist, PlaylistItemObj
 from .preferences import settings, sync_mpv_with_settings
@@ -73,16 +79,6 @@ from .utils import (
 )
 
 logger = logging.getLogger(__name__)
-
-libegl = ctypes.CDLL("libEGL.so.1")
-egl_get_proc_address = libegl.eglGetProcAddress
-egl_get_proc_address.restype = ctypes.c_void_p
-egl_get_proc_address.argtypes = [ctypes.c_char_p]
-
-GL_FRAMEBUFFER_BINDING = 0x8CA6
-libgl = ctypes.CDLL("libGL.so.1")
-glGetIntegerv = libgl.glGetIntegerv
-glGetIntegerv.argtypes = [ctypes.c_uint, ctypes.POINTER(ctypes.c_int)]
 
 gtk_setts: Gtk.Settings | None = Gtk.Settings.get_default()
 
@@ -178,7 +174,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.prev_prog_time: float = -1.0
         self.prev_prog_motion_xy: tuple = (0, 0)
         self.inhibit_cookie: int = 0
-        self.loaded_path: str = ""
+        self.video_path: str | None = None
         self.startup: bool = True
         self.space_hold_id: int = 0
         self.space_holding: bool = False
@@ -195,7 +191,8 @@ class CineWindow(Adw.ApplicationWindow):
         self.hide_icon_indicator: bool = True
         self.skip_obs_count: int = 0
         self.playing_on_press: bool = False
-        self.preview_player: mpv.MPV | None = None
+        self.thumb_area: ThumbPreviewGLArea | None = None
+        self.thumb_w, self.thumb_h, self.video_w, self.video_h = 1280, 720, 1280, 720
         self.late_preview_id: int = 0
         self.is_local_path: bool = True
         self.last_preview_update: float = 0
@@ -394,12 +391,6 @@ class CineWindow(Adw.ApplicationWindow):
         self.popover_content_box = Gtk.Box()
         self.popover_content_box.props.orientation = Gtk.Orientation.VERTICAL
 
-        self.thumb_preview = Gtk.Picture()
-        self.thumb_preview.set_valign(Gtk.Align.START)
-        self.thumb_preview.set_content_fit(Gtk.ContentFit.COVER)
-        self.thumb_preview.set_halign(Gtk.Align.CENTER)
-        self.thumb_preview.set_can_shrink(False)
-
         self.time_tooltip_label = Gtk.Label()
         self.time_tooltip_label.set_use_markup(True)
         self.time_tooltip_label.set_justify(Gtk.Justification.CENTER)
@@ -423,10 +414,12 @@ class CineWindow(Adw.ApplicationWindow):
             return layer, revealer
 
         self.tooltip_label_layer, self.tooltip_label_revealer = (
-            create_layer_and_revealer(self.time_tooltip_label, 42)
+            create_layer_and_revealer(self.time_tooltip_label, 38)
         )
+
+        self.thumb_frame = Gtk.Frame()
         self.tooltip_thumb_layer, self.tooltip_thumb_revealer = (
-            create_layer_and_revealer(self.thumb_preview, 72)
+            create_layer_and_revealer(self.thumb_frame, 72)
         )
 
         self._set_time_margin()
@@ -954,106 +947,30 @@ class CineWindow(Adw.ApplicationWindow):
         self._on_open_url(add=True)
         return Gdk.EVENT_STOP
 
-    def setup_preview_player(self):
-        try:
-            params = cast(dict, self.mpv.video_params)
-            v_width = params.get("w") or 1920
-            v_height = params.get("h") or 1080
-        except Exception:
-            logger.exception("v_width and v_height failed")
-            v_width, v_height = 1920, 1080
+    def _setup_thumb_preview(self):
+        if not self.thumb_area:
+            self.thumb_area = ThumbPreviewGLArea(self.mpv.hwdec)
+            self.thumb_frame.set_child(self.thumb_area)
+            self.thumb_area.realize()
+
+        v_width = self.video_w
+        v_height = self.video_h
 
         if v_width >= v_height:
             # Horizontal or square
-            width = 180
+            width = 200
             height = int((v_height / v_width) * width)
             if height == width:
-                width = 150
-                height = 150
+                width, height = 168, 168
         else:
             # Vertical
-            height = 150
+            height = 168
             width = int((v_width / v_height) * height)
 
-        self.thumb_preview.set_size_request(width, height)
-        self.thumb_w = width + 12
-
-        if self.preview_player is None:
-            self.preview_player = mpv.MPV(
-                vo="null",
-                ao="null",
-                hwdec=self.mpv.hwdec,
-                ytdl=False,
-                config=False,
-                osc=False,
-                terminal=False,
-                load_scripts=False,
-                msg_level="all=no",
-                vd_lavc_threads=2,
-                vd_lavc_fast=True,
-                vd_lavc_skiploopfilter="all",
-                vd_lavc_software_fallback=1,
-                sws_scaler="fast-bilinear",
-                demuxer_readahead_secs=0,
-                demuxer_max_bytes="128KiB",
-                hr_seek=False,
-                gpu_dumb_mode=True,
-                pause=True,
-                ovc="rawvideo",
-                of="image2",
-                ofopts="update=1",
-            )
-
-            self.preview_player["load-osd-console"] = "no"
-            self.preview_player["load-stats-overlay"] = "no"
-            self.preview_player["load-auto-profiles"] = "no"
-            self.preview_player["really-quiet"] = "yes"
-
-            @self.preview_player.property_observer("time-pos")
-            def pos_observer(_name, pos):
-                if pos is None:
-                    self._hide_time_tooltip()
-                    return
-
-                def on_screenshot_ready(_none, result):
-                    if result:
-                        idle_add_once(self._apply_preview_texture, result)
-
-                if p := self.preview_player:
-                    p.command_async("screenshot-raw", callback=on_screenshot_ready)
-
-        self.preview_player.loadfile(self.mpv.path, "replace")
-        self.preview_player["vf"] = (
-            f"scale={width}:{height}:force_original_aspect_ratio=decrease,format=bgra"
-        )
+        self.thumb_w, self.thumb_h = width, height
+        self.thumb_area.set_size_request(self.thumb_w, self.thumb_h)
+        self.thumb_area.load_file(self.video_path)
         self._set_time_tooltip()
-
-    def _update_video_preview(self):
-        if self.preview_player is None or not self.preview_player.path:
-            return
-
-        if self.hover_time == 0:
-            self.hover_time = 0.1
-
-        try:
-            self.preview_player.command_async(
-                "seek", self.hover_time, "absolute+keyframes"
-            )
-        except Exception:
-            logger.exception("_update_video_preview failed")
-
-    def _apply_preview_texture(self, res):
-        try:
-            self.thumb_preview.props.paintable = Gdk.MemoryTexture.new(
-                res["w"],
-                res["h"],
-                Gdk.MemoryFormat.B8G8R8X8,
-                GLib.Bytes.new(res["data"]),
-                res["stride"],
-            )
-        except Exception:
-            logger.exception("_apply_preview_texture failed")
-            self._hide_time_tooltip()
 
     def _hide_time_tooltip(self, *args):
         self.prev_reveal = False
@@ -1091,7 +1008,7 @@ class CineWindow(Adw.ApplicationWindow):
         if self.late_preview_id > 0:
             GLib.source_remove(self.late_preview_id)
 
-        self.late_preview_id = timeout_add_once(120, self._late_update_preview)
+        self.late_preview_id = timeout_add_once(100, self._late_update_preview)
 
         if self.prog_width <= 0:
             return
@@ -1117,14 +1034,21 @@ class CineWindow(Adw.ApplicationWindow):
             self.tooltip_label_revealer, self.tooltip_label_layer, x, label_w
         )
 
-        if self.show_thumb_preview:
-            self._move_time_tooltip(
-                self.tooltip_thumb_revealer, self.tooltip_thumb_layer, x, self.thumb_w
-            )
-            curr_time = time()
-            if curr_time - self.last_preview_update > 0.3:
-                self.last_preview_update = curr_time
-                idle_add_once(self._update_video_preview)
+        if not self.show_thumb_preview:
+            return
+
+        self._move_time_tooltip(
+            self.tooltip_thumb_revealer, self.tooltip_thumb_layer, x, self.thumb_w + 12
+        )
+        curr_time = time()
+        if curr_time - self.last_preview_update > 0.175:
+            self.last_preview_update = curr_time
+            idle_add_once(self._update_video_preview)
+
+    def _update_video_preview(self):
+        if not self.thumb_area:
+            return
+        self.thumb_area.seek(self.hover_time)
 
     def _late_update_preview(self):
         """Update preview when the cursor is stopped"""
@@ -1428,7 +1352,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self.drop_label.props.label = _("Play")
 
             except GLib.Error as e:
-                logger.warning(f"File error path: {self.loaded_path}")
+                logger.warning(f"File error path: {self.video_path}")
                 idle_add_once(self._show_toast, _("File Error") + f": {e.message}")
                 self.spinner.set_visible(False)
                 return
@@ -1899,7 +1823,6 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.event_callback("start-file")
         def on_start_file(_event):
             idle_add_once(self.spinner.set_visible, True)
-            self.loaded_path = str(self.mpv.path)
 
         @self.mpv.event_callback("file-loaded")
         def on_files_loaded(_event):
@@ -1911,10 +1834,11 @@ class CineWindow(Adw.ApplicationWindow):
                     self._hide_ui_timeout()
 
                     if settings.get_boolean("thumbnail-preview") and self.is_local_path:
-                        self.setup_preview_player()
-                    elif self.preview_player:
-                        self.preview_player.terminate()
-                        self.preview_player = None
+                        self._setup_thumb_preview()
+                    elif self.thumb_area:
+                        self.thumb_area.unrealize()
+                        self.thumb_area.unmap()
+                        self.thumb_area = None
 
                     self.app_mpris._update_metadata()
                 except mpv.ShutdownError:
@@ -1940,7 +1864,7 @@ class CineWindow(Adw.ApplicationWindow):
                         self.mpv.playlist_pos = 0
 
                     self.error_count += 1
-                    logger.warning(f"File error path: {self.loaded_path}")
+                    logger.warning(f"File error path: {self.video_path}")
                     error = info["file_error"].decode("utf-8")
                     idle_add_once(self._show_toast, _("File Error") + f": {error}")
 
@@ -1955,10 +1879,19 @@ class CineWindow(Adw.ApplicationWindow):
             except mpv.ShutdownError:
                 pass
 
+        @self.mpv.property_observer("width")
+        @self.mpv.property_observer("height")
+        def on_w_h_change(name, value):
+            if not value:
+                return
+            elif name == "width":
+                self.video_w = value
+            elif name == "height":
+                self.video_h = value
+
         @self.mpv.property_observer("path")
-        def on_path_change(_name, has_file):
-            if has_file:
-                idle_add_once(self.play_pause_btn.set_sensitive, has_file)
+        def on_path_change(_name, path):
+            self.video_path = path
 
         @self.mpv.property_observer("playlist-count")
         def on_playlist_count_change(_name, _count):

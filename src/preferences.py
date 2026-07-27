@@ -213,13 +213,17 @@ class Preferences(Adw.Dialog):
         self.mpv["alang"] = settings.get_string(key)
 
     def _on_thumb_preview_changed(self, settings, key):
-        if not settings.get_boolean(key) and self.win.preview_player:
-            self.win.preview_player.terminate()
-            self.win.preview_player = None
-            self.win.thumb_preview.props.visible = False
-        elif not self.mpv.idle_active:
-            self.win.thumb_preview.props.visible = True
-            self.win.setup_preview_player()
+        if settings.get_boolean(key):
+            for w in self.win.app.get_windows():
+                if not w.mpv.idle_active:
+                    w._setup_thumb_preview()
+            return
+
+        for w in self.win.app.get_windows():
+            if w.thumb_area:
+                w.thumb_area.unrealize()
+                w.thumb_area.unmap()
+                w.thumb_area = None
 
     def _on_offload_changed(self, settings, key):
         self.win.offload.set_enabled(

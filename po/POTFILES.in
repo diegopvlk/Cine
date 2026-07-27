@@ -6,6 +6,7 @@ src/history.blp
 src/history.py
 src/main.py
 src/mpris.py
+src/mpv_gl_area.py
 src/options.blp
 src/options.py
 src/playlist.blp
