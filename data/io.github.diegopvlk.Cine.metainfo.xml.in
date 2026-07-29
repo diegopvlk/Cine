@@ -72,17 +72,19 @@
   </requires>
 
   <releases>
-    <release version="1.8.0" date="2026-07-28">
+    <release version="1.8.1" date="2026-07-29">
       <description translate="no">
         <ul>
           <li>Added a preference for Graphics Offload; disable if you encounter playback issues</li>
           <li>Is now possible to set "ENTER" or "KP_ENTER" keys in input.conf</li>
-          <li>Improved performance of thumbnail preview and time/chapter tooltip</li>
+          <li>Improved performance of time/chapter tooltip</li>
+          <li>Thumbnail preview is super fast now</li>
           <li>Moving the cursor over the tooltip/thumbnail while scrubbing will not lose the drag event anymore</li>
           <li>Fixed HDR not working for thumbnail</li>
           <li>Fixed a crash that could occur when hiding the time tooltip</li>
           <li>Fixed video jitter while scrubbing and stopping</li>
           <li>Fixed some custom keys not working</li>
+          <li>Fixed subtitle file drop not adding when video was paused</li>
         </ul>
       </description>
     </release>
