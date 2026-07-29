@@ -22,7 +22,6 @@ import logging
 import os
 import shlex
 from gettext import gettext as _
-from time import time
 from typing import cast
 from urllib.parse import urlparse
 
@@ -175,9 +174,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.playing_on_press: bool = False
         self.thumb_area: ThumbPreviewGLArea | None = None
         self.thumb_w, self.thumb_h, self.video_w, self.video_h = 1280, 720, 1280, 720
-        self.late_preview_id: int = 0
         self.is_local_path: bool = True
-        self.last_preview_update: float = 0
         self.prog_fine_tune: bool = False
         self.error_count: int = 0
         self.pressed_combos: set[str] = set()
@@ -978,9 +975,6 @@ class CineWindow(Adw.ApplicationWindow):
         self.prog_width = self.video_progress_scale.get_width()
         self.duration = float(self.mpv.duration or 0)
         self.prev_reveal = False
-        self.show_thumb_preview = (
-            settings.get_boolean("thumbnail-preview") and self.is_local_path
-        )
 
     def _move_time_tooltip(self, revealer, layer: Gtk.Fixed, x, tooltip_w):
         x_pos = max(0, min(x - (tooltip_w / 2) + 23, self.width - tooltip_w))
@@ -996,14 +990,9 @@ class CineWindow(Adw.ApplicationWindow):
             return
 
         if not self.prev_reveal:
-            self.tooltip_thumb_revealer.set_reveal_child(self.show_thumb_preview)
+            self.tooltip_thumb_revealer.set_reveal_child(self.thumb_area is not None)
             self.tooltip_label_revealer.set_reveal_child(True)
             self.prev_reveal = True
-
-        if self.late_preview_id > 0:
-            GLib.source_remove(self.late_preview_id)
-
-        self.late_preview_id = timeout_add_once(100, self._late_update_preview)
 
         if self.prog_width <= 0:
             return
@@ -1029,26 +1018,14 @@ class CineWindow(Adw.ApplicationWindow):
             self.tooltip_label_revealer, self.tooltip_label_layer, x, label_w
         )
 
-        if not self.show_thumb_preview:
+        if self.thumb_area is None:
             return
 
         self._move_time_tooltip(
             self.tooltip_thumb_revealer, self.tooltip_thumb_layer, x, self.thumb_w + 12
         )
-        curr_time = time()
-        if curr_time - self.last_preview_update > 0.175:
-            self.last_preview_update = curr_time
-            idle_add_once(self._update_video_preview)
 
-    def _update_video_preview(self):
-        if not self.thumb_area:
-            return
-        self.thumb_area.seek(self.hover_time)
-
-    def _late_update_preview(self):
-        """Update preview when the cursor is stopped"""
-        self.late_preview_id = 0
-        idle_add_once(self._update_video_preview)
+        idle_add_once(self.thumb_area.seek, self.hover_time)
 
     def _go_to_chapter_start(self, *args):
         if self.curr_chapter_time is not None:

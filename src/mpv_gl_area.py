@@ -133,6 +133,15 @@ class ThumbPreviewGLArea(BaseGLArea):
         )
         self.connect("unrealize", self._on_unrealize)
 
+        self._time = None
+        self._is_seeking = False
+
+        @self._mpv.property_observer("seeking")
+        def on_seeking_change(_name, seeking):
+            if not seeking:
+                self._is_seeking = False
+                self._flush_seek()
+
     def _on_realize(self, _area):
         self.make_current()
         if not self._mpv:
@@ -163,13 +172,22 @@ class ThumbPreviewGLArea(BaseGLArea):
             logger.exception("ThumbPreviewGLArea load_file failed")
 
     def seek(self, time):
+        self._time = time
+        self._flush_seek()
+
+    def _flush_seek(self):
         if not self._mpv:
-            logger.warning("ThumbPreviewGLArea has no mpv instance on seek")
+            logger.warning("ThumbPreviewGLArea has no mpv instance during seek")
             return
-        try:
-            self._mpv.command_async("seek", time, "absolute+keyframes")
-        except Exception:
-            logger.exception("ThumbPreviewGLArea seek failed")
+
+        if self._is_seeking or self._time is None:
+            return
+
+        time = self._time
+        self._is_seeking = True
+        self._time = None
+
+        self._mpv.command_async("seek", time, "absolute+keyframes")
 
 
 class VideoGLArea(BaseGLArea):
