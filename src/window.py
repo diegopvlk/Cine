@@ -1909,8 +1909,9 @@ class CineWindow(Adw.ApplicationWindow):
             idle_add_once(self._update_progress, float(value or 0))
 
         @self.mpv.property_observer("seeking")
-        def on_seeking_change(_name, _is_seeking):
-            idle_add_once(self.app_mpris._emit_seeked)
+        def on_seeking_change(_name, seeking):
+            if not seeking:
+                idle_add_once(self.app_mpris._emit_seeked)
 
         @self.mpv.property_observer("duration")
         def on_duration_change(_name, value):
