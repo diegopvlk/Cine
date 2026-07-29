@@ -244,9 +244,7 @@ class CineWindow(Adw.ApplicationWindow):
         if self.mpv["window-maximized"] or settings.get_boolean("is-maximized"):
             self.maximize()
 
-        self.conf_hwdec = list(
-            filter(lambda x: x != "no", cast(list, self.mpv["hwdec"]))
-        )
+        self.conf_hwdec = list(filter(lambda x: x != "no", cast(list, self.mpv.hwdec)))
         self.mpv["vo"] = "libmpv"
         self.mpv["osc"] = "no"
         self.mpv["load-console"] = "no"
@@ -943,8 +941,15 @@ class CineWindow(Adw.ApplicationWindow):
             self.thumb_frame.set_child(self.thumb_area)
             self.thumb_area.realize()
 
-        v_width = self.video_w
-        v_height = self.video_h
+        try:
+            self.mpv.wait_for_property("width", timeout=2)
+            self.mpv.wait_for_property("height", timeout=2)
+            v_width = cast(int, self.mpv.width)
+            v_height = cast(int, self.mpv.height)
+        except Exception:
+            logger.exception("Failed to get video w/h")
+            v_width = 1280
+            v_height = 720
 
         if v_width >= v_height:
             # Horizontal or square
@@ -957,8 +962,8 @@ class CineWindow(Adw.ApplicationWindow):
             height = 168
             width = int((v_width / v_height) * height)
 
-        self.thumb_w, self.thumb_h = width, height
-        self.thumb_area.set_size_request(self.thumb_w, self.thumb_h)
+        self.thumb_w = width
+        self.thumb_area.set_size_request(width, height)
         self.thumb_area.load_file(self.video_path)
         self._set_time_tooltip()
 
@@ -1830,16 +1835,6 @@ class CineWindow(Adw.ApplicationWindow):
                     idle_add_once(self.close)
             except mpv.ShutdownError:
                 pass
-
-        @self.mpv.property_observer("width")
-        @self.mpv.property_observer("height")
-        def on_w_h_change(name, value):
-            if not value:
-                return
-            elif name == "width":
-                self.video_w = value
-            elif name == "height":
-                self.video_h = value
 
         @self.mpv.property_observer("path")
         def on_path_change(_name, path):
