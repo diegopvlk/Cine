@@ -173,7 +173,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.skip_obs_count: int = 0
         self.playing_on_press: bool = False
         self.thumb_area: ThumbPreviewGLArea | None = None
-        self.thumb_w, self.thumb_h, self.video_w, self.video_h = 1280, 720, 1280, 720
+        self.thumb_w: int = 1280
         self.is_local_path: bool = True
         self.prog_fine_tune: bool = False
         self.error_count: int = 0
