@@ -157,6 +157,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.inhibit_cookie: int = 0
         self.video_path: str | None = None
         self.startup: bool = True
+        self.is_audio: bool = False
         self.space_hold_id: int = 0
         self.space_holding: bool = False
         self.space_pressed: bool = False
@@ -656,13 +657,15 @@ class CineWindow(Adw.ApplicationWindow):
 
         self.video_tracks_menu.remove_all()
 
+        video_count = 0
         for track in track_list:
-            if track["type"] in ("sub", "audio", "video"):
+            track_type = track.get("type")
+            if track_type in ("sub", "audio", "video"):
                 self._add_track_to_menu(track)
+            if track_type == "video" and not track.get("albumart"):
+                video_count += 1
 
-        video_count = len(
-            [t for t in track_list if t["type"] == "video" and not t.get("albumart")]
-        )
+        self.is_audio = video_count == 0
         self.video_tracks_menu_btn.set_visible(video_count > 1)
 
         def hide_box_first_model_btn(menu_btn):
@@ -938,15 +941,16 @@ class CineWindow(Adw.ApplicationWindow):
             self.thumb_frame.set_child(self.thumb_area)
             self.thumb_area.realize()
 
+        v_width, v_height = 1280, 720
+
         try:
-            self.mpv.wait_for_property("width", timeout=2)
-            self.mpv.wait_for_property("height", timeout=2)
-            v_width = cast(int, self.mpv.width)
-            v_height = cast(int, self.mpv.height)
+            if self.mpv.vid:
+                self.mpv.wait_for_property("width", timeout=2)
+                self.mpv.wait_for_property("height", timeout=2)
+                v_width = cast(int, self.mpv.width)
+                v_height = cast(int, self.mpv.height)
         except Exception:
             logger.exception("Failed to get video w/h")
-            v_width = 1280
-            v_height = 720
 
         if v_width >= v_height:
             # Horizontal or square
@@ -989,8 +993,10 @@ class CineWindow(Adw.ApplicationWindow):
             self._hide_time_tooltip()
             return
 
+        show_thumb = self.thumb_area is not None and not self.is_audio
+
         if not self.prev_reveal:
-            self.tooltip_thumb_revealer.set_reveal_child(self.thumb_area is not None)
+            self.tooltip_thumb_revealer.set_reveal_child(show_thumb)
             self.tooltip_label_revealer.set_reveal_child(True)
             self.prev_reveal = True
 
