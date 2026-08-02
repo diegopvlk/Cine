@@ -353,24 +353,26 @@ class CineWindow(Adw.ApplicationWindow):
         self.volume_scale_adj.set_upper(max_vol)
 
         self.mute_handler_id = self.mute_toggle_btn.connect(
-            "toggled", lambda btn: setattr(self.mpv, "mute", btn.get_active())
+            "toggled",
+            lambda btn: self.mpv.command_async("set", "mute", btn.get_active()),
         )
 
         vol_mid_click = Gtk.GestureClick(button=2)
         vol_mid_click.connect(
             "pressed",
-            lambda *a: setattr(self.mpv, "mute", not self.mpv.mute),
+            lambda *a: self.mpv.command_async("cycle", "mute"),
         )
         self.volume_menu_btn.add_controller(vol_mid_click)
 
         self.fullscreen_btn.connect(
             "clicked",
-            lambda *a: setattr(self.mpv, "fullscreen", not self._is_fullscreen),
+            lambda *a: self.mpv.command_async("cycle", "fullscreen"),
         )
 
+        vc_adj = self.volume_scale_adj
         self.volume_handler_id = self.volume_scale.connect(
             "value-changed",
-            lambda *a: setattr(self.mpv, "volume", self.volume_scale_adj.props.value),
+            lambda *a: self.mpv.command_async("set", "volume", vc_adj.props.value),
         )
 
         if max_vol > 100:
@@ -1154,7 +1156,7 @@ class CineWindow(Adw.ApplicationWindow):
         self._navigate_playlist(+1)
 
     def _on_subtitle_selected(self, action, parameter):
-        self.mpv.command("set", "sub-visibility", "yes")
+        self.mpv.command_async("set", "sub-visibility", "yes")
         track_id = parameter.get_int32()
         self.mpv.sid = track_id if track_id > 0 else "no"
         action.set_state(parameter)
@@ -1380,7 +1382,7 @@ class CineWindow(Adw.ApplicationWindow):
             name = (item.get_basename() or "").lower()
             if name.endswith(SUB_EXTS):
                 if not self.mpv.idle_active:
-                    self.mpv.command("sub-add", path, "select")
+                    self.mpv.command_async("sub-add", path, "select")
                 continue
 
             mime = info.get_content_type() or ""
