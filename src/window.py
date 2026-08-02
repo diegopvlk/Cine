@@ -264,7 +264,7 @@ class CineWindow(Adw.ApplicationWindow):
         except Exception:
             logger.exception("load-input-conf failed")
 
-        self.bindings = cast(dict, self.mpv._get_property("input-bindings"))
+        self.bindings = cast(dict, self.mpv.input_bindings)
         self.mouse_bindings: dict = get_mouse_bindings(self.bindings)
         self.nonrepeat_keys, self.has_enter_binding, self.has_kp_enter_binding = (
             parse_bindings(self.bindings)
@@ -1231,10 +1231,10 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _on_progress_pressed(self, *args):
         try:
-            self._playing_on_press = not self.mpv._get_property("pause")
+            self._playing_on_press = not self.mpv.pause
             if self._playing_on_press:
                 self._skip_obs_count += 1
-                self.mpv._set_property("pause", True)
+                self.mpv.command("set", "pause", "yes")
         except Exception:
             logger.exception("_on_progress_pressed failed")
             self._skip_obs_count = 0
@@ -1244,7 +1244,7 @@ class CineWindow(Adw.ApplicationWindow):
             if self._playing_on_press:
                 self._skip_obs_count += 1
                 self._playing_on_press = False
-                self.mpv._set_property("pause", False)
+                self.mpv.command("set", "pause", "no")
         except Exception:
             logger.exception("_on_progress_released failed")
             self._skip_obs_count = 0
@@ -1984,19 +1984,15 @@ class CineWindow(Adw.ApplicationWindow):
             self.mute_toggle_btn.set_active(muted)
             self.mute_toggle_btn.handler_unblock(self.mute_handler_id)
             self._update_volume_icon()
-            show_icon = None
-
-            try:
-                show_icon = self.mpv._get_property("user-data/show-icon")
-            except AttributeError:
-                pass
+            user_data = cast(dict, self.mpv.user_data)
+            show_icon = user_data.get("show-icon")
 
             if show_icon == "yes":
                 self.icon_indicator.props.icon_name = (
                     self.volume_menu_btn.props.icon_name
                 )
                 self._show_icon_indicator()
-                self.mpv._set_property("user-data/show-icon", None)
+                user_data["show-icon"] = None
 
         @self.mpv.property_observer("mute")
         def on_mute_change(_name, muted):
@@ -2138,18 +2134,14 @@ class CineWindow(Adw.ApplicationWindow):
                 if name != "sub-visibility":
                     return
 
-                show_icon = None
-
-                try:
-                    show_icon = self.mpv._get_property("user-data/show-icon")
-                except AttributeError:
-                    pass
+                user_data = cast(dict, self.mpv.user_data)
+                show_icon = user_data.get("show-icon")
 
                 if show_icon == "yes":
                     icon = sub_on_icon if sub_on else sub_off_icon
                     self.icon_indicator.props.icon_name = icon
                     self._show_icon_indicator()
-                    self.mpv._set_property("user-data/show-icon", None)
+                    user_data["show-icon"] = None
             except mpv.ShutdownError:
                 pass
 
