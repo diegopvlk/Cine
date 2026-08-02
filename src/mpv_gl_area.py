@@ -186,6 +186,13 @@ class ThumbPreviewGLArea(BaseGLArea):
         except Exception:
             logger.exception("ThumbPreviewGLArea _flush_seek failed")
 
+    def stop(self):
+        try:
+            assert self._mpv is not None
+            self._mpv.stop()
+        except Exception:
+            logger.exception("ThumbPreviewGLArea stop failed")
+
 
 class VideoGLArea(BaseGLArea):
     def __init__(self, mpv_instance: mpv.MPV, **kwargs):

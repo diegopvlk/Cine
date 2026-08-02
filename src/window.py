@@ -965,7 +965,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         self._thumb_w = width
         self.thumb_area.set_size_request(width, height)
-        self.thumb_area.load_file(self._video_path)
+        a = self.thumb_area
+        a.stop() if self._is_audio else a.load_file(self._video_path)
         self._set_time_tooltip()
 
     def _hide_time_tooltip(self, *args):
