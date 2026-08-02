@@ -1795,31 +1795,28 @@ class CineWindow(Adw.ApplicationWindow):
         def on_start_file(_event):
             idle_add_once(self.spinner.set_visible, True)
 
+        def on_f_loaded():
+            try:
+                self.spinner.set_visible(False)
+                self._is_local_path = is_local_path(self.mpv.path)
+                self.start_page.set_sensitive(True)
+                self.hide_ui_timeout()
+                self._on_ab_loop_btn_toggled(None)
+
+                if settings.get_boolean("thumbnail-preview") and self._is_local_path:
+                    self.setup_thumb_preview()
+                elif self.thumb_area:
+                    self.thumb_area.unrealize()
+                    self.thumb_area.unmap()
+                    self.thumb_area = None
+
+                self._mpris.update_metadata()
+            except mpv.ShutdownError:
+                pass
+
         @self.mpv.event_callback("file-loaded")
-        def on_files_loaded(_event):
-            def update():
-                try:
-                    self.spinner.set_visible(False)
-                    self._is_local_path = is_local_path(self.mpv.path)
-                    self.start_page.set_sensitive(True)
-                    self.hide_ui_timeout()
-                    self._on_ab_loop_btn_toggled(None)
-
-                    if (
-                        settings.get_boolean("thumbnail-preview")
-                        and self._is_local_path
-                    ):
-                        self.setup_thumb_preview()
-                    elif self.thumb_area:
-                        self.thumb_area.unrealize()
-                        self.thumb_area.unmap()
-                        self.thumb_area = None
-
-                    self._mpris.update_metadata()
-                except mpv.ShutdownError:
-                    pass
-
-            idle_add_once(update)
+        def on_file_loaded(_event):
+            idle_add_once(on_f_loaded)
             timeout_add_seconds_once(5, setattr, self, "_error_count", 0)
 
         @self.mpv.event_callback("end-file")
@@ -1870,21 +1867,21 @@ class CineWindow(Adw.ApplicationWindow):
                 self._playlist_debounce_id = timeout_add_once(75, self.splice_playlist)
             idle_add_once(self._sync_can_prev_next)
 
+        def update_playing_item(pos):
+            try:
+                prev_p = self._playlist_prev_pos
+                prev_obj = cast(PlaylistItemObj, self.playlist_ls.get_item(prev_p))
+                curr_obj = cast(PlaylistItemObj, self.playlist_ls.get_item(pos))
+                prev_obj.playing = False
+                curr_obj.playing = True
+            except (AttributeError, OverflowError):
+                pass
+            finally:
+                self._playlist_prev_pos = pos
+
         @self.mpv.property_observer("playlist-pos")
         def on_playlist_pos_changed(_name, pos):
-            def update_playing_item():
-                try:
-                    prev_p = self._playlist_prev_pos
-                    prev_obj = cast(PlaylistItemObj, self.playlist_ls.get_item(prev_p))
-                    curr_obj = cast(PlaylistItemObj, self.playlist_ls.get_item(pos))
-                    prev_obj.playing = False
-                    curr_obj.playing = True
-                except (AttributeError, OverflowError):
-                    pass
-                finally:
-                    self._playlist_prev_pos = pos
-
-            idle_add_once(update_playing_item)
+            idle_add_once(update_playing_item, pos)
 
         self._ab_loop_a = None
         self._ab_loop_b = None
@@ -1953,20 +1950,20 @@ class CineWindow(Adw.ApplicationWindow):
         def on_loop_change(name, value):
             idle_add_once(sync_loop, name, value)
 
+        def sync_fs(value):
+            icon = (
+                "cine-view-restore-symbolic"
+                if value
+                else "cine-view-fullscreen-symbolic"
+            )
+            text = _("Exit Fullscreen") if value else _("Fullscreen")
+            self.fullscreen_btn.set_tooltip_text(text)
+            self.fullscreen_btn.set_icon_name(icon)
+            self._sync_fullscreen(value)
+
         @self.mpv.property_observer("fullscreen")
         def on_fs_change(_name, value):
-            def update():
-                icon = (
-                    "cine-view-restore-symbolic"
-                    if value
-                    else "cine-view-fullscreen-symbolic"
-                )
-                text = _("Exit Fullscreen") if value else _("Fullscreen")
-                self.fullscreen_btn.set_tooltip_text(text)
-                self.fullscreen_btn.set_icon_name(icon)
-                self._sync_fullscreen(value)
-
-            idle_add_once(update)
+            idle_add_once(sync_fs, value)
             self.hide_ui_timeout()
 
         @self.mpv.property_observer("time-pos")
@@ -1982,49 +1979,49 @@ class CineWindow(Adw.ApplicationWindow):
         def on_duration_change(_name, value):
             idle_add_once(self._update_duration, float(value or 0))
 
+        def sync_mute(muted):
+            self.mute_toggle_btn.handler_block(self.mute_handler_id)
+            self.mute_toggle_btn.set_active(muted)
+            self.mute_toggle_btn.handler_unblock(self.mute_handler_id)
+            self._update_volume_icon()
+            show_icon = None
+
+            try:
+                show_icon = self.mpv._get_property("user-data/show-icon")
+            except AttributeError:
+                pass
+
+            if show_icon == "yes":
+                self.icon_indicator.props.icon_name = (
+                    self.volume_menu_btn.props.icon_name
+                )
+                self._show_icon_indicator()
+                self.mpv._set_property("user-data/show-icon", None)
+
         @self.mpv.property_observer("mute")
         def on_mute_change(_name, muted):
-            def update_mute():
-                self.mute_toggle_btn.handler_block(self.mute_handler_id)
-                self.mute_toggle_btn.set_active(muted)
-                self.mute_toggle_btn.handler_unblock(self.mute_handler_id)
-                self._update_volume_icon()
-                show_icon = None
+            idle_add_once(sync_mute, muted)
 
-                try:
-                    show_icon = self.mpv._get_property("user-data/show-icon")
-                except AttributeError:
-                    pass
+        def update_icon_and_vol_adj(value):
+            vol = int(value)
+            # block the signal to not trigger value-changed
+            self.volume_scale.handler_block(self.volume_handler_id)
+            self.volume_scale_adj.set_value(vol)
+            self.volume_scale.handler_unblock(self.volume_handler_id)
 
-                if show_icon == "yes":
-                    self.icon_indicator.props.icon_name = (
-                        self.volume_menu_btn.props.icon_name
-                    )
-                    self._show_icon_indicator()
-                    self.mpv._set_property("user-data/show-icon", None)
+            if vol > 0 and self.mpv.mute:
+                self.mpv.mute = False
 
-            idle_add_once(update_mute)
+            if self.volume_menu_btn.props.active:
+                self.mpv.show_text(_("Volume") + f": {vol}%")
+
+            self._update_volume_icon()
+            settings.set_int("volume", vol)
+            self._mpris.update_volume(vol)
 
         @self.mpv.property_observer("volume")
         def on_volume_change(_name, value):
-            def update_icon_and_vol_adj():
-                vol = int(value)
-                # block the signal to not trigger value-changed
-                self.volume_scale.handler_block(self.volume_handler_id)
-                self.volume_scale_adj.set_value(vol)
-                self.volume_scale.handler_unblock(self.volume_handler_id)
-
-                if vol > 0 and self.mpv.mute:
-                    self.mpv.mute = False
-
-                if self.volume_menu_btn.props.active:
-                    self.mpv.show_text(_("Volume") + f": {vol}%")
-
-                self._update_volume_icon()
-                settings.set_int("volume", vol)
-                self._mpris.update_volume(vol)
-
-            idle_add_once(update_icon_and_vol_adj)
+            idle_add_once(update_icon_and_vol_adj, value)
 
         track_map = {
             "sid": "select-subtitle",
@@ -2032,16 +2029,16 @@ class CineWindow(Adw.ApplicationWindow):
             "vid": "select-video",
         }
 
-        def on_track_change(name, value):
-            def set_track():
-                action_name = track_map.get(name) or ""
-                val = value if isinstance(value, int) else 0
-                if action := self.lookup_action(action_name):
-                    action.set_state(  # pyright: ignore[reportAttributeAccessIssue]
-                        GLib.Variant("i", val)
-                    )
+        def set_track(name, value):
+            action_name = track_map.get(name) or ""
+            val = value if isinstance(value, int) else 0
+            if action := self.lookup_action(action_name):
+                action.set_state(  # pyright: ignore[reportAttributeAccessIssue]
+                    GLib.Variant("i", val)
+                )
 
-            idle_add_once(set_track)
+        def on_track_change(name, value):
+            idle_add_once(set_track, name, value)
 
         for prop in track_map:
             self.mpv.property_observer(prop)(on_track_change)
@@ -2076,101 +2073,100 @@ class CineWindow(Adw.ApplicationWindow):
             idle_add_once(self._sync_inhibit)
             self._update_play_pause_icon(paused)
 
+        def sync_idle_active(is_idle):
+            self._actions["open-sub-menu"].set_enabled(not is_idle)
+            self._actions["open-audio-menu"].set_enabled(not is_idle)
+
+            self.title_widget.set_visible(not is_idle)
+            self.start_page.set_visible(is_idle)
+            self.controls_box.set_visible(not is_idle)
+            self.video_area.set_visible(not is_idle)
+
+            if is_idle:
+                self._error_count = 0
+                self.revealer_ui.set_reveal_child(True)
+                self.set_title(_("Cine"))
+                self._hide_icon_indicator = True
+                if isinstance(self._visible_dialog, Playlist):
+                    self._visible_dialog.close()
+
+            self._sync_inhibit()
+
         @self.mpv.property_observer("idle-active")
         def on_idle_change(_name, is_idle):
-            def update_state():
-                self._actions["open-sub-menu"].set_enabled(not is_idle)
-                self._actions["open-audio-menu"].set_enabled(not is_idle)
-
-                self.title_widget.set_visible(not is_idle)
-                self.start_page.set_visible(is_idle)
-                self.controls_box.set_visible(not is_idle)
-                self.video_area.set_visible(not is_idle)
-
-                if is_idle:
-                    self._error_count = 0
-                    self.revealer_ui.set_reveal_child(True)
-                    self.set_title(_("Cine"))
-                    self._hide_icon_indicator = True
-                    if isinstance(self._visible_dialog, Playlist):
-                        self._visible_dialog.close()
-
-                self._sync_inhibit()
-
             self._is_startup = False
+            idle_add_once(sync_idle_active, is_idle)
 
-            idle_add_once(update_state)
+        def sync_title(title):
+            try:
+                if title == self.mpv.filename:
+                    title_no_ext = os.path.splitext(title)[0]
+                    self.set_title(title_no_ext)
+                    self.title_widget.set_title(title_no_ext)
+                else:
+                    self.set_title(title)
+                    self.title_widget.set_title(title)
+                    pos = abs(cast(int, self.mpv.playlist_pos))
+                    if obj := cast(PlaylistItemObj, self.playlist_ls.get_item(pos)):
+                        obj.notify("playing")
+
+                self._hide_icon_indicator = False
+                self._mpris.update_props()
+            except mpv.ShutdownError:
+                pass
 
         @self.mpv.property_observer("media-title")
         def on_title_change(_name, title):
-            def set():
-                try:
-                    if title == self.mpv.filename:
-                        title_no_ext = os.path.splitext(title)[0]
-                        self.set_title(title_no_ext)
-                        self.title_widget.set_title(title_no_ext)
-                    else:
-                        self.set_title(title)
-                        self.title_widget.set_title(title)
-                        pos = abs(cast(int, self.mpv.playlist_pos))
-                        if obj := cast(PlaylistItemObj, self.playlist_ls.get_item(pos)):
-                            obj.notify("playing")
-
-                    self._hide_icon_indicator = False
-                    self._mpris.update_props()
-                except mpv.ShutdownError:
-                    pass
-
             if title:
-                idle_add_once(set)
+                idle_add_once(sync_title, title)
 
         @self.mpv.property_observer("sub-scale")
         def on_sub_scale_change(_name, value):
             if self._visible_dialog is None:
                 idle_add_once(settings.set_double, "subtitle-scale", value)
 
+        def set_sub_icon(name, value):
+            try:
+                sub_on_icon = "cine-subtitles-symbolic"
+                sub_off_icon = "cine-subtitles-off-symbolic"
+
+                sub_on = (value == "auto" or value) and self.mpv.sid
+                self.subtitles_menu_btn.props.icon_name = (
+                    sub_on_icon if sub_on else sub_off_icon
+                )
+
+                if name != "sub-visibility":
+                    return
+
+                show_icon = None
+
+                try:
+                    show_icon = self.mpv._get_property("user-data/show-icon")
+                except AttributeError:
+                    pass
+
+                if show_icon == "yes":
+                    icon = sub_on_icon if sub_on else sub_off_icon
+                    self.icon_indicator.props.icon_name = icon
+                    self._show_icon_indicator()
+                    self.mpv._set_property("user-data/show-icon", None)
+            except mpv.ShutdownError:
+                pass
+
         @self.mpv.property_observer("sub-visibility")
         @self.mpv.property_observer("sid")
         def on_sub_vis_change(name, value):
-            def set_icon():
-                try:
-                    sub_on_icon = "cine-subtitles-symbolic"
-                    sub_off_icon = "cine-subtitles-off-symbolic"
+            idle_add_once(set_sub_icon, name, value)
 
-                    sub_on = (value == "auto" or value) and self.mpv.sid
-                    self.subtitles_menu_btn.props.icon_name = (
-                        sub_on_icon if sub_on else sub_off_icon
-                    )
-
-                    if name != "sub-visibility":
-                        return
-
-                    show_icon = None
-
-                    try:
-                        show_icon = self.mpv._get_property("user-data/show-icon")
-                    except AttributeError:
-                        pass
-
-                    if show_icon == "yes":
-                        icon = sub_on_icon if sub_on else sub_off_icon
-                        self.icon_indicator.props.icon_name = icon
-                        self._show_icon_indicator()
-                        self.mpv._set_property("user-data/show-icon", None)
-                except mpv.ShutdownError:
-                    pass
-
-            idle_add_once(set_icon)
+        def set_aid_icon(value):
+            audio_on = value == "auto" or value
+            self.audio_tracks_menu_btn.props.icon_name = (
+                "cine-audio-symbolic" if audio_on else "cine-audio-off-symbolic"
+            )
 
         @self.mpv.property_observer("aid")
         def on_aid_change(_name, value):
-            def set_icon():
-                audio_on = value == "auto" or value
-                self.audio_tracks_menu_btn.props.icon_name = (
-                    "cine-audio-symbolic" if audio_on else "cine-audio-off-symbolic"
-                )
-
-            idle_add_once(set_icon)
+            idle_add_once(set_aid_icon, value)
 
         @self.mpv.property_observer("vid")
         def on_vid_change(_name, value):
