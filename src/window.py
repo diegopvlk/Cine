@@ -839,6 +839,8 @@ class CineWindow(Adw.ApplicationWindow):
                 self.mpv.pause = False
         except GLib.Error as e:
             logger.warning(f"Dialog error: {e}")
+        except Exception:
+            logger.exception("Failed to add files")
         finally:
             if isinstance(self._visible_dialog, Playlist):
                 self._visible_dialog.spinner.set_visible(False)
