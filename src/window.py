@@ -631,7 +631,7 @@ class CineWindow(Adw.ApplicationWindow):
         except mpv.ShutdownError:
             return
 
-    def _on_mouse_motion(self, _controller, x, y):
+    def _on_mouse_motion(self, controller: Gtk.EventControllerMotion, x, y):
         if None not in (x, y):
             if (x, y) == self._prev_motion_xy or self._click_holding:
                 return
@@ -640,9 +640,12 @@ class CineWindow(Adw.ApplicationWindow):
             self._show_ui()
             self.hide_ui_timeout()
 
-            mpv_x = int(x * self.props.scale_factor)
-            mpv_y = int(y * self.props.scale_factor)
-            self.mpv.command_async("mouse", mpv_x, mpv_y)
+            if event := controller.get_current_event():
+                state = event.get_modifier_state()
+                if state & Gdk.ModifierType.CONTROL_MASK:
+                    mpv_x = int(x * self.props.scale_factor)
+                    mpv_y = int(y * self.props.scale_factor)
+                    self.mpv.command_async("mouse", mpv_x, mpv_y)
 
     def _update_track_menus(self, track_list):
         self.subtitles_menu.remove_all()
