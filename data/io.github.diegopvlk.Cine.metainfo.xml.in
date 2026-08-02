@@ -72,6 +72,15 @@
   </requires>
 
   <releases>
+    <release version="1.8.2" date="2026-08-03">
+      <description translate="no">
+        <ul>
+          <li>New: Added A-B Loop button</li>
+          <li>Fixed thumbnail showing for audio files</li>
+          <li>Fixed drop overlay being stuck sometimes</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.8.1" date="2026-07-29">
       <description translate="no">
         <ul>
