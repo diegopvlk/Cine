@@ -307,30 +307,16 @@ template $CineWindow: Adw.ApplicationWindow {
                   toggled => $_on_shuffle_toggled();
                 }
 
-                ToggleButton loop_playlist_btn {
+                ToggleButton loop_btn {
                   styles [
                     "circular",
                     "flat",
                   ]
 
                   icon-name: "cine-playlist-repeat-symbolic";
-                  tooltip-text: _("Loop Playlist");
+                  tooltip-text: _("Loop");
                   valign: end;
                   halign: center;
-                  toggled => $_on_loop_playlist_toggled();
-                }
-
-                ToggleButton loop_file_btn {
-                  styles [
-                    "circular",
-                    "flat",
-                  ]
-
-                  icon-name: "cine-repeat-file-symbolic";
-                  tooltip-text: _("Loop File");
-                  valign: end;
-                  halign: center;
-                  toggled => $_on_loop_file_toggled();
                 }
 
                 Button {

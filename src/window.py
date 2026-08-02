@@ -120,8 +120,7 @@ class CineWindow(Adw.ApplicationWindow):
     chapters_menu: Gio.Menu = Gtk.Template.Child()
     options_menu_btn: OptionsMenuButton = Gtk.Template.Child()
     shuffle_toggle_btn: Gtk.ToggleButton = Gtk.Template.Child()
-    loop_playlist_btn: Gtk.ToggleButton = Gtk.Template.Child()
-    loop_file_btn: Gtk.ToggleButton = Gtk.Template.Child()
+    loop_btn: Gtk.ToggleButton = Gtk.Template.Child()
     fullscreen_btn: Gtk.Button = Gtk.Template.Child()
     time_elapsed_label: Gtk.Label = Gtk.Template.Child()
     progress_box: Gtk.Box = Gtk.Template.Child()
@@ -146,6 +145,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.has_some_doc_path: bool = False
         self.can_go_prev: bool = False
         self.can_go_next: bool = False
+        self._loop_mode: str = "no"
         self._chapters: list = []
         self._curr_chapter_time = None
         self._actions: dict[str, Gio.SimpleAction] = {}
@@ -377,6 +377,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         if max_vol > 100:
             self.volume_scale.add_mark(100.0, Gtk.PositionType.BOTTOM, None)
+
+        self.loop_btn.connect("toggled", self._on_loop_toggled)
 
         self.video_progress_adj.connect("value-changed", self._on_progress_adjusted)
         self.popover_content_box = Gtk.Box()
@@ -1261,38 +1263,52 @@ class CineWindow(Adw.ApplicationWindow):
         if isinstance(self._visible_dialog, Playlist):
             idle_add_once(self.splice_playlist)
 
-    def _set_loop_state(self, loop, active):
-        if loop == "playlist":
-            self.mpv.loop_playlist = "inf" if active else "no"
-            if active:
-                self.mpv.loop_file = "no"
-                self.loop_file_btn.set_active(False)
-            self._sync_can_prev_next()
+    def _update_loop_state(self):
+        icon_loop = "cine-playlist-repeat-symbolic"
+        icon_loop_file = "cine-repeat-file-symbolic"
+        is_file = self.mpv.loop_file
+        is_playlist = self.mpv.loop_playlist
 
-        elif loop == "file":
-            self.mpv.loop_file = "inf" if active else "no"
-            if active:
-                self.mpv.loop_playlist = "no"
-                self.loop_playlist_btn.set_active(False)
+        if is_file:
+            self._loop_mode = "file"
+            icon, tooltip, active = icon_loop_file, _("Loop File"), True
+        elif is_playlist:
+            self._loop_mode = "playlist"
+            icon, tooltip, active = icon_loop, _("Loop Playlist"), True
+        else:
+            self._loop_mode = "no"
+            icon, tooltip, active = icon_loop, _("Loop"), False
 
-    @Gtk.Template.Callback()
-    def _on_loop_playlist_toggled(self, button):
-        self._set_loop_state("playlist", button.props.active)
+        self.loop_btn.handler_block_by_func(self._on_loop_toggled)
+        self.loop_btn.set_active(active)
+        self.loop_btn.handler_unblock_by_func(self._on_loop_toggled)
 
-    @Gtk.Template.Callback()
-    def _on_loop_file_toggled(self, button):
-        self._set_loop_state("file", button.props.active)
+        self.loop_btn.set_icon_name(icon)
+        self.loop_btn.set_tooltip_text(tooltip)
+
+    def _on_loop_toggled(self, _button):
+        next_modes = {"no": "playlist", "playlist": "file", "file": "no"}
+        curr_mode = self._loop_mode
+        target_mode = next_modes[curr_mode]
+        if target_mode == "playlist":
+            self.mpv.loop_file = "no"
+            self.mpv.loop_playlist = "inf"
+        elif target_mode == "file":
+            self.mpv.loop_file = "inf"
+            self.mpv.loop_playlist = "no"
+        elif target_mode == "no":
+            self.mpv.loop_file = "no"
+            self.mpv.loop_playlist = "no"
 
     def _sync_can_prev_next(self):
         try:
             count: int = cast(int, self.mpv.playlist_count) or 0
             pos: int = cast(int, self.mpv.playlist_pos) or 0
-            loop_list_enabled: bool = self.mpv.loop_playlist is not False
-
             has_multiple: bool = count > 1
+            loop_list_on: bool = self.mpv.loop_playlist is not False and has_multiple
 
-            self.can_go_prev = loop_list_enabled or (has_multiple and pos > 0)
-            self.can_go_next = loop_list_enabled or (has_multiple and pos < count - 1)
+            self.can_go_prev = loop_list_on or (has_multiple and pos > 0)
+            self.can_go_next = loop_list_on or (has_multiple and pos < count - 1)
 
             self._mpris.update_can_prev_next(self.can_go_prev, self.can_go_next)
 
@@ -1303,7 +1319,6 @@ class CineWindow(Adw.ApplicationWindow):
             self._actions["next"].props.enabled = self.can_go_next
 
             self.shuffle_toggle_btn.props.visible = has_multiple
-            self.loop_playlist_btn.props.visible = has_multiple
         except mpv.ShutdownError:
             pass
 
@@ -1859,22 +1874,27 @@ class CineWindow(Adw.ApplicationWindow):
 
             idle_add_once(update_playing_item)
 
-        @self.mpv.property_observer("loop-playlist")
-        def on_loop_playlist_change(_name, value):
-            def update():
-                self.loop_playlist_btn.set_active(value == "inf")
+        def sync_loop(name, value):
+            new_mode = "no"
+            if name == "loop-playlist" and value == "inf":
+                self.mpv.loop_file = False
+                new_mode = "playlist"
                 self._sync_can_prev_next()
+            elif name == "loop-file" and value == "inf":
+                self.mpv.loop_playlist = False
+                new_mode = "file"
+            elif name == "loop-playlist":
+                self._sync_can_prev_next()
+
+            if self._loop_mode != new_mode:
+                self._loop_mode = new_mode
+                self._update_loop_state()
                 self._mpris.update_loop()
 
-            idle_add_once(update)
-
+        @self.mpv.property_observer("loop-playlist")
         @self.mpv.property_observer("loop-file")
-        def on_loop_file_change(_name, value):
-            def update():
-                self.loop_file_btn.set_active(value == "inf")
-                self._mpris.update_loop()
-
-            idle_add_once(update)
+        def on_loop_change(name, value):
+            idle_add_once(sync_loop, name, value)
 
         @self.mpv.property_observer("fullscreen")
         def on_fs_change(_name, value):
