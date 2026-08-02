@@ -98,8 +98,8 @@ class Preferences(Adw.Dialog):
 
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
-        self.win = window
-        self.mpv = window.mpv
+        self._win = window
+        self._mpv = window.mpv
 
         self._bind_ui()
         self._setup_mpv_updates()
@@ -181,52 +181,52 @@ class Preferences(Adw.Dialog):
             settings.disconnect(connection_id)
 
     def _on_sub_color_changed(self, settings, key):
-        self.mpv["sub-color"] = settings.get_string(key)
+        self._mpv["sub-color"] = settings.get_string(key)
 
     def _on_sub_bg_color_changed(self, _settings, key):
         if settings.get_boolean("subtitle-bg"):
-            self.mpv["sub-back-color"] = settings.get_string(key)
-            self.mpv["sub-border-color"] = settings.get_string(key)
+            self._mpv["sub-back-color"] = settings.get_string(key)
+            self._mpv["sub-border-color"] = settings.get_string(key)
 
     def _on_sub_scale_changed(self, settings, key):
-        self.mpv["sub-scale"] = settings.get_double(key)
+        self._mpv["sub-scale"] = settings.get_double(key)
 
     def _on_sub_font_changed(self, settings, key):
-        self.mpv["sub-font"] = settings.get_string(key)
+        self._mpv["sub-font"] = settings.get_string(key)
 
     def _on_sub_bg_changed(self, settings, key):
         sub_bg = settings.get_boolean(key)
         if sub_bg:
-            self.mpv["sub-shadow-offset"] = 8
-            self.mpv["sub-border-style"] = "background-box"
-            self.mpv["sub-back-color"] = settings.get_string("subtitle-bg-color")
-            self.mpv["sub-border-color"] = settings.get_string("subtitle-bg-color")
+            self._mpv["sub-shadow-offset"] = 8
+            self._mpv["sub-border-style"] = "background-box"
+            self._mpv["sub-back-color"] = settings.get_string("subtitle-bg-color")
+            self._mpv["sub-border-color"] = settings.get_string("subtitle-bg-color")
         else:
-            self.mpv["sub-shadow-offset"] = 0.6
-            self.mpv["sub-border-style"] = "outline-and-shadow"
-            self.mpv["sub-shadow-color"] = "#97000000"
+            self._mpv["sub-shadow-offset"] = 0.6
+            self._mpv["sub-border-style"] = "outline-and-shadow"
+            self._mpv["sub-shadow-color"] = "#97000000"
 
     def _on_slang_changed(self, settings, key):
-        self.mpv["slang"] = settings.get_string(key)
+        self._mpv["slang"] = settings.get_string(key)
 
     def _on_alang_changed(self, settings, key):
-        self.mpv["alang"] = settings.get_string(key)
+        self._mpv["alang"] = settings.get_string(key)
 
     def _on_thumb_preview_changed(self, settings, key):
         if settings.get_boolean(key):
-            for w in self.win.app.get_windows():
+            for w in self._win.app.get_windows():
                 if not w.mpv.idle_active:
                     w.setup_thumb_preview()
             return
 
-        for w in self.win.app.get_windows():
+        for w in self._win.app.get_windows():
             if w.thumb_area:
                 w.thumb_area.unrealize()
                 w.thumb_area.unmap()
                 w.thumb_area = None
 
     def _on_offload_changed(self, settings, key):
-        self.win.offload.set_enabled(
+        self._win.offload.set_enabled(
             Gtk.GraphicsOffloadEnabled.ENABLED
             if settings.get_boolean(key)
             else Gtk.GraphicsOffloadEnabled.DISABLED
@@ -235,21 +235,21 @@ class Preferences(Adw.Dialog):
     def _on_hwdec_changed(self, settings, key):
         hwdec_enabled = settings.get_boolean(key)
         if hwdec_enabled:
-            self.mpv.command_async("vf", "remove", "@hflip")
-            self.mpv.command_async("vf", "remove", "@vflip")
-            self.mpv["hwdec"] = self.win.conf_hwdec + ["auto"]
+            self._mpv.command_async("vf", "remove", "@hflip")
+            self._mpv.command_async("vf", "remove", "@vflip")
+            self._mpv["hwdec"] = self._win.conf_hwdec + ["auto"]
         else:
-            self.mpv["hwdec"] = "no"
+            self._mpv["hwdec"] = "no"
 
     def _on_save_pos_changed(self, settings, _key):
-        self.mpv["save-position-on-quit"] = settings.get_boolean("save-video-position")
+        self._mpv["save-position-on-quit"] = settings.get_boolean("save-video-position")
 
     def _on_norm_volume_changed(self, settings, key):
         norm_enabled = settings.get_boolean(key)
         if norm_enabled:
-            self.mpv.command("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
+            self._mpv.command("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
         else:
-            self.mpv.command("af", "remove", "@cine_loudnorm")
+            self._mpv.command("af", "remove", "@cine_loudnorm")
 
     def _on_sub_color_selected(self, color_btn, *arg):
         rgba = color_btn.get_rgba()
@@ -311,7 +311,7 @@ class Preferences(Adw.Dialog):
             except Exception:
                 logger.exception("Features selection failed")
 
-        dialog.choose_face(self.win, None, None, callback)
+        dialog.choose_face(self._win, None, None, callback)
 
     def _on_font_reset(self, _button):
         default_font = "Adwaita Sans SemiBold"
@@ -327,7 +327,7 @@ class Preferences(Adw.Dialog):
                 logger.exception("Failed to open folder")
 
         f_launcher = Gtk.FileLauncher.new(Gio.File.new_for_path(CONFIG_DIR))
-        f_launcher.launch(self.win, None, on_launch_finished, None)
+        f_launcher.launch(self._win, None, on_launch_finished, None)
 
     @Gtk.Template.Callback()
     def _on_btn_warning_map(self, button):

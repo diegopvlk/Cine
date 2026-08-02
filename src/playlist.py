@@ -71,8 +71,8 @@ class Playlist(Adw.Dialog):
 
     def __init__(self, win, **kwargs):
         super().__init__(**kwargs)
-        self.win = win
-        self.mpv = win.mpv
+        self._win = win
+        self._mpv = win.mpv
 
         n_items = win.playlist_ls.get_n_items()
         shuffle_btn = win.shuffle_toggle_btn
@@ -129,15 +129,15 @@ class Playlist(Adw.Dialog):
         )
         shortcut_add_files = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string("<shift><primary>o"),
-            action=Gtk.CallbackAction.new(self.win.on_add_playlist_dialog),
+            action=Gtk.CallbackAction.new(self._win.on_add_playlist_dialog),
         )
         shortcut_add_folder = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string("<shift><primary>i"),
-            action=Gtk.CallbackAction.new(self.win.on_open_folder_dialog),
+            action=Gtk.CallbackAction.new(self._win.on_open_folder_dialog),
         )
         shortcut_add_url = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string("<shift><primary>u"),
-            action=Gtk.CallbackAction.new(self.win.on_add_url),
+            action=Gtk.CallbackAction.new(self._win.on_add_url),
         )
 
         shortcut_controller = Gtk.ShortcutController()
@@ -163,7 +163,7 @@ class Playlist(Adw.Dialog):
 
         self.set_save_btn_playlist()
 
-        pos = self.mpv.playlist_pos
+        pos = self._mpv.playlist_pos
         if pos > 0:
             idle_add_once(
                 self.playlist_list_view.scroll_to,
@@ -173,14 +173,14 @@ class Playlist(Adw.Dialog):
 
     @Gtk.Template.Callback()
     def _on_list_item_activate(self, list_view, pos):
-        self.mpv.pause = False
+        self._mpv.pause = False
         obj = list_view.get_model().get_item(pos)
-        self.mpv.playlist_pos = obj.position
+        self._mpv.playlist_pos = obj.position
         self.close()
 
     def set_save_btn_playlist(self):
         btn = self.save_playlist_btn
-        if self.win.has_some_doc_path:
+        if self._win.has_some_doc_path:
             btn.set_tooltip_text(
                 _("Save Playlist")
                 + " - "
@@ -291,7 +291,7 @@ class Playlist(Adw.Dialog):
             row = list_item.get_child()
             if obj.playing:
                 row.add_css_class("playing-item-playlist")
-                set_item(self.mpv.playlist[obj.position])
+                set_item(self._mpv.playlist[obj.position])
             else:
                 row.remove_css_class("playing-item-playlist")
 
@@ -345,7 +345,7 @@ class Playlist(Adw.Dialog):
                 is_url = not is_local_path(path)  # URL Thumbnail
 
                 if is_url:
-                    self.mpv.loadfile(path, "append-play")
+                    self._mpv.loadfile(path, "append-play")
                     continue
                 else:
                     info = item.query_info(
@@ -358,15 +358,15 @@ class Playlist(Adw.Dialog):
                 mime_type = info.get_content_type() or ""
 
                 if file_type == Gio.FileType.DIRECTORY:
-                    self.mpv.loadfile(path, "append-play")
+                    self._mpv.loadfile(path, "append-play")
                     continue
 
                 valid_types = ("video/", "audio/", "image/")
                 if mime_type.startswith(valid_types):
-                    self.mpv.loadfile(path, "append-play")
+                    self._mpv.loadfile(path, "append-play")
 
             elif isinstance(item, str):  # URL string
-                self.mpv.loadfile(item, "append-play")
+                self._mpv.loadfile(item, "append-play")
 
         self.spinner.set_visible(False)
 
@@ -383,11 +383,11 @@ class Playlist(Adw.Dialog):
             return
 
         if source_index < dest_index:
-            self.mpv.command("playlist-move", source_index, dest_index + 1)
+            self._mpv.command("playlist-move", source_index, dest_index + 1)
         else:
-            self.mpv.command("playlist-move", source_index, dest_index)
+            self._mpv.command("playlist-move", source_index, dest_index)
 
-        self.win.splice_playlist()
+        self._win.splice_playlist()
 
     def _on_row_right_click(self, _gesture, _n_press, x, y, list_item, row):
         idx = list_item.get_item().position
@@ -396,7 +396,7 @@ class Playlist(Adw.Dialog):
         def show_in_folder():
             gfile = Gio.File.new_for_path(path)
             launcher = Gtk.FileLauncher.new(gfile)
-            launcher.open_containing_folder(self.win, None, on_launch_finished)
+            launcher.open_containing_folder(self._win, None, on_launch_finished)
 
         def on_launch_finished(launcher, result):
             try:
@@ -407,12 +407,12 @@ class Playlist(Adw.Dialog):
         def remove_from_playlist(index):
             if (
                 index > 0
-                and index == self.mpv.playlist_count - 1
-                and index == self.mpv.playlist_pos
+                and index == self._mpv.playlist_count - 1
+                and index == self._mpv.playlist_pos
             ):
-                self.mpv.playlist_pos = index - 1
+                self._mpv.playlist_pos = index - 1
 
-            self.mpv.command("playlist-remove", index)
+            self._mpv.command("playlist-remove", index)
 
             if index > 0:
                 timeout_add_once(
@@ -475,14 +475,14 @@ class Playlist(Adw.Dialog):
             try:
                 file = dialog.save_finish(result)
                 path = file.get_path()
-                self._write_m3u_file(self.mpv, path)
+                self._write_m3u_file(self._mpv, path)
             except Exception:
                 logger.exception("Save playlist failed")
 
-        dialog.save(self.win, None, on_save)
+        dialog.save(self._win, None, on_save)
 
     def set_item_count(self, *args, list_amt=None):
-        count = list_amt if list_amt is not None else self.mpv.playlist_count
+        count = list_amt if list_amt is not None else self._mpv.playlist_count
         amt_label = ngettext("{n} item", "{n} items", count).format(n=count)
         self.title_widget.set_subtitle(f"{amt_label}")
 
