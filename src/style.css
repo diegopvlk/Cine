@@ -87,6 +87,13 @@ button.pill:active,
   transform: scale(0.98);
 }
 
+button.a-loop {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.33);
+  color: rgb(255, 190, 111);
+  -gtk-icon-shadow: 0px 1px 6px rgba(0, 0, 0, 1);
+}
+
 dialog:not(#playlist),
 #playlist headerbar,
 #playlist searchbar,

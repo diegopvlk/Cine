@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16" height="16" gpa:state="0" gpa:state-names="outline empty" gpa:version="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+  <path class="foreground-stroke transparent-fill" d="m10.158 7v7h2.1489c1.1046 0 2-0.89543 2-2s-0.89543-2-2-2h-2.1489m-6.8416-2h1c1.1046 0 2 0.89543 2 2v4h-2.7659c-0.85653 0-1.5509-0.69435-1.5509-1.5509 0.028099-0.82843 0.72245-1.4772 1.5509-1.4491h2.7659" gpa:states="outline" gpa:stroke="foreground" gpa:stroke-maxwidth="150%" gpa:stroke-minwidth="25%"/>
+  <path class="foreground-stroke transparent-fill" d="m2 5c0-2.2091 1.7909-3 4-3h4c2.2091 0 4 0.79086 4 3" gpa:states="outline" gpa:stroke="foreground" gpa:stroke-maxwidth="150%" gpa:stroke-minwidth="25%"/>
+ </g>
+</svg>

@@ -120,6 +120,7 @@ class CineWindow(Adw.ApplicationWindow):
     chapters_menu: Gio.Menu = Gtk.Template.Child()
     options_menu_btn: OptionsMenuButton = Gtk.Template.Child()
     shuffle_toggle_btn: Gtk.ToggleButton = Gtk.Template.Child()
+    ab_loop_btn: Gtk.ToggleButton = Gtk.Template.Child()
     loop_btn: Gtk.ToggleButton = Gtk.Template.Child()
     fullscreen_btn: Gtk.Button = Gtk.Template.Child()
     time_elapsed_label: Gtk.Label = Gtk.Template.Child()
@@ -250,6 +251,8 @@ class CineWindow(Adw.ApplicationWindow):
         self.mpv.command("change-list", "watch-later-options", "remove", "aid")
         self.mpv.command("change-list", "watch-later-options", "remove", "volume")
         self.mpv.command("change-list", "watch-later-options", "remove", "sub-scale")
+        self.mpv.command("change-list", "watch-later-options", "remove", "ab-loop-a")
+        self.mpv.command("change-list", "watch-later-options", "remove", "ab-loop-b")
 
         self._setup_actions()
         self._setup_widgets()
@@ -378,6 +381,7 @@ class CineWindow(Adw.ApplicationWindow):
         if max_vol > 100:
             self.volume_scale.add_mark(100.0, Gtk.PositionType.BOTTOM, None)
 
+        self.ab_loop_btn.connect("toggled", self._on_ab_loop_btn_toggled)
         self.loop_btn.connect("toggled", self._on_loop_toggled)
 
         self.video_progress_adj.connect("value-changed", self._on_progress_adjusted)
@@ -1135,9 +1139,7 @@ class CineWindow(Adw.ApplicationWindow):
 
             time_pos = chapter.get("time")
             if time_pos is not None:
-                self.video_progress_scale.add_mark(
-                    float(time_pos), Gtk.PositionType.TOP, None
-                )
+                self.video_progress_scale.add_mark(time_pos, Gtk.PositionType.TOP, None)
 
             self.chapter_times.append(chapter.get("time"))
             self.chapter_titles.append(GLib.markup_escape_text(title))
@@ -1262,6 +1264,15 @@ class CineWindow(Adw.ApplicationWindow):
 
         if isinstance(self._visible_dialog, Playlist):
             idle_add_once(self.splice_playlist)
+
+    def _on_ab_loop_btn_toggled(self, button):
+        if not button or not button.get_active():
+            self.mpv.ab_loop_a = False
+            self.mpv.ab_loop_b = False
+            self.video_progress_scale.clear_marks()
+            self.ab_loop_btn.remove_css_class("a-loop")
+        else:
+            self.mpv.command_async("ab-loop")
 
     def _update_loop_state(self):
         icon_loop = "cine-playlist-repeat-symbolic"
@@ -1792,6 +1803,7 @@ class CineWindow(Adw.ApplicationWindow):
                     self._is_local_path = is_local_path(self.mpv.path)
                     self.start_page.set_sensitive(True)
                     self.hide_ui_timeout()
+                    self._on_ab_loop_btn_toggled(None)
 
                     if (
                         settings.get_boolean("thumbnail-preview")
@@ -1873,6 +1885,51 @@ class CineWindow(Adw.ApplicationWindow):
                     self._playlist_prev_pos = pos
 
             idle_add_once(update_playing_item)
+
+        self._ab_loop_a = None
+        self._ab_loop_b = None
+
+        def sync_ab_loop(name):
+            scale = self.video_progress_scale
+            btn = self.ab_loop_btn
+
+            a_time = self._ab_loop_a
+            b_time = self._ab_loop_b
+            a_on = a_time is not None
+            b_on = b_time is not None
+            is_looping = a_on and b_on
+            ab_off = not a_on and not b_on
+
+            if name == "ab-loop-a" and a_on:
+                scale.add_mark(a_time, Gtk.PositionType.BOTTOM, None)
+                btn.add_css_class("a-loop")
+
+            if name == "ab-loop-b" and b_on:
+                scale.add_mark(b_time, Gtk.PositionType.BOTTOM, None)
+                btn.remove_css_class("a-loop")
+
+            if ab_off and name == "ab-loop-b":
+                btn.remove_css_class("a-loop")
+                scale.clear_marks()
+                for chapter in self._chapters:
+                    time_pos = chapter.get("time")
+                    if time_pos is not None:
+                        scale.add_mark(time_pos, Gtk.PositionType.TOP, None)
+
+            if btn.get_active() != is_looping:
+                btn.handler_block_by_func(self._on_ab_loop_btn_toggled)
+                btn.set_active(is_looping)
+                btn.handler_unblock_by_func(self._on_ab_loop_btn_toggled)
+
+        @self.mpv.property_observer("ab-loop-a")
+        @self.mpv.property_observer("ab-loop-b")
+        def on_ab_loop_change(name, value):
+            val = float(value) if isinstance(value, float) else None
+            if name == "ab-loop-a":
+                self._ab_loop_a = val
+            elif name == "ab-loop-b":
+                self._ab_loop_b = val
+            idle_add_once(sync_ab_loop, name)
 
         def sync_loop(name, value):
             new_mode = "no"

@@ -14,7 +14,7 @@ template $CineWindow: Adw.ApplicationWindow {
 
     setters {
       controls_separator.visible: false;
-      controls_wrap_box.child-spacing: 2;
+      controls_wrap_box.child-spacing: 6;
     }
   }
 
@@ -157,6 +157,7 @@ template $CineWindow: Adw.ApplicationWindow {
                 wrap-reverse: true;
                 justify: spread;
                 justify-last-line: true;
+                line-spacing: 5;
 
                 Button previous_btn {
                   styles [
@@ -305,6 +306,18 @@ template $CineWindow: Adw.ApplicationWindow {
                   valign: end;
                   halign: center;
                   toggled => $_on_shuffle_toggled();
+                }
+
+                ToggleButton ab_loop_btn {
+                  styles [
+                    "circular",
+                    "flat",
+                  ]
+
+                  icon-name: "cine-ab-loop-symbolic";
+                  tooltip-text: _("Set/Clear A-B Loop Points");
+                  valign: end;
+                  halign: center;
                 }
 
                 ToggleButton loop_btn {
