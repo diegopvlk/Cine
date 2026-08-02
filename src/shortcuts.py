@@ -53,7 +53,6 @@ f                nonrepeatable cycle fullscreen; #{_("Fullscreen")}
 ESC              set fullscreen no; #{_("Exit Fullscreen")}
 MBTN_LEFT_DBL    nonrepeatable cycle fullscreen
 MBTN_MID         nonrepeatable cycle fullscreen
-MBTN_RIGHT       ignore
 MBTN_BACK        playlist-prev; 
 MBTN_FORWARD     playlist-next; 
 WHEEL_LEFT       seek -5 keyframes; show-text "⯇⯇"

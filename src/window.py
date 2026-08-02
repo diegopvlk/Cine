@@ -1564,8 +1564,12 @@ class CineWindow(Adw.ApplicationWindow):
             and self._left_clk == PrimaryClick.FOCUS_PLAY_PAUSE
         )
 
-        if ignored_btn or ignore_left or self._is_hovering() or n_press > 2:
+        if ignored_btn or ignore_left or self._is_hovering():
             return
+
+        is_secondary_pause = (
+            button == "MBTN_RIGHT" and self._right_clk == SecondaryClick.PLAY_PAUSE
+        )
 
         if self._click_delay_id:
             GLib.source_remove(self._click_delay_id)
@@ -1575,23 +1579,19 @@ class CineWindow(Adw.ApplicationWindow):
             if button == "MBTN_LEFT" and self._left_clk != PrimaryClick.BYPASS:
 
                 def click():
-                    self.mpv.command_async("cycle", "pause")
+                    self._cycle_pause()
                     self._click_delay_id = 0
 
                 self._click_delay_id = timeout_add_once(self._click_time, click)
+                return
+        elif n_press == 2 and (cmd_str_dbl := self.mouse_bindings.get(f"{button}_DBL")):
+            self._run_command(cmd_str_dbl)
+            return
 
-            elif (
-                button == "MBTN_RIGHT" and self._right_clk == SecondaryClick.PLAY_PAUSE
-            ):
-                self.mpv.command_async("cycle", "pause")
-
-            elif cmd_str := self.mouse_bindings.get(button):
-                self._run_command(cmd_str)
-
-        elif n_press == 2:
-            button_dbl = f"{button}_DBL"
-            if cmd_str_dbl := self.mouse_bindings.get(button_dbl):
-                self._run_command(cmd_str_dbl)
+        if is_secondary_pause:
+            self._cycle_pause()
+        elif cmd_str := self.mouse_bindings.get(button):
+            self._run_command(cmd_str)
 
     def _cancel_click_hold(self, *args):
         if not self._click_holding:
