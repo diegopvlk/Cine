@@ -67,7 +67,7 @@ def restore_last_playlist(window, app, win_mpv):
             return
 
         window.start_page.set_sensitive(False)
-        window._show_toast(_("Restoring Session…"), force_dismiss=True)
+        window.show_toast(_("Restoring Session…"), force_dismiss=True)
         idle_add_once(win_mpv.loadfile, LAST_PLAYLIST_FILE, "replace")
     except Exception:
         logger.exception("Failed to restore last playlist file")

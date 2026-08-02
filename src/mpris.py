@@ -95,7 +95,7 @@ class MPRIS:
 
         Gio.bus_get(Gio.BusType.SESSION, None, self._on_bus_acquired)
 
-        self._app.connect("notify::active-window", self._update_props)
+        self._app.connect("notify::active-window", self.update_props)
 
     def _on_bus_acquired(self, _source, res):
         def register():
@@ -134,7 +134,7 @@ class MPRIS:
             GLib.Variant("(sa{sv}as)", (MEDIAPLAYER2_PLAYER, changed_props, [])),
         )
 
-    def _update_props(self, *args):
+    def update_props(self, *args):
         """Notifies D-Bus that properties have changed."""
         if not self._con:
             return
@@ -208,27 +208,27 @@ class MPRIS:
 
         return "None"
 
-    def _update_playback_status(self, paused):
+    def update_playback_status(self, paused):
         status = "Paused" if paused else "Playing"
         self._emit_props_changed({"PlaybackStatus": GLib.Variant("s", status)})
 
-    def _update_volume(self, value):
+    def update_volume(self, value):
         vol = value / 100.0
         self._emit_props_changed({"Volume": GLib.Variant("d", float(vol))})
 
-    def _update_metadata(self):
+    def update_metadata(self):
         metadata = self._get_metadata_variant()
         self._emit_props_changed({"Metadata": metadata})
 
-    def _update_loop(self):
+    def update_loop(self):
         current_loop = self._get_loop_status()
         self._emit_props_changed({"LoopStatus": GLib.Variant("s", current_loop)})
 
-    def _update_can_prev_next(self, can_prev, can_next):
+    def update_can_prev_next(self, can_prev, can_next):
         self._emit_props_changed({"CanGoPrevious": GLib.Variant("b", can_prev)})
         self._emit_props_changed({"CanGoNext": GLib.Variant("b", can_next)})
 
-    def _update_shuffle(self, shuffle_active):
+    def update_shuffle(self, shuffle_active):
         self._emit_props_changed({"Shuffle": GLib.Variant("b", shuffle_active)})
 
     def _get_metadata_variant(self):
@@ -283,23 +283,23 @@ class MPRIS:
             elif method == "Previous":
                 win = self._app.props.active_window
                 if win and win.can_go_prev:  # type: ignore
-                    win._on_previous_clicked()  # type: ignore
+                    win.on_previous_clicked()  # type: ignore
             elif method == "Next":
                 win = self._app.props.active_window
                 if win and win.can_go_next:  # type: ignore
-                    win._on_next_clicked()  # type: ignore
+                    win.on_next_clicked()  # type: ignore
             elif method == "Stop":
                 p.stop()
-                self._update_props()
+                self.update_props()
             elif method == "Seek":
                 offset_usec = params.get_child_value(0).get_int64()
                 current_pos = getattr(p, "time_pos", 0)
                 p.time_pos = current_pos + (offset_usec / 1_000_000.0)
-                self._emit_seeked()
+                self.emit_seeked()
             elif method == "SetPosition":
                 pos_usec = params.get_child_value(1).get_int64()
                 p.time_pos = pos_usec / 1_000_000.0
-                self._emit_seeked()
+                self.emit_seeked()
             elif method == "Raise":
                 win = self._app.props.active_window
                 if win:
@@ -309,7 +309,7 @@ class MPRIS:
         except mpv.ShutdownError:
             pass
 
-    def _emit_seeked(self):
+    def emit_seeked(self):
         try:
             if not self._con or not self._mpv:
                 return

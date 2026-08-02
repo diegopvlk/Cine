@@ -79,10 +79,10 @@ class Playlist(Adw.Dialog):
         shuff_changed = win.prev_shuffle != shuffle_btn.props.active
 
         if n_items == 0 or n_items == 1 or shuff_changed or win.playlist_changed:
-            win._splice_playlist()
+            win.splice_playlist()
 
         self.set_content_height(win.get_height())
-        self._set_item_count()
+        self.set_item_count()
 
         list_filter = Gtk.CustomFilter()
         list_filter_model = Gtk.FilterListModel(
@@ -115,7 +115,7 @@ class Playlist(Adw.Dialog):
 
         def search_filter(*args):
             list_filter.changed(Gtk.FilterChange.DIFFERENT)
-            self._set_item_count(list_amt=list_filter_model.get_n_items())
+            self.set_item_count(list_amt=list_filter_model.get_n_items())
 
         list_filter.set_filter_func(filter_func)
         self.search_entry.connect("search-changed", search_filter)
@@ -129,15 +129,15 @@ class Playlist(Adw.Dialog):
         )
         shortcut_add_files = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string("<shift><primary>o"),
-            action=Gtk.CallbackAction.new(self.win._on_add_playlist_dialog),
+            action=Gtk.CallbackAction.new(self.win.on_add_playlist_dialog),
         )
         shortcut_add_folder = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string("<shift><primary>i"),
-            action=Gtk.CallbackAction.new(self.win._on_open_folder_dialog),
+            action=Gtk.CallbackAction.new(self.win.on_open_folder_dialog),
         )
         shortcut_add_url = Gtk.Shortcut.new(
             trigger=Gtk.ShortcutTrigger.parse_string("<shift><primary>u"),
-            action=Gtk.CallbackAction.new(self.win._on_add_url),
+            action=Gtk.CallbackAction.new(self.win.on_add_url),
         )
 
         shortcut_controller = Gtk.ShortcutController()
@@ -161,7 +161,7 @@ class Playlist(Adw.Dialog):
         drop_target.connect("drop", self._on_drop)
         self.add_controller(drop_target)
 
-        self._set_save_btn_playlist()
+        self.set_save_btn_playlist()
 
         pos = self.mpv.playlist_pos
         if pos > 0:
@@ -178,7 +178,7 @@ class Playlist(Adw.Dialog):
         self.mpv.playlist_pos = obj.position
         self.close()
 
-    def _set_save_btn_playlist(self):
+    def set_save_btn_playlist(self):
         btn = self.save_playlist_btn
         if self.win.has_some_doc_path:
             btn.set_tooltip_text(
@@ -387,7 +387,7 @@ class Playlist(Adw.Dialog):
         else:
             self.mpv.command("playlist-move", source_index, dest_index)
 
-        self.win._splice_playlist()
+        self.win.splice_playlist()
 
     def _on_row_right_click(self, _gesture, _n_press, x, y, list_item, row):
         idx = list_item.get_item().position
@@ -481,7 +481,7 @@ class Playlist(Adw.Dialog):
 
         dialog.save(self.win, None, on_save)
 
-    def _set_item_count(self, *args, list_amt=None):
+    def set_item_count(self, *args, list_amt=None):
         count = list_amt if list_amt is not None else self.mpv.playlist_count
         amt_label = ngettext("{n} item", "{n} items", count).format(n=count)
         self.title_widget.set_subtitle(f"{amt_label}")

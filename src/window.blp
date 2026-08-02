@@ -166,7 +166,7 @@ template $CineWindow: Adw.ApplicationWindow {
 
                   icon-name: "cine-skip-backward-symbolic";
                   tooltip-text: _("Previous");
-                  clicked => $_on_previous_clicked();
+                  clicked => $on_previous_clicked();
                 }
 
                 Button play_pause_btn {
@@ -178,7 +178,7 @@ template $CineWindow: Adw.ApplicationWindow {
                   icon-name: "cine-playback-start-symbolic";
                   tooltip-text: _("Play/Pause");
                   halign: center;
-                  clicked => $_on_play_pause_clicked();
+                  clicked => $_cycle_pause();
                 }
 
                 Button next_btn {
@@ -190,7 +190,7 @@ template $CineWindow: Adw.ApplicationWindow {
                   icon-name: "cine-skip-forward-symbolic";
                   tooltip-text: _("Next");
                   halign: center;
-                  clicked => $_on_next_clicked();
+                  clicked => $on_next_clicked();
                 }
 
                 MenuButton volume_menu_btn {

@@ -216,7 +216,7 @@ class Preferences(Adw.Dialog):
         if settings.get_boolean(key):
             for w in self.win.app.get_windows():
                 if not w.mpv.idle_active:
-                    w._setup_thumb_preview()
+                    w.setup_thumb_preview()
             return
 
         for w in self.win.app.get_windows():

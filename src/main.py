@@ -136,7 +136,7 @@ class CineApplication(Adw.Application):
                             w = width
                             h = height
 
-                        win._set_window_size(w, h)
+                        win.set_window_size(w, h)
                 except Exception:
                     logger.exception("Metadata probe failed")
             win.present()
@@ -156,7 +156,7 @@ class CineApplication(Adw.Application):
             # Pause previous opened windows
             w.mpv.pause = w != win
 
-        win._hide_ui_timeout()
+        win.hide_ui_timeout()
 
     def find_first_file(self, gfile, visited=None):
         """Local-only recursive search."""
