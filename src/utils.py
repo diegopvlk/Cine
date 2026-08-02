@@ -73,6 +73,9 @@ try:
         from shutil import move
 
         move(OLD_PL_FILE, PLAYLIST_DIR)
+    elif not os.path.exists(LAST_PLAYLIST_FILE):
+        open(LAST_PLAYLIST_FILE, "w").close()
+
 except Exception:
     logger.exception("Failed to create files/folders")
 

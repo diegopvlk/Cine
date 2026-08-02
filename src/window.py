@@ -1360,7 +1360,6 @@ class CineWindow(Adw.ApplicationWindow):
 
                 self.drop_icon.props.icon_name = "cine-playback-start-symbolic"
                 self.drop_label.props.label = _("Play")
-
             except GLib.Error as e:
                 logger.warning(f"File error path: {self._video_path}")
                 idle_add_once(self.show_toast, _("File Error") + f": {e.message}")
@@ -1372,10 +1371,9 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _on_drop_leave(self, _target):
         self.revealer_drop_indicator.set_reveal_child(False)
-        self.drop_icon.set_from_icon_name("")
-        self.drop_label.set_text("")
 
     def _on_drop(self, _target, value, _x, _y):
+        self.revealer_drop_indicator.set_reveal_child(False)
         items: list[Gio.File] | list[str] = []
         playable_items: list[str] = []
 
