@@ -1336,37 +1336,8 @@ class CineWindow(Adw.ApplicationWindow):
         except mpv.ShutdownError:
             pass
 
-    def _on_drop_enter(self, target, _x, _y):
+    def _on_drop_enter(self, _target, _x, _y):
         self.revealer_drop_indicator.set_reveal_child(True)
-        drop = target.get_current_drop()
-        formats = drop.get_formats()
-        target_type = (
-            Gdk.FileList if formats.contain_gtype(Gdk.FileList) else GObject.TYPE_STRING
-        )
-
-        def on_read_done(source, result):
-            try:
-                value = source.read_value_finish(result)
-
-                if isinstance(value, Gdk.FileList):
-                    f_name = value.get_files()[0].get_basename() or ""
-                    f_name = f_name.lower()
-                    is_playing = not self.mpv.idle_active
-
-                    if is_playing and any(f_name.endswith(ext) for ext in SUB_EXTS):
-                        self.drop_icon.props.icon_name = "cine-subtitles-symbolic"
-                        self.drop_label.props.label = _("Add Subtitle Track")
-                        return
-
-                self.drop_icon.props.icon_name = "cine-playback-start-symbolic"
-                self.drop_label.props.label = _("Play")
-            except GLib.Error as e:
-                logger.warning(f"File error path: {self._video_path}")
-                idle_add_once(self.show_toast, _("File Error") + f": {e.message}")
-                self.spinner.set_visible(False)
-                return
-
-        drop.read_value_async(target_type, GLib.PRIORITY_DEFAULT, None, on_read_done)
         return True
 
     def _on_drop_leave(self, _target):
@@ -2078,6 +2049,15 @@ class CineWindow(Adw.ApplicationWindow):
             self.start_page.set_visible(is_idle)
             self.controls_box.set_visible(not is_idle)
             self.video_area.set_visible(not is_idle)
+
+            self.drop_label.props.label = (
+                _("Play") if is_idle else _("Play or Add Subtitles")
+            )
+            self.drop_icon.props.icon_name = (
+                "cine-playback-start-symbolic"
+                if is_idle
+                else "cine-play-or-sub-symbolic"
+            )
 
             if is_idle:
                 self._error_count = 0

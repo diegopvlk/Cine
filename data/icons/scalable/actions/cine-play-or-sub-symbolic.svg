@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" gpa:state="0" gpa:state-names="outline filled empty" gpa:version="1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:gpa="https://www.gtk.org/grappa" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <path d="m7.502 2.0039c-0.61632 0.028292-1.2261 0.21244-1.7656 0.54688-1.0764 0.66723-1.7317 1.8493-1.7324 3.1152v0.0039063h-0.0039062v0.0039062 20.658c4.922e-4 1.2679 0.66178 2.4524 1.7402 3.1191 1.0784 0.66674 2.4339 0.73025 3.5684 0.16406a2.0015 2.0015 0 0 0 0.074219-0.042968l18.656-10.346c1.2176-0.60975 1.9902-1.8629 1.9902-3.2246 0-1.3617-0.77262-2.6149-1.9902-3.2246l-18.656-10.352a2.0015 2.0015 0 0 0-0.074219-0.039062c-0.5679-0.28343-1.1903-0.4111-1.8066-0.38281zm0.49805 15.996h6v1h-6v-1zm8 0h5v1h-5v-1zm-8 3h2v1h-2v-1zm4 0h4v1h-4v-1z" stop-color="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.0013"/>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work>
+    <cc:license rdf:resource="https://creativecommons.org/publicdomain/zero/1.0/"/>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Diego Povliuk</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+</svg>
