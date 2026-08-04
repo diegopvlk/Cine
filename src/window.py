@@ -545,30 +545,18 @@ class CineWindow(Adw.ApplicationWindow):
         # Somehow because the options menu contains other menus popovers inside,
         # when closing it, contains_pointer from header/controls still returns True,
         # even if not hovering; setting Gtk.PropagationLimit.NONE seems to be the only way to fix it
-        # also sets Gtk.PropagationLimit.SAME_NATIVE back for the other buttons
-        groups = {
-            Gtk.PropagationLimit.SAME_NATIVE: [
-                self.primary_menu_btn,
-                self.open_menu_btn,
-                self.volume_menu_btn,
-                self.subtitles_menu_btn,
-                self.audio_tracks_menu_btn,
-                self.video_tracks_menu_btn,
-                self.chapters_menu_btn,
-            ],
-            Gtk.PropagationLimit.NONE: [
-                self.options_menu_btn,
-            ],
-        }
-        for limit, buttons in groups.items():
-            for btn in buttons:
-                btn.connect(
-                    "notify::active",
-                    lambda *a, lim=limit: (
-                        self.motion_header.set_propagation_limit(lim),
-                        self.motion_controls.set_propagation_limit(lim),
-                    ),
-                )
+        # Also affects click behaviour, when closing without the workaround, click gesture wont work
+        # and will activate the window_handle clicks instead, until controls are hovered again
+
+        def set_p_limit_workaround(btn, _gparam):
+            limit = (
+                Gtk.PropagationLimit.NONE
+                if btn.props.active
+                else Gtk.PropagationLimit.SAME_NATIVE
+            )
+            self.motion_controls.set_propagation_limit(limit)
+
+        self.options_menu_btn.connect("notify::active", set_p_limit_workaround)
 
     def _set_fs_state(self, _window, _gparam):
         is_fullscreen = self.props.fullscreened
@@ -670,9 +658,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         video_count = 0
         for track in track_list:
+            self._add_track_to_menu(track)
             track_type = track.get("type")
-            if track_type in ("sub", "audio", "video"):
-                self._add_track_to_menu(track)
             if track_type == "video" and not track.get("albumart"):
                 video_count += 1
 
@@ -1418,9 +1405,9 @@ class CineWindow(Adw.ApplicationWindow):
 
             try:
                 self.mpv.pause = False
-                self._prev_speed = cast(float, self.mpv["speed"])
+                self._prev_speed = cast(float, self.mpv.speed)
                 new_speed = self._prev_speed * 2
-                self.mpv["speed"] = new_speed
+                self.mpv.speed = new_speed
                 self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
             except mpv.ShutdownError:
                 pass
@@ -1434,8 +1421,8 @@ class CineWindow(Adw.ApplicationWindow):
             if self._space_pressed:
                 self._space_pressed = False
                 try:
-                    self.mpv["speed"] = self._prev_speed
-                    self.mpv.show_text(f"{self.mpv['speed']:g}×")
+                    self.mpv.speed = self._prev_speed
+                    self.mpv.show_text(f"{self.mpv.speed:g}×")
                 except mpv.ShutdownError:
                     pass
 
@@ -1506,7 +1493,7 @@ class CineWindow(Adw.ApplicationWindow):
             pass
 
     def _on_click_pressed(self, gesture, _n_press, x, y, button):
-        if self._is_hovering() and button != "MBTN_MID":
+        if self._is_hovering_ui() and button != "MBTN_MID":
             return
 
         if button != "MBTN_LEFT":
@@ -1536,14 +1523,14 @@ class CineWindow(Adw.ApplicationWindow):
 
     def _on_click_hold(self, gesture, *args):
         try:
-            if self._space_holding or self._is_hovering():
+            if self._space_holding or self._is_hovering_ui():
                 return
 
             self._click_holding = True
             self.mpv.pause = False
-            self._prev_speed = cast(float, self.mpv["speed"])
+            self._prev_speed = cast(float, self.mpv.speed)
             new_speed = self._prev_speed * 2
-            self.mpv["speed"] = new_speed
+            self.mpv.speed = new_speed
             self.mpv.show_text(f"{new_speed:g}× ⯈⯈", "100000000")
             gesture.set_state(Gtk.EventSequenceState.CLAIMED)
         except mpv.ShutdownError:
@@ -1566,7 +1553,7 @@ class CineWindow(Adw.ApplicationWindow):
             and self._left_clk == PrimaryClick.FOCUS_PLAY_PAUSE
         )
 
-        if ignored_btn or ignore_left or self._is_hovering():
+        if ignored_btn or ignore_left or self._is_hovering_ui():
             return
 
         is_secondary_pause = (
@@ -1599,8 +1586,8 @@ class CineWindow(Adw.ApplicationWindow):
         if not self._click_holding:
             return
         try:
-            self.mpv["speed"] = self._prev_speed
-            self.mpv.show_text(f"{self.mpv['speed']:g}×")
+            self.mpv.speed = self._prev_speed
+            self.mpv.show_text(f"{self.mpv.speed:g}×")
             self._click_holding = False
         except mpv.ShutdownError:
             pass
@@ -1661,7 +1648,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         return True
 
-    def _is_hovering(self):
+    def _is_hovering_ui(self):
         controls_hover = self.motion_controls.props.contains_pointer
         header_hover = self.motion_header.props.contains_pointer
         separator_hover = self.motion_controls_separator.props.contains_pointer
@@ -1895,7 +1882,7 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("ab-loop-a")
         @self.mpv.property_observer("ab-loop-b")
         def on_ab_loop_change(name, value):
-            val = float(value) if isinstance(value, float) else None
+            val = value if isinstance(value, float) else None
             if name == "ab-loop-a":
                 self._ab_loop_a = val
             elif name == "ab-loop-b":
