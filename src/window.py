@@ -146,7 +146,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.has_some_doc_path: bool = False
         self.can_go_prev: bool = False
         self.can_go_next: bool = False
-        self._loop_mode: str = "no"
+        self._loop_mode: str = "off"
         self._chapters: list = []
         self._curr_chapter_time = None
         self._actions: dict[str, Gio.SimpleAction] = {}
@@ -1272,15 +1272,17 @@ class CineWindow(Adw.ApplicationWindow):
         is_file = self.mpv.loop_file
         is_playlist = self.mpv.loop_playlist
 
-        if is_file:
-            self._loop_mode = "file"
-            icon, tooltip, active = icon_loop_file, _("Loop File"), True
-        elif is_playlist:
+        if is_playlist:
             self._loop_mode = "playlist"
             icon, tooltip, active = icon_loop, _("Loop Playlist"), True
+        elif is_file:
+            self._loop_mode = "file"
+            icon, tooltip, active = icon_loop_file, _("Loop File"), True
         else:
-            self._loop_mode = "no"
+            self._loop_mode = "off"
             icon, tooltip, active = icon_loop, _("Loop"), False
+
+        settings.set_string("loop-state", self._loop_mode)
 
         self.loop_btn.handler_block_by_func(self._on_loop_toggled)
         self.loop_btn.set_active(active)
@@ -1290,7 +1292,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.loop_btn.set_tooltip_text(tooltip)
 
     def _on_loop_toggled(self, _button):
-        next_modes = {"no": "playlist", "playlist": "file", "file": "no"}
+        next_modes = {"off": "playlist", "playlist": "file", "file": "off"}
         curr_mode = self._loop_mode
         target_mode = next_modes[curr_mode]
         if target_mode == "playlist":
@@ -1299,7 +1301,7 @@ class CineWindow(Adw.ApplicationWindow):
         elif target_mode == "file":
             self.mpv.loop_file = "inf"
             self.mpv.loop_playlist = "no"
-        elif target_mode == "no":
+        elif target_mode == "off":
             self.mpv.loop_file = "no"
             self.mpv.loop_playlist = "no"
 

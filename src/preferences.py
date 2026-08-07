@@ -66,6 +66,12 @@ def sync_mpv_with_settings(window):
     if norm_enabled:
         mpv.command("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
 
+    loop = settings.get_string("loop-state")
+    if loop == "playlist":
+        mpv.loop_playlist = "inf"
+    elif loop == "file":
+        mpv.loop_file = "inf"
+
 
 @Gtk.Template(resource_path="/io/github/diegopvlk/Cine/preferences.ui")
 class Preferences(Adw.Dialog):
