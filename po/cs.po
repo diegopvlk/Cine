@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-15 13:38-0300\n"
-"PO-Revision-Date: 2026-09-01 19:51+0000\n"
+"PO-Revision-Date: 2026-09-03 14:55+0000\n"
 "Last-Translator: seja-arctic-fox <seja.czstudio@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/cine/app/cs/>\n"
 "Language: cs\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 2026.9.dev0\n"
+"X-Generator: Weblate 2026.9\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:234 src/mpris.py:144
 #: src/mpris.py:362 src/window.py:192 src/window.py:2061 src/window.blp:6
@@ -40,13 +40,12 @@ msgid "New Window"
 msgstr "Nové okno"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:25
-#, fuzzy
 msgid ""
 "Cine combines a clean interface with a high-performance engine to deliver a "
 "seamless viewing experience."
 msgstr ""
 "Cine poskytuje bezproblémový zážitek ze sledování kombinací čistého rozhraní "
-"s vysokovýkonostním základem."
+"s výkonným základem."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:27
 msgid "Simple Design: A refined, distraction-free interface"
@@ -123,7 +122,6 @@ msgstr "Hledat"
 
 #: src/playlist.py:185 src/playlist.py:193 src/playlist.py:465
 #: src/preferences.py:347 src/playlist.blp:52
-#, fuzzy
 msgid "Save Playlist"
 msgstr "Uložit frontu"
 
@@ -240,48 +238,36 @@ msgid "Subtitles"
 msgstr "Titulky"
 
 #: src/shortcuts.py:41
-#, fuzzy
-#| msgid "Switch to Next Subtitle Track"
 msgid "Next Subtitle Track"
-msgstr "Přepnout na další stopu titulků"
+msgstr "Další stopa titulků"
 
 #: src/shortcuts.py:42
-#, fuzzy
-#| msgid "Switch to Previous Subtitle Track"
 msgid "Previous Subtitle Track"
-msgstr "Přepnout na předchozí stopu titulků"
+msgstr "Předchozí stopa titulků"
 
 #: src/shortcuts.py:43 src/shortcuts.py:44
 msgid "Secondary Subtitles"
 msgstr "Sekundární titulky"
 
 #: src/shortcuts.py:43
-#, fuzzy
-#| msgid "Switch Secondary Subtitle Track"
 msgid "Next Secondary Subtitle Track"
-msgstr "Přepnout na sekundární stopu titulků"
+msgstr "Další sekundární stopa titulků"
 
 #: src/shortcuts.py:44
-#, fuzzy
-#| msgid "Switch Secondary Subtitle Track"
 msgid "Previous Secondary Subtitle Track"
-msgstr "Přepnout na sekundární stopu titulků"
+msgstr "Předchozí sekundární stopa titulků"
 
 #: src/shortcuts.py:45 src/shortcuts.py:46 src/window.py:790 src/window.blp:259
 msgid "Audio"
 msgstr "Zvuk"
 
 #: src/shortcuts.py:45
-#, fuzzy
-#| msgid "Switch to Next Audio Track"
 msgid "Next Audio Track"
-msgstr "Přepnout na další zvukovou stopu"
+msgstr "Další zvuková stopa"
 
 #: src/shortcuts.py:46
-#, fuzzy
-#| msgid "Switch to Previous Audio Track"
 msgid "Previous Audio Track"
-msgstr "Přepnout na předchozí zvukovou stopu"
+msgstr "Předchozí zvuková stopa"
 
 #: src/shortcuts.py:47
 msgid "Seek 10s Backward"
@@ -717,9 +703,8 @@ msgid "Open New Window for New Files"
 msgstr "Otevřít nové okno pro nové soubory"
 
 #: src/preferences.blp:85
-#, fuzzy
 msgid "Seek Bar Thumbnail"
-msgstr "Náhled v přehrávacím panelu"
+msgstr "Náhled videa v panelu přehrávání"
 
 #: src/preferences.blp:89
 msgid "Normalize Volume"
@@ -744,65 +729,61 @@ msgid "Use GPU for video decoding when available"
 msgstr "Použít GPU pro dekódování videa, pokud je to možné"
 
 #: src/preferences.blp:104
-#, fuzzy
 msgid "Pick up where you left off after saving from the menu"
-msgstr "Pokračujte tam, kde jste přestali, po uložení v menu"
+msgstr "Po uložení z nabídky pokračovat tam, kde jste přestali"
 
 #: src/preferences.blp:139
 msgid "Also save options like brightness, subtitle delay, etc."
-msgstr ""
+msgstr "Ukládat také možnosti jako jas, zpoždění titulků, atd."
 
 #: src/preferences.blp:188 src/preferences.blp:234
 msgid "Reset"
-msgstr ""
+msgstr "Resetovat"
 
 #: src/preferences.blp:198
 msgid "Subtitle Font"
-msgstr ""
+msgstr "Písmo titulků"
 
 #: src/preferences.blp:211
 msgid "Some fonts may not work"
-msgstr ""
+msgstr "Některá písma nemusí fungovat"
 
 #: src/preferences.blp:274
 msgid "Primary Click"
-msgstr ""
+msgstr "Primární kliknutí"
 
 #: src/preferences.blp:279
-#, fuzzy
-#| msgid "Play/Pause"
 msgid "Focus/Play/Pause"
-msgstr "Přehrát/Pozastavit"
+msgstr "Zaměřit/Přehrát/Pozastavit"
 
 #: src/preferences.blp:280 src/preferences.blp:292
 msgid "Bypass"
-msgstr ""
+msgstr "Nepoužívat"
 
 #: src/preferences.blp:286
-#, fuzzy
-#| msgid "Secondary Subtitles"
 msgid "Secondary Click"
-msgstr "Sekundární titulky"
+msgstr "Sekundární kliknutí"
 
 #: src/preferences.blp:291
 msgid "Context Menu"
-msgstr ""
+msgstr "Kontextová nabídka"
 
 #: src/preferences.blp:300
 msgid "Preferred Subtitle Languages"
-msgstr ""
+msgstr "Preferované jazyky titulků"
 
 #: src/preferences.blp:301 src/preferences.blp:306
+#, fuzzy
 msgid "Example: en,es,pt"
-msgstr ""
+msgstr "Příklad: cs,en,de"
 
 #: src/preferences.blp:305
 msgid "Preferred Audio Languages"
-msgstr ""
+msgstr "Preferované jazyky zvuku"
 
 #: src/preferences.blp:312
 msgid "Open Config Folder"
-msgstr ""
+msgstr "Otevřít složku s nastavením"
 
 #: src/shortcuts-dialog.blp:8
 msgid "General"
@@ -810,91 +791,91 @@ msgstr "Obecné"
 
 #: src/shortcuts-dialog.blp:31
 msgid "Add Files to Playlist"
-msgstr ""
+msgstr "Přidat soubory do fronty"
 
 #: src/shortcuts-dialog.blp:36
 msgid "Add Folder to Playlist"
-msgstr ""
+msgstr "Přidat složku do fronty"
 
 #: src/shortcuts-dialog.blp:41
 msgid "Add URL to Playlist"
-msgstr ""
+msgstr "Přidat URL adresu do fronty"
 
 #: src/shortcuts-dialog.blp:46
 msgid "Open Subtitles Menu"
-msgstr ""
+msgstr "Otevřít nabídku pro titulky"
 
 #: src/shortcuts-dialog.blp:51
 msgid "Open Audio Menu"
-msgstr ""
+msgstr "Otevřít nabídku pro zvuk"
 
 #: src/shortcuts-dialog.blp:56
 msgid "Open Chapters Menu"
-msgstr ""
+msgstr "Otevřít nabídku pro kapitoly"
 
 #: src/shortcuts-dialog.blp:66
 msgid "Show Shortcuts"
-msgstr ""
+msgstr "Ukázat klávesové zkratky"
 
 #: src/shortcuts-dialog.blp:71
 msgid "Close Window"
-msgstr ""
+msgstr "Zavřít okno"
 
 #: src/shortcuts-dialog.blp:76 src/window.blp:129
 msgid "Save Session"
-msgstr ""
+msgstr "Uložit sezení"
 
 #: src/shortcuts-dialog.blp:81 src/window.blp:130
 msgid "Save Session and Close"
-msgstr ""
+msgstr "Uložit sezení a zavřít"
 
 #: src/shortcuts-dialog.blp:86
 msgid "Quit"
-msgstr ""
+msgstr "Ukončit"
 
 #: src/window.blp:118
 msgid "Main Menu"
-msgstr ""
+msgstr "Hlavní nabídka"
 
 #: src/window.blp:124
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 #: src/window.blp:125
 msgid "About Cine"
-msgstr ""
+msgstr "O aplikaci Cine"
 
 #: src/window.blp:169 src/window.blp:541
 msgid "Previous"
-msgstr ""
+msgstr "Předchozí"
 
 #: src/window.blp:192 src/window.blp:542
 msgid "Next"
-msgstr ""
+msgstr "Další"
 
 #: src/window.blp:273
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: src/window.blp:288
 msgid "Chapters"
-msgstr ""
+msgstr "Kapitoly"
 
 #: src/window.blp:305
 msgid "Shuffle Playlist"
-msgstr ""
+msgstr "Zamíchat frontu"
 
 #: src/window.blp:390
 msgid "Toggle Elapsed/Remaining"
-msgstr ""
+msgstr "Přepnout uplynulé/zbývající"
 
 #: src/window.blp:437
 msgid "Drag and drop files here"
-msgstr ""
+msgstr "Přetáhněte soubory sem"
 
 #: src/window.blp:457
 msgid "Open…"
-msgstr ""
+msgstr "Otevřít…"
 
 #~ msgid "Unknown title"
 #~ msgstr "Neznámý název"
