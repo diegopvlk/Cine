@@ -112,21 +112,6 @@ class OptionsMenuButton(Gtk.MenuButton):
             spin_down.props.width_request = 50
             spin_up.props.width_request = 50
 
-        # TODO: remove for gnome 51
-        # GTK bug: not possible to close popover after opening dropdown
-        self.popv_motion = Gtk.EventControllerMotion()
-        for btn_num in range(1, 4):
-            gesture_click = Gtk.GestureClick(button=btn_num)
-            gesture_click.connect("pressed", self._popdown)
-            self.popover.add_controller(gesture_click)
-        self.popover.add_controller(self.popv_motion)
-
-    def _popdown(self, *args):
-        if not self.popv_motion.props.contains_pointer:
-            self.grab_focus()
-            self.popover.popdown()
-            self.grab_focus()
-
     def _on_active_changed(self, *arg):
         if not self.get_active():
             return

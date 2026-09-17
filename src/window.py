@@ -541,23 +541,6 @@ class CineWindow(Adw.ApplicationWindow):
 
                 popover.connect("closed", on_popv_closed)
 
-        # TODO: remove for gnome 51
-        # Somehow because the options menu contains other menus popovers inside,
-        # when closing it, contains_pointer from header/controls still returns True,
-        # even if not hovering; setting Gtk.PropagationLimit.NONE seems to be the only way to fix it
-        # Also affects click behaviour, when closing without the workaround, click gesture wont work
-        # and will activate the window_handle clicks instead, until controls are hovered again
-
-        def set_p_limit_workaround(btn, _gparam):
-            limit = (
-                Gtk.PropagationLimit.NONE
-                if btn.props.active
-                else Gtk.PropagationLimit.SAME_NATIVE
-            )
-            self.motion_controls.set_propagation_limit(limit)
-
-        self.options_menu_btn.connect("notify::active", set_p_limit_workaround)
-
     def _set_fs_state(self, _window, _gparam):
         is_fullscreen = self.props.fullscreened
 
@@ -1705,7 +1688,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         if not self._hide_icon_indicator:
             self.revealer_icon_indicator.set_reveal_child(True)
-            timeout_add_once(350, self.revealer_icon_indicator.set_reveal_child, False)
+            timeout_add_once(385, self.revealer_icon_indicator.set_reveal_child, False)
 
     def do_close_request(self) -> bool:
         try:

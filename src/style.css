@@ -24,7 +24,7 @@ sheet {
 }
 
 label.link {
-  --accent-color: @accent_color;
+  --accent-color: oklab(from @accent_bg_color var(--standalone-color-oklab));
 }
 
 toast {
@@ -151,7 +151,7 @@ button:active:not(.close):not(.maximize):not(.minimize):not(.pill):not(
 }
 
 button.a-loop {
-  color: oklab(from @accent_color var(--standalone-color-oklab));
+  color: oklab(from @accent_bg_color var(--standalone-color-oklab));
   background-color: rgb(from @accent_bg_color r g b / calc(alpha * 0.25));
   box-shadow:
     inset 0 0px 0px 1px rgb(from currentColor r g b / calc(alpha * 0.5)),
