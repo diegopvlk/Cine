@@ -174,6 +174,7 @@ class CineWindow(Adw.ApplicationWindow):
         self._hide_icon_indicator: bool = True
         self.skip_pause_obs_count: int = 0
         self._playing_on_press: bool = False
+        self._duration: float = 0.0
         self.thumb_area: ThumbPreviewGLArea | None = None
         self._thumb_w: int = 1280
         self.is_local_path: bool = True
@@ -970,19 +971,18 @@ class CineWindow(Adw.ApplicationWindow):
         a.stop() if self._is_audio else a.load_file(self._video_path)
 
     def _hide_time_tooltip(self, *args):
-        self.prev_reveal = False
+        self._prev_reveal = False
         self.tooltip_thumb_revealer.set_reveal_child(False)
         self.tooltip_label_revealer.set_reveal_child(False)
 
     def _set_time_tooltip(self, *args):
         self._prev_prog_motion_xy = (-1, -1)  # triggers _on_progress_motion
-        self.width = self.get_width()
-        self.prog_width = self.video_progress_scale.get_width()
-        self.duration = float(self.mpv.duration or 0)
-        self.prev_reveal = False
+        self._width = self.get_width()
+        self._prog_width = self.video_progress_scale.get_width()
+        self._prev_reveal = False
 
     def _move_time_tooltip(self, revealer, layer: Gtk.Fixed, x, tooltip_w):
-        x_pos = max(0, min(x - (tooltip_w / 2) + 23, self.width - tooltip_w))
+        x_pos = max(0, min(x - (tooltip_w / 2) + 23, self._width - tooltip_w))
         layer.move(revealer, x_pos, 0)
 
     def _on_progress_motion(self, _controller, x, y):
@@ -996,16 +996,16 @@ class CineWindow(Adw.ApplicationWindow):
 
         show_thumb = self.thumb_area is not None and not self._is_audio
 
-        if not self.prev_reveal:
+        if not self._prev_reveal:
             self.tooltip_thumb_revealer.set_reveal_child(show_thumb)
             self.tooltip_label_revealer.set_reveal_child(True)
-            self.prev_reveal = True
+            self._prev_reveal = True
 
-        if self.prog_width <= 0:
+        if self._prog_width <= 0:
             return
 
-        percentage = max(0, min(1, x / self.prog_width))
-        self._hover_time = percentage * self.duration
+        percentage = max(0, min(1, x / self._prog_width))
+        self._hover_time = percentage * self._duration
 
         title = None
         if self._chapters:
@@ -1226,7 +1226,7 @@ class CineWindow(Adw.ApplicationWindow):
             self._playing_on_press = not self.mpv.pause
             if self._playing_on_press:
                 self.skip_pause_obs_count += 1
-                self.mpv.command("set", "pause", "yes")
+                self.mpv.command_async("set", "pause", "yes")
         except Exception:
             logger.exception("_on_progress_pressed failed")
             self.skip_pause_obs_count = 0
@@ -1236,7 +1236,7 @@ class CineWindow(Adw.ApplicationWindow):
             if self._playing_on_press:
                 self.skip_pause_obs_count += 1
                 self._playing_on_press = False
-                self.mpv.command("set", "pause", "no")
+                self.mpv.command_async("set", "pause", "no")
         except Exception:
             logger.exception("_on_progress_released failed")
             self.skip_pause_obs_count = 0
@@ -1943,7 +1943,9 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("duration")
         def on_duration_change(_name, value):
-            idle_add_once(self._update_duration, float(value or 0))
+            val = float(value or 0)
+            self._duration = val
+            idle_add_once(self._update_duration, val)
 
         def sync_mute(muted):
             self.mute_toggle_btn.handler_block(self.mute_handler_id)
