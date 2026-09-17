@@ -1871,7 +1871,7 @@ class CineWindow(Adw.ApplicationWindow):
                 scale.add_mark(b_time, Gtk.PositionType.BOTTOM, None)
                 btn.remove_css_class("a-loop")
 
-            if ab_off and name == "ab-loop-a":
+            if ab_off:
                 btn.remove_css_class("a-loop")
                 scale.clear_marks()
                 for chapter in self._chapters:
