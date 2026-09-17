@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-15 13:38-0300\n"
+"POT-Creation-Date: 2026-09-16 20:39-0300\n"
 "PO-Revision-Date: 2026-04-06 11:07+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/cine/app/fi/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Weblate 5.17-dev\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:234 src/mpris.py:144
-#: src/mpris.py:362 src/window.py:192 src/window.py:2061 src/window.blp:6
+#: src/mpris.py:362 src/window.py:193 src/window.py:2045 src/window.blp:6
 #: src/window.blp:81 src/window.blp:436
 msgid "Cine"
 msgstr "Cine"
@@ -134,7 +134,7 @@ msgid ""
 msgstr ""
 "Vaatii Flatpak-käyttöoikeuden lukeakseen kansiota, johon video on tallennettu"
 
-#: src/playlist.py:321 src/window.py:1808
+#: src/playlist.py:321 src/window.py:1790
 msgid "File Error"
 msgstr "Tiedostovirhe"
 
@@ -213,7 +213,7 @@ msgid "Restoring Session…"
 msgstr "Palautetaan istuntoa…"
 
 #: src/shortcuts.py:33 src/shortcuts.py:34 src/shortcuts.py:35
-#: src/shortcuts.py:36 src/window.py:1979 src/window.blp:201
+#: src/shortcuts.py:36 src/window.py:1963 src/window.blp:201
 msgid "Volume"
 msgstr "Äänenvoimakkuus"
 
@@ -236,7 +236,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Näytä/piilota tekstitys"
 
 #: src/shortcuts.py:41 src/shortcuts.py:42 src/shortcuts.py:170
-#: src/shortcuts.py:234 src/window.py:785 src/window.blp:244
+#: src/shortcuts.py:234 src/window.py:768 src/window.blp:244
 msgid "Subtitles"
 msgstr "Tekstitys"
 
@@ -260,7 +260,7 @@ msgstr "Seuraava toissijainen tekstitysraita"
 msgid "Previous Secondary Subtitle Track"
 msgstr "Edellinen toissijainen tekstitysraita"
 
-#: src/shortcuts.py:45 src/shortcuts.py:46 src/window.py:790 src/window.blp:259
+#: src/shortcuts.py:45 src/shortcuts.py:46 src/window.py:773 src/window.blp:259
 msgid "Audio"
 msgstr "Ääni"
 
@@ -288,12 +288,12 @@ msgstr "Kelaa 5 s taaksepäin"
 msgid "Seek 5s Forward"
 msgstr "Kelaa 5 s eteenpäin"
 
-#: src/shortcuts.py:51 src/shortcuts.py:52 src/window.py:1926
+#: src/shortcuts.py:51 src/shortcuts.py:52 src/window.py:1908
 #: src/window.blp:357
 msgid "Fullscreen"
 msgstr "Koko näyttö"
 
-#: src/shortcuts.py:53 src/window.py:1926
+#: src/shortcuts.py:53 src/window.py:1908
 msgid "Exit Fullscreen"
 msgstr "Poistu koko näytöstä"
 
@@ -400,11 +400,11 @@ msgstr "Tilastonäkymä"
 msgid "Set/Clear A-B Loop Points"
 msgstr "Aseta/poista A-B-toistopisteet"
 
-#: src/shortcuts.py:86 src/window.py:1282 src/window.blp:330
+#: src/shortcuts.py:86 src/window.py:1264 src/window.blp:330
 msgid "Loop"
 msgstr "Kertaus"
 
-#: src/shortcuts.py:86 src/window.py:1279
+#: src/shortcuts.py:86 src/window.py:1261
 msgid "Loop File"
 msgstr "Kertaa tiedosto"
 
@@ -497,94 +497,94 @@ msgstr "Toisto"
 msgid "Miscellaneous"
 msgstr "Sekalaiset"
 
-#: src/window.py:640 src/window.blp:104
+#: src/window.py:623 src/window.blp:104
 msgid "Add Subtitle Track"
 msgstr "Lisää tekstitysraita"
 
-#: src/window.py:642 src/window.py:651
+#: src/window.py:625 src/window.py:634
 msgid "None"
 msgstr "Ei mitään"
 
-#: src/window.py:649 src/window.blp:105
+#: src/window.py:632 src/window.blp:105
 msgid "Add Audio Track"
 msgstr "Lisää ääniraita"
 
-#: src/window.py:689
+#: src/window.py:672
 msgid "Track"
 msgstr "Raita"
 
-#: src/window.py:732 src/playlist.blp:31 src/window.blp:102
+#: src/window.py:715 src/playlist.blp:31 src/window.blp:102
 msgid "Add Folder"
 msgstr "Lisää kansio"
 
-#: src/window.py:732 src/shortcuts-dialog.blp:21 src/window.blp:99
+#: src/window.py:715 src/shortcuts-dialog.blp:21 src/window.blp:99
 #: src/window.blp:481 src/window.blp:547
 msgid "Open Folder"
 msgstr "Avaa kansio"
 
-#: src/window.py:759 src/shortcuts-dialog.blp:16 src/window.blp:98
+#: src/window.py:742 src/shortcuts-dialog.blp:16 src/window.blp:98
 #: src/window.blp:546
 msgid "Open Files"
 msgstr "Avaa tiedostoja"
 
-#: src/window.py:762 src/playlist.blp:26 src/window.blp:101
+#: src/window.py:745 src/playlist.blp:26 src/window.blp:101
 msgid "Add Files"
 msgstr "Lisää tiedostoja"
 
-#: src/window.py:766
+#: src/window.py:749
 msgid "Add Subtitle"
 msgstr "Lisää tekstitys"
 
-#: src/window.py:769
+#: src/window.py:752
 msgid "Add Audio"
 msgstr "Lisää ääni"
 
-#: src/window.py:794
+#: src/window.py:777
 msgid "Media"
 msgstr "Media"
 
-#: src/window.py:857
+#: src/window.py:840
 msgid "Session Saved"
 msgstr "Istunto tallennettu"
 
-#: src/window.py:865 src/playlist.blp:36 src/window.blp:103
+#: src/window.py:848 src/playlist.blp:36 src/window.blp:103
 msgid "Add URL"
 msgstr "Lisää verkko-osoite"
 
-#: src/window.py:865 src/shortcuts-dialog.blp:26 src/window.blp:100
+#: src/window.py:848 src/shortcuts-dialog.blp:26 src/window.blp:100
 #: src/window.blp:490 src/window.blp:548
 msgid "Open URL"
 msgstr "Avaa verkko-osoite"
 
-#: src/window.py:878
+#: src/window.py:861
 msgid "URL"
 msgstr "Verkko-osoite"
 
-#: src/window.py:886 src/playlist.blp:22
+#: src/window.py:869 src/playlist.blp:22
 msgid "Add"
 msgstr "Lisää"
 
-#: src/window.py:886 src/window.blp:93
+#: src/window.py:869 src/window.blp:93
 msgid "Open"
 msgstr "Avaa"
 
-#: src/window.py:1128
+#: src/window.py:1110
 msgid "Chapter"
 msgstr "Kappale"
 
-#: src/window.py:1190 src/window.py:2050
+#: src/window.py:1172 src/window.py:2034
 msgid "Play"
 msgstr "Toista"
 
-#: src/window.py:1190
+#: src/window.py:1172
 msgid "Pause"
 msgstr "Keskeytä"
 
-#: src/window.py:1276
+#: src/window.py:1258
 msgid "Loop Playlist"
 msgstr "Kertaa soittolista"
 
-#: src/window.py:2050
+#: src/window.py:2034
 msgid "Play or Add Subtitles"
 msgstr "Toista tai lisää tekstitys"
 
