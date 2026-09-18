@@ -72,6 +72,14 @@
   </requires>
 
   <releases>
+    <release version="1.8.5" date="2026-09-18">
+      <description translate="no">
+        <ul>
+          <li>Added Czech translation</li>
+          <li>Updated GNOME runtime to 51</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.8.4" date="2026-08-16">
       <description translate="no">
         <ul>
