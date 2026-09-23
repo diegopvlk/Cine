@@ -216,6 +216,11 @@ popover > arrow {
   padding: 10px;
 }
 
+.volume-scale {
+  margin-left: -4px;
+  margin-right: 2px;
+}
+
 scale highlight,
 scale > trough > slider {
   background-color: white;
@@ -227,6 +232,7 @@ popover scale > trough > slider {
 
 scale > trough > slider {
   border-radius: 100%;
+  transform: scale(0.9);
 }
 scale trough {
   background-color: rgba(255, 255, 255, 0.3);
