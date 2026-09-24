@@ -72,7 +72,7 @@
   </requires>
 
   <releases>
-    <release version="1.8.5" date="2026-09-18">
+    <release version="1.8.6" date="2026-09-24">
       <description translate="no">
         <ul>
           <li>Added Czech translation</li>
