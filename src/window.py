@@ -1640,13 +1640,15 @@ class CineWindow(Adw.ApplicationWindow):
             should_inhibit = False
 
         if should_inhibit and self._inhibit_cookie == 0:
-            self._inhibit_cookie = self.app.inhibit(
-                self,
-                Gtk.ApplicationInhibitFlags.IDLE,
-                "Playing Media",
-            )
+            if self.app.props.is_registered:
+                self._inhibit_cookie = self.app.inhibit(
+                    self,
+                    Gtk.ApplicationInhibitFlags.IDLE,
+                    "Playing Media",
+                )
         elif not should_inhibit and self._inhibit_cookie != 0:
-            self.app.uninhibit(self._inhibit_cookie)
+            if self.app.props.is_registered:
+                self.app.uninhibit(self._inhibit_cookie)
             self._inhibit_cookie = 0
 
     def _show_icon_indicator(self):
@@ -1661,6 +1663,11 @@ class CineWindow(Adw.ApplicationWindow):
             timeout_add_once(385, self.revealer_icon_indicator.set_reveal_child, False)
 
     def do_close_request(self) -> bool:
+        if self._inhibit_cookie:
+            if self.app.props.is_registered:
+                self.app.uninhibit(self._inhibit_cookie)
+            self._inhibit_cookie = 0
+
         try:
             same_playlist = is_same_playlist(self.mpv.playlist)
             save_pos = settings.get_boolean("save-video-position")
@@ -1671,9 +1678,6 @@ class CineWindow(Adw.ApplicationWindow):
             self.mpv.wait_for_shutdown(timeout=3)
         except mpv.ShutdownError:
             pass
-
-        if self._inhibit_cookie:
-            self.app.uninhibit(self._inhibit_cookie)
 
         return False
 
