@@ -1674,6 +1674,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         if self._inhibit_cookie:
             self.app.uninhibit(self._inhibit_cookie)
+            self._inhibit_cookie = 0
 
         return False
 
