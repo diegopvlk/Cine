@@ -23,15 +23,6 @@ import unicodedata
 from gettext import gettext as _
 from gettext import ngettext
 
-import gi
-
-gi.require_version("Adw", "1")
-gi.require_version("Gio", "2.0")
-gi.require_version("Gdk", "4.0")
-gi.require_version("GLib", "2.0")
-gi.require_version("Gtk", "4.0")
-gi.require_version("GObject", "2.0")
-gi.require_version("Pango", "1.0")
 from gi.repository import Adw, Gdk, Gio, GLib, GObject, Gtk, Pango
 
 from .utils import idle_add_once, is_local_path, timeout_add_once

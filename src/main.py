@@ -27,9 +27,15 @@ from typing import cast
 import gi
 
 gi.require_version("Adw", "1")
+gi.require_version("Gdk", "4.0")
 gi.require_version("Gio", "2.0")
+gi.require_version("GObject", "2.0")
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
+gi.require_version("GdkX11", "4.0")
+gi.require_version("GdkWayland", "4.0")
+gi.require_version("Pango", "1.0")
+
 from gi.repository import Adw, Gio, GLib, Gtk
 
 from .mpris import MPRIS

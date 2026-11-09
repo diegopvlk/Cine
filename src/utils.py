@@ -22,12 +22,6 @@ import logging
 import os
 from urllib.parse import urlparse
 
-import gi
-
-gi.require_version("Gdk", "4.0")
-gi.require_version("GLib", "2.0")
-gi.require_version("GdkX11", "4.0")
-gi.require_version("GdkWayland", "4.0")
 from gi.repository import Gdk, GdkWayland, GdkX11, GLib
 
 logging.basicConfig(format="%(levelname)s: [%(filename)s:%(lineno)d] %(message)s")

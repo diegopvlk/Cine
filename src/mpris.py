@@ -20,11 +20,6 @@
 import logging
 from gettext import gettext as _
 
-import gi
-
-gi.require_version("Adw", "1")
-gi.require_version("Gio", "2.0")
-gi.require_version("GLib", "2.0")
 from gi.repository import Adw, Gio, GLib
 
 from .mpv import ShutdownError
