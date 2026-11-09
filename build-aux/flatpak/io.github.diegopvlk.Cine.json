@@ -63,10 +63,6 @@
                         "url-template": "https://github.com/mpv-player/mpv/archive/v$version.tar.gz",
                         "is-important": true
                     }
-                },
-                {
-                    "type": "patch",
-                    "path": "fix-screenshots.diff"
                 }
             ],
             "modules": [
