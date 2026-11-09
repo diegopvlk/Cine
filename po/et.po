@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-11-09 11:46-0300\n"
-"PO-Revision-Date: 2026-07-09 03:01+0000\n"
+"PO-Revision-Date: 2026-11-12 00:21+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/cine/app/et/>\n"
 "Language: et\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.7.1.dev0\n"
+"X-Generator: Weblate 2026.11.2.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
 #: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
@@ -722,11 +722,11 @@ msgstr "Kui võimalik, siis kasuta graafikaprotsessorit video dekodeerimiseks"
 
 #: src/preferences.blp:103
 msgid "GPU-Next Renderer (Requires Restart)"
-msgstr ""
+msgstr "GPU-Next pilditöötlus (eeldab uuesti käivitust)"
 
 #: src/preferences.blp:104
 msgid "Better colors and HDR-to-SDR tone mapping"
-msgstr ""
+msgstr "Paremad värvid ja toonide vastendamine HDR-st SDR-i"
 
 #: src/preferences.blp:109
 msgid "Pick up where you left off after saving from the menu"
