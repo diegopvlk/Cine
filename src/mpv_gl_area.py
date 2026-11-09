@@ -20,13 +20,13 @@ import ctypes
 import logging
 
 import gi
-from mpv import MPV, MpvGlGetProcAddressFn, MpvRenderContext
-
-from .utils import get_display_param
 
 gi.require_version("GLib", "2.0")
 gi.require_version("Gtk", "4.0")
 from gi.repository import GLib, Gtk
+
+from .mpv import MPV, MpvGlGetProcAddressFn, MpvRenderContext
+from .utils import get_display_param
 
 logger = logging.getLogger(__name__)
 

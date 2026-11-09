@@ -21,13 +21,13 @@ import logging
 from gettext import gettext as _
 
 import gi
-from mpv import ShutdownError
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
 gi.require_version("GLib", "2.0")
 from gi.repository import Adw, Gio, GLib
 
+from .mpv import ShutdownError
 from .utils import idle_add_once
 
 logger = logging.getLogger(__name__)

@@ -214,20 +214,6 @@
             ]
         },
         {
-            "name": "python-mpv",
-            "buildsystem": "simple",
-            "build-commands": [
-                "pip3 install --no-index --no-build-isolation --find-links=. --prefix=/app python_mpv"
-            ],
-            "sources": [
-                {
-                    "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/77/bc/6aa34c8805ff62e2fefc7d171563c60598aac215d5241186031a2c839935/python_mpv-1.0.8.tar.gz",
-                    "sha256": "017fa359da059c831a94c419083491903e6d2f7c81b9841c33c196cabf4b3fe3"
-                }
-            ]
-        },
-        {
             "name": "cine",
             "builddir": true,
             "buildsystem": "meson",

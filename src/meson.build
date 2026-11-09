@@ -47,6 +47,7 @@ cine_sources = [
   'history.py',
   'main.py',
   'mpv_gl_area.py',
+  'mpv.py',
   'mpris.py',
   'options.py',
   'playlist.py',

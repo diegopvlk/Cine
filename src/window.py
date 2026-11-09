@@ -26,7 +26,6 @@ from typing import cast
 from urllib.parse import urlparse
 
 import gi
-from mpv import MPV, ShutdownError
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -38,6 +37,7 @@ from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 
 from .history import HistoryDialog
 from .mpris import MPRIS
+from .mpv import MPV, ShutdownError
 from .mpv_gl_area import ThumbPreviewGLArea, VideoGLArea
 from .options import OptionsMenuButton
 from .playlist import Playlist, PlaylistItemObj
