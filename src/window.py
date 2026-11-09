@@ -127,7 +127,7 @@ class CineWindow(Adw.ApplicationWindow):
     video_progress_adj: Gtk.Adjustment = Gtk.Template.Child()
     time_total_label: Gtk.Label = Gtk.Template.Child()
 
-    def __init__(self, is_activate=False, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.app: Adw.Application = cast(Adw.Application, kwargs.get("application"))
         self._mpris: MPRIS = self.app.mpris  # type: ignore
@@ -273,9 +273,6 @@ class CineWindow(Adw.ApplicationWindow):
         )
 
         sync_mpv_with_settings(self)
-
-        if settings.get_boolean("save-session") and is_activate:
-            restore_last_playlist(self, self.app, self.mpv)
 
     def _setup_actions(self):
         self._create_action("clear-and-add", self._on_clear_and_add)
@@ -832,6 +829,9 @@ class CineWindow(Adw.ApplicationWindow):
             return
         self._show_ui()
         self.chapters_menu_btn.popup()
+
+    def restore_session(self):
+        restore_last_playlist(self)
 
     def _on_save_session(self, *args, close=False):
         try:

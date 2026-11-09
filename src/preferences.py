@@ -60,6 +60,9 @@ def sync_mpv_with_settings(window):
     if mpv.window_maximized or settings.get_boolean("is-maximized"):
         window.maximize()
 
+    if settings.get_boolean("save-session"):
+        window.restore_session()
+
     if settings.get_boolean("hwdec"):
         mpv.hwdec = [h for h in mpv.hwdec if h != "no"] + ["auto"]
 

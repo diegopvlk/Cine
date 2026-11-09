@@ -56,6 +56,8 @@ class CineApplication(Adw.Application):
             resource_base_path="/io/github/diegopvlk/Cine",
         )
 
+        self.can_restore_session = True
+
         self.add_main_option(
             "new-window",
             ord("n"),
@@ -81,7 +83,7 @@ class CineApplication(Adw.Application):
         )
 
     def do_activate(self):
-        win = CineWindow(application=self, is_activate=True)
+        win = CineWindow(application=self)
         self._set_size_and_present(win)
 
     def _set_size_and_present(self, window, width=1920, height=1080):
@@ -90,6 +92,7 @@ class CineApplication(Adw.Application):
         window.present()
 
     def do_open(self, files, n_files, hint):
+        self.can_restore_session = False
         win: CineWindow = cast(CineWindow, self.props.active_window)
         open_new = settings.get_boolean("open-new-windows") or not win
         vid_w, vid_h = 1920, 1080
