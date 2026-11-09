@@ -209,25 +209,6 @@ template $Preferences: Adw.Dialog {
 					title: _("Subtitle Font");
 					activatable: true;
 
-					MenuButton {
-						icon-name: "info-outline-symbolic";
-						valign: center;
-
-						styles [
-							"flat",
-						]
-
-						popover: Popover {
-							Label {
-								label: _("Some fonts may not work");
-
-								styles [
-									"warning",
-								]
-							}
-						};
-					}
-
 					[suffix]
 					Label font_label {
 						label: "$FONT";

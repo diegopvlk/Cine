@@ -18,6 +18,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import logging
+import re
+import subprocess
 from gettext import gettext as _
 
 from gi.repository import Adw, Gdk, Gio, Gtk
@@ -280,46 +282,48 @@ class Preferences(Adw.Dialog):
         self.sub_color.parse(default_color)
         self.sub_color_btn.set_rgba(self.sub_color)
 
+    def _get_font_name(self, name: str, style: str) -> str | None:
+        try:
+            res = subprocess.run(
+                ["fc-match", "--brief", f"{name}:style={style}"],
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            props = {}
+            for line in res.stdout.splitlines():
+                if ":" in line:
+                    key, val = line.split(":", 1)
+                    quoted_vals = re.findall(r'"((?:[^"\\]|\\.)*)"', val)
+                    props.setdefault(key.strip(), []).extend(quoted_vals)
+
+            ps_names = props.get("postscriptname", [])
+            full_names = props.get("fullname", [])
+            font_format = props.get("fontformat", [])
+
+            if ps_names and "CFF" in font_format:
+                return ps_names[0]
+
+            return full_names[-1] if full_names else name
+        except Exception:
+            logger.exception("_get_font_name failed")
+            return None
+
     def _on_font_activated(self, _row):
         dialog = Gtk.FontDialog()
 
         def callback(dialog, result):
             try:
                 face = dialog.choose_face_finish(result)
-
                 family_obj = face.get_family()
-                family_name = family_obj.get_name()
-                style_name = face.get_face_name()
+                name = family_obj.get_name()
+                style = face.get_face_name()
 
-                ignored_styles = [
-                    "Regular",
-                    "Normal",
-                    "Roman",
-                    "Book",
-                    "Standard",
-                    "Plain",
-                    "Text",
-                    "Semi",
-                    "Semi-Bold",
-                    "Demi",
-                    "Demi-Bold",
-                    "Upright",
-                    "Alt",
-                ]
+                if n := self._get_font_name(name, style):
+                    name = n
 
-                if any(s == style_name for s in ignored_styles):
-                    font_full = family_name
-                else:
-                    # prevents "Font Bold Bold"
-                    if style_name.lower() in family_name.lower():
-                        font_full = family_name
-                    else:
-                        font_full = f"{family_name} {style_name}"
-
-                font_full = " ".join(font_full.split())
-
-                settings.set_string("subtitle-font", font_full)
-                self.font_label.set_label(font_full)
+                settings.set_string("subtitle-font", name)
+                self.font_label.set_label(name)
 
             except Exception:
                 logger.exception("Features selection failed")
