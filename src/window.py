@@ -517,6 +517,14 @@ class CineWindow(Adw.ApplicationWindow):
             popover = btn.props.popover
             popover.connect("closed", self.hide_ui_timeout)
 
+            if (
+                btn == self.subtitles_menu_btn
+                or btn == self.audio_tracks_menu_btn
+                or btn == self.video_tracks_menu_btn
+            ):
+                scrolled_w = popover.get_first_child().get_first_child()
+                scrolled_w.set_max_content_height(422)
+
             if btn == self.open_menu_btn:
 
                 def on_popv_closed(*args):
