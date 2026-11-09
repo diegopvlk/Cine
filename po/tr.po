@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 20:39-0300\n"
+"POT-Creation-Date: 2026-11-09 11:46-0300\n"
 "PO-Revision-Date: 2026-02-28 11:40-0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -19,9 +19,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.8\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:234 src/mpris.py:144
-#: src/mpris.py:362 src/window.py:193 src/window.py:2045 src/window.blp:6
-#: src/window.blp:81 src/window.blp:436
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
+#: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
+#: src/window.blp:80 src/window.blp:445
 msgid "Cine"
 msgstr "Cine"
 
@@ -36,7 +36,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;Ses;Müzik;Klip;Oynatıcı;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:122
+#: src/window.blp:129
 msgid "New Window"
 msgstr "Yeni Pencere"
 
@@ -82,7 +82,7 @@ msgid "Video Options"
 msgstr "Video Seçenekleri"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:123 src/window.blp:552
+#: src/preferences.blp:77 src/window.blp:130 src/window.blp:561
 msgid "Preferences"
 msgstr "Tercihler"
 
@@ -90,102 +90,94 @@ msgstr "Tercihler"
 msgid "Main Window"
 msgstr "Ana Pencere"
 
-#: src/history.py:59 src/history.py:63
+#: src/history.py:52 src/history.py:56
 msgid "Load All"
 msgstr "Tümünü Yükle"
 
-#: src/history.py:145
+#: src/history.py:138
 msgid "Remove from History"
 msgstr "Geçmişten Kaldır"
 
-#: src/history.py:215 src/playlist.py:426
+#: src/history.py:208 src/playlist.py:417
 msgid "Open Item Location"
 msgstr "Öge Konumunu Aç"
 
-#: src/history.py:304
+#: src/history.py:297
 msgid "Clear Watch History?"
 msgstr "İzleme Geçmişi Temizlensin mi?"
 
-#: src/history.py:305
+#: src/history.py:298
 msgid "Cancel"
 msgstr "İptal"
 
-#: src/history.py:306 src/history.blp:16
+#: src/history.py:299 src/history.blp:16
 msgid "Clear All"
 msgstr "Tümünü Temizle"
 
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:244
+#: src/main.py:193
 msgid "translator-credits"
 msgstr "Sabri Ünal <yakushabb@gmail.com>, 2026"
 
-#: src/playlist.py:122 src/playlist.blp:45
+#: src/playlist.py:113 src/playlist.blp:45
 msgid "Search"
 msgstr "Ara"
 
-#: src/playlist.py:185 src/playlist.py:193 src/playlist.py:465
-#: src/preferences.py:347 src/playlist.blp:52
+#: src/playlist.py:176 src/playlist.py:184 src/playlist.py:456
+#: src/preferences.py:359 src/playlist.blp:52
 msgid "Save Playlist"
 msgstr "Oynatma Listesini Kaydet"
 
-#: src/playlist.py:188 src/preferences.blp:120 src/preferences.blp:155
+#: src/playlist.py:179 src/preferences.blp:125 src/preferences.blp:160
 msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "Videonun saklandığı klasörü okumak için flatpak izni gerektirir"
 
-#: src/playlist.py:321 src/window.py:1790
+#: src/playlist.py:312 src/window.py:1757
 msgid "File Error"
 msgstr "Dosya Hatası"
 
-#: src/playlist.py:427
+#: src/playlist.py:418
 msgid "Remove from Playlist"
 msgstr "Oynatma Listesinden Kaldır"
 
-#: src/playlist.py:466 src/playlist.blp:16 src/window.blp:341
-#: src/window.blp:554
+#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:352
+#: src/window.blp:563
 msgid "Playlist"
 msgstr "Oynatma Listesi"
 
-#: src/playlist.py:486
+#: src/playlist.py:477
 #, python-brace-format
 msgid "{n} item"
 msgid_plural "{n} items"
 msgstr[0] "{n} öğe"
 
-#: src/preferences.py:123 src/preferences.blp:175
-msgid "Subtitle Color"
-msgstr "Alt Yazı Rengi"
-
-#: src/preferences.py:137 src/preferences.blp:255
-msgid "Subtitle Background"
-msgstr "Alt Yazı Arka Planı"
-
-#: src/preferences.py:344
+#: src/preferences.py:356
 msgid "Some features require extra permission to work properly:"
 msgstr "Bazı özelliklerin düzgün çalışması için ek izin gerekir:"
 
-#: src/preferences.py:345
+#: src/preferences.py:357
 msgid "Auto load subtitle file"
 msgstr "Altyazı dosyasını otomatik yükle"
 
-#: src/preferences.py:346
+#: src/preferences.py:358
 msgid "Auto add files from the same folder to playlist"
 msgstr "Aynı klasördeki dosyaları oynatma listesine otomatik ekle"
 
-#: src/preferences.py:348 src/preferences.blp:103
+#: src/preferences.py:360 src/preferences.blp:108
 msgid "Restore Saved Session"
 msgstr "Kaydedilmiş Oturumu Geri Yükle"
 
-#: src/preferences.py:349 src/preferences.blp:138
+#: src/preferences.py:361 src/preferences.blp:143
 msgid "Save Video Position on Close"
 msgstr "Kapatırken Video Konumunu Kaydet"
 
-#: src/preferences.py:350 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:108 src/window.blp:468 src/window.blp:553
+#: src/preferences.py:362 src/history.blp:5 src/shortcuts-dialog.blp:61
+#: src/window.blp:115 src/window.blp:477 src/window.blp:562
 msgid "Watch History"
 msgstr "İzleme Geçmişi"
 
-#: src/preferences.py:354
+#: src/preferences.py:366
 msgid ""
 "If you wish to use those features, install Flatseal for granular folder "
 "control, or run this command to grant access to all folders in the system:"
@@ -194,15 +186,15 @@ msgstr ""
 "Flatseal'ı yükleyin veya sistemdeki tüm klasörlere erişim izni vermek için "
 "bu komutu çalıştırın:"
 
-#: src/preferences.py:360
+#: src/preferences.py:372
 msgid "Extra permission enabled."
 msgstr "Ek izin etkinleştirildi."
 
-#: src/preferences.py:376
+#: src/preferences.py:388
 msgid "Copied"
 msgstr "Kopyalandı"
 
-#: src/preferences.py:382 src/preferences.blp:58
+#: src/preferences.py:394 src/preferences.blp:58
 msgid "Copy"
 msgstr "Kopyala"
 
@@ -210,379 +202,379 @@ msgstr "Kopyala"
 msgid "Restoring Session…"
 msgstr "Oturum Geri Yükleniyor…"
 
-#: src/shortcuts.py:33 src/shortcuts.py:34 src/shortcuts.py:35
-#: src/shortcuts.py:36 src/window.py:1963 src/window.blp:201
+#: src/shortcuts.py:28 src/shortcuts.py:29 src/shortcuts.py:30
+#: src/shortcuts.py:31 src/window.py:1927 src/window.blp:208
 msgid "Volume"
 msgstr "Ses"
 
-#: src/shortcuts.py:33
+#: src/shortcuts.py:28
 msgid "Volume Increase"
 msgstr "Sesi Artır"
 
-#: src/shortcuts.py:34
+#: src/shortcuts.py:29
 msgid "Volume Decrease"
 msgstr "Sesi Azalt"
 
-#: src/shortcuts.py:37 src/shortcuts.py:38 src/shortcuts.py:39
-#: src/preferences.blp:278 src/preferences.blp:290 src/window.blp:180
-#: src/window.blp:540
+#: src/shortcuts.py:32 src/shortcuts.py:33 src/shortcuts.py:34
+#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:187
+#: src/window.blp:549
 msgid "Play/Pause"
 msgstr "Oynat/Duraklat"
 
-#: src/shortcuts.py:40
+#: src/shortcuts.py:35
 msgid "Show/Hide Subtitles"
 msgstr "Alt Yazıları Göster/Gizle"
 
-#: src/shortcuts.py:41 src/shortcuts.py:42 src/shortcuts.py:170
-#: src/shortcuts.py:234 src/window.py:768 src/window.blp:244
+#: src/shortcuts.py:36 src/shortcuts.py:37 src/shortcuts.py:165
+#: src/shortcuts.py:229 src/window.py:758 src/window.blp:255
 msgid "Subtitles"
 msgstr "Alt Yazılar"
 
-#: src/shortcuts.py:41
+#: src/shortcuts.py:36
 msgid "Next Subtitle Track"
 msgstr "Sonraki Altyazı Parçası"
 
-#: src/shortcuts.py:42
+#: src/shortcuts.py:37
 msgid "Previous Subtitle Track"
 msgstr "Önceki Altyazı Parçası"
 
-#: src/shortcuts.py:43 src/shortcuts.py:44
+#: src/shortcuts.py:38 src/shortcuts.py:39
 msgid "Secondary Subtitles"
 msgstr "İkincil Altyazılar"
 
-#: src/shortcuts.py:43
+#: src/shortcuts.py:38
 msgid "Next Secondary Subtitle Track"
 msgstr "Sonraki İkincil Altyazı Parçası"
 
-#: src/shortcuts.py:44
+#: src/shortcuts.py:39
 msgid "Previous Secondary Subtitle Track"
 msgstr "Önceki İkincil Altyazı Parçası"
 
-#: src/shortcuts.py:45 src/shortcuts.py:46 src/window.py:773 src/window.blp:259
+#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:763 src/window.blp:270
 msgid "Audio"
 msgstr "Ses"
 
-#: src/shortcuts.py:45
+#: src/shortcuts.py:40
 msgid "Next Audio Track"
 msgstr "Sonraki Ses Parçası"
 
-#: src/shortcuts.py:46
+#: src/shortcuts.py:41
 msgid "Previous Audio Track"
 msgstr "Önceki Ses Parçası"
 
-#: src/shortcuts.py:47
+#: src/shortcuts.py:42
 msgid "Seek 10s Backward"
 msgstr "10sn Geri Sar"
 
-#: src/shortcuts.py:48
+#: src/shortcuts.py:43
 msgid "Seek 10s Forward"
 msgstr "10sn İleri Sar"
 
-#: src/shortcuts.py:49
+#: src/shortcuts.py:44
 msgid "Seek 5s Backward"
 msgstr "5 sn Geri Sar"
 
-#: src/shortcuts.py:50
+#: src/shortcuts.py:45
 msgid "Seek 5s Forward"
 msgstr "5 sn İleri Sar"
 
-#: src/shortcuts.py:51 src/shortcuts.py:52 src/window.py:1908
-#: src/window.blp:357
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1875
+#: src/window.blp:368
 msgid "Fullscreen"
 msgstr "Tam Ekran"
 
-#: src/shortcuts.py:53 src/window.py:1908
+#: src/shortcuts.py:48 src/window.py:1875
 msgid "Exit Fullscreen"
 msgstr "Tam Ekrandan Çık"
 
-#: src/shortcuts.py:62 src/shortcuts.py:63 src/shortcuts.py:64
-#: src/options.blp:285 src/options.blp:311
+#: src/shortcuts.py:57 src/shortcuts.py:58 src/shortcuts.py:59
+#: src/options.blp:283 src/options.blp:309
 msgid "Zoom"
 msgstr "Yaklaştırma"
 
-#: src/shortcuts.py:62 src/shortcuts.py:63
+#: src/shortcuts.py:57 src/shortcuts.py:58
 msgid "Zoom In"
 msgstr "Yakınlaştır"
 
-#: src/shortcuts.py:64
+#: src/shortcuts.py:59
 msgid "Zoom Out"
 msgstr "Uzaklaştır"
 
-#: src/shortcuts.py:67 src/shortcuts.py:68 src/options.blp:623
-#: src/options.blp:649
+#: src/shortcuts.py:62 src/shortcuts.py:63 src/options.blp:621
+#: src/options.blp:647
 msgid "Subtitle Delay"
 msgstr "Alt Yazı Gecikmesi"
 
-#: src/shortcuts.py:67
+#: src/shortcuts.py:62
 msgid "Decrease Subtitle Delay"
 msgstr "Alt Yazı Gecikmesini Azalt"
 
-#: src/shortcuts.py:68
+#: src/shortcuts.py:63
 msgid "Increase Subtitle Delay"
 msgstr "Alt Yazı Gecikmesini Artır"
 
-#: src/shortcuts.py:69 src/shortcuts.py:70
+#: src/shortcuts.py:64 src/shortcuts.py:65
 msgid "Subtitle Position"
 msgstr "Alt Yazı Konumu"
 
-#: src/shortcuts.py:69
+#: src/shortcuts.py:64
 msgid "Move Subtitles Up"
 msgstr "Alt Yazıları Yukarı Taşı"
 
-#: src/shortcuts.py:70
+#: src/shortcuts.py:65
 msgid "Move Subtitles Down"
 msgstr "Alt Yazıları Aşağı Taşı"
 
-#: src/shortcuts.py:71 src/shortcuts.py:72 src/preferences.blp:244
+#: src/shortcuts.py:66 src/shortcuts.py:67 src/preferences.blp:236
 msgid "Subtitle Scale"
 msgstr "Alt Yazı Ölçeği"
 
-#: src/shortcuts.py:71
+#: src/shortcuts.py:66
 msgid "Increase Subtitle Scale"
 msgstr "Alt Yazı Ölçeğini Artır"
 
-#: src/shortcuts.py:72
+#: src/shortcuts.py:67
 msgid "Decrease Subtitle Scale"
 msgstr "Alt Yazı Ölçeğini Azalt"
 
-#: src/shortcuts.py:73 src/window.blp:212
+#: src/shortcuts.py:68 src/window.blp:219
 msgid "Mute/Unmute"
 msgstr "Sesi Kapat/Aç"
 
-#: src/shortcuts.py:74 src/shortcuts.py:75 src/shortcuts.py:76
-#: src/options.blp:680 src/options.blp:706
+#: src/shortcuts.py:69 src/shortcuts.py:70 src/shortcuts.py:71
+#: src/options.blp:678 src/options.blp:704
 msgid "Audio Delay"
 msgstr "Ses Gecikmesi"
 
-#: src/shortcuts.py:74
+#: src/shortcuts.py:69
 msgid "Decrease Audio Delay"
 msgstr "Ses Gecikmesini Azalt"
 
-#: src/shortcuts.py:75 src/shortcuts.py:76
+#: src/shortcuts.py:70 src/shortcuts.py:71
 msgid "Increase Audio Delay"
 msgstr "Ses Gecikmesini Artır"
 
-#: src/shortcuts.py:77
+#: src/shortcuts.py:72
 msgid "Go Back One Frame"
 msgstr "Bir Kare Geri Git"
 
-#: src/shortcuts.py:78
+#: src/shortcuts.py:73
 msgid "Advance One Frame"
 msgstr "Bir Kare İleri Git"
 
-#: src/shortcuts.py:79
+#: src/shortcuts.py:74
 msgid "Seek to the Previous Chapter"
 msgstr "Önceki Bölüme Atla"
 
-#: src/shortcuts.py:80
+#: src/shortcuts.py:75
 msgid "Seek to the Next Chapter"
 msgstr "Sonraki Bölüme Atla"
 
-#: src/shortcuts.py:81
+#: src/shortcuts.py:76
 msgid "Take Screenshot With Subtitles"
 msgstr "Alt Yazılı Ekran Görüntüsü Al"
 
-#: src/shortcuts.py:82
+#: src/shortcuts.py:77
 msgid "Take Screenshot Without Subtitles"
 msgstr "Alt Yazısız Ekran Görüntüsü Al"
 
-#: src/shortcuts.py:83
+#: src/shortcuts.py:78
 msgid "Statistics"
 msgstr "İstatistikler"
 
-#: src/shortcuts.py:84
+#: src/shortcuts.py:79
 msgid "Statistics Overlay"
 msgstr "İstatistik Genel Görünümü"
 
-#: src/shortcuts.py:85 src/window.blp:318
+#: src/shortcuts.py:80 src/window.blp:329
 msgid "Set/Clear A-B Loop Points"
 msgstr "A-B Döngü Noktalarını Ayarla/Temizle"
 
-#: src/shortcuts.py:86 src/window.py:1264 src/window.blp:330
+#: src/shortcuts.py:81 src/window.py:1256 src/window.blp:341
 msgid "Loop"
 msgstr "Döngü"
 
-#: src/shortcuts.py:86 src/window.py:1261
+#: src/shortcuts.py:81 src/window.py:1253
 msgid "Loop File"
 msgstr "Dosya Döngüsü"
 
-#: src/shortcuts.py:87 src/shortcuts.py:88 src/options.blp:342
-#: src/options.blp:367
+#: src/shortcuts.py:82 src/shortcuts.py:83 src/options.blp:340
+#: src/options.blp:365
 msgid "Contrast"
 msgstr "Karşıtlık"
 
-#: src/shortcuts.py:87
+#: src/shortcuts.py:82
 msgid "Decrease Contrast"
 msgstr "Karşıtlığı Azalt"
 
-#: src/shortcuts.py:88
+#: src/shortcuts.py:83
 msgid "Increase Contrast"
 msgstr "Karşıtlığı Artır"
 
-#: src/shortcuts.py:89 src/shortcuts.py:90 src/options.blp:398
-#: src/options.blp:423
+#: src/shortcuts.py:84 src/shortcuts.py:85 src/options.blp:396
+#: src/options.blp:421
 msgid "Brightness"
 msgstr "Parlaklık"
 
-#: src/shortcuts.py:89
+#: src/shortcuts.py:84
 msgid "Decrease Brightness"
 msgstr "Parlaklığı Azalt"
 
-#: src/shortcuts.py:90
+#: src/shortcuts.py:85
 msgid "Increase Brightness"
 msgstr "Parlaklığı Artır"
 
-#: src/shortcuts.py:91 src/shortcuts.py:92 src/options.blp:454
-#: src/options.blp:479
+#: src/shortcuts.py:86 src/shortcuts.py:87 src/options.blp:452
+#: src/options.blp:477
 msgid "Gamma"
 msgstr "Gama"
 
-#: src/shortcuts.py:91
+#: src/shortcuts.py:86
 msgid "Decrease Gamma"
 msgstr "Gamayı Azalt"
 
-#: src/shortcuts.py:92
+#: src/shortcuts.py:87
 msgid "Increase Gamma"
 msgstr "Gamayı Artır"
 
-#: src/shortcuts.py:93 src/shortcuts.py:94 src/options.blp:510
-#: src/options.blp:535
+#: src/shortcuts.py:88 src/shortcuts.py:89 src/options.blp:508
+#: src/options.blp:533
 msgid "Saturation"
 msgstr "Doygunluk"
 
-#: src/shortcuts.py:93
+#: src/shortcuts.py:88
 msgid "Decrease Saturation"
 msgstr "Doygunluğu Azalt"
 
-#: src/shortcuts.py:94
+#: src/shortcuts.py:89
 msgid "Increase Saturation"
 msgstr "Doygunluğu Artır"
 
-#: src/shortcuts.py:95 src/shortcuts.py:96 src/shortcuts.py:97
+#: src/shortcuts.py:90 src/shortcuts.py:91 src/shortcuts.py:92
 msgid "Speed"
 msgstr "Hız"
 
-#: src/shortcuts.py:95
+#: src/shortcuts.py:90
 msgid "Decrease Playback Speed"
 msgstr "Oynatma Hızını Azalt"
 
-#: src/shortcuts.py:96
+#: src/shortcuts.py:91
 msgid "Increase Playback Speed"
 msgstr "Oynatma Hızını Artır"
 
-#: src/shortcuts.py:97 src/options.blp:727
+#: src/shortcuts.py:92 src/options.blp:725
 msgid "Reset Playback Speed"
 msgstr "Oynatma Hızını Sıfırla"
 
-#: src/shortcuts.py:154 src/shortcuts.py:237
+#: src/shortcuts.py:149 src/shortcuts.py:232
 msgid "Display & Video"
 msgstr "Ekran ve Video"
 
-#: src/shortcuts.py:171 src/shortcuts.py:235
+#: src/shortcuts.py:166 src/shortcuts.py:230
 msgid "Audio & Volume"
 msgstr "Ses ve Ses Düzeyi"
 
-#: src/shortcuts.py:172 src/shortcuts.py:236
+#: src/shortcuts.py:167 src/shortcuts.py:231
 msgid "Navigation"
 msgstr "Gezinme"
 
-#: src/shortcuts.py:173 src/shortcuts.py:238
+#: src/shortcuts.py:168 src/shortcuts.py:233
 msgid "Playback"
 msgstr "Oynatma"
 
-#: src/shortcuts.py:177 src/shortcuts.py:183 src/shortcuts.py:239
-#: src/shortcuts.py:243
+#: src/shortcuts.py:172 src/shortcuts.py:178 src/shortcuts.py:234
+#: src/shortcuts.py:238
 msgid "Miscellaneous"
 msgstr "Çeşitli"
 
-#: src/window.py:623 src/window.blp:104
+#: src/window.py:622 src/window.blp:110
 msgid "Add Subtitle Track"
 msgstr "Alt Yazı Parçası Ekle"
 
-#: src/window.py:625 src/window.py:634
+#: src/window.py:624 src/window.py:633
 msgid "None"
 msgstr "Yok"
 
-#: src/window.py:632 src/window.blp:105
+#: src/window.py:631 src/window.blp:111
 msgid "Add Audio Track"
 msgstr "Ses Parçası Ekle"
 
-#: src/window.py:672
+#: src/window.py:662
 msgid "Track"
 msgstr "Parça"
 
-#: src/window.py:715 src/playlist.blp:31 src/window.blp:102
+#: src/window.py:705 src/playlist.blp:31 src/window.blp:105
 msgid "Add Folder"
 msgstr "Klasör Ekle"
 
-#: src/window.py:715 src/shortcuts-dialog.blp:21 src/window.blp:99
-#: src/window.blp:481 src/window.blp:547
+#: src/window.py:705 src/shortcuts-dialog.blp:21 src/window.blp:99
+#: src/window.blp:490 src/window.blp:556
 msgid "Open Folder"
 msgstr "Klasör Aç"
 
-#: src/window.py:742 src/shortcuts-dialog.blp:16 src/window.blp:98
-#: src/window.blp:546
+#: src/window.py:732 src/shortcuts-dialog.blp:16 src/window.blp:98
+#: src/window.blp:555
 msgid "Open Files"
 msgstr "Dosya Aç"
 
-#: src/window.py:745 src/playlist.blp:26 src/window.blp:101
+#: src/window.py:735 src/playlist.blp:26 src/window.blp:104
 msgid "Add Files"
 msgstr "Dosya Ekle"
 
-#: src/window.py:749
+#: src/window.py:739
 msgid "Add Subtitle"
 msgstr "Alt Yazı Ekle"
 
-#: src/window.py:752
+#: src/window.py:742
 msgid "Add Audio"
 msgstr "Ses Ekle"
 
-#: src/window.py:777
+#: src/window.py:767
 msgid "Media"
 msgstr "Ortam"
 
-#: src/window.py:840
+#: src/window.py:833
 msgid "Session Saved"
 msgstr "Oturumu kaydedildi"
 
-#: src/window.py:848 src/playlist.blp:36 src/window.blp:103
+#: src/window.py:841 src/playlist.blp:36 src/window.blp:106
 msgid "Add URL"
 msgstr "URL Ekle"
 
-#: src/window.py:848 src/shortcuts-dialog.blp:26 src/window.blp:100
-#: src/window.blp:490 src/window.blp:548
+#: src/window.py:841 src/shortcuts-dialog.blp:26 src/window.blp:100
+#: src/window.blp:499 src/window.blp:557
 msgid "Open URL"
 msgstr "URL Aç"
 
-#: src/window.py:861
+#: src/window.py:854
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:869 src/playlist.blp:22
+#: src/window.py:862 src/playlist.blp:22
 msgid "Add"
 msgstr "Ekle"
 
-#: src/window.py:869 src/window.blp:93
+#: src/window.py:862 src/window.blp:92
 msgid "Open"
 msgstr "Aç"
 
-#: src/window.py:1110
+#: src/window.py:1103
 msgid "Chapter"
 msgstr "Bölüme"
 
-#: src/window.py:1172 src/window.py:2034
+#: src/window.py:1164 src/window.py:1997
 msgid "Play"
 msgstr "Oynat"
 
-#: src/window.py:1172
+#: src/window.py:1164
 msgid "Pause"
 msgstr "Duraklat"
 
-#: src/window.py:1258
+#: src/window.py:1250
 msgid "Loop Playlist"
 msgstr "Oynatma Listesi Döngüsü"
 
-#: src/window.py:2034
+#: src/window.py:1997
 msgid "Play or Add Subtitles"
 msgstr "Oynat veya Altyazı Ekle"
 
@@ -590,100 +582,100 @@ msgstr "Oynat veya Altyazı Ekle"
 msgid "Options"
 msgstr "Seçenekler"
 
-#: src/options.blp:28
+#: src/options.blp:27
 msgid "Reset All"
 msgstr "Tümünü Sıfırla"
 
-#: src/options.blp:40
+#: src/options.blp:38
 msgid "Reset Aspect Ratio"
 msgstr "En Boy Oranını Sıfırla"
 
-#: src/options.blp:50
+#: src/options.blp:48
 msgid "Aspect Ratio"
 msgstr "En Boy Oranı"
 
-#: src/options.blp:76 src/options.blp:135
+#: src/options.blp:74 src/options.blp:133
 msgid "Original"
 msgstr "Özgün"
 
-#: src/options.blp:99
+#: src/options.blp:97
 msgid "Reset Crop"
 msgstr "Kırpmayı Sıfırla"
 
-#: src/options.blp:109
+#: src/options.blp:107
 msgid "Crop"
 msgstr "Kırp"
 
-#: src/options.blp:159
+#: src/options.blp:157
 msgid "Reset Rotation"
 msgstr "Döndürmeyi Sıfırla"
 
-#: src/options.blp:169
+#: src/options.blp:167
 msgid "Rotate"
 msgstr "Döndür"
 
-#: src/options.blp:196
+#: src/options.blp:194
 msgid "Rotate Left"
 msgstr "Sola Döndür"
 
-#: src/options.blp:204
+#: src/options.blp:202
 msgid "Rotate Right"
 msgstr "Sağa Döndür"
 
-#: src/options.blp:217
+#: src/options.blp:215
 msgid "Reset Flip"
 msgstr "Çevirmeyi Sıfırla"
 
-#: src/options.blp:227
+#: src/options.blp:225
 msgid "Flip"
 msgstr "Çevir"
 
-#: src/options.blp:254
+#: src/options.blp:252
 msgid "Flip Horizontally"
 msgstr "Yatay Çevir"
 
-#: src/options.blp:262
+#: src/options.blp:260
 msgid "Flip Vertically"
 msgstr "Dikey Çevir"
 
-#: src/options.blp:275
+#: src/options.blp:273
 msgid "Reset Zoom"
 msgstr "Yakınlaştırmayı Sıfırla"
 
-#: src/options.blp:332
+#: src/options.blp:330
 msgid "Reset Contrast"
 msgstr "Karşıtlığı Sıfırla"
 
-#: src/options.blp:388
+#: src/options.blp:386
 msgid "Reset Brightness"
 msgstr "Parlaklığı Sıfırla"
 
-#: src/options.blp:444
+#: src/options.blp:442
 msgid "Reset Gamma"
 msgstr "Gamayı Sıfırla"
 
-#: src/options.blp:500
+#: src/options.blp:498
 msgid "Reset Saturation"
 msgstr "Doygunluğu Sıfırla"
 
-#: src/options.blp:556
+#: src/options.blp:554
 msgid "Reset Hue"
 msgstr "Renk Özünü Sıfırla"
 
 #. TRANSLATORS: Do not use "Color" or "Temperature", those are different things
-#: src/options.blp:567 src/options.blp:592
+#: src/options.blp:565 src/options.blp:590
 msgid "Hue"
 msgstr "Renk Özü"
 
-#: src/options.blp:613
+#: src/options.blp:611
 msgid "Reset Subtitle Delay"
 msgstr "Alt Yazı Gecikmesini Sıfırla"
 
-#: src/options.blp:670
+#: src/options.blp:668
 msgid "Reset Audio Delay"
 msgstr "Ses Gecikmesini Sıfırla"
 
-#: src/options.blp:737 src/options.blp:763
+#: src/options.blp:735 src/options.blp:761
 msgid "Playback Speed"
 msgstr "Oynatma Hızı"
 
@@ -728,59 +720,71 @@ msgstr "Donanım Hızlandırma"
 msgid "Use GPU for video decoding when available"
 msgstr "Mümkün olduğunda video çözme için GPU kullan"
 
+#: src/preferences.blp:103
+msgid "GPU-Next Renderer (Requires Restart)"
+msgstr ""
+
 #: src/preferences.blp:104
+msgid "Better colors and HDR-to-SDR tone mapping"
+msgstr ""
+
+#: src/preferences.blp:109
 msgid "Pick up where you left off after saving from the menu"
 msgstr "Menüden kaydettikten sonra kaldığınız yerden devam edin"
 
-#: src/preferences.blp:139
+#: src/preferences.blp:144
 msgid "Also save options like brightness, subtitle delay, etc."
 msgstr "Parlaklık, altyazı gecikmesi vb. gibi seçenekleri de kaydet."
 
-#: src/preferences.blp:188 src/preferences.blp:234
+#: src/preferences.blp:180
+msgid "Subtitle Color"
+msgstr "Alt Yazı Rengi"
+
+#: src/preferences.blp:189 src/preferences.blp:247 src/preferences.blp:256
+msgid "Subtitle Background"
+msgstr "Alt Yazı Arka Planı"
+
+#: src/preferences.blp:199 src/preferences.blp:226
 msgid "Reset"
 msgstr "Sıfırla"
 
-#: src/preferences.blp:198
+#: src/preferences.blp:209
 msgid "Subtitle Font"
 msgstr "Alt Yazı Yazı Tipi"
 
-#: src/preferences.blp:211
-msgid "Some fonts may not work"
-msgstr "Kimi yazı tipleri çalışmayabilir"
-
-#: src/preferences.blp:274
+#: src/preferences.blp:272
 msgid "Primary Click"
 msgstr "Birincil Tıklama"
 
-#: src/preferences.blp:279
+#: src/preferences.blp:277
 msgid "Focus/Play/Pause"
 msgstr "Odaklan/Oynat/Duraklat"
 
-#: src/preferences.blp:280 src/preferences.blp:292
+#: src/preferences.blp:278 src/preferences.blp:290
 msgid "Bypass"
 msgstr "Yoksay"
 
-#: src/preferences.blp:286
+#: src/preferences.blp:284
 msgid "Secondary Click"
 msgstr "İkincil Tıklama"
 
-#: src/preferences.blp:291
+#: src/preferences.blp:289
 msgid "Context Menu"
 msgstr "Bağlam Menüsü"
 
-#: src/preferences.blp:300
+#: src/preferences.blp:298
 msgid "Preferred Subtitle Languages"
 msgstr "Yeğlenen Alt Yazı Dilleri"
 
-#: src/preferences.blp:301 src/preferences.blp:306
+#: src/preferences.blp:299 src/preferences.blp:304
 msgid "Example: en,es,pt"
 msgstr "Örnek: tr,en,es"
 
-#: src/preferences.blp:305
+#: src/preferences.blp:303
 msgid "Preferred Audio Languages"
 msgstr "Yeğlenen Ses Dilleri"
 
-#: src/preferences.blp:312
+#: src/preferences.blp:310
 msgid "Open Config Folder"
 msgstr "Yapılandırma klasörünü aç"
 
@@ -820,11 +824,11 @@ msgstr "Kısayolları Göster"
 msgid "Close Window"
 msgstr "Pencereyi Kapat"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:129
+#: src/shortcuts-dialog.blp:76 src/window.blp:136
 msgid "Save Session"
 msgstr "Oturumu Kaydet"
 
-#: src/shortcuts-dialog.blp:81 src/window.blp:130
+#: src/shortcuts-dialog.blp:81 src/window.blp:137
 msgid "Save Session and Close"
 msgstr "Oturumu Kaydet ve Kapat"
 
@@ -832,49 +836,52 @@ msgstr "Oturumu Kaydet ve Kapat"
 msgid "Quit"
 msgstr "Çık"
 
-#: src/window.blp:118
+#: src/window.blp:125
 msgid "Main Menu"
 msgstr "Ana Menü"
 
-#: src/window.blp:124
+#: src/window.blp:131
 msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
-#: src/window.blp:125
+#: src/window.blp:132
 msgid "About Cine"
 msgstr "Cine hakkında"
 
-#: src/window.blp:169 src/window.blp:541
+#: src/window.blp:176 src/window.blp:550
 msgid "Previous"
 msgstr "Önceki"
 
-#: src/window.blp:192 src/window.blp:542
+#: src/window.blp:199 src/window.blp:551
 msgid "Next"
 msgstr "Sonraki"
 
-#: src/window.blp:273
+#: src/window.blp:284
 msgid "Video"
 msgstr "Video"
 
-#: src/window.blp:288
+#: src/window.blp:299
 msgid "Chapters"
 msgstr "Bölümler"
 
-#: src/window.blp:305
+#: src/window.blp:316
 msgid "Shuffle Playlist"
 msgstr "Oynatma Listesini Karıştır"
 
-#: src/window.blp:390
+#: src/window.blp:399
 msgid "Toggle Elapsed/Remaining"
 msgstr "Geçen/Kalan Süre Değiştir"
 
-#: src/window.blp:437
+#: src/window.blp:446
 msgid "Drag and drop files here"
 msgstr "Dosyaları buraya sürükleyip bırak"
 
-#: src/window.blp:457
+#: src/window.blp:466
 msgid "Open…"
 msgstr "Aç…"
+
+#~ msgid "Some fonts may not work"
+#~ msgstr "Kimi yazı tipleri çalışmayabilir"
 
 #~ msgid "Left Click"
 #~ msgstr "Sol Tık"
