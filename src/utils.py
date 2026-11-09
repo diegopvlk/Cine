@@ -141,7 +141,8 @@ def parse_bindings(bindings):
 
 def is_local_path(path):
     parsed = urlparse(str(path))
-    return bool(not parsed.scheme or parsed.scheme == "file" or len(parsed.scheme) == 1)
+    s = parsed.scheme
+    return bool(not s or s == "file" or len(s) == 1)
 
 
 def _run_once(func, *args, **kwargs):
@@ -192,20 +193,19 @@ def get_display_param():
 
 def _get_fallback_w_h(width, height):
     aspect_ratio = width / height
-    base_size = 1120
+    max_w, max_h = 1120, 630
 
     if aspect_ratio < 1:
-        new_h = int(base_size / aspect_ratio)
-        new_w = base_size
+        new_h = round(max_w / aspect_ratio)
+        new_w = max_w
     else:
-        new_w = int(base_size * aspect_ratio)
-        new_h = base_size
+        new_w = round(max_w * aspect_ratio)
+        new_h = max_w
 
-    max_w, max_h = 1280, 720
     if new_w > max_w or new_h > max_h:
         scale = min(max_w / new_w, max_h / new_h)
-        new_w = int(new_w * scale)
-        new_h = int(new_h * scale)
+        new_w = round(new_w * scale)
+        new_h = round(new_h * scale)
 
     return new_w, new_h
 

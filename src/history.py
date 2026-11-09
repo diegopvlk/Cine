@@ -51,7 +51,7 @@ class HistoryDialog(Adw.Dialog):
     def __init__(self, window, **kwargs):
         super().__init__(**kwargs)
         self._win = window
-        self._hist_path = window.mpv["watch-history-path"]
+        self._hist_path = window.mpv.watch_history_path
         self._groups = {}
 
         self._load_all_group = Adw.PreferencesGroup()
@@ -193,7 +193,7 @@ class HistoryDialog(Adw.Dialog):
             self.clear_btn.set_sensitive(False)
             self.placeholder_img.set_visible(True)
             self.history_prefs_page.set_visible(False)
-            if self.history_prefs_page.get_group(0):  # type: ignore
+            if self.history_prefs_page.get_group(0):
                 self.history_prefs_page.remove(self._load_all_group)
 
         idle_add_once(self.spinner.set_visible, False)
@@ -275,7 +275,7 @@ class HistoryDialog(Adw.Dialog):
                     ):
                         last_row = None
                         i = 0
-                        while curr_row := prev_group.get_row(i):  # type: ignore
+                        while curr_row := prev_group.get_row(i):
                             last_row = curr_row
                             i += 1
 

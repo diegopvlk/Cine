@@ -20,7 +20,7 @@ import ctypes
 import logging
 
 import gi
-import mpv
+from mpv import MPV, MpvGlGetProcAddressFn, MpvRenderContext
 
 from .utils import get_display_param
 
@@ -46,7 +46,7 @@ DISPLAY_PARAM = get_display_param()
 class BaseGLArea(Gtk.GLArea):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self._ctx: mpv.MpvRenderContext | None = None
+        self._ctx: MpvRenderContext | None = None
         self._fbo = ctypes.c_int()
         self._fbo_width = 0
         self._fbo_height = 0
@@ -61,12 +61,12 @@ class BaseGLArea(Gtk.GLArea):
         self._fbo_width = self.get_width() * scale
         self._fbo_height = self.get_height() * scale
 
-    def _setup_mpv_context(self, mpv_instance: mpv.MPV) -> mpv.MpvRenderContext | None:
+    def _setup_mpv_context(self, mpv_instance: MPV) -> MpvRenderContext | None:
         try:
-            proc_address_fn = mpv.MpvGlGetProcAddressFn(
+            proc_address_fn = MpvGlGetProcAddressFn(
                 lambda _inst, name: egl_get_proc_address(name)
             )
-            ctx = mpv.MpvRenderContext(
+            ctx = MpvRenderContext(
                 mpv_instance,
                 "opengl",
                 opengl_init_params={"get_proc_address": proc_address_fn},
@@ -74,7 +74,7 @@ class BaseGLArea(Gtk.GLArea):
             )
             ctx.update_cb = lambda: GLib.idle_add(
                 self.queue_render,
-                priority=GLib.PRIORITY_HIGH_IDLE,  # type: ignore
+                priority=GLib.PRIORITY_HIGH_IDLE,
             )
             return ctx
         except Exception:
@@ -104,7 +104,7 @@ class ThumbPreviewGLArea(BaseGLArea):
     def __init__(self, hwdec, **kwargs):
         super().__init__(**kwargs)
         self.set_auto_render(False)
-        self._mpv = mpv.MPV(
+        self._mpv = MPV(
             vo="libmpv",
             sub="no",
             audio="no",
@@ -125,9 +125,6 @@ class ThumbPreviewGLArea(BaseGLArea):
             demuxer_max_bytes="128KiB",
             hr_seek=False,
             pause=True,
-            ovc="rawvideo",
-            of="image2",
-            ofopts="update=1",
             load_osd_console=False,
             load_stats_overlay=False,
             load_auto_profiles=False,
@@ -205,7 +202,7 @@ class ThumbPreviewGLArea(BaseGLArea):
 
 
 class VideoGLArea(BaseGLArea):
-    def __init__(self, mpv_instance: mpv.MPV, **kwargs):
+    def __init__(self, mpv_instance: MPV, **kwargs):
         super().__init__(**kwargs)
         self._mpv = mpv_instance
 

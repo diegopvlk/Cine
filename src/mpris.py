@@ -21,7 +21,7 @@ import logging
 from gettext import gettext as _
 
 import gi
-import mpv
+from mpv import ShutdownError
 
 gi.require_version("Adw", "1")
 gi.require_version("Gio", "2.0")
@@ -211,7 +211,7 @@ class MPRIS:
                 return "Track"
             if loop_playlist == "inf":
                 return "Playlist"
-        except mpv.ShutdownError:
+        except ShutdownError:
             pass
 
         return "None"
@@ -265,7 +265,7 @@ class MPRIS:
 
             if artist := (md or {}).get("artist"):
                 metadata["xesam:artist"] = GLib.Variant("as", [str(artist)])
-        except mpv.ShutdownError:
+        except ShutdownError:
             pass
 
         return GLib.Variant("a{sv}", metadata)
@@ -312,7 +312,7 @@ class MPRIS:
                 win.present()
             elif method == "Quit":
                 self._app.quit()
-        except mpv.ShutdownError:
+        except ShutdownError:
             pass
         except Exception:
             logger.exception("_handle_method failed")
@@ -332,7 +332,7 @@ class MPRIS:
                 "Seeked",
                 GLib.Variant("(x)", (pos_usec,)),
             )
-        except mpv.ShutdownError:
+        except ShutdownError:
             pass
 
     def _on_get_property(self, _con, _sender, _path, interface, prop):
@@ -376,7 +376,7 @@ class MPRIS:
                     return GLib.Variant("b", False)
                 elif prop in ["SupportedUriSchemes", "SupportedMimeTypes"]:
                     return GLib.Variant("as", [])
-        except mpv.ShutdownError:
+        except ShutdownError:
             pass
 
         return None
@@ -415,7 +415,7 @@ class MPRIS:
                     btn.props.active = new_shuffle
                 self._emit_props_changed({"Shuffle": GLib.Variant("b", new_shuffle)})
                 return True
-        except mpv.ShutdownError:
+        except ShutdownError:
             pass
 
         return False

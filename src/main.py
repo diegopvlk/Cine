@@ -56,6 +56,8 @@ class CineApplication(Adw.Application):
             resource_base_path="/io/github/diegopvlk/Cine",
         )
 
+        self.mpris = MPRIS(self)
+
         self.can_restore_session = True
 
         self.add_main_option(
@@ -70,8 +72,6 @@ class CineApplication(Adw.Application):
         self.connect("shutdown", self._on_shutdown)
 
     def do_startup(self):
-        self.mpris = MPRIS(self)
-
         Adw.Application.do_startup(self)
         Adw.StyleManager.get_default().props.color_scheme = Adw.ColorScheme.FORCE_DARK
 
@@ -128,15 +128,14 @@ class CineApplication(Adw.Application):
 
                     if output:
                         # "1920x1080x-90" or just "1920x1080"
-                        parts = output.splitlines()[0].split("x")
+                        p = output.splitlines()[0].split("x")
 
-                        width = int(parts[0])
-                        height = int(parts[1])
+                        width = int(p[0])
+                        height = int(p[1])
 
                         try:
-                            rotation = int(parts[2]) if len(parts) > 2 else 0
-                        except Exception:
-                            logger.exception("Failed to get rotation")
+                            rotation = int(p[2]) if len(p) > 2 and p[2] else 0
+                        except ValueError:
                             rotation = 0
 
                         if abs(rotation) in (90, 270):
@@ -156,14 +155,13 @@ class CineApplication(Adw.Application):
             win.mpv.stop()
 
         for gfile in files:
-            path = gfile.get_path() or gfile.get_uri()
-            if path:
+            if path := (gfile.get_path() or gfile.get_uri()):
                 win.mpv.loadfile(path, "append-play")
 
         for window in self.get_windows():
             w = cast(CineWindow, window)
             # Pause previous opened windows
-            w.mpv.pause = w != win
+            w.mpv.command_async("set", "pause", w != win)
 
         win.hide_ui_timeout()
 
@@ -217,8 +215,8 @@ class CineApplication(Adw.Application):
             logger.exception("find_first_file failed")
         return None
 
-    # From showtime
     def do_handle_local_options(self, options: GLib.VariantDict):
+        # Copied from showtime: https://gitlab.gnome.org/GNOME/showtime/-/blob/25066ad0ca1c20bd8b9f6f776f5be75b31277039/showtime/main.py#L211-224
         """Handle local command line arguments."""
         self.register()  # This is so props.is_remote works
 
