@@ -20,7 +20,6 @@
 import bisect
 import logging
 import os
-import shlex
 from gettext import gettext as _
 from typing import cast
 from urllib.parse import urlparse
@@ -53,7 +52,6 @@ from .utils import (
     append_modifiers,
     display,
     format_time,
-    get_mouse_bindings,
     has_host_permission,
     idle_add_once,
     is_local_path,
@@ -211,8 +209,6 @@ class CineWindow(Adw.ApplicationWindow):
         self._space_hold_id: int = 0
         self._space_holding: bool = False
         self._space_pressed: bool = False
-        self._left_clk: int = settings.get_int("left-click")
-        self._right_clk: int = settings.get_int("right-click")
         self._double_click_time = cast(int, self.mpv.input_doubleclick_time)
         self._click_delay_id: int = 0
         self._click_holding: bool = False
@@ -255,7 +251,6 @@ class CineWindow(Adw.ApplicationWindow):
             logger.exception("load-input-conf failed")
 
         self._input_bindings = cast(dict, self.mpv.input_bindings)
-        self._mouse_binds: dict = get_mouse_bindings(self._input_bindings)
         self._nonrepeat_keys, self._has_enter_binding, self._has_kp_enter_binding = (
             parse_bindings(self._input_bindings)
         )
@@ -1508,14 +1503,6 @@ class CineWindow(Adw.ApplicationWindow):
         except ShutdownError:
             pass
 
-    def _run_command(self, cmd):
-        try:
-            for sub_cmd in cmd.split(";"):
-                args = shlex.split(sub_cmd.strip())
-                self.mpv.command_async(*args)
-        except Exception:
-            logger.exception("_run_command failed")
-
     def _click_cycle_pause(self):
         self._cycle_pause()
         self._click_delay_id = 0
@@ -1535,24 +1522,29 @@ class CineWindow(Adw.ApplicationWindow):
             button == "MBTN_RIGHT" and self._right_clk == SecondaryClick.PLAY_PAUSE
         )
 
+        if is_secondary_pause:
+            self._cycle_pause()
+            return
+
         if self._click_delay_id:
             GLib.source_remove(self._click_delay_id)
             self._click_delay_id = 0
 
-        if n_press == 1 and not self._click_holding:
-            if button == "MBTN_LEFT" and self._left_clk != PrimaryClick.BYPASS:
-                self._click_delay_id = timeout_add_once(
-                    self._double_click_time, self._click_cycle_pause
-                )
-                return
-        elif n_press == 2 and (cmd_str_dbl := self._mouse_binds.get(f"{button}_DBL")):
-            self._run_command(cmd_str_dbl)
+        if (
+            n_press == 1
+            and not self._click_holding
+            and button == "MBTN_LEFT"
+            and self._left_clk != PrimaryClick.BYPASS
+        ):
+            self._click_delay_id = timeout_add_once(
+                self._double_click_time, self._click_cycle_pause
+            )
+            return
+        elif n_press == 2:
+            self.mpv.command_async("keypress", button + "_DBL")
             return
 
-        if is_secondary_pause:
-            self._cycle_pause()
-        elif cmd_str := self._mouse_binds.get(button):
-            self._run_command(cmd_str)
+        self.mpv.command_async("keypress", button)
 
     def _cancel_click_hold(self, *args):
         if not self._click_holding:
