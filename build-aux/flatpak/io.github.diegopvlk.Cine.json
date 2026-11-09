@@ -54,8 +54,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/mpv-player/mpv/archive/v0.41.0.tar.gz",
-                    "sha256": "ee21092a5ee427353392360929dc64645c54479aefdb5babc5cfbb5fad626209",
+                    "url": "https://github.com/mpv-player/mpv/archive/v0.42.0.tar.gz",
+                    "sha256": "bcfebbfa2b65a6d88dc97ea18117831072373e38b5785a2afb874ed4df5070dd",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 5348,
@@ -204,8 +204,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/yt-dlp/yt-dlp.git",
-                    "tag": "2026.10.21",
-                    "commit": "6ccd977303412151ee23352c6257dd658ffc1987",
+                    "tag": "2026.10.26",
+                    "commit": "f264a6cbd1f630894da0f368df00f8aae50140e0",
                     "x-checker-data": {
                         "type": "git",
                         "tag-pattern": "^([\\d.]+)$"
