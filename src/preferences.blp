@@ -99,6 +99,11 @@ template $Preferences: Adw.Dialog {
 					subtitle: _("Use GPU for video decoding when available");
 				}
 
+				Adw.SwitchRow gpu_next_row {
+					title: _("GPU-Next Renderer (Requires Restart)");
+					subtitle: _("Better colors and HDR-to-SDR tone mapping");
+				}
+
 				Adw.ActionRow {
 					title: _("Restore Saved Session");
 					subtitle: _("Pick up where you left off after saving from the menu");

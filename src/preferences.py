@@ -81,6 +81,7 @@ class Preferences(Adw.Dialog):
     thumb_preview_row: Adw.SwitchRow = Gtk.Template.Child()
     offload_row: Adw.SwitchRow = Gtk.Template.Child()
     hwdec_row: Adw.SwitchRow = Gtk.Template.Child()
+    gpu_next_row: Adw.SwitchRow = Gtk.Template.Child()
     normalize_volume_row: Adw.SwitchRow = Gtk.Template.Child()
     save_session_switch: Gtk.Switch = Gtk.Template.Child()
     save_position_switch: Gtk.Switch = Gtk.Template.Child()
@@ -107,6 +108,8 @@ class Preferences(Adw.Dialog):
 
         self._bind_ui()
         self._setup_mpv_updates()
+
+        self.gpu_next_row.set_visible(is_flatpak)
 
         font = settings.get_string("subtitle-font")
         self.font_label.set_label(font)
@@ -142,6 +145,7 @@ class Preferences(Adw.Dialog):
             ("normalize-volume", self.normalize_volume_row, "active"),
             ("graphics-offload", self.offload_row, "active"),
             ("hwdec", self.hwdec_row, "active"),
+            ("gpu-next", self.gpu_next_row, "active"),
             ("save-session", self.save_session_switch, "active"),
             ("save-video-position", self.save_position_switch, "active"),
             ("subtitle-scale", self.subtitle_scale_row, "value"),

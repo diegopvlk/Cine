@@ -30,6 +30,9 @@
 		<key name="hwdec" type="b">
 			<default>true</default>
 		</key>
+		<key name="gpu-next" type="b">
+			<default>false</default>
+		</key>
 		<key name="save-video-position" type="b">
 			<default>false</default>
 		</key>

@@ -22,7 +22,8 @@ import logging
 from gi.repository import GLib, Gtk
 
 from .mpv import MPV, MpvGlGetProcAddressFn, MpvRenderContext
-from .utils import get_display_param
+from .preferences import settings
+from .utils import get_display_param, is_flatpak
 
 logger = logging.getLogger(__name__)
 
@@ -58,13 +59,18 @@ class BaseGLArea(Gtk.GLArea):
         self._fbo_height = self.get_height() * scale
 
     def _setup_mpv_context(self, mpv_instance: MPV) -> MpvRenderContext | None:
+        api_type = (
+            "opengl-next"
+            if is_flatpak and settings.get_boolean("gpu-next")
+            else "opengl"
+        )
         try:
             proc_address_fn = MpvGlGetProcAddressFn(
                 lambda _inst, name: egl_get_proc_address(name)
             )
             ctx = MpvRenderContext(
                 mpv_instance,
-                "opengl",
+                api_type,
                 opengl_init_params={"get_proc_address": proc_address_fn},
                 **DISPLAY_PARAM,
             )

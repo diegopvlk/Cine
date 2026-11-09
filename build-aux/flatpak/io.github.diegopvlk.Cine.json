@@ -63,6 +63,10 @@
                         "url-template": "https://github.com/mpv-player/mpv/archive/v$version.tar.gz",
                         "is-important": true
                     }
+                },
+                {
+                    "type": "patch",
+                    "path": "opengl-next.patch"
                 }
             ],
             "modules": [
