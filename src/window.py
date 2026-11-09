@@ -41,7 +41,7 @@ from .mpris import MPRIS
 from .mpv_gl_area import ThumbPreviewGLArea, VideoGLArea
 from .options import OptionsMenuButton
 from .playlist import Playlist, PlaylistItemObj
-from .preferences import settings, sync_mpv_with_settings
+from .preferences import get_init_mpv_settings, settings, sync_mpv_with_settings
 from .save_session import (
     is_same_playlist,
     restore_last_playlist,
@@ -183,6 +183,8 @@ class CineWindow(Adw.ApplicationWindow):
         self._is_inactive: bool = False
         self._mpv_ctx: mpv.MpvRenderContext
 
+        init_setts = get_init_mpv_settings()
+
         self.mpv = mpv.MPV(
             # terminal=True,
             # log_handler=print,
@@ -197,15 +199,20 @@ class CineWindow(Adw.ApplicationWindow):
             load_scripts=True,
             audio_display="embedded-first",
             audio_file_auto="fuzzy",
+            alang=init_setts["alang"],
+            slang=init_setts["slang"],
             sub_auto="fuzzy",
             sub_file_paths="sub:subs:subtitles:Sub:Subs:Subtitles:srt:srts:Srt:Srts",
             sub_border_size=2,
-            sub_shadow_offset=0.6,
-            sub_border_color="#B6000000",
-            sub_shadow_color="#97000000",
-            sub_color="#ebebeb",
+            sub_color=init_setts["sub-color"],
+            sub_scale=init_setts["sub-scale"],
+            sub_font=init_setts["sub-font"],
+            sub_border_style=init_setts["sub-border-style"],
+            sub_shadow_offset=init_setts["sub-shadow-offset"],
+            sub_border_color=init_setts["sub-border-color"],
+            sub_back_color=init_setts["sub-back-color"],
+            sub_shadow_color=init_setts["sub-back-color"],
             sub_use_margins=False,
-            sub_font="Adwaita Sans SemiBold",
             osd_font="Adwaita Sans",
             osd_bold=True,
             osd_bar=False,
@@ -216,12 +223,14 @@ class CineWindow(Adw.ApplicationWindow):
             osd_shadow_color="#1B000000",
             osd_margin_x=66,
             osd_margin_y=66,
+            volume=init_setts["volume"],
             volume_max=150,
             keep_open=True,
             ytdl=True,
             ytdl_raw_options="yes-playlist=",
             cursor_autohide_fs_only=True,
             autocreate_playlist="filter",
+            save_position_on_quit=init_setts["save-position-on-quit"],
             save_watch_history=True,
             watch_history_path=WATCH_HISTORY_JSONL,
         )
@@ -237,10 +246,6 @@ class CineWindow(Adw.ApplicationWindow):
             else Gtk.GraphicsOffloadEnabled.DISABLED
         )
 
-        if self.mpv["window-maximized"] or settings.get_boolean("is-maximized"):
-            self.maximize()
-
-        self.conf_hwdec = list(filter(lambda x: x != "no", cast(list, self.mpv.hwdec)))
         self.mpv["vo"] = "libmpv"
         self.mpv["osc"] = "no"
         self.mpv["load-console"] = "no"

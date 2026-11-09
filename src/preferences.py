@@ -35,35 +35,36 @@ logger = logging.getLogger(__name__)
 settings = Gio.Settings.new("io.github.diegopvlk.Cine")
 
 
-def sync_mpv_with_settings(window):
-    """Apply settings values to the mpv instance"""
-    mpv = window.mpv
-    mpv["sub-color"] = settings.get_string("subtitle-color")
-    mpv["sub-scale"] = settings.get_double("subtitle-scale")
-    mpv["sub-font"] = settings.get_string("subtitle-font")
-    mpv["slang"] = settings.get_string("subtitle-languages")
-    mpv["alang"] = settings.get_string("audio-languages")
-    mpv["volume"] = settings.get_int("volume")
-    mpv["save-position-on-quit"] = settings.get_boolean("save-video-position")
-    hwdec_enabled = settings.get_boolean("hwdec")
-    norm_enabled = settings.get_boolean("normalize-volume")
-
+def get_init_mpv_settings():
+    # mpv.conf overrides these at startup
     sub_bg = settings.get_boolean("subtitle-bg")
-    mpv["sub-border-style"] = "background-box" if sub_bg else "outline-and-shadow"
-    mpv["sub-shadow-offset"] = 8 if sub_bg else 0.6
-    mpv["sub-back-color"] = (
-        settings.get_string("subtitle-bg-color") if sub_bg else "#97000000"
-    )
-    mpv["sub-border-color"] = mpv["sub-back-color"]
+    sub_bg_color = settings.get_string("subtitle-bg-color")
+    return {
+        "save-position-on-quit": settings.get_boolean("save-video-position"),
+        "volume": settings.get_int("volume"),
+        "alang": settings.get_string("audio-languages"),
+        "slang": settings.get_string("subtitle-languages"),
+        "sub-color": settings.get_string("subtitle-color"),
+        "sub-scale": settings.get_double("subtitle-scale"),
+        "sub-font": settings.get_string("subtitle-font"),
+        "sub-border-style": "background-box" if sub_bg else "outline-and-shadow",
+        "sub-shadow-offset": 8 if sub_bg else 0.6,
+        "sub-back-color": sub_bg_color if sub_bg else "#97000000",
+        "sub-border-color": sub_bg_color if sub_bg else "#B6000000",
+    }
 
-    # for older versions
-    mpv.command_async("vf", "remove", "@hflip")
-    mpv.command_async("vf", "remove", "@vflip")
 
-    mpv["hwdec"] = window.conf_hwdec + ["auto"] if hwdec_enabled else "no"
+def sync_mpv_with_settings(window):
+    mpv = window.mpv
 
-    if norm_enabled:
-        mpv.command("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
+    if mpv.window_maximized or settings.get_boolean("is-maximized"):
+        window.maximize()
+
+    if settings.get_boolean("hwdec"):
+        mpv.hwdec = [h for h in mpv.hwdec if h != "no"] + ["auto"]
+
+    if settings.get_boolean("normalize-volume"):
+        mpv.command_async("af", "add", "@cine_loudnorm:lavfi=[loudnorm=I=-20]")
 
     loop = settings.get_string("loop-state")
     if loop == "playlist":
@@ -106,39 +107,37 @@ class Preferences(Adw.Dialog):
         self._win = window
         self._mpv = window.mpv
 
+        self._sync_back_setts(self._mpv)
+
         self._bind_ui()
         self._setup_mpv_updates()
 
         font = settings.get_string("subtitle-font")
         self.font_label.set_label(font)
-
-        self.sub_color_btn.connect("notify::rgba", self._on_sub_color_selected)
-        self.reset_sub_color.connect("clicked", self._on_sub_color_reset)
         self.font_row.connect("activated", self._on_font_activated)
         self.reset_sub_font.connect("clicked", self._on_font_reset)
 
-        self.sub_color = Gdk.RGBA()
-        self.sub_color.parse(settings.get_string("subtitle-color"))
-        self.sub_color_btn.set_dialog(
-            Gtk.ColorDialog(title=_("Subtitle Color"), modal=True, with_alpha=False)
-        )
+        self.sub_color = self._get_RGBA(settings.get_string("subtitle-color"))
+        self.sub_color_btn.connect("notify::rgba", self._on_sub_color_selected)
         self.sub_color_btn.set_rgba(self.sub_color)
+        self.reset_sub_color.connect("clicked", self._on_sub_color_reset)
 
+        self.sub_bg_color = self._get_RGBA(settings.get_string("subtitle-bg-color"))
         self.sub_bg_color_btn.connect("notify::rgba", self._on_sub_bg_color_selected)
-
-        bg_hex = settings.get_string("subtitle-bg-color").lstrip("#")
-        self.sub_bg_color = Gdk.RGBA()
-        self.sub_bg_color.alpha = int(bg_hex[0:2], 16) / 255
-        self.sub_bg_color.red = int(bg_hex[2:4], 16) / 255
-        self.sub_bg_color.green = int(bg_hex[4:6], 16) / 255
-        self.sub_bg_color.blue = int(bg_hex[6:8], 16) / 255
-
-        self.sub_bg_color_btn.set_dialog(
-            Gtk.ColorDialog(title=_("Subtitle Background"), modal=True, with_alpha=True)
-        )
         self.sub_bg_color_btn.set_rgba(self.sub_bg_color)
 
         self.connect("closed", self._disconnect_settings)
+
+    def _sync_back_setts(self, mpv):
+        settings.set_boolean("save-video-position", mpv.save_position_on_quit)
+        settings.set_int("volume", mpv.volume)
+        settings.set_string("audio-languages", ",".join(mpv.alang))
+        settings.set_string("subtitle-languages", ",".join(mpv.slang))
+        settings.set_string("subtitle-color", mpv.sub_color)
+        settings.set_double("subtitle-scale", mpv.sub_scale)
+        settings.set_string("subtitle-font", mpv.sub_font)
+        settings.set_string("subtitle-bg-color", mpv.sub_back_color)
+        settings.set_boolean("subtitle-bg", mpv.sub_border_style == "background-box")
 
     def _bind_ui(self):
         bindings = [
@@ -185,37 +184,47 @@ class Preferences(Adw.Dialog):
         for connection_id in self._setting_ids:
             settings.disconnect(connection_id)
 
+    def _get_RGBA(self, hex_clr: str) -> Gdk.RGBA:
+        hex_clr = hex_clr.lstrip("#")
+        rgba = Gdk.RGBA()
+        rgba.alpha = int(hex_clr[0:2], 16) / 255
+        rgba.red = int(hex_clr[2:4], 16) / 255
+        rgba.green = int(hex_clr[4:6], 16) / 255
+        rgba.blue = int(hex_clr[6:8], 16) / 255
+        return rgba
+
     def _on_sub_color_changed(self, settings, key):
-        self._mpv["sub-color"] = settings.get_string(key)
+        self._mpv.sub_color = settings.get_string(key)
 
     def _on_sub_bg_color_changed(self, _settings, key):
         if settings.get_boolean("subtitle-bg"):
-            self._mpv["sub-back-color"] = settings.get_string(key)
-            self._mpv["sub-border-color"] = settings.get_string(key)
+            self._mpv.sub_back_color = settings.get_string(key)
+            self._mpv.sub_border_color = settings.get_string(key)
 
     def _on_sub_scale_changed(self, settings, key):
-        self._mpv["sub-scale"] = settings.get_double(key)
+        self._mpv.sub_scale = settings.get_double(key)
 
     def _on_sub_font_changed(self, settings, key):
-        self._mpv["sub-font"] = settings.get_string(key)
+        self._mpv.sub_font = settings.get_string(key)
 
     def _on_sub_bg_changed(self, settings, key):
         sub_bg = settings.get_boolean(key)
         if sub_bg:
-            self._mpv["sub-shadow-offset"] = 8
-            self._mpv["sub-border-style"] = "background-box"
-            self._mpv["sub-back-color"] = settings.get_string("subtitle-bg-color")
-            self._mpv["sub-border-color"] = settings.get_string("subtitle-bg-color")
+            self._mpv.sub_shadow_offset = 8
+            self._mpv.sub_border_style = "background-box"
+            self._mpv.sub_back_color = settings.get_string("subtitle-bg-color")
+            self._mpv.sub_border_color = settings.get_string("subtitle-bg-color")
         else:
-            self._mpv["sub-shadow-offset"] = 0.6
-            self._mpv["sub-border-style"] = "outline-and-shadow"
-            self._mpv["sub-shadow-color"] = "#97000000"
+            self._mpv.sub_shadow_offset = 0.6
+            self._mpv.sub_border_style = "outline-and-shadow"
+            self._mpv.sub_border_color = "#B6000000"
+            self._mpv.sub_shadow_color = "#97000000"
 
     def _on_slang_changed(self, settings, key):
-        self._mpv["slang"] = settings.get_string(key)
+        self._mpv.slang = settings.get_string(key)
 
     def _on_alang_changed(self, settings, key):
-        self._mpv["alang"] = settings.get_string(key)
+        self._mpv.alang = settings.get_string(key)
 
     def _on_thumb_preview_changed(self, settings, key):
         if settings.get_boolean(key):
@@ -238,16 +247,12 @@ class Preferences(Adw.Dialog):
         )
 
     def _on_hwdec_changed(self, settings, key):
-        hwdec_enabled = settings.get_boolean(key)
-        if hwdec_enabled:
-            self._mpv.command_async("vf", "remove", "@hflip")
-            self._mpv.command_async("vf", "remove", "@vflip")
-            self._mpv["hwdec"] = self._win.conf_hwdec + ["auto"]
-        else:
-            self._mpv["hwdec"] = "no"
+        hwdec_on = settings.get_boolean(key)
+        hwdec = [h for h in self._mpv.hwdec if h != "no"]
+        self._mpv.hwdec = hwdec + ["auto"] if hwdec_on else ["no"] + hwdec
 
     def _on_save_pos_changed(self, settings, _key):
-        self._mpv["save-position-on-quit"] = settings.get_boolean("save-video-position")
+        self._mpv.save_position_on_quit = settings.get_boolean("save-video-position")
 
     def _on_norm_volume_changed(self, settings, key):
         norm_enabled = settings.get_boolean(key)
@@ -256,16 +261,19 @@ class Preferences(Adw.Dialog):
         else:
             self._mpv.command("af", "remove", "@cine_loudnorm")
 
+    def _get_mpv_color(self, btn: Gtk.ColorDialogButton):
+        rgba = btn.get_rgba()
+        channels = (rgba.alpha, rgba.red, rgba.green, rgba.blue)
+        hex_channels = [f"{int(c * 255):02x}" for c in channels]
+        return f"#{''.join(hex_channels)}"  # #AARRGGBB
+
     def _on_sub_color_selected(self, color_btn, *arg):
-        rgba = color_btn.get_rgba()
-        hex_color = f"#{''.join(f'{int(c * 255):02x}' for c in (rgba.red, rgba.green, rgba.blue))}"
-        settings.set_string("subtitle-color", hex_color)
+        color = self._get_mpv_color(color_btn)
+        settings.set_string("subtitle-color", color)
 
     def _on_sub_bg_color_selected(self, color_btn, *arg):
-        rgba = color_btn.get_rgba()
-        # sub-back-color is #AARRGGBB
-        hex_color = f"#{''.join(f'{int(c * 255):02x}' for c in (rgba.alpha, rgba.red, rgba.green, rgba.blue))}"
-        settings.set_string("subtitle-bg-color", hex_color)
+        color = self._get_mpv_color(color_btn)
+        settings.set_string("subtitle-bg-color", color)
 
     def _on_sub_color_reset(self, _button):
         default_color = "#ebebeb"

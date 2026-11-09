@@ -179,6 +179,12 @@ template $Preferences: Adw.Dialog {
 					[suffix]
 					ColorDialogButton sub_color_btn {
 						valign: center;
+
+						dialog: ColorDialog {
+							title: _("Subtitle Background");
+							modal: true;
+							with-alpha: true;
+						};
 					}
 
 					[suffix]
@@ -259,6 +265,12 @@ template $Preferences: Adw.Dialog {
 					ColorDialogButton sub_bg_color_btn {
 						valign: center;
 						sensitive: bind subtitle_bg_switch.active;
+
+						dialog: ColorDialog {
+							title: _("Subtitle Background");
+							modal: true;
+							with-alpha: true;
+						};
 					}
 
 					[suffix]
