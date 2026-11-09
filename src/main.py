@@ -101,51 +101,37 @@ class CineApplication(Adw.Application):
             win = CineWindow(application=self)
             win.start_page.set_visible(False)
 
-            first_video_path = None
-            for gfile in files:
-                first_video_path = self._find_first_file(gfile)
+            try:
+                cmd = [
+                    "ffprobe",
+                    "-v",
+                    "error",
+                    "-select_streams",
+                    "v:0",
+                    "-show_entries",
+                    "stream=width,height:stream_side_data=rotation",
+                    "-of",
+                    "csv=s=x:p=0",
+                    files[0].get_path() or files[0].get_uri(),
+                ]
 
-                if first_video_path:
-                    break
+                res = subprocess.run(cmd, check=False, capture_output=True, text=True)
 
-            if first_video_path:
+                # "1920x1080x-90" or just "1920x1080"
+                p = res.stdout.split("x")
+
                 try:
-                    cmd = [
-                        "ffprobe",
-                        "-v",
-                        "error",
-                        "-select_streams",
-                        "v:0",
-                        "-show_entries",
-                        "stream=width,height:stream_side_data=rotation",
-                        "-of",
-                        "csv=s=x:p=0",
-                        first_video_path,
-                    ]
-                    output = subprocess.check_output(
-                        cmd, text=True, timeout=2, stderr=subprocess.DEVNULL
-                    ).strip()
+                    rotation = int(p[2]) if len(p) > 2 and p[2] else 0
+                except ValueError:
+                    rotation = 0
 
-                    if output:
-                        # "1920x1080x-90" or just "1920x1080"
-                        p = output.splitlines()[0].split("x")
+                vertical = abs(rotation) in (90, 270)
 
-                        width = int(p[0])
-                        height = int(p[1])
-
-                        try:
-                            rotation = int(p[2]) if len(p) > 2 and p[2] else 0
-                        except ValueError:
-                            rotation = 0
-
-                        if abs(rotation) in (90, 270):
-                            vid_w = height
-                            vid_h = width
-                        else:
-                            vid_w = width
-                            vid_h = height
-                except Exception:
-                    logger.exception("Metadata probe failed")
+                if len(p) > 1:
+                    vid_w = int(p[1]) if vertical else int(p[0])
+                    vid_h = int(p[0]) if vertical else int(p[1])
+            except Exception:
+                logger.exception("Metadata probe failed")
 
         self._set_size_and_present(win, vid_w, vid_h)
 
@@ -164,56 +150,6 @@ class CineApplication(Adw.Application):
             w.mpv.command_async("set", "pause", w != win)
 
         win.hide_ui_timeout()
-
-    def _find_first_file(self, gfile, visited=None):
-        """Local-only recursive search."""
-        if gfile.get_uri_scheme() != "file":
-            return None
-
-        if visited is None:
-            visited = set()
-
-        path = gfile.get_path()
-        if not path or path in visited:
-            return None
-        visited.add(path)
-
-        try:
-            info = gfile.query_info(
-                "standard::type", Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS, None
-            )
-            f_type = info.get_file_type()
-
-            if f_type == Gio.FileType.REGULAR:
-                return path
-
-            if f_type == Gio.FileType.DIRECTORY:
-                enumerator = gfile.enumerate_children(
-                    "standard::name,standard::type",
-                    Gio.FileQueryInfoFlags.NOFOLLOW_SYMLINKS,
-                    None,
-                )
-
-                subdirectories = []
-                for child in enumerator:
-                    child_type = child.get_file_type()
-                    name = child.get_name()
-
-                    if name.startswith("."):
-                        continue
-
-                    if child_type == Gio.FileType.REGULAR:
-                        return gfile.get_child(name).get_path()
-                    elif child_type == Gio.FileType.DIRECTORY:
-                        subdirectories.append(gfile.get_child(name))
-
-                for folder in subdirectories:
-                    found = self._find_first_file(folder, visited)
-                    if found:
-                        return found
-        except Exception:
-            logger.exception("find_first_file failed")
-        return None
 
     def do_handle_local_options(self, options: GLib.VariantDict):
         # Copied from showtime: https://gitlab.gnome.org/GNOME/showtime/-/blob/25066ad0ca1c20bd8b9f6f776f5be75b31277039/showtime/main.py#L211-224
