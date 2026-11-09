@@ -23,8 +23,6 @@ from ctypes import *
 import ctypes.util
 import threading
 import queue
-import os
-import os.path
 import sys
 from warnings import warn
 from functools import partial, wraps
@@ -33,45 +31,28 @@ from concurrent.futures import Future, InvalidStateError
 import collections
 import re
 import traceback
+import locale
 
-if os.name == 'nt':
-    # Note: mpv-2.dll with API version 2 corresponds to mpv v0.35.0. Most things should work with the fallback, too.
-    names = ['mpv-2.dll', 'libmpv-2.dll', 'mpv-1.dll']
-    for name in names:
-        dll = ctypes.util.find_library(name)
-        if dll:
-            break
-    else:
-        for name in names:
-            dll = os.path.join(os.path.dirname(__file__), name)
-            if os.path.isfile(dll):
-                break
-        else:
-            raise OSError('Cannot find mpv-1.dll, mpv-2.dll or libmpv-2.dll in your system %PATH%. One way to deal with this is to ship the dll with your script and put the directory your script is in into %PATH% before "import mpv": os.environ["PATH"] = os.path.dirname(__file__) + os.pathsep + os.environ["PATH"] If mpv-1.dll is located elsewhere, you can add that path to os.environ["PATH"].')
+# libmpv requires LC_NUMERIC to be set to "C". Since messing with global variables everyone else relies upon is
+# still better than segfaulting, we are setting LC_NUMERIC to "C".
+locale.setlocale(locale.LC_NUMERIC, "C")
 
+
+def _get_backend():
     try:
-        # flags argument: LOAD_LIBRARY_SEARCH_DEFAULT_DIRS | LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR
-        # cf. https://learn.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibraryexa
-        backend = CDLL(dll, 0x00001000 | 0x00000100)
-    except Exception as e:
-        if not os.path.isabs(dll): # can only be find_library, not the "look next to mpv.py" thing
-            raise OSError(f'ctypes.find_library found mpv.dll at {dll}, but ctypes.CDLL could not load it. It looks like find_library found mpv.dll under a relative path entry in %PATH%. Please make sure all paths in %PATH% are absolute. Instead of trying to load mpv.dll from the current working directory, put it somewhere next to your script and add that path to %PATH% using os.environ["PATH"] = os.path.dirname(__file__) + os.pathsep + os.environ["PATH"]') from e
-        else:
-            raise OSError(f'ctypes.find_library found mpv.dll at {dll}, but ctypes.CDLL could not load it.') from e
-    fs_enc = 'utf-8'
+        return CDLL("libmpv.so.2")
+    except OSError:
+        pass
 
-else:
-    import locale
-    lc, enc = locale.getlocale(locale.LC_NUMERIC)
-    # libmpv requires LC_NUMERIC to be set to "C". Since messing with global variables everyone else relies upon is
-    # still better than segfaulting, we are setting LC_NUMERIC to "C".
-    locale.setlocale(locale.LC_NUMERIC, 'C')
-
+    # Slow fallback
     sofile = ctypes.util.find_library('mpv')
     if sofile is None:
         raise OSError("Cannot find libmpv in the usual places. Depending on your distro, you may try installing an mpv-devel or mpv-libs package. If you have libmpv around but this script can't find it, consult the documentation for ctypes.util.find_library which this script uses to look up the library filename.")
-    backend = CDLL(sofile)
-    fs_enc = sys.getfilesystemencoding()
+    return CDLL(sofile)
+
+
+backend = _get_backend()
+fs_enc = sys.getfilesystemencoding()
 
 
 class ShutdownError(SystemError):
