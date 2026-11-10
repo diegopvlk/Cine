@@ -8,15 +8,16 @@ msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-11-09 11:46-0300\n"
-"PO-Revision-Date: 2026-10-31 15:04+0000\n"
-"Last-Translator: avds <avds@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-11-12 00:21+0000\n"
+"Last-Translator: Danial Behzadi "
+"<danialbehzadi@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/cine/app/fa/>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 2026.11.dev0\n"
+"X-Generator: Weblate 2026.11.2.dev0\n"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
 #: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
@@ -721,19 +722,19 @@ msgstr "استفاده از پردازنده گرافیکی برای رمزگش�
 
 #: src/preferences.blp:103
 msgid "GPU-Next Renderer (Requires Restart)"
-msgstr ""
+msgstr "پرداختگر GPU-Next (نیازمند آغاز دوباره)"
 
 #: src/preferences.blp:104
 msgid "Better colors and HDR-to-SDR tone mapping"
-msgstr ""
+msgstr "رنگ‌های بهتر و نگاشت HDR به SDR"
 
 #: src/preferences.blp:109
 msgid "Pick up where you left off after saving from the menu"
-msgstr "پس از ذخیره از منو، از همان‌جایی که رها کردید ادامه دهید"
+msgstr "ادامه از مکان رها شده پس از ذخیره کردن از فهرست"
 
 #: src/preferences.blp:144
 msgid "Also save options like brightness, subtitle delay, etc."
-msgstr "همچنین ذخیره گزینه‌هایی مانند روشنایی، تأخیر زیرنویس و..."
+msgstr "همچنین ذخیرهٔ گزینه‌هایی چون روشنایی، تأخیر زیرنویس و..."
 
 #: src/preferences.blp:180
 msgid "Subtitle Color"
