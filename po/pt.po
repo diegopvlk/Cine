@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-11 21:23-0300\n"
 "PO-Revision-Date: 2026-04-03 15:09+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/cine/app/pt/"
@@ -726,12 +726,12 @@ msgid "Use GPU for video decoding when available"
 msgstr "Utilizar GPU para descodificação de vídeo quando disponível"
 
 #: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
-msgstr ""
+msgid "OpenGL-Next Renderer (Requires Restart)"
+msgstr "Renderizador OpenGL-Next (requer reinício)"
 
 #: src/preferences.blp:104
 msgid "Better colors and HDR-to-SDR tone mapping"
-msgstr ""
+msgstr "Cores e mapeamento de tons HDR para SDR melhores"
 
 #: src/preferences.blp:109
 msgid "Pick up where you left off after saving from the menu"

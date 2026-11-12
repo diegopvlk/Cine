@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-11 21:23-0300\n"
 "PO-Revision-Date: 2026-11-12 00:21+0000\n"
 "Last-Translator: Danial Behzadi "
 "<danialbehzadi@users.noreply.hosted.weblate.org>\n"
@@ -721,8 +721,8 @@ msgid "Use GPU for video decoding when available"
 msgstr "استفاده از پردازنده گرافیکی برای رمزگشایی ویدیو در صورت در دسترس بودن"
 
 #: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
-msgstr "پرداختگر GPU-Next (نیازمند آغاز دوباره)"
+msgid "OpenGL-Next Renderer (Requires Restart)"
+msgstr "پرداختگر OpenGL-Next (نیازمند آغاز دوباره)"
 
 #: src/preferences.blp:104
 msgid "Better colors and HDR-to-SDR tone mapping"

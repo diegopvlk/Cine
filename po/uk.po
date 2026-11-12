@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-11 21:23-0300\n"
 "PO-Revision-Date: 2026-09-01 19:51+0000\n"
 "Last-Translator: Димко <Dymkovych@proton.me>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/cine/app/uk/>\n"
@@ -724,7 +724,7 @@ msgid "Use GPU for video decoding when available"
 msgstr "Використовувати ГП для декодування коли можливо"
 
 #: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
+msgid "OpenGL-Next Renderer (Requires Restart)"
 msgstr ""
 
 #: src/preferences.blp:104

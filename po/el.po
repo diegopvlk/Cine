@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-11 21:23-0300\n"
 "PO-Revision-Date: 2026-06-30 00:38+0000\n"
 "Last-Translator: Hazel L <hazeltwink@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/cine/app/el/>\n"
@@ -724,7 +724,7 @@ msgid "Use GPU for video decoding when available"
 msgstr "Χρήση της GPU για αποκωδικοποίηση βίντεο όταν είναι δυνατό"
 
 #: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
+msgid "OpenGL-Next Renderer (Requires Restart)"
 msgstr ""
 
 #: src/preferences.blp:104

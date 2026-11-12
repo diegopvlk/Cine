@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-11 21:23-0300\n"
 "PO-Revision-Date: 2026-11-12 00:21+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/cine/app/et/>\n"
@@ -721,8 +721,8 @@ msgid "Use GPU for video decoding when available"
 msgstr "Kui võimalik, siis kasuta graafikaprotsessorit video dekodeerimiseks"
 
 #: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
-msgstr "GPU-Next pilditöötlus (eeldab uuesti käivitust)"
+msgid "OpenGL-Next Renderer (Requires Restart)"
+msgstr "OpenGL-Next pilditöötlus (eeldab uuesti käivitust)"
 
 #: src/preferences.blp:104
 msgid "Better colors and HDR-to-SDR tone mapping"

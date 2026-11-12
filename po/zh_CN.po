@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-11 21:23-0300\n"
 "PO-Revision-Date: 2026-05-03 13:33+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
@@ -712,7 +712,7 @@ msgid "Use GPU for video decoding when available"
 msgstr "可用时使用 GPU 进行视频解码"
 
 #: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
+msgid "OpenGL-Next Renderer (Requires Restart)"
 msgstr ""
 
 #: src/preferences.blp:104

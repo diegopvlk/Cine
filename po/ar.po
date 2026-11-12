@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-11 21:23-0300\n"
 "PO-Revision-Date: 2026-07-06 10:01+0000\n"
 "Last-Translator: Muhammed Al-Basha "
 "<mu7basha@users.noreply.hosted.weblate.org>\n"
@@ -724,7 +724,7 @@ msgid "Use GPU for video decoding when available"
 msgstr "استخدم وحدة معالجة الرسوميات لفك ترميز الفيديو عند توفرها"
 
 #: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
+msgid "OpenGL-Next Renderer (Requires Restart)"
 msgstr ""
 
 #: src/preferences.blp:104
