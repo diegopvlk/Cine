@@ -37,7 +37,7 @@ msgstr "Audio;Video;TV;Film;Clip;Riproduttore;Cine;mpv;"
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
 #: src/window.blp:129
 msgid "New Window"
-msgstr "Nuova Finestra"
+msgstr "Nuova finestra"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:25
 msgid ""
@@ -70,8 +70,8 @@ msgstr ""
 msgid ""
 "Video Controls: Easily adjust brightness, contrast, zoom, aspect ratio, etc."
 msgstr ""
-"Controlli video: Aggiusta facilemte la luminosità, il contrasto, lo zoom, il "
-"rapporto, ecc."
+"Controlli video: regola facilmente la luminosità, il contrasto, lo zoom, il "
+"rapporto d'aspetto, ecc."
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:42
 msgid "Video Playing"
@@ -88,7 +88,7 @@ msgstr "Preferenze"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:54
 msgid "Main Window"
-msgstr "Finestra Principale"
+msgstr "Finestra principale"
 
 #: src/history.py:52 src/history.py:56
 msgid "Load All"
@@ -170,7 +170,7 @@ msgstr "Aggiungi automaticamente alla playlist i file della stessa cartella"
 
 #: src/preferences.py:360 src/preferences.blp:108
 msgid "Restore Saved Session"
-msgstr "Restaurer la session enregistrée"
+msgstr "Ripristina la sessione salvata"
 
 #: src/preferences.py:361 src/preferences.blp:143
 msgid "Save Video Position on Close"
@@ -268,19 +268,19 @@ msgstr "Traccia audio precedente"
 
 #: src/shortcuts.py:42
 msgid "Seek 10s Backward"
-msgstr "Cerca 10s indietro"
+msgstr "Vai indietro di 10 s"
 
 #: src/shortcuts.py:43
 msgid "Seek 10s Forward"
-msgstr "Cerca 10s in avanti"
+msgstr "Vai avanti di 10 s"
 
 #: src/shortcuts.py:44
 msgid "Seek 5s Backward"
-msgstr "Cerca 5s indietro"
+msgstr "Vai indietro di 5 s"
 
 #: src/shortcuts.py:45
 msgid "Seek 5s Forward"
-msgstr "Cerca 5s in avanti"
+msgstr "Vai avanti di 5 s"
 
 #: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1875
 #: src/window.blp:368
@@ -323,11 +323,11 @@ msgstr "Posizione sottotitoli"
 
 #: src/shortcuts.py:64
 msgid "Move Subtitles Up"
-msgstr "Muovi i sottotitoli in sù"
+msgstr "Sposta i sottotitoli in su"
 
 #: src/shortcuts.py:65
 msgid "Move Subtitles Down"
-msgstr "Muovi i sottotitoli in giù"
+msgstr "Sposta i sottotitoli in giù"
 
 #: src/shortcuts.py:66 src/shortcuts.py:67 src/preferences.blp:236
 msgid "Subtitle Scale"
@@ -343,7 +343,7 @@ msgstr "Diminuisci la grandezza dei sottotitoli"
 
 #: src/shortcuts.py:68 src/window.blp:219
 msgid "Mute/Unmute"
-msgstr "Muta/Smuta"
+msgstr "Disattiva/Attiva l'audio"
 
 #: src/shortcuts.py:69 src/shortcuts.py:70 src/shortcuts.py:71
 #: src/options.blp:678 src/options.blp:704
@@ -368,11 +368,11 @@ msgstr "Vai avanti di un frame"
 
 #: src/shortcuts.py:74
 msgid "Seek to the Previous Chapter"
-msgstr "Cerca al capitolo precedente"
+msgstr "Vai al capitolo precedente"
 
 #: src/shortcuts.py:75
 msgid "Seek to the Next Chapter"
-msgstr "Cerca al capitolo successivo"
+msgstr "Vai al capitolo successivo"
 
 #: src/shortcuts.py:76
 msgid "Take Screenshot With Subtitles"
@@ -422,7 +422,7 @@ msgstr "Luminosità"
 
 #: src/shortcuts.py:84
 msgid "Decrease Brightness"
-msgstr "Diminuisci la luminostà"
+msgstr "Diminuisci la luminosità"
 
 #: src/shortcuts.py:85
 msgid "Increase Brightness"
@@ -448,7 +448,7 @@ msgstr "Saturazione"
 
 #: src/shortcuts.py:88
 msgid "Decrease Saturation"
-msgstr "Diminusici la saturazione"
+msgstr "Diminuisci la saturazione"
 
 #: src/shortcuts.py:89
 msgid "Increase Saturation"
@@ -472,11 +472,11 @@ msgstr "Reimposta la velocità di riproduzione"
 
 #: src/shortcuts.py:149 src/shortcuts.py:232
 msgid "Display & Video"
-msgstr "Display e Video"
+msgstr "Schermo e video"
 
 #: src/shortcuts.py:166 src/shortcuts.py:230
 msgid "Audio & Volume"
-msgstr "Audio e Volume"
+msgstr "Audio e volume"
 
 #: src/shortcuts.py:167 src/shortcuts.py:231
 msgid "Navigation"
@@ -489,7 +489,7 @@ msgstr "Riproduzione"
 #: src/shortcuts.py:172 src/shortcuts.py:178 src/shortcuts.py:234
 #: src/shortcuts.py:238
 msgid "Miscellaneous"
-msgstr "Miscellanee"
+msgstr "Varie"
 
 #: src/window.py:622 src/window.blp:110
 msgid "Add Subtitle Track"
@@ -592,11 +592,11 @@ msgstr "Reimposta tutto"
 
 #: src/options.blp:38
 msgid "Reset Aspect Ratio"
-msgstr "Reimposta il rapporto"
+msgstr "Reimposta il rapporto d'aspetto"
 
 #: src/options.blp:48
 msgid "Aspect Ratio"
-msgstr "Rapporto"
+msgstr "Rapporto d'aspetto"
 
 #: src/options.blp:74 src/options.blp:133
 msgid "Original"
@@ -673,7 +673,7 @@ msgstr "Tonalità"
 
 #: src/options.blp:611
 msgid "Reset Subtitle Delay"
-msgstr "Reimposta il ritardo dei sottitoli"
+msgstr "Reimposta il ritardo dei sottotitoli"
 
 #: src/options.blp:668
 msgid "Reset Audio Delay"
@@ -719,24 +719,24 @@ msgstr ""
 
 #: src/preferences.blp:98
 msgid "Hardware Acceleration"
-msgstr "Accélération matérielle"
+msgstr "Accelerazione hardware"
 
 #: src/preferences.blp:99
 msgid "Use GPU for video decoding when available"
-msgstr "Utiliser le GPU pour le décodage vidéo si disponible"
+msgstr "Usa la GPU per la decodifica video quando disponibile"
 
 #: src/preferences.blp:103
 msgid "OpenGL-Next Renderer (Requires Restart)"
-msgstr ""
+msgstr "Renderer OpenGL-Next (richiede il riavvio)"
 
 #: src/preferences.blp:104
 msgid "Better colors and HDR-to-SDR tone mapping"
-msgstr ""
+msgstr "Colori migliori e mappatura dei toni da HDR a SDR"
 
 #: src/preferences.blp:109
 msgid "Pick up where you left off after saving from the menu"
 msgstr ""
-"Reprenez là où vous vous étiez arrêté après avoir enregistré via le menu"
+"Riprendi da dove avevi interrotto dopo aver salvato la sessione dal menu"
 
 #: src/preferences.blp:144
 msgid "Also save options like brightness, subtitle delay, etc."
@@ -781,7 +781,7 @@ msgstr "Menu contestuale"
 
 #: src/preferences.blp:298
 msgid "Preferred Subtitle Languages"
-msgstr "Lingua dei sottotitoli preferita"
+msgstr "Lingue dei sottotitoli preferite"
 
 #: src/preferences.blp:299 src/preferences.blp:304
 msgid "Example: en,es,pt"
@@ -873,7 +873,7 @@ msgstr "Capitoli"
 
 #: src/window.blp:316
 msgid "Shuffle Playlist"
-msgstr "Metti la playlist in shuffle"
+msgstr "Riproduci la playlist in ordine casuale"
 
 #: src/window.blp:399
 msgid "Toggle Elapsed/Remaining"
