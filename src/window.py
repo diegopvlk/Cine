@@ -1079,7 +1079,7 @@ class CineWindow(Adw.ApplicationWindow):
             if self._show_remaining:
                 duration = float(self.mpv.duration or 0)
                 remaining = (duration - curr_time) if duration > curr_time else 0
-                self.time_elapsed_label.props.label = f"-{format_time(remaining)}"
+                self.time_elapsed_label.props.label = f"−{format_time(remaining)}"
             else:
                 self.time_elapsed_label.props.label = format_time(curr_time)
         except ShutdownError:
