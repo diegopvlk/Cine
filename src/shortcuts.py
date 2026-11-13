@@ -39,10 +39,10 @@ alt+z            nonrepeatable cycle secondary-sid; show-text "{_("Secondary Sub
 ctrl+z           nonrepeatable cycle secondary-sid down; show-text "{_("Secondary Subtitles")}: ${{secondary-sid}}"; #{_("Previous Secondary Subtitle Track")}
 a                nonrepeatable cycle audio; show-text "{_("Audio")}: ${{audio}}" #{_("Next Audio Track")}
 A                nonrepeatable cycle audio down; show-text "{_("Audio")}: ${{audio}}" #{_("Previous Audio Track")}
-j                seek -10; show-text "⯇⯇" #{_("Seek 10s Backward")}
-l                seek 10; show-text "⯈⯈" #{_("Seek 10s Forward")}
-LEFT             seek -5; show-text "⯇⯇" #{_("Seek 5s Backward")}
-RIGHT            seek 5; show-text "⯈⯈" #{_("Seek 5s Forward")}
+j                seek -10; show-text "🞀🞀" #{_("Seek 10s Backward")}
+l                seek 10; show-text "🞂🞂" #{_("Seek 10s Forward")}
+LEFT             seek -5; show-text "🞀🞀" #{_("Seek 5s Backward")}
+RIGHT            seek 5; show-text "🞂🞂" #{_("Seek 5s Forward")}
 F11              nonrepeatable cycle fullscreen; #{_("Fullscreen")}
 f                nonrepeatable cycle fullscreen; #{_("Fullscreen")}
 ESC              set fullscreen no; #{_("Exit Fullscreen")}
@@ -50,10 +50,10 @@ MBTN_LEFT_DBL    nonrepeatable cycle fullscreen
 MBTN_MID         nonrepeatable cycle fullscreen
 MBTN_BACK        playlist-prev; 
 MBTN_FORWARD     playlist-next; 
-WHEEL_LEFT       seek -5 keyframes; show-text "⯇⯇"
-WHEEL_RIGHT      seek 5 keyframes; show-text "⯈⯈"
-shift+WHEEL_DOWN seek -5 keyframes; show-text "⯇⯇"
-shift+WHEEL_UP   seek 5 keyframes; show-text "⯈⯈"
+WHEEL_LEFT       seek -5 keyframes; show-text "🞀🞀"
+WHEEL_RIGHT      seek 5 keyframes; show-text "🞂🞂"
+shift+WHEEL_DOWN seek -5 keyframes; show-text "🞀🞀"
+shift+WHEEL_UP   seek 5 keyframes; show-text "🞂🞂"
 =                add video-zoom 0.05; show-text "{_("Zoom")}: ${{video-zoom}}" #{_("Zoom In")}
 +                add video-zoom 0.05; show-text "{_("Zoom")}: ${{video-zoom}}" #{_("Zoom In")}
 -                add video-zoom -0.05; show-text "{_("Zoom")}: ${{video-zoom}}" #{_("Zoom Out")}
@@ -69,8 +69,8 @@ m                nonrepeatable no-osd cycle mute; no-osd set user-data/show-icon
 ctrl+-           add audio-delay -0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Decrease Audio Delay")}
 ctrl+=           add audio-delay 0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Increase Audio Delay")}
 ctrl++           add audio-delay 0.1; show-text "{_("Audio Delay")}: ${{audio-delay}}" #{_("Increase Audio Delay")}
-ctrl+[           frame-step -1 seek; show-text "⯇⯇" #{_("Go Back One Frame")}
-ctrl+]           frame-step 1 seek; show-text "⯈⯈" #{_("Advance One Frame")}
+ctrl+[           frame-step -1 seek; show-text "🞀🞀" #{_("Go Back One Frame")}
+ctrl+]           frame-step 1 seek; show-text "🞂🞂" #{_("Advance One Frame")}
 Ctrl+LEFT        nonrepeatable add chapter -1 #{_("Seek to the Previous Chapter")}
 Ctrl+RIGHT       nonrepeatable add chapter 1 #{_("Seek to the Next Chapter")}
 s                nonrepeatable screenshot #{_("Take Screenshot With Subtitles")}
@@ -87,9 +87,9 @@ L                nonrepeatable cycle-values loop-file "inf" "no"; show-text "{_(
 6                add gamma 1; show-text "{_("Gamma")}: ${{gamma}}" #{_("Increase Gamma")}
 7                add saturation -1; show-text "{_("Saturation")}: ${{saturation}}" #{_("Decrease Saturation")}
 8                add saturation 1; show-text "{_("Saturation")}: ${{saturation}}" #{_("Increase Saturation")}
-[                nonrepeatable multiply speed 1/1.1; show-text "{_("Speed")}: ${{speed}}×" #{_("Decrease Playback Speed")}
-]                nonrepeatable multiply speed 1.1; show-text "{_("Speed")}: ${{speed}}×" #{_("Increase Playback Speed")}
-BS               set speed 1.0; show-text "{_("Speed")}: ${{speed}}×" #{_("Reset Playback Speed")}
+[                nonrepeatable multiply speed 1/1.1; show-text "{_("Speed")}: ${{speed}}x" #{_("Decrease Playback Speed")}
+]                nonrepeatable multiply speed 1.1; show-text "{_("Speed")}: ${{speed}}x" #{_("Increase Playback Speed")}
+BS               set speed 1.0; show-text "{_("Speed")}: ${{speed}}x" #{_("Reset Playback Speed")}
 """
 
 MPV_TO_GTK = {v: k for k, v in KEY_REMAP.items()}

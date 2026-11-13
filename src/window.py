@@ -1384,7 +1384,7 @@ class CineWindow(Adw.ApplicationWindow):
                 self._prev_speed = cast(float, self.mpv.speed)
                 new_speed = self._prev_speed * 2
                 self.mpv.speed = new_speed
-                self.mpv.show_text(f"{new_speed:g}x ⯈⯈", "100000000")
+                self.mpv.show_text(f"{new_speed:g}x ⏩︎", "100000000")
             except ShutdownError:
                 pass
         else:
@@ -1508,7 +1508,7 @@ class CineWindow(Adw.ApplicationWindow):
             self._prev_speed = cast(float, self.mpv.speed)
             new_speed = self._prev_speed * 2
             self.mpv.speed = new_speed
-            self.mpv.show_text(f"{new_speed:g}x ⯈⯈", "100000000")
+            self.mpv.show_text(f"{new_speed:g}x ⏩︎", "100000000")
         except ShutdownError:
             pass
 
