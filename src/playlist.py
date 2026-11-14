@@ -98,7 +98,6 @@ class Playlist(Adw.Dialog):
             path = obj.item.get("filename")
             name_with_ext = os.path.basename(path)
             file_title = os.path.splitext(name_with_ext)[0]
-            file_title = GLib.markup_escape_text(file_title)
             title = obj.item.get("title") or obj.title or file_title
             title = remove_diacritics(title).lower()
 
@@ -271,11 +270,11 @@ class Playlist(Adw.Dialog):
                     icon_name = "cine-warning-symbolic"
 
             list_item.title.set_text(file_title)
+            obj.title = file_title
             dir = GLib.markup_escape_text(dir)
             file_title = GLib.markup_escape_text(file_title)
             list_item.title.set_tooltip_markup(f"<b>{dir}</b>\n{file_title}")
             list_item.icon.set_from_icon_name(icon_name)
-            obj.title = file_title
 
         def set_playing_item(obj, _pspec):
             list_item.playing_icon.props.visible = obj.playing
