@@ -19,7 +19,6 @@
 
 import logging
 import os
-import subprocess
 import sys
 from gettext import gettext as _
 from typing import cast
@@ -41,7 +40,6 @@ from gi.repository import Adw, Gio, GLib, Gtk
 from .mpris import MPRIS
 from .preferences import Preferences, settings
 from .save_session import is_same_playlist
-from .utils import set_window_size
 from .window import CineWindow
 
 logger = logging.getLogger(__name__)
@@ -90,56 +88,25 @@ class CineApplication(Adw.Application):
 
     def do_activate(self):
         win = CineWindow(application=self)
-        self._set_size_and_present(win)
 
-    def _set_size_and_present(self, window, width=1920, height=1080):
-        window.realize()
-        set_window_size(window, width, height)
-        window.present()
+        if self.can_restore_session and settings.get_boolean("save-session"):
+            win.realize()  # auto resize when restoring session
+            return
+
+        win.realize()
+        win.set_win_size_and_present()
 
     def do_open(self, files, n_files, hint):
         self.can_restore_session = False
         win: CineWindow = cast(CineWindow, self.props.active_window)
-        open_new = settings.get_boolean("open-new-windows") or not win
-        vid_w, vid_h = 1920, 1080
+        is_first_win = not win
+        open_new = settings.get_boolean("open-new-windows") or is_first_win
 
         if open_new:
             win = CineWindow(application=self)
             win.start_page.set_visible(False)
 
-            try:
-                cmd = [
-                    "ffprobe",
-                    "-v",
-                    "error",
-                    "-select_streams",
-                    "v:0",
-                    "-show_entries",
-                    "stream=width,height:stream_side_data=rotation",
-                    "-of",
-                    "csv=s=x:p=0",
-                    files[0].get_path() or files[0].get_uri(),
-                ]
-
-                res = subprocess.run(cmd, check=False, capture_output=True, text=True)
-
-                # "1920x1080x-90" or just "1920x1080"
-                p = res.stdout.split("x")
-
-                try:
-                    rotation = int(p[2]) if len(p) > 2 and p[2] else 0
-                except ValueError:
-                    rotation = 0
-
-                vertical = abs(rotation) in (90, 270)
-
-                if len(p) > 1:
-                    vid_w = int(p[1]) if vertical else int(p[0])
-                    vid_h = int(p[0]) if vertical else int(p[1])
-            except Exception:
-                logger.exception("Metadata probe failed")
-
-        self._set_size_and_present(win, vid_w, vid_h)
+            win.realize()
 
         if not open_new:
             if is_same_playlist(win.mpv.playlist):
@@ -147,13 +114,18 @@ class CineApplication(Adw.Application):
             win.mpv.stop()
 
         for gfile in files:
-            if path := (gfile.get_path() or gfile.get_uri()):
+            path = gfile.get_path() or gfile.get_uri()
+            if os.path.exists(path):
                 win.mpv.loadfile(path, "append-play")
+            else:
+                win.set_win_size_and_present()
+                win.show_toast(_("File Error") + f": {path}")
 
-        for window in self.get_windows():
-            w = cast(CineWindow, window)
+        if not is_first_win:
             # Pause previous opened windows
-            w.mpv.command_async("set", "pause", w != win)
+            for window in self.get_windows():
+                w = cast(CineWindow, window)
+                w.mpv.command_async("set", "pause", w != win)
 
         win.hide_ui_timeout()
 

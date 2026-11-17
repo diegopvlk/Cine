@@ -29,7 +29,7 @@ from gi.repository import Adw, Gdk, Gio, GLib, Gtk
 from .history import HistoryDialog
 from .mpris import MPRIS
 from .mpv import MPV, ShutdownError
-from .mpv_gl_area import ThumbPreviewGLArea, VideoGLArea
+from .mpv_gl_area import ThumbPreviewGLArea, VideoGLArea, create_mpv_context
 from .options import OptionsMenuButton
 from .playlist import Playlist, PlaylistItemObj
 from .preferences import get_init_mpv_settings, settings, sync_mpv_with_settings
@@ -52,6 +52,7 @@ from .utils import (
     append_modifiers,
     display,
     format_time,
+    get_window_w_h,
     has_host_permission,
     idle_add_once,
     is_local_path,
@@ -183,6 +184,7 @@ class CineWindow(Adw.ApplicationWindow):
         for opt in ("vid", "aid", "volume", "sub-scale", "ab-loop-a", "ab-loop-b"):
             self.mpv.command("change-list", "watch-later-options", "remove", opt)
 
+        self._presented: bool = False
         self._visible_dialog: Adw.Dialog | None = None
         self.playlist_ls: Gio.ListStore = Gio.ListStore.new(PlaylistItemObj)
         self._playlist_debounce_id: int = 0
@@ -234,6 +236,8 @@ class CineWindow(Adw.ApplicationWindow):
         self.offload.set_black_background(True)
         self.video_overlay.set_child(self.offload)
 
+        self.connect("realize", self._set_video_area_ctx)
+
         self.offload.set_enabled(
             Gtk.GraphicsOffloadEnabled.ENABLED
             if settings.get_boolean("graphics-offload")
@@ -256,6 +260,10 @@ class CineWindow(Adw.ApplicationWindow):
         )
 
         sync_mpv_with_settings(self)
+
+    def _set_video_area_ctx(self, _window):
+        ctx = create_mpv_context(self._video_area, self.mpv)
+        self._video_area.set_ctx(ctx)
 
     def _setup_actions(self):
         self._create_action("clear-and-add", self._on_clear_and_add)
@@ -1705,6 +1713,26 @@ class CineWindow(Adw.ApplicationWindow):
         if force_dismiss:
             timeout_add_seconds_once(2, toast.dismiss)
 
+    def set_win_size_and_present(self, width=1920, height=1080):
+        scale_tiers = (
+            (144, 1.6666),
+            (240, 1.50),
+            (360, 1.3333),
+            (480, 1.15),
+        )
+
+        # Scale up small videos
+        for threshold, multiplier in scale_tiers:
+            if min(width, height) <= threshold:
+                width *= multiplier
+                height *= multiplier
+                break
+
+        new_w, new_h = get_window_w_h(self, width, height)
+        self.set_default_size(new_w, new_h)
+        self.present()
+        self._presented = True
+
     def _setup_observers(self):
         @self.mpv.event_callback("start-file")
         def on_start_file(_event):
@@ -1746,7 +1774,13 @@ class CineWindow(Adw.ApplicationWindow):
                 info = event.as_dict()
                 reason = info["reason"]
 
+                if not self._presented and not info.get("playlist_insert_num_entries"):
+                    self.set_win_size_and_present()
+
                 if reason == b"error":
+                    if not self._presented:
+                        self.set_win_size_and_present()
+
                     # Avoid stopping playback on last file/folder error
                     playlist_count = cast(int, self.mpv.playlist_count)
                     if curr_pos == playlist_count - 1:
@@ -1773,6 +1807,27 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("path")
         def on_path_change(_name, path):
             self._video_path = path
+
+        @self.mpv.property_observer("video-params/rotate")
+        def on_rotate_change(_name, rotate_val):
+            if rotate_val is None or self._presented:
+                return
+
+            vid_w = cast(int, self.mpv.width) or 1920
+            vid_h = cast(int, self.mpv.height) or 1080
+
+            if abs(rotate_val) in (90, 270):
+                vid_w = vid_h
+                vid_h = vid_w
+
+            self.set_win_size_and_present(vid_w, vid_h)
+
+        @self.mpv.property_observer("audio-params")
+        def on_a_params_change(_name, audio_params):
+            if audio_params is None or self._presented:
+                return
+
+            self.set_win_size_and_present()
 
         @self.mpv.property_observer("playlist-count")
         def on_playlist_count_change(_name, _count):
