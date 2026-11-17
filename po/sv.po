@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-17 17:36-0300\n"
 "PO-Revision-Date: 2026-11-17 10:11+0000\n"
 "Last-Translator: bittin1ddc447d824349b2 "
 "<bittin1ddc447d824349b2@users.noreply.hosted.weblate.org>\n"
@@ -19,9 +19,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2026.12.dev0\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
-#: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
-#: src/window.blp:80 src/window.blp:445
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:155 src/mpris.py:147
+#: src/mpris.py:365 src/window.py:134 src/window.py:2061 src/window.blp:6
+#: src/window.blp:81 src/window.blp:446
 msgid "Cine"
 msgstr "Cine"
 
@@ -36,7 +36,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;Ljud;Video;Film;Klipp;Spelare;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:129
+#: src/window.blp:130
 msgid "New Window"
 msgstr "Nytt fönster"
 
@@ -81,7 +81,7 @@ msgid "Video Options"
 msgstr "Videoalternativ"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:130 src/window.blp:561
+#: src/preferences.blp:77 src/window.blp:131 src/window.blp:562
 msgid "Preferences"
 msgstr "Inställningar"
 
@@ -113,8 +113,12 @@ msgstr "Avbryt"
 msgid "Clear All"
 msgstr "Rensa allt"
 
+#: src/main.py:123 src/playlist.py:312 src/window.py:1789
+msgid "File Error"
+msgstr "Filfel"
+
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:193
+#: src/main.py:165
 msgid "translator-credits"
 msgstr "jgottlander"
 
@@ -132,16 +136,12 @@ msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "Kräver Flatpak-behörighet för att läsa mappen där videon finns lagrad"
 
-#: src/playlist.py:312 src/window.py:1757
-msgid "File Error"
-msgstr "Filfel"
-
 #: src/playlist.py:418
 msgid "Remove from Playlist"
 msgstr "Ta bort från spellista"
 
-#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:352
-#: src/window.blp:563
+#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:353
+#: src/window.blp:564
 msgid "Playlist"
 msgstr "Spellista"
 
@@ -174,7 +174,7 @@ msgid "Save Video Position on Close"
 msgstr "Spara videoposition vid stängning"
 
 #: src/preferences.py:362 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:115 src/window.blp:477 src/window.blp:562
+#: src/window.blp:116 src/window.blp:478 src/window.blp:563
 msgid "Watch History"
 msgstr "Visningshistorik"
 
@@ -199,12 +199,12 @@ msgstr "Kopierad"
 msgid "Copy"
 msgstr "Kopiera"
 
-#: src/save_session.py:68
-msgid "Restoring Session…"
-msgstr "Återställer session…"
+#: src/save_session.py:69
+msgid "Session Restored"
+msgstr "Session återställd"
 
 #: src/shortcuts.py:28 src/shortcuts.py:29 src/shortcuts.py:30
-#: src/shortcuts.py:31 src/window.py:1927 src/window.blp:208
+#: src/shortcuts.py:31 src/window.py:1980 src/window.blp:209
 msgid "Volume"
 msgstr "Volym"
 
@@ -217,8 +217,8 @@ msgid "Volume Decrease"
 msgstr "Volymminskning"
 
 #: src/shortcuts.py:32 src/shortcuts.py:33 src/shortcuts.py:34
-#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:187
-#: src/window.blp:549
+#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:188
+#: src/window.blp:550
 msgid "Play/Pause"
 msgstr "Spela/Pausa"
 
@@ -227,7 +227,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Visa/dölj undertexter"
 
 #: src/shortcuts.py:36 src/shortcuts.py:37 src/shortcuts.py:165
-#: src/shortcuts.py:229 src/window.py:758 src/window.blp:255
+#: src/shortcuts.py:229 src/window.py:767 src/window.blp:256
 msgid "Subtitles"
 msgstr "Undertexter"
 
@@ -251,7 +251,7 @@ msgstr "Nästa sekundära undertextspår"
 msgid "Previous Secondary Subtitle Track"
 msgstr "Föregående sekundära undertextspår"
 
-#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:763 src/window.blp:270
+#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:772 src/window.blp:271
 msgid "Audio"
 msgstr "Ljud"
 
@@ -279,12 +279,12 @@ msgstr "Hoppa 5 sekunder bakåt"
 msgid "Seek 5s Forward"
 msgstr "Hoppa 5 sekunder framåt"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1875
-#: src/window.blp:368
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1928
+#: src/window.blp:369
 msgid "Fullscreen"
 msgstr "Helskärm"
 
-#: src/shortcuts.py:48 src/window.py:1875
+#: src/shortcuts.py:48 src/window.py:1928
 msgid "Exit Fullscreen"
 msgstr "Avsluta helskärm"
 
@@ -338,7 +338,7 @@ msgstr "Öka skala för undertexter"
 msgid "Decrease Subtitle Scale"
 msgstr "Minska skala för undertexter"
 
-#: src/shortcuts.py:68 src/window.blp:219
+#: src/shortcuts.py:68 src/window.blp:220
 msgid "Mute/Unmute"
 msgstr "Ljud av/på"
 
@@ -387,15 +387,15 @@ msgstr "Statistik"
 msgid "Statistics Overlay"
 msgstr "Statistiköverlägg"
 
-#: src/shortcuts.py:80 src/window.blp:329
+#: src/shortcuts.py:80 src/window.blp:330
 msgid "Set/Clear A-B Loop Points"
 msgstr "Sätt/Rensa A-B-slingpunkter"
 
-#: src/shortcuts.py:81 src/window.py:1256 src/window.blp:341
+#: src/shortcuts.py:81 src/window.py:1265 src/window.blp:342
 msgid "Loop"
 msgstr "Slinga"
 
-#: src/shortcuts.py:81 src/window.py:1253
+#: src/shortcuts.py:81 src/window.py:1262
 msgid "Loop File"
 msgstr "Spela filen i slinga"
 
@@ -488,94 +488,94 @@ msgstr "Uppspelning"
 msgid "Miscellaneous"
 msgstr "Diverse"
 
-#: src/window.py:622 src/window.blp:110
+#: src/window.py:631 src/window.blp:111
 msgid "Add Subtitle Track"
 msgstr "Lägg till undertextspår"
 
-#: src/window.py:624 src/window.py:633
+#: src/window.py:633 src/window.py:642
 msgid "None"
 msgstr "Inget"
 
-#: src/window.py:631 src/window.blp:111
+#: src/window.py:640 src/window.blp:112
 msgid "Add Audio Track"
 msgstr "Lägg till ljudspår"
 
-#: src/window.py:662
+#: src/window.py:671
 msgid "Track"
 msgstr "Spår"
 
-#: src/window.py:705 src/playlist.blp:31 src/window.blp:105
+#: src/window.py:714 src/playlist.blp:31 src/window.blp:106
 msgid "Add Folder"
 msgstr "Lägg till mapp"
 
-#: src/window.py:705 src/shortcuts-dialog.blp:21 src/window.blp:99
-#: src/window.blp:490 src/window.blp:556
+#: src/window.py:714 src/shortcuts-dialog.blp:21 src/window.blp:100
+#: src/window.blp:491 src/window.blp:557
 msgid "Open Folder"
 msgstr "Öppna mapp"
 
-#: src/window.py:732 src/shortcuts-dialog.blp:16 src/window.blp:98
-#: src/window.blp:555
+#: src/window.py:741 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.blp:556
 msgid "Open Files"
 msgstr "Öppna filer"
 
-#: src/window.py:735 src/playlist.blp:26 src/window.blp:104
+#: src/window.py:744 src/playlist.blp:26 src/window.blp:105
 msgid "Add Files"
 msgstr "Lägg till filer"
 
-#: src/window.py:739
+#: src/window.py:748
 msgid "Add Subtitle"
 msgstr "Lägg till undertext"
 
-#: src/window.py:742
+#: src/window.py:751
 msgid "Add Audio"
 msgstr "Lägg till ljud"
 
-#: src/window.py:767
+#: src/window.py:776
 msgid "Media"
 msgstr "Media"
 
-#: src/window.py:833
+#: src/window.py:842
 msgid "Session Saved"
 msgstr "Session sparad"
 
-#: src/window.py:841 src/playlist.blp:36 src/window.blp:106
+#: src/window.py:850 src/playlist.blp:36 src/window.blp:107
 msgid "Add URL"
 msgstr "Lägg till URL"
 
-#: src/window.py:841 src/shortcuts-dialog.blp:26 src/window.blp:100
-#: src/window.blp:499 src/window.blp:557
+#: src/window.py:850 src/shortcuts-dialog.blp:26 src/window.blp:101
+#: src/window.blp:500 src/window.blp:558
 msgid "Open URL"
 msgstr "Öppna URL"
 
-#: src/window.py:854
+#: src/window.py:863
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:862 src/playlist.blp:22
+#: src/window.py:871 src/playlist.blp:22
 msgid "Add"
 msgstr "Lägg till"
 
-#: src/window.py:862 src/window.blp:92
+#: src/window.py:871 src/window.blp:93
 msgid "Open"
 msgstr "Öppna"
 
-#: src/window.py:1103
+#: src/window.py:1112
 msgid "Chapter"
 msgstr "Kapitel"
 
-#: src/window.py:1164 src/window.py:1997
+#: src/window.py:1173 src/window.py:2050
 msgid "Play"
 msgstr "Spela"
 
-#: src/window.py:1164
+#: src/window.py:1173
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/window.py:1250
+#: src/window.py:1259
 msgid "Loop Playlist"
 msgstr "Repetera spellista"
 
-#: src/window.py:1997
+#: src/window.py:2050
 msgid "Play or Add Subtitles"
 msgstr "Spela eller lägg till undertexter"
 
@@ -826,11 +826,11 @@ msgstr "Visa genvägar"
 msgid "Close Window"
 msgstr "Stäng fönster"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:136
+#: src/shortcuts-dialog.blp:76 src/window.blp:137
 msgid "Save Session"
 msgstr "Spara session"
 
-#: src/shortcuts-dialog.blp:81 src/window.blp:137
+#: src/shortcuts-dialog.blp:81 src/window.blp:138
 msgid "Save Session and Close"
 msgstr "Spara session och stäng"
 
@@ -838,49 +838,52 @@ msgstr "Spara session och stäng"
 msgid "Quit"
 msgstr "Avsluta"
 
-#: src/window.blp:125
+#: src/window.blp:126
 msgid "Main Menu"
 msgstr "Huvudmeny"
 
-#: src/window.blp:131
+#: src/window.blp:132
 msgid "Keyboard Shortcuts"
 msgstr "Tangentbordsgenvägar"
 
-#: src/window.blp:132
+#: src/window.blp:133
 msgid "About Cine"
 msgstr "Om Cine"
 
-#: src/window.blp:176 src/window.blp:550
+#: src/window.blp:177 src/window.blp:551
 msgid "Previous"
 msgstr "Föregående"
 
-#: src/window.blp:199 src/window.blp:551
+#: src/window.blp:200 src/window.blp:552
 msgid "Next"
 msgstr "Nästa"
 
-#: src/window.blp:284
+#: src/window.blp:285
 msgid "Video"
 msgstr "Video"
 
-#: src/window.blp:299
+#: src/window.blp:300
 msgid "Chapters"
 msgstr "Kapitel"
 
-#: src/window.blp:316
+#: src/window.blp:317
 msgid "Shuffle Playlist"
 msgstr "Blanda spellista"
 
-#: src/window.blp:399
+#: src/window.blp:400
 msgid "Toggle Elapsed/Remaining"
 msgstr "Växla förfluten/återstående tid"
 
-#: src/window.blp:446
+#: src/window.blp:447
 msgid "Drag and drop files here"
 msgstr "Dra och släpp filer här"
 
-#: src/window.blp:466
+#: src/window.blp:467
 msgid "Open…"
 msgstr "Öppna…"
+
+#~ msgid "Restoring Session…"
+#~ msgstr "Återställer session…"
 
 #~ msgid "Some fonts may not work"
 #~ msgstr "Vissa teckensnitt kanske inte fungerar"

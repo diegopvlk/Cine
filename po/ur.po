@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-17 17:36-0300\n"
 "PO-Revision-Date: 2026-11-15 17:44+0000\n"
 "Last-Translator: Ahmer Jamil Khan <ahmer@khan.am>\n"
 "Language-Team: Urdu <https://hosted.weblate.org/projects/cine/app/ur/>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2026.12.dev0\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
-#: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
-#: src/window.blp:80 src/window.blp:445
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:155 src/mpris.py:147
+#: src/mpris.py:365 src/window.py:134 src/window.py:2061 src/window.blp:6
+#: src/window.blp:81 src/window.blp:446
 msgid "Cine"
 msgstr "سنی"
 
@@ -35,7 +35,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "آڈیو;ویڈیو;مووی;ٹی وی;فلم;کلپ;پلیئر;سنی;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:129
+#: src/window.blp:130
 msgid "New Window"
 msgstr "نئی ونڈو"
 
@@ -81,7 +81,7 @@ msgid "Video Options"
 msgstr "ویڈیو آپشنز"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:130 src/window.blp:561
+#: src/preferences.blp:77 src/window.blp:131 src/window.blp:562
 msgid "Preferences"
 msgstr "ترجیحات"
 
@@ -113,8 +113,12 @@ msgstr "منسوخ کریں"
 msgid "Clear All"
 msgstr "سب صاف کریں"
 
+#: src/main.py:123 src/playlist.py:312 src/window.py:1789
+msgid "File Error"
+msgstr "فائل میں خرابی"
+
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:193
+#: src/main.py:165
 msgid "translator-credits"
 msgstr "Ahmer Jamil Khan https://ahmer.co"
 
@@ -133,16 +137,12 @@ msgid ""
 msgstr ""
 "اس فولڈر تک رسائی کے لیے فلیٹ پیک کی اجازت درکار ہے جہاں ویڈیو محفوظ ہے"
 
-#: src/playlist.py:312 src/window.py:1757
-msgid "File Error"
-msgstr "فائل میں خرابی"
-
 #: src/playlist.py:418
 msgid "Remove from Playlist"
 msgstr "پلے لسٹ سے ہٹائیں"
 
-#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:352
-#: src/window.blp:563
+#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:353
+#: src/window.blp:564
 msgid "Playlist"
 msgstr "پلے لسٹ"
 
@@ -175,7 +175,7 @@ msgid "Save Video Position on Close"
 msgstr "بند کرتے وقت ویڈیو کی پوزیشن محفوظ کریں"
 
 #: src/preferences.py:362 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:115 src/window.blp:477 src/window.blp:562
+#: src/window.blp:116 src/window.blp:478 src/window.blp:563
 msgid "Watch History"
 msgstr "دیکھنے کی ہسٹری"
 
@@ -200,12 +200,12 @@ msgstr "کاپی ہو گیا"
 msgid "Copy"
 msgstr "کاپی کریں"
 
-#: src/save_session.py:68
-msgid "Restoring Session…"
-msgstr "نشست بحال کی جا رہی ہے…"
+#: src/save_session.py:69
+msgid "Session Restored"
+msgstr "سیشن بحال ہو گیا"
 
 #: src/shortcuts.py:28 src/shortcuts.py:29 src/shortcuts.py:30
-#: src/shortcuts.py:31 src/window.py:1927 src/window.blp:208
+#: src/shortcuts.py:31 src/window.py:1980 src/window.blp:209
 msgid "Volume"
 msgstr "آواز"
 
@@ -218,8 +218,8 @@ msgid "Volume Decrease"
 msgstr "آواز میں کمی"
 
 #: src/shortcuts.py:32 src/shortcuts.py:33 src/shortcuts.py:34
-#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:187
-#: src/window.blp:549
+#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:188
+#: src/window.blp:550
 msgid "Play/Pause"
 msgstr "چلائیں/روکیں"
 
@@ -228,7 +228,7 @@ msgid "Show/Hide Subtitles"
 msgstr "سب ٹائٹلز دکھائیں/چھپائیں"
 
 #: src/shortcuts.py:36 src/shortcuts.py:37 src/shortcuts.py:165
-#: src/shortcuts.py:229 src/window.py:758 src/window.blp:255
+#: src/shortcuts.py:229 src/window.py:767 src/window.blp:256
 msgid "Subtitles"
 msgstr "سب ٹائٹلز"
 
@@ -252,7 +252,7 @@ msgstr "اگلا ثانوی سب ٹائٹل ٹریک"
 msgid "Previous Secondary Subtitle Track"
 msgstr "پچھلا ثانوی سب ٹائٹل ٹریک"
 
-#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:763 src/window.blp:270
+#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:772 src/window.blp:271
 msgid "Audio"
 msgstr "آڈیو"
 
@@ -280,12 +280,12 @@ msgstr "5 سیکنڈ پیچھے جائیں"
 msgid "Seek 5s Forward"
 msgstr "5 سیکنڈ آگے بڑھیں"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1875
-#: src/window.blp:368
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1928
+#: src/window.blp:369
 msgid "Fullscreen"
 msgstr "پوری اسکرین"
 
-#: src/shortcuts.py:48 src/window.py:1875
+#: src/shortcuts.py:48 src/window.py:1928
 msgid "Exit Fullscreen"
 msgstr "فل سکرین سے باہر نکلیں"
 
@@ -339,7 +339,7 @@ msgstr "سب ٹائٹل اسکیل میں اضافہ کریں"
 msgid "Decrease Subtitle Scale"
 msgstr "سب ٹائٹل اسکیل میں کمی کریں"
 
-#: src/shortcuts.py:68 src/window.blp:219
+#: src/shortcuts.py:68 src/window.blp:220
 msgid "Mute/Unmute"
 msgstr "خاموش/آواز"
 
@@ -388,15 +388,15 @@ msgstr "اعداد و شمار"
 msgid "Statistics Overlay"
 msgstr "شماریاتی اوورلے"
 
-#: src/shortcuts.py:80 src/window.blp:329
+#: src/shortcuts.py:80 src/window.blp:330
 msgid "Set/Clear A-B Loop Points"
 msgstr "A-B لوپ پوائنٹس سیٹ/کلیئر کریں"
 
-#: src/shortcuts.py:81 src/window.py:1256 src/window.blp:341
+#: src/shortcuts.py:81 src/window.py:1265 src/window.blp:342
 msgid "Loop"
 msgstr "لوپ"
 
-#: src/shortcuts.py:81 src/window.py:1253
+#: src/shortcuts.py:81 src/window.py:1262
 msgid "Loop File"
 msgstr "فائل کو دہرائیں"
 
@@ -489,94 +489,94 @@ msgstr "پلے بیک"
 msgid "Miscellaneous"
 msgstr "متفرق"
 
-#: src/window.py:622 src/window.blp:110
+#: src/window.py:631 src/window.blp:111
 msgid "Add Subtitle Track"
 msgstr "سب ٹائٹل ٹریک شامل کریں"
 
-#: src/window.py:624 src/window.py:633
+#: src/window.py:633 src/window.py:642
 msgid "None"
 msgstr "کچھ نہیں"
 
-#: src/window.py:631 src/window.blp:111
+#: src/window.py:640 src/window.blp:112
 msgid "Add Audio Track"
 msgstr "آڈیو ٹریک شامل کریں"
 
-#: src/window.py:662
+#: src/window.py:671
 msgid "Track"
 msgstr "ٹریک"
 
-#: src/window.py:705 src/playlist.blp:31 src/window.blp:105
+#: src/window.py:714 src/playlist.blp:31 src/window.blp:106
 msgid "Add Folder"
 msgstr "فولڈر شامل کریں"
 
-#: src/window.py:705 src/shortcuts-dialog.blp:21 src/window.blp:99
-#: src/window.blp:490 src/window.blp:556
+#: src/window.py:714 src/shortcuts-dialog.blp:21 src/window.blp:100
+#: src/window.blp:491 src/window.blp:557
 msgid "Open Folder"
 msgstr "فولڈر کھولیں"
 
-#: src/window.py:732 src/shortcuts-dialog.blp:16 src/window.blp:98
-#: src/window.blp:555
+#: src/window.py:741 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.blp:556
 msgid "Open Files"
 msgstr "فائلیں کھولیں"
 
-#: src/window.py:735 src/playlist.blp:26 src/window.blp:104
+#: src/window.py:744 src/playlist.blp:26 src/window.blp:105
 msgid "Add Files"
 msgstr "فائلیں شامل کریں"
 
-#: src/window.py:739
+#: src/window.py:748
 msgid "Add Subtitle"
 msgstr "سب ٹائٹل شامل کریں"
 
-#: src/window.py:742
+#: src/window.py:751
 msgid "Add Audio"
 msgstr "آڈیو شامل کریں"
 
-#: src/window.py:767
+#: src/window.py:776
 msgid "Media"
 msgstr "میڈیا"
 
-#: src/window.py:833
+#: src/window.py:842
 msgid "Session Saved"
 msgstr "سیشن محفوظ ہو گیا"
 
-#: src/window.py:841 src/playlist.blp:36 src/window.blp:106
+#: src/window.py:850 src/playlist.blp:36 src/window.blp:107
 msgid "Add URL"
 msgstr "یو آر ایل شامل کریں"
 
-#: src/window.py:841 src/shortcuts-dialog.blp:26 src/window.blp:100
-#: src/window.blp:499 src/window.blp:557
+#: src/window.py:850 src/shortcuts-dialog.blp:26 src/window.blp:101
+#: src/window.blp:500 src/window.blp:558
 msgid "Open URL"
 msgstr "یو آر ایل کھولیں"
 
-#: src/window.py:854
+#: src/window.py:863
 msgid "URL"
 msgstr "یو آر ایل"
 
-#: src/window.py:862 src/playlist.blp:22
+#: src/window.py:871 src/playlist.blp:22
 msgid "Add"
 msgstr "شامل کریں"
 
-#: src/window.py:862 src/window.blp:92
+#: src/window.py:871 src/window.blp:93
 msgid "Open"
 msgstr "کھولیں"
 
-#: src/window.py:1103
+#: src/window.py:1112
 msgid "Chapter"
 msgstr "باب"
 
-#: src/window.py:1164 src/window.py:1997
+#: src/window.py:1173 src/window.py:2050
 msgid "Play"
 msgstr "چلائیں"
 
-#: src/window.py:1164
+#: src/window.py:1173
 msgid "Pause"
 msgstr "روکیں"
 
-#: src/window.py:1250
+#: src/window.py:1259
 msgid "Loop Playlist"
 msgstr "پلے لسٹ کو دہرائیں"
 
-#: src/window.py:1997
+#: src/window.py:2050
 msgid "Play or Add Subtitles"
 msgstr "چلائیں یا سب ٹائٹلز شامل کریں"
 
@@ -827,11 +827,11 @@ msgstr "شارٹ کٹس دکھائیں"
 msgid "Close Window"
 msgstr "ونڈو بند کریں"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:136
+#: src/shortcuts-dialog.blp:76 src/window.blp:137
 msgid "Save Session"
 msgstr "سیشن محفوظ کریں"
 
-#: src/shortcuts-dialog.blp:81 src/window.blp:137
+#: src/shortcuts-dialog.blp:81 src/window.blp:138
 msgid "Save Session and Close"
 msgstr "سیشن محفوظ کریں اور بند کریں"
 
@@ -839,49 +839,52 @@ msgstr "سیشن محفوظ کریں اور بند کریں"
 msgid "Quit"
 msgstr "بند کریں"
 
-#: src/window.blp:125
+#: src/window.blp:126
 msgid "Main Menu"
 msgstr "مین مینو"
 
-#: src/window.blp:131
+#: src/window.blp:132
 msgid "Keyboard Shortcuts"
 msgstr "کی بورڈ شارٹ کٹس"
 
-#: src/window.blp:132
+#: src/window.blp:133
 msgid "About Cine"
 msgstr "سنی کے بارے میں"
 
-#: src/window.blp:176 src/window.blp:550
+#: src/window.blp:177 src/window.blp:551
 msgid "Previous"
 msgstr "پچھلا"
 
-#: src/window.blp:199 src/window.blp:551
+#: src/window.blp:200 src/window.blp:552
 msgid "Next"
 msgstr "اگلا"
 
-#: src/window.blp:284
+#: src/window.blp:285
 msgid "Video"
 msgstr "ویڈیو"
 
-#: src/window.blp:299
+#: src/window.blp:300
 msgid "Chapters"
 msgstr "ابواب"
 
-#: src/window.blp:316
+#: src/window.blp:317
 msgid "Shuffle Playlist"
 msgstr "پلے لسٹ کو بے ترتیب کریں"
 
-#: src/window.blp:399
+#: src/window.blp:400
 msgid "Toggle Elapsed/Remaining"
 msgstr "گزرا ہوا/باقی وقت تبدیل کریں"
 
-#: src/window.blp:446
+#: src/window.blp:447
 msgid "Drag and drop files here"
 msgstr "فائلیں یہاں گھسیٹ کر چھوڑیں"
 
-#: src/window.blp:466
+#: src/window.blp:467
 msgid "Open…"
 msgstr "کھولیں…"
+
+#~ msgid "Restoring Session…"
+#~ msgstr "نشست بحال کی جا رہی ہے…"
 
 #~ msgid "Some fonts may not work"
 #~ msgstr "کچھ فونٹس شاید کام نہ کریں"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-17 17:36-0300\n"
 "PO-Revision-Date: 2026-10-18 12:46+0000\n"
 "Last-Translator: Arif Budiman <arifpedia@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/cine/app/id/"
@@ -19,9 +19,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 2026.11.dev0\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
-#: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
-#: src/window.blp:80 src/window.blp:445
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:155 src/mpris.py:147
+#: src/mpris.py:365 src/window.py:134 src/window.py:2061 src/window.blp:6
+#: src/window.blp:81 src/window.blp:446
 msgid "Cine"
 msgstr "Cine"
 
@@ -36,7 +36,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:129
+#: src/window.blp:130
 msgid "New Window"
 msgstr "Jendela Baru"
 
@@ -82,7 +82,7 @@ msgid "Video Options"
 msgstr "Opsi Video"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:130 src/window.blp:561
+#: src/preferences.blp:77 src/window.blp:131 src/window.blp:562
 msgid "Preferences"
 msgstr "Preferensi"
 
@@ -114,8 +114,12 @@ msgstr "Batal"
 msgid "Clear All"
 msgstr "Hapus Semua"
 
+#: src/main.py:123 src/playlist.py:312 src/window.py:1789
+msgid "File Error"
+msgstr "Galat Berkas"
+
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:193
+#: src/main.py:165
 msgid "translator-credits"
 msgstr "Arif Budiman <arifpedia@gmail.com>"
 
@@ -133,16 +137,12 @@ msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "Memerlukan izin Flatpak untuk membaca folder tempat video disimpan"
 
-#: src/playlist.py:312 src/window.py:1757
-msgid "File Error"
-msgstr "Galat Berkas"
-
 #: src/playlist.py:418
 msgid "Remove from Playlist"
 msgstr "Hapus dari Daftar Putar"
 
-#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:352
-#: src/window.blp:563
+#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:353
+#: src/window.blp:564
 msgid "Playlist"
 msgstr "Daftar Putar"
 
@@ -174,7 +174,7 @@ msgid "Save Video Position on Close"
 msgstr "Simpan Posisi Video saat Ditutup"
 
 #: src/preferences.py:362 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:115 src/window.blp:477 src/window.blp:562
+#: src/window.blp:116 src/window.blp:478 src/window.blp:563
 msgid "Watch History"
 msgstr "Riwayat Tontonan"
 
@@ -199,12 +199,12 @@ msgstr "Tersalin"
 msgid "Copy"
 msgstr "Salin"
 
-#: src/save_session.py:68
-msgid "Restoring Session…"
-msgstr "Memulihkan Sesi…"
+#: src/save_session.py:69
+msgid "Session Restored"
+msgstr "Sesi Dipulihkan"
 
 #: src/shortcuts.py:28 src/shortcuts.py:29 src/shortcuts.py:30
-#: src/shortcuts.py:31 src/window.py:1927 src/window.blp:208
+#: src/shortcuts.py:31 src/window.py:1980 src/window.blp:209
 msgid "Volume"
 msgstr "Volume"
 
@@ -217,8 +217,8 @@ msgid "Volume Decrease"
 msgstr "Turunkan Volume"
 
 #: src/shortcuts.py:32 src/shortcuts.py:33 src/shortcuts.py:34
-#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:187
-#: src/window.blp:549
+#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:188
+#: src/window.blp:550
 msgid "Play/Pause"
 msgstr "Putar/Jeda"
 
@@ -227,7 +227,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Tampilkan/Sembunyikan Subtitel"
 
 #: src/shortcuts.py:36 src/shortcuts.py:37 src/shortcuts.py:165
-#: src/shortcuts.py:229 src/window.py:758 src/window.blp:255
+#: src/shortcuts.py:229 src/window.py:767 src/window.blp:256
 msgid "Subtitles"
 msgstr "Subtitel"
 
@@ -251,7 +251,7 @@ msgstr "Trek Subtitel Sekunder Berikutnya"
 msgid "Previous Secondary Subtitle Track"
 msgstr "Trek Subtitel Sekunder Sebelumnya"
 
-#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:763 src/window.blp:270
+#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:772 src/window.blp:271
 msgid "Audio"
 msgstr "Audio"
 
@@ -279,12 +279,12 @@ msgstr "Lompat 5d ke Belakang"
 msgid "Seek 5s Forward"
 msgstr "Lompat 5d ke Depan"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1875
-#: src/window.blp:368
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1928
+#: src/window.blp:369
 msgid "Fullscreen"
 msgstr "Layar Penuh"
 
-#: src/shortcuts.py:48 src/window.py:1875
+#: src/shortcuts.py:48 src/window.py:1928
 msgid "Exit Fullscreen"
 msgstr "Keluar dari Layar Penuh"
 
@@ -338,7 +338,7 @@ msgstr "Perbesar Skala Subtitel"
 msgid "Decrease Subtitle Scale"
 msgstr "Perkecil Skala Subtitel"
 
-#: src/shortcuts.py:68 src/window.blp:219
+#: src/shortcuts.py:68 src/window.blp:220
 msgid "Mute/Unmute"
 msgstr "Bungkam/Nyalakan Suara"
 
@@ -387,15 +387,15 @@ msgstr "Statistik"
 msgid "Statistics Overlay"
 msgstr "Hamparan Statistik"
 
-#: src/shortcuts.py:80 src/window.blp:329
+#: src/shortcuts.py:80 src/window.blp:330
 msgid "Set/Clear A-B Loop Points"
 msgstr "Atur/Hapus Titik Pengulangan A-B"
 
-#: src/shortcuts.py:81 src/window.py:1256 src/window.blp:341
+#: src/shortcuts.py:81 src/window.py:1265 src/window.blp:342
 msgid "Loop"
 msgstr "Ulangi"
 
-#: src/shortcuts.py:81 src/window.py:1253
+#: src/shortcuts.py:81 src/window.py:1262
 msgid "Loop File"
 msgstr "Ulangi Berkas"
 
@@ -488,94 +488,94 @@ msgstr "Pemutaran"
 msgid "Miscellaneous"
 msgstr "Lain-lain"
 
-#: src/window.py:622 src/window.blp:110
+#: src/window.py:631 src/window.blp:111
 msgid "Add Subtitle Track"
 msgstr "Tambah Trek Subtitel"
 
-#: src/window.py:624 src/window.py:633
+#: src/window.py:633 src/window.py:642
 msgid "None"
 msgstr "Tidak ada"
 
-#: src/window.py:631 src/window.blp:111
+#: src/window.py:640 src/window.blp:112
 msgid "Add Audio Track"
 msgstr "Tambah Trek Audio"
 
-#: src/window.py:662
+#: src/window.py:671
 msgid "Track"
 msgstr "Trek"
 
-#: src/window.py:705 src/playlist.blp:31 src/window.blp:105
+#: src/window.py:714 src/playlist.blp:31 src/window.blp:106
 msgid "Add Folder"
 msgstr "Tambah Folder"
 
-#: src/window.py:705 src/shortcuts-dialog.blp:21 src/window.blp:99
-#: src/window.blp:490 src/window.blp:556
+#: src/window.py:714 src/shortcuts-dialog.blp:21 src/window.blp:100
+#: src/window.blp:491 src/window.blp:557
 msgid "Open Folder"
 msgstr "Buka Folder"
 
-#: src/window.py:732 src/shortcuts-dialog.blp:16 src/window.blp:98
-#: src/window.blp:555
+#: src/window.py:741 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.blp:556
 msgid "Open Files"
 msgstr "Buka Berkas"
 
-#: src/window.py:735 src/playlist.blp:26 src/window.blp:104
+#: src/window.py:744 src/playlist.blp:26 src/window.blp:105
 msgid "Add Files"
 msgstr "Tambah Berkas"
 
-#: src/window.py:739
+#: src/window.py:748
 msgid "Add Subtitle"
 msgstr "Tambah Subtitel"
 
-#: src/window.py:742
+#: src/window.py:751
 msgid "Add Audio"
 msgstr "Tambah Audio"
 
-#: src/window.py:767
+#: src/window.py:776
 msgid "Media"
 msgstr "Media"
 
-#: src/window.py:833
+#: src/window.py:842
 msgid "Session Saved"
 msgstr "Sesi Disimpan"
 
-#: src/window.py:841 src/playlist.blp:36 src/window.blp:106
+#: src/window.py:850 src/playlist.blp:36 src/window.blp:107
 msgid "Add URL"
 msgstr "Tambah URL"
 
-#: src/window.py:841 src/shortcuts-dialog.blp:26 src/window.blp:100
-#: src/window.blp:499 src/window.blp:557
+#: src/window.py:850 src/shortcuts-dialog.blp:26 src/window.blp:101
+#: src/window.blp:500 src/window.blp:558
 msgid "Open URL"
 msgstr "Buka URL"
 
-#: src/window.py:854
+#: src/window.py:863
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:862 src/playlist.blp:22
+#: src/window.py:871 src/playlist.blp:22
 msgid "Add"
 msgstr "Tambah"
 
-#: src/window.py:862 src/window.blp:92
+#: src/window.py:871 src/window.blp:93
 msgid "Open"
 msgstr "Buka"
 
-#: src/window.py:1103
+#: src/window.py:1112
 msgid "Chapter"
 msgstr "Bab"
 
-#: src/window.py:1164 src/window.py:1997
+#: src/window.py:1173 src/window.py:2050
 msgid "Play"
 msgstr "Putar"
 
-#: src/window.py:1164
+#: src/window.py:1173
 msgid "Pause"
 msgstr "Jeda"
 
-#: src/window.py:1250
+#: src/window.py:1259
 msgid "Loop Playlist"
 msgstr "Ulangi Daftar Putar"
 
-#: src/window.py:1997
+#: src/window.py:2050
 msgid "Play or Add Subtitles"
 msgstr "Putar atau Tambahkan Subtitel"
 
@@ -724,11 +724,11 @@ msgstr "Gunakan GPU untuk mendekode video jika tersedia"
 
 #: src/preferences.blp:103
 msgid "GPU-Next Renderer (Requires Restart)"
-msgstr ""
+msgstr "Perender GPU-Next (Memerlukan Mulai Ulang)"
 
 #: src/preferences.blp:104
 msgid "Better colors and HDR-to-SDR tone mapping"
-msgstr ""
+msgstr "Warna lebih baik dan pemetaan nada HDR-ke-SDR"
 
 #: src/preferences.blp:109
 msgid "Pick up where you left off after saving from the menu"
@@ -826,11 +826,11 @@ msgstr "Tampilkan Pintasan"
 msgid "Close Window"
 msgstr "Tutup Jendela"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:136
+#: src/shortcuts-dialog.blp:76 src/window.blp:137
 msgid "Save Session"
 msgstr "Simpan Sesi"
 
-#: src/shortcuts-dialog.blp:81 src/window.blp:137
+#: src/shortcuts-dialog.blp:81 src/window.blp:138
 msgid "Save Session and Close"
 msgstr "Simpan Sesi dan Tutup"
 
@@ -838,49 +838,52 @@ msgstr "Simpan Sesi dan Tutup"
 msgid "Quit"
 msgstr "Keluar"
 
-#: src/window.blp:125
+#: src/window.blp:126
 msgid "Main Menu"
 msgstr "Menu Utama"
 
-#: src/window.blp:131
+#: src/window.blp:132
 msgid "Keyboard Shortcuts"
 msgstr "Pintasan Papan Ketik"
 
-#: src/window.blp:132
+#: src/window.blp:133
 msgid "About Cine"
 msgstr "Tentang Cine"
 
-#: src/window.blp:176 src/window.blp:550
+#: src/window.blp:177 src/window.blp:551
 msgid "Previous"
 msgstr "Sebelumnya"
 
-#: src/window.blp:199 src/window.blp:551
+#: src/window.blp:200 src/window.blp:552
 msgid "Next"
 msgstr "Berikutnya"
 
-#: src/window.blp:284
+#: src/window.blp:285
 msgid "Video"
 msgstr "Video"
 
-#: src/window.blp:299
+#: src/window.blp:300
 msgid "Chapters"
 msgstr "Bab"
 
-#: src/window.blp:316
+#: src/window.blp:317
 msgid "Shuffle Playlist"
 msgstr "Acak Daftar Putar"
 
-#: src/window.blp:399
+#: src/window.blp:400
 msgid "Toggle Elapsed/Remaining"
 msgstr "Beralih Berlalu/Tersisa"
 
-#: src/window.blp:446
+#: src/window.blp:447
 msgid "Drag and drop files here"
 msgstr "Seret dan lepaskan berkas di sini"
 
-#: src/window.blp:466
+#: src/window.blp:467
 msgid "Open…"
 msgstr "Buka…"
+
+#~ msgid "Restoring Session…"
+#~ msgstr "Memulihkan Sesi…"
 
 #~ msgid "Some fonts may not work"
 #~ msgstr "Beberapa font mungkin tidak berfungsi"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-17 17:36-0300\n"
 "PO-Revision-Date: 2026-04-30 07:09+0000\n"
 "Last-Translator: Diego Povliuk <diego.pvlk@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/cine/app/it/>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.17.1-dev\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
-#: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
-#: src/window.blp:80 src/window.blp:445
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:155 src/mpris.py:147
+#: src/mpris.py:365 src/window.py:134 src/window.py:2061 src/window.blp:6
+#: src/window.blp:81 src/window.blp:446
 msgid "Cine"
 msgstr "Cine"
 
@@ -35,7 +35,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "Audio;Video;TV;Film;Clip;Riproduttore;Cine;mpv;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:129
+#: src/window.blp:130
 msgid "New Window"
 msgstr "Nuova finestra"
 
@@ -82,7 +82,7 @@ msgid "Video Options"
 msgstr "Opzioni video"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:130 src/window.blp:561
+#: src/preferences.blp:77 src/window.blp:131 src/window.blp:562
 msgid "Preferences"
 msgstr "Preferenze"
 
@@ -114,8 +114,12 @@ msgstr "Annulla"
 msgid "Clear All"
 msgstr "Cancella tutto"
 
+#: src/main.py:123 src/playlist.py:312 src/window.py:1789
+msgid "File Error"
+msgstr "Errore file"
+
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:193
+#: src/main.py:165
 msgid "translator-credits"
 msgstr "Neko the gamer https://github.com/Nekothegamer"
 
@@ -135,16 +139,12 @@ msgstr ""
 "È richiesto di impostare i permessi al flatpak per leggere la cartella dov'è "
 "memorizzato il video"
 
-#: src/playlist.py:312 src/window.py:1757
-msgid "File Error"
-msgstr "Errore file"
-
 #: src/playlist.py:418
 msgid "Remove from Playlist"
 msgstr "Rimuovi dalla playlist"
 
-#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:352
-#: src/window.blp:563
+#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:353
+#: src/window.blp:564
 msgid "Playlist"
 msgstr "Playlist"
 
@@ -177,7 +177,7 @@ msgid "Save Video Position on Close"
 msgstr "Salva la posizione del video alla chiusura"
 
 #: src/preferences.py:362 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:115 src/window.blp:477 src/window.blp:562
+#: src/window.blp:116 src/window.blp:478 src/window.blp:563
 msgid "Watch History"
 msgstr "Cronologia di visualizzazione"
 
@@ -202,12 +202,12 @@ msgstr "Copiato"
 msgid "Copy"
 msgstr "Copia"
 
-#: src/save_session.py:68
-msgid "Restoring Session…"
-msgstr "Ripristino sessione…"
+#: src/save_session.py:69
+msgid "Session Restored"
+msgstr "Sessione ripristinata"
 
 #: src/shortcuts.py:28 src/shortcuts.py:29 src/shortcuts.py:30
-#: src/shortcuts.py:31 src/window.py:1927 src/window.blp:208
+#: src/shortcuts.py:31 src/window.py:1980 src/window.blp:209
 msgid "Volume"
 msgstr "Volume"
 
@@ -220,8 +220,8 @@ msgid "Volume Decrease"
 msgstr "Diminuzione volume"
 
 #: src/shortcuts.py:32 src/shortcuts.py:33 src/shortcuts.py:34
-#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:187
-#: src/window.blp:549
+#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:188
+#: src/window.blp:550
 msgid "Play/Pause"
 msgstr "Riproduci/Pausa"
 
@@ -230,7 +230,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Mostra/Nascondi sottotitoli"
 
 #: src/shortcuts.py:36 src/shortcuts.py:37 src/shortcuts.py:165
-#: src/shortcuts.py:229 src/window.py:758 src/window.blp:255
+#: src/shortcuts.py:229 src/window.py:767 src/window.blp:256
 msgid "Subtitles"
 msgstr "Sottotitoli"
 
@@ -254,7 +254,7 @@ msgstr "Traccia sottotitoli secondaria successiva"
 msgid "Previous Secondary Subtitle Track"
 msgstr "Traccia sottotitoli secondaria precedente"
 
-#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:763 src/window.blp:270
+#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:772 src/window.blp:271
 msgid "Audio"
 msgstr "Audio"
 
@@ -282,12 +282,12 @@ msgstr "Vai indietro di 5 s"
 msgid "Seek 5s Forward"
 msgstr "Vai avanti di 5 s"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1875
-#: src/window.blp:368
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1928
+#: src/window.blp:369
 msgid "Fullscreen"
 msgstr "Schermo intero"
 
-#: src/shortcuts.py:48 src/window.py:1875
+#: src/shortcuts.py:48 src/window.py:1928
 msgid "Exit Fullscreen"
 msgstr "Esci da schermo intero"
 
@@ -341,7 +341,7 @@ msgstr "Aumenta la grandezza dei sottotitoli"
 msgid "Decrease Subtitle Scale"
 msgstr "Diminuisci la grandezza dei sottotitoli"
 
-#: src/shortcuts.py:68 src/window.blp:219
+#: src/shortcuts.py:68 src/window.blp:220
 msgid "Mute/Unmute"
 msgstr "Disattiva/Attiva l'audio"
 
@@ -390,15 +390,15 @@ msgstr "Statistiche"
 msgid "Statistics Overlay"
 msgstr "Overlay statistiche"
 
-#: src/shortcuts.py:80 src/window.blp:329
+#: src/shortcuts.py:80 src/window.blp:330
 msgid "Set/Clear A-B Loop Points"
 msgstr "Imposta/cancella punti di loop A-B"
 
-#: src/shortcuts.py:81 src/window.py:1256 src/window.blp:341
+#: src/shortcuts.py:81 src/window.py:1265 src/window.blp:342
 msgid "Loop"
 msgstr "Loop"
 
-#: src/shortcuts.py:81 src/window.py:1253
+#: src/shortcuts.py:81 src/window.py:1262
 msgid "Loop File"
 msgstr "Metti in loop il file"
 
@@ -491,94 +491,94 @@ msgstr "Riproduzione"
 msgid "Miscellaneous"
 msgstr "Varie"
 
-#: src/window.py:622 src/window.blp:110
+#: src/window.py:631 src/window.blp:111
 msgid "Add Subtitle Track"
 msgstr "Aggiungi traccia sottotitoli"
 
-#: src/window.py:624 src/window.py:633
+#: src/window.py:633 src/window.py:642
 msgid "None"
 msgstr "Nessuno"
 
-#: src/window.py:631 src/window.blp:111
+#: src/window.py:640 src/window.blp:112
 msgid "Add Audio Track"
 msgstr "Aggiungi traccia audio"
 
-#: src/window.py:662
+#: src/window.py:671
 msgid "Track"
 msgstr "Traccia"
 
-#: src/window.py:705 src/playlist.blp:31 src/window.blp:105
+#: src/window.py:714 src/playlist.blp:31 src/window.blp:106
 msgid "Add Folder"
 msgstr "Aggiungi cartella"
 
-#: src/window.py:705 src/shortcuts-dialog.blp:21 src/window.blp:99
-#: src/window.blp:490 src/window.blp:556
+#: src/window.py:714 src/shortcuts-dialog.blp:21 src/window.blp:100
+#: src/window.blp:491 src/window.blp:557
 msgid "Open Folder"
 msgstr "Apri cartella"
 
-#: src/window.py:732 src/shortcuts-dialog.blp:16 src/window.blp:98
-#: src/window.blp:555
+#: src/window.py:741 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.blp:556
 msgid "Open Files"
 msgstr "Apri file"
 
-#: src/window.py:735 src/playlist.blp:26 src/window.blp:104
+#: src/window.py:744 src/playlist.blp:26 src/window.blp:105
 msgid "Add Files"
 msgstr "Aggiungi file"
 
-#: src/window.py:739
+#: src/window.py:748
 msgid "Add Subtitle"
 msgstr "Aggiungi sottotitoli"
 
-#: src/window.py:742
+#: src/window.py:751
 msgid "Add Audio"
 msgstr "Aggiungi audio"
 
-#: src/window.py:767
+#: src/window.py:776
 msgid "Media"
 msgstr "Media"
 
-#: src/window.py:833
+#: src/window.py:842
 msgid "Session Saved"
 msgstr "Sessione salvata"
 
-#: src/window.py:841 src/playlist.blp:36 src/window.blp:106
+#: src/window.py:850 src/playlist.blp:36 src/window.blp:107
 msgid "Add URL"
 msgstr "Aggiungi URL"
 
-#: src/window.py:841 src/shortcuts-dialog.blp:26 src/window.blp:100
-#: src/window.blp:499 src/window.blp:557
+#: src/window.py:850 src/shortcuts-dialog.blp:26 src/window.blp:101
+#: src/window.blp:500 src/window.blp:558
 msgid "Open URL"
 msgstr "Apri URL"
 
-#: src/window.py:854
+#: src/window.py:863
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:862 src/playlist.blp:22
+#: src/window.py:871 src/playlist.blp:22
 msgid "Add"
 msgstr "Aggiungi"
 
-#: src/window.py:862 src/window.blp:92
+#: src/window.py:871 src/window.blp:93
 msgid "Open"
 msgstr "Apri"
 
-#: src/window.py:1103
+#: src/window.py:1112
 msgid "Chapter"
 msgstr "Capitolo"
 
-#: src/window.py:1164 src/window.py:1997
+#: src/window.py:1173 src/window.py:2050
 msgid "Play"
 msgstr "Riproduci"
 
-#: src/window.py:1164
+#: src/window.py:1173
 msgid "Pause"
 msgstr "Pausa"
 
-#: src/window.py:1250
+#: src/window.py:1259
 msgid "Loop Playlist"
 msgstr "Metti in loop la playlist"
 
-#: src/window.py:1997
+#: src/window.py:2050
 msgid "Play or Add Subtitles"
 msgstr "Riproduci o aggiungi sottotitoli"
 
@@ -831,11 +831,11 @@ msgstr "Mostra scorciatoie da tastiera"
 msgid "Close Window"
 msgstr "Chiudi finestra"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:136
+#: src/shortcuts-dialog.blp:76 src/window.blp:137
 msgid "Save Session"
 msgstr "Salva sessione"
 
-#: src/shortcuts-dialog.blp:81 src/window.blp:137
+#: src/shortcuts-dialog.blp:81 src/window.blp:138
 msgid "Save Session and Close"
 msgstr "Salva sessione e chiudi"
 
@@ -843,49 +843,52 @@ msgstr "Salva sessione e chiudi"
 msgid "Quit"
 msgstr "Esci"
 
-#: src/window.blp:125
+#: src/window.blp:126
 msgid "Main Menu"
 msgstr "Menù principale"
 
-#: src/window.blp:131
+#: src/window.blp:132
 msgid "Keyboard Shortcuts"
 msgstr "Scorciatoie da tastiera"
 
-#: src/window.blp:132
+#: src/window.blp:133
 msgid "About Cine"
 msgstr "Informazioni su Cine"
 
-#: src/window.blp:176 src/window.blp:550
+#: src/window.blp:177 src/window.blp:551
 msgid "Previous"
 msgstr "Precedente"
 
-#: src/window.blp:199 src/window.blp:551
+#: src/window.blp:200 src/window.blp:552
 msgid "Next"
 msgstr "Successivo"
 
-#: src/window.blp:284
+#: src/window.blp:285
 msgid "Video"
 msgstr "Video"
 
-#: src/window.blp:299
+#: src/window.blp:300
 msgid "Chapters"
 msgstr "Capitoli"
 
-#: src/window.blp:316
+#: src/window.blp:317
 msgid "Shuffle Playlist"
 msgstr "Riproduci la playlist in ordine casuale"
 
-#: src/window.blp:399
+#: src/window.blp:400
 msgid "Toggle Elapsed/Remaining"
 msgstr "Alterna trascorso/rimanente"
 
-#: src/window.blp:446
+#: src/window.blp:447
 msgid "Drag and drop files here"
 msgstr "Trascina i file qui"
 
-#: src/window.blp:466
+#: src/window.blp:467
 msgid "Open…"
 msgstr "Apri…"
+
+#~ msgid "Restoring Session…"
+#~ msgstr "Ripristino sessione…"
 
 #~ msgid "Some fonts may not work"
 #~ msgstr "Alcuni font potrebbero non funzionare"
