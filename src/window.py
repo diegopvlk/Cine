@@ -1325,6 +1325,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.revealer_drop_indicator.set_reveal_child(False)
         items: list[Gio.File] | list[str] = []
         playable_items: list[str] = []
+        accepted = False
 
         if is_same_playlist(self.mpv.playlist):
             self.mpv.write_watch_later_config()
@@ -1353,12 +1354,13 @@ class CineWindow(Adw.ApplicationWindow):
             except Exception as e:
                 logger.exception("Drop failed")
                 idle_add_once(self.show_toast, str(e))
-                return
+                return accepted
 
             name = (item.get_basename() or "").lower()
             if name.endswith(SUB_EXTS):
                 if not self.mpv.idle_active:
                     self.mpv.command_async("sub-add", path, "select")
+                    accepted = True
                 continue
 
             mime = info.get_content_type() or ""
@@ -1370,9 +1372,12 @@ class CineWindow(Adw.ApplicationWindow):
         for idx, source in enumerate(playable_items):
             mode = "replace" if idx == 0 else "append-play"
             self.mpv.loadfile(source, mode)
+            accepted = True
 
         if playable_items:
             self.mpv.command_async("set", "pause", "no")
+
+        return accepted
 
     def _sync_fullscreen(self, mpv_is_fs: bool):
         self._is_fullscreen = mpv_is_fs

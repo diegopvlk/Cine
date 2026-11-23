@@ -323,6 +323,7 @@ class Playlist(Adw.Dialog):
 
     def _on_drop(self, _target, value, _x, _y):
         items: list[Gio.File] | list[str] = []
+        accepted = False
 
         if isinstance(value, Gdk.FileList):
             items = value.get_files()
@@ -337,29 +338,39 @@ class Playlist(Adw.Dialog):
 
                 if is_url:
                     self._mpv.loadfile(path, "append-play")
+                    accepted = True
                     continue
-                else:
+                try:
                     info = item.query_info(
                         "standard::content-type,standard::type",
                         Gio.FileQueryInfoFlags.NONE,
                         None,
                     )
+                except GLib.Error as e:
+                    logger.exception("Drop failed")
+                    toast = Adw.Toast.new(_("File Error") + f": {e.message}")
+                    self.toast_overlay.add_toast(toast)
+                    continue
 
                 file_type = info.get_file_type()
                 mime_type = info.get_content_type() or ""
 
                 if file_type == Gio.FileType.DIRECTORY:
                     self._mpv.loadfile(path, "append-play")
+                    accepted = True
                     continue
 
                 valid_types = ("video/", "audio/", "image/")
                 if mime_type.startswith(valid_types):
                     self._mpv.loadfile(path, "append-play")
+                    accepted = True
 
             elif isinstance(item, str):  # URL string
                 self._mpv.loadfile(item, "append-play")
+                accepted = True
 
         self.spinner.set_visible(False)
+        return accepted
 
     def _on_row_drag_prepare(self, _source, _x, _y, list_item):
         index = list_item.get_item().position
@@ -371,7 +382,7 @@ class Playlist(Adw.Dialog):
     def _on_row_drop(self, _target, source_index, _x, _y, list_item):
         dest_index = list_item.get_item().position
         if source_index == dest_index:
-            return
+            return True
 
         if source_index < dest_index:
             self._mpv.command("playlist-move", source_index, dest_index + 1)
@@ -379,6 +390,7 @@ class Playlist(Adw.Dialog):
             self._mpv.command("playlist-move", source_index, dest_index)
 
         self._win.splice_playlist()
+        return True
 
     def _on_row_right_click(self, _gesture, _n_press, x, y, list_item, row):
         idx = list_item.get_item().position
