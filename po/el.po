@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-23 08:37-0300\n"
 "PO-Revision-Date: 2026-06-30 00:38+0000\n"
 "Last-Translator: Hazel L <hazeltwink@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/cine/app/el/>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2026.7.dev0\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
-#: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
-#: src/window.blp:80 src/window.blp:445
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:158 src/mpris.py:147
+#: src/mpris.py:365 src/window.py:136 src/window.py:2095 src/window.blp:6
+#: src/window.blp:81 src/window.blp:450
 msgid "Cine"
 msgstr "Cine"
 
@@ -35,7 +35,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;Ήχος;Βίντεο;Ταινία;Τηλεόραση;Κλιπ;Αναπαραγωγός;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:129
+#: src/window.blp:130
 msgid "New Window"
 msgstr "Νέο παράθυρο"
 
@@ -80,7 +80,7 @@ msgid "Video Options"
 msgstr "Ρυθμίσεις βίντεο"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:130 src/window.blp:561
+#: src/preferences.blp:77 src/window.blp:131 src/window.blp:566
 msgid "Preferences"
 msgstr "Προτιμήσεις"
 
@@ -112,8 +112,12 @@ msgstr "Ακύρωση"
 msgid "Clear All"
 msgstr "Καθαρισμός όλων"
 
+#: src/main.py:125 src/playlist.py:312 src/window.py:1820
+msgid "File Error"
+msgstr "Σφάλμα αρχείου"
+
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:193
+#: src/main.py:168
 msgid "translator-credits"
 msgstr "Φουντουκιά (Hazel) Λεβέντη <hazeltwink@gmail.com>"
 
@@ -133,16 +137,12 @@ msgstr ""
 "Απαιτείται άδεια flatpak για ανάγνωση του φακέλου όπου είναι αποθηκευμένο το "
 "βίντεο"
 
-#: src/playlist.py:312 src/window.py:1757
-msgid "File Error"
-msgstr "Σφάλμα αρχείου"
-
 #: src/playlist.py:418
 msgid "Remove from Playlist"
 msgstr "Αφαίρεση από την λίστα αναπαραγωγής"
 
-#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:352
-#: src/window.blp:563
+#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:357
+#: src/window.blp:568
 msgid "Playlist"
 msgstr "Λίστα αναπαραγωγής"
 
@@ -175,7 +175,7 @@ msgid "Save Video Position on Close"
 msgstr "Αποθήκευση θέσης βίντεο κατά το κλείσιμο"
 
 #: src/preferences.py:362 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:115 src/window.blp:477 src/window.blp:562
+#: src/window.blp:116 src/window.blp:482 src/window.blp:567
 msgid "Watch History"
 msgstr "Ιστορικό παρακολούθησης"
 
@@ -200,12 +200,12 @@ msgstr "Αντιγράφτηκε"
 msgid "Copy"
 msgstr "Αντιγραφή"
 
-#: src/save_session.py:68
-msgid "Restoring Session…"
-msgstr "Ανάκτηση συνεδρίας…"
+#: src/save_session.py:69
+msgid "Session Restored"
+msgstr "Η συνεδρία επαναφέρθηκε"
 
 #: src/shortcuts.py:28 src/shortcuts.py:29 src/shortcuts.py:30
-#: src/shortcuts.py:31 src/window.py:1927 src/window.blp:208
+#: src/shortcuts.py:31 src/window.py:2018 src/window.blp:213
 msgid "Volume"
 msgstr "Ένταση"
 
@@ -218,8 +218,8 @@ msgid "Volume Decrease"
 msgstr "Μείωση έντασης"
 
 #: src/shortcuts.py:32 src/shortcuts.py:33 src/shortcuts.py:34
-#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:187
-#: src/window.blp:549
+#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:192
+#: src/window.blp:554
 msgid "Play/Pause"
 msgstr "Αναπαραγωγή/παύση"
 
@@ -228,7 +228,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Εμφάνιση/απόκρυψη υποτίτλων"
 
 #: src/shortcuts.py:36 src/shortcuts.py:37 src/shortcuts.py:165
-#: src/shortcuts.py:229 src/window.py:758 src/window.blp:255
+#: src/shortcuts.py:229 src/window.py:765 src/window.blp:260
 msgid "Subtitles"
 msgstr "Υπότιτλοι"
 
@@ -252,7 +252,7 @@ msgstr "Επόμενο κομμάτι δευτερευόντων υποτίτλ�
 msgid "Previous Secondary Subtitle Track"
 msgstr "Προηγούμενο κομμάτι δευτερευόντων υποτίτλων"
 
-#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:763 src/window.blp:270
+#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:770 src/window.blp:275
 msgid "Audio"
 msgstr "Ήχος"
 
@@ -280,12 +280,12 @@ msgstr "Προσπέλαση 5δ πίσω"
 msgid "Seek 5s Forward"
 msgstr "Προσπέλαση 5δ μπροστά"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1875
-#: src/window.blp:368
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1966
+#: src/window.blp:373
 msgid "Fullscreen"
 msgstr "Πλήρης οθόνη"
 
-#: src/shortcuts.py:48 src/window.py:1875
+#: src/shortcuts.py:48 src/window.py:1966
 msgid "Exit Fullscreen"
 msgstr "Έξοδος από πλήρη οθόνη"
 
@@ -339,7 +339,7 @@ msgstr "Μεγέθυνση υποτίτλων"
 msgid "Decrease Subtitle Scale"
 msgstr "Σμίκρυνση υποτίτλων"
 
-#: src/shortcuts.py:68 src/window.blp:219
+#: src/shortcuts.py:68 src/window.blp:224
 msgid "Mute/Unmute"
 msgstr "Εναλλαγή σίγασης"
 
@@ -388,15 +388,15 @@ msgstr "Στατιστικά"
 msgid "Statistics Overlay"
 msgstr "Επικάλυψη στατιστικών"
 
-#: src/shortcuts.py:80 src/window.blp:329
+#: src/shortcuts.py:80 src/window.blp:334
 msgid "Set/Clear A-B Loop Points"
 msgstr "Ορισμός/καθαρισμός σημείων Α-Β επανάληψης"
 
-#: src/shortcuts.py:81 src/window.py:1256 src/window.blp:341
+#: src/shortcuts.py:81 src/window.py:1271 src/window.blp:346
 msgid "Loop"
 msgstr "Επανάληψη"
 
-#: src/shortcuts.py:81 src/window.py:1253
+#: src/shortcuts.py:81 src/window.py:1268
 msgid "Loop File"
 msgstr "Επανάληψη αρχείου"
 
@@ -489,94 +489,94 @@ msgstr "Αναπαραγωγή"
 msgid "Miscellaneous"
 msgstr "Διάφορα"
 
-#: src/window.py:622 src/window.blp:110
+#: src/window.py:625 src/window.blp:111
 msgid "Add Subtitle Track"
 msgstr "Προσθήκη κομματιού υποτίτλων"
 
-#: src/window.py:624 src/window.py:633
+#: src/window.py:627 src/window.py:636
 msgid "None"
 msgstr "Κανένα"
 
-#: src/window.py:631 src/window.blp:111
+#: src/window.py:634 src/window.blp:112
 msgid "Add Audio Track"
 msgstr "Προσθήκη κομματιού ήχου"
 
-#: src/window.py:662
+#: src/window.py:669
 msgid "Track"
 msgstr "Κομμάτι"
 
-#: src/window.py:705 src/playlist.blp:31 src/window.blp:105
+#: src/window.py:712 src/playlist.blp:31 src/window.blp:106
 msgid "Add Folder"
 msgstr "Προσθήκη φακέλου"
 
-#: src/window.py:705 src/shortcuts-dialog.blp:21 src/window.blp:99
-#: src/window.blp:490 src/window.blp:556
+#: src/window.py:712 src/shortcuts-dialog.blp:21 src/window.blp:100
+#: src/window.blp:495 src/window.blp:561
 msgid "Open Folder"
 msgstr "Άνοιγμα φακέλου"
 
-#: src/window.py:732 src/shortcuts-dialog.blp:16 src/window.blp:98
-#: src/window.blp:555
+#: src/window.py:739 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.blp:560
 msgid "Open Files"
 msgstr "Άνοιγμα αρχείων"
 
-#: src/window.py:735 src/playlist.blp:26 src/window.blp:104
+#: src/window.py:742 src/playlist.blp:26 src/window.blp:105
 msgid "Add Files"
 msgstr "Προσθήκη αρχείων"
 
-#: src/window.py:739
+#: src/window.py:746
 msgid "Add Subtitle"
 msgstr "Προσθήκη υποτίτλων"
 
-#: src/window.py:742
+#: src/window.py:749
 msgid "Add Audio"
 msgstr "Προσθήκη ήχου"
 
-#: src/window.py:767
+#: src/window.py:774
 msgid "Media"
 msgstr "Μέσα"
 
-#: src/window.py:833
+#: src/window.py:848
 msgid "Session Saved"
 msgstr "Η συνεδρία αποθηκεύτηκε"
 
-#: src/window.py:841 src/playlist.blp:36 src/window.blp:106
+#: src/window.py:856 src/playlist.blp:36 src/window.blp:107
 msgid "Add URL"
 msgstr "Προσθήκη URL"
 
-#: src/window.py:841 src/shortcuts-dialog.blp:26 src/window.blp:100
-#: src/window.blp:499 src/window.blp:557
+#: src/window.py:856 src/shortcuts-dialog.blp:26 src/window.blp:101
+#: src/window.blp:504 src/window.blp:562
 msgid "Open URL"
 msgstr "Άνοιγμα URL"
 
-#: src/window.py:854
+#: src/window.py:869
 msgid "URL"
 msgstr "URL"
 
-#: src/window.py:862 src/playlist.blp:22
+#: src/window.py:877 src/playlist.blp:22
 msgid "Add"
 msgstr "Προσθήκη"
 
-#: src/window.py:862 src/window.blp:92
+#: src/window.py:877 src/window.blp:93
 msgid "Open"
 msgstr "Άνοιγμα"
 
-#: src/window.py:1103
+#: src/window.py:1118
 msgid "Chapter"
 msgstr "Κεφάλαιο"
 
-#: src/window.py:1164 src/window.py:1997
+#: src/window.py:1179 src/window.py:2084
 msgid "Play"
 msgstr "Αναπαραγωγή"
 
-#: src/window.py:1164
+#: src/window.py:1179
 msgid "Pause"
 msgstr "Παύση"
 
-#: src/window.py:1250
+#: src/window.py:1265
 msgid "Loop Playlist"
 msgstr "Επανάληψη λίστας αναπαραγωγής"
 
-#: src/window.py:1997
+#: src/window.py:2084
 msgid "Play or Add Subtitles"
 msgstr "Αναπαραγωγή ή προσθήκη υποτίτλων"
 
@@ -706,30 +706,30 @@ msgid "Normalize Volume"
 msgstr "Κανονικοποίηση έντασης"
 
 #: src/preferences.blp:93
+msgid "Auto Window Resize"
+msgstr "Αυτόματη αλλαγή μεγέθους παραθύρου"
+
+#: src/preferences.blp:94
+msgid "Adapt window size when changing videos"
+msgstr "Προσαρμογή μεγέθους παραθύρου κατά την εναλλαγή βίντεο"
+
+#: src/preferences.blp:98
 msgid "Graphics Offload"
 msgstr "Αποφόρτιση γραφικών"
 
-#: src/preferences.blp:94
+#: src/preferences.blp:99
 msgid "Reduces resource usage; disable if you encounter playback issues"
 msgstr ""
 "Μειώνει τη χρήση πόρων· απενεργοποιήστε το αν αντιμετωπίσετε προβλήματα "
 "αναπαραγωγής"
 
-#: src/preferences.blp:98
+#: src/preferences.blp:103
 msgid "Hardware Acceleration"
 msgstr "Επιτάχυνση υλισμικού"
 
-#: src/preferences.blp:99
+#: src/preferences.blp:104
 msgid "Use GPU for video decoding when available"
 msgstr "Χρήση της GPU για αποκωδικοποίηση βίντεο όταν είναι δυνατό"
-
-#: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
-msgstr ""
-
-#: src/preferences.blp:104
-msgid "Better colors and HDR-to-SDR tone mapping"
-msgstr ""
 
 #: src/preferences.blp:109
 msgid "Pick up where you left off after saving from the menu"
@@ -829,11 +829,11 @@ msgstr "Εμφάνιση συντομεύσεων"
 msgid "Close Window"
 msgstr "Κλείσιμο παραθύρου"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:136
+#: src/shortcuts-dialog.blp:76 src/window.blp:141
 msgid "Save Session"
 msgstr "Αποθήκευση συνεδρίας"
 
-#: src/shortcuts-dialog.blp:81 src/window.blp:137
+#: src/shortcuts-dialog.blp:81 src/window.blp:142
 msgid "Save Session and Close"
 msgstr "Αποθήκευση συνεδρίας και κλείσιμο"
 
@@ -841,49 +841,62 @@ msgstr "Αποθήκευση συνεδρίας και κλείσιμο"
 msgid "Quit"
 msgstr "Έξοδος"
 
-#: src/window.blp:125
+#: src/window.blp:126
 msgid "Main Menu"
 msgstr "Κύριο μενού"
 
-#: src/window.blp:131
+#: src/window.blp:132
 msgid "Keyboard Shortcuts"
 msgstr "Συντομεύσεις πληκτρολογίου"
 
-#: src/window.blp:132
+#: src/window.blp:133
 msgid "About Cine"
 msgstr "Σχετικά με το Cine"
 
-#: src/window.blp:176 src/window.blp:550
+#: src/window.blp:137
+msgid "Clear Session and Stop"
+msgstr "Καθαρισμός συνεδρίας και διακοπή"
+
+#: src/window.blp:181 src/window.blp:555
 msgid "Previous"
 msgstr "Προηγούμενο"
 
-#: src/window.blp:199 src/window.blp:551
+#: src/window.blp:204 src/window.blp:556
 msgid "Next"
 msgstr "Επόμενο"
 
-#: src/window.blp:284
+#: src/window.blp:289
 msgid "Video"
 msgstr "Βίντεο"
 
-#: src/window.blp:299
+#: src/window.blp:304
 msgid "Chapters"
 msgstr "Κεφάλαια"
 
-#: src/window.blp:316
+#: src/window.blp:321
 msgid "Shuffle Playlist"
 msgstr "Ανακάτεμα λίστας αναπαραγωγής"
 
-#: src/window.blp:399
+#: src/window.blp:404
 msgid "Toggle Elapsed/Remaining"
 msgstr "Εναλλαγή παρερχόμενου/υπολειπόμενου χρόνου"
 
-#: src/window.blp:446
+#: src/window.blp:451
 msgid "Drag and drop files here"
 msgstr "Σύρετε και αφήστε αρχεία εδώ"
 
-#: src/window.blp:466
+#: src/window.blp:471
 msgid "Open…"
 msgstr "Άνοιγμα…"
+
+#~ msgid "GPU-Next Renderer (Requires Restart)"
+#~ msgstr "Πρόγραμμα απόδοσης GPU-Next (Απαιτεί επανεκκίνηση)"
+
+#~ msgid "Better colors and HDR-to-SDR tone mapping"
+#~ msgstr "Καλύτερα χρώματα και χαρτογράφηση τόνων HDR σε SDR"
+
+#~ msgid "Restoring Session…"
+#~ msgstr "Ανάκτηση συνεδρίας…"
 
 #~ msgid "Some fonts may not work"
 #~ msgstr "Μερικές γραμματοσειρές ίσως να μη λειτουργούν"

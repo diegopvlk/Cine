@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: io.github.diegopvlk.Cine\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-09 11:46-0300\n"
+"POT-Creation-Date: 2026-11-23 08:37-0300\n"
 "PO-Revision-Date: 2026-11-12 00:21+0000\n"
 "Last-Translator: Priit Jõerüüt <jrthwlate@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Estonian <https://hosted.weblate.org/projects/cine/app/et/>\n"
@@ -18,9 +18,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 2026.11.2.dev0\n"
 
-#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:183 src/mpris.py:147
-#: src/mpris.py:365 src/window.py:133 src/window.py:2008 src/window.blp:6
-#: src/window.blp:80 src/window.blp:445
+#: data/io.github.diegopvlk.Cine.desktop.in:2 src/main.py:158 src/mpris.py:147
+#: src/mpris.py:365 src/window.py:136 src/window.py:2095 src/window.blp:6
+#: src/window.blp:81 src/window.blp:450
 msgid "Cine"
 msgstr "Cine"
 
@@ -35,7 +35,7 @@ msgid "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;"
 msgstr "Audio;Video;Movie;TV;Film;Clip;Player;Cine;mpv;filmid;videod;vaata;esita;pleier;multimeedia;vaatamine;sarjad;muusikavideo;"
 
 #: data/io.github.diegopvlk.Cine.desktop.in:18 src/shortcuts-dialog.blp:11
-#: src/window.blp:129
+#: src/window.blp:130
 msgid "New Window"
 msgstr "Uus aken"
 
@@ -80,7 +80,7 @@ msgid "Video Options"
 msgstr "Video valikud"
 
 #: data/io.github.diegopvlk.Cine.metainfo.xml.in:50 src/preferences.blp:5
-#: src/preferences.blp:77 src/window.blp:130 src/window.blp:561
+#: src/preferences.blp:77 src/window.blp:131 src/window.blp:566
 msgid "Preferences"
 msgstr "Eelistused"
 
@@ -112,8 +112,12 @@ msgstr "Tühista"
 msgid "Clear All"
 msgstr "Tühjenda kõik"
 
+#: src/main.py:125 src/playlist.py:312 src/window.py:1820
+msgid "File Error"
+msgstr "Failiviga"
+
 #. Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
-#: src/main.py:193
+#: src/main.py:168
 msgid "translator-credits"
 msgstr "Priit Jõerüüt 2026"
 
@@ -131,16 +135,12 @@ msgid ""
 "Requires flatpak permission to read the folder where the video is stored"
 msgstr "Eeldab flatpaki õiguse lugemaks kausta, kus video on salvestatud"
 
-#: src/playlist.py:312 src/window.py:1757
-msgid "File Error"
-msgstr "Failiviga"
-
 #: src/playlist.py:418
 msgid "Remove from Playlist"
 msgstr "Eemalda esitusloendist"
 
-#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:352
-#: src/window.blp:563
+#: src/playlist.py:457 src/playlist.blp:16 src/window.blp:357
+#: src/window.blp:568
 msgid "Playlist"
 msgstr "Esitusloend"
 
@@ -173,7 +173,7 @@ msgid "Save Video Position on Close"
 msgstr "Sulgemisel salvesta esitusjärg videos"
 
 #: src/preferences.py:362 src/history.blp:5 src/shortcuts-dialog.blp:61
-#: src/window.blp:115 src/window.blp:477 src/window.blp:562
+#: src/window.blp:116 src/window.blp:482 src/window.blp:567
 msgid "Watch History"
 msgstr "Vaatamisajalugu"
 
@@ -198,12 +198,12 @@ msgstr "Kopeeritud"
 msgid "Copy"
 msgstr "Kopeeri"
 
-#: src/save_session.py:68
-msgid "Restoring Session…"
-msgstr "Taastan sessiooni…"
+#: src/save_session.py:69
+msgid "Session Restored"
+msgstr "Sessioon taastatud"
 
 #: src/shortcuts.py:28 src/shortcuts.py:29 src/shortcuts.py:30
-#: src/shortcuts.py:31 src/window.py:1927 src/window.blp:208
+#: src/shortcuts.py:31 src/window.py:2018 src/window.blp:213
 msgid "Volume"
 msgstr "Helivaljus"
 
@@ -216,8 +216,8 @@ msgid "Volume Decrease"
 msgstr "Heli vaiksemaks"
 
 #: src/shortcuts.py:32 src/shortcuts.py:33 src/shortcuts.py:34
-#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:187
-#: src/window.blp:549
+#: src/preferences.blp:276 src/preferences.blp:288 src/window.blp:192
+#: src/window.blp:554
 msgid "Play/Pause"
 msgstr "Esita/Peata esitus"
 
@@ -226,7 +226,7 @@ msgid "Show/Hide Subtitles"
 msgstr "Näita/peida subtiitrid"
 
 #: src/shortcuts.py:36 src/shortcuts.py:37 src/shortcuts.py:165
-#: src/shortcuts.py:229 src/window.py:758 src/window.blp:255
+#: src/shortcuts.py:229 src/window.py:765 src/window.blp:260
 msgid "Subtitles"
 msgstr "Subtiitrid"
 
@@ -250,7 +250,7 @@ msgstr "Järgmine teisene subtiitrirada"
 msgid "Previous Secondary Subtitle Track"
 msgstr "Eelmine teisene subtiitrirada"
 
-#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:763 src/window.blp:270
+#: src/shortcuts.py:40 src/shortcuts.py:41 src/window.py:770 src/window.blp:275
 msgid "Audio"
 msgstr "Heli"
 
@@ -278,12 +278,12 @@ msgstr "Keri 5 sekundit tagasi"
 msgid "Seek 5s Forward"
 msgstr "Keri 5 sekundit edasi"
 
-#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1875
-#: src/window.blp:368
+#: src/shortcuts.py:46 src/shortcuts.py:47 src/window.py:1966
+#: src/window.blp:373
 msgid "Fullscreen"
 msgstr "Täisekraanivaade"
 
-#: src/shortcuts.py:48 src/window.py:1875
+#: src/shortcuts.py:48 src/window.py:1966
 msgid "Exit Fullscreen"
 msgstr "Välju täisekraanivaatest"
 
@@ -337,7 +337,7 @@ msgstr "Kohenda subtiitreid suuremaks"
 msgid "Decrease Subtitle Scale"
 msgstr "Kohenda subtiitreid väiksemaks"
 
-#: src/shortcuts.py:68 src/window.blp:219
+#: src/shortcuts.py:68 src/window.blp:224
 msgid "Mute/Unmute"
 msgstr "Summuta/lõpeta summutamine"
 
@@ -386,15 +386,15 @@ msgstr "Statistika"
 msgid "Statistics Overlay"
 msgstr "Statistika ülekate"
 
-#: src/shortcuts.py:80 src/window.blp:329
+#: src/shortcuts.py:80 src/window.blp:334
 msgid "Set/Clear A-B Loop Points"
 msgstr "Lisa või eemalda korduse A->B otspunktid"
 
-#: src/shortcuts.py:81 src/window.py:1256 src/window.blp:341
+#: src/shortcuts.py:81 src/window.py:1271 src/window.blp:346
 msgid "Loop"
 msgstr "Kordus"
 
-#: src/shortcuts.py:81 src/window.py:1253
+#: src/shortcuts.py:81 src/window.py:1268
 msgid "Loop File"
 msgstr "Korda faili"
 
@@ -487,94 +487,94 @@ msgstr "Taasesitus"
 msgid "Miscellaneous"
 msgstr "Varia"
 
-#: src/window.py:622 src/window.blp:110
+#: src/window.py:625 src/window.blp:111
 msgid "Add Subtitle Track"
 msgstr "Lisa subtiitrite riba"
 
-#: src/window.py:624 src/window.py:633
+#: src/window.py:627 src/window.py:636
 msgid "None"
 msgstr "Puudub"
 
-#: src/window.py:631 src/window.blp:111
+#: src/window.py:634 src/window.blp:112
 msgid "Add Audio Track"
 msgstr "Lisa heliriba"
 
-#: src/window.py:662
+#: src/window.py:669
 msgid "Track"
 msgstr "Riba"
 
-#: src/window.py:705 src/playlist.blp:31 src/window.blp:105
+#: src/window.py:712 src/playlist.blp:31 src/window.blp:106
 msgid "Add Folder"
 msgstr "Lisa kaust"
 
-#: src/window.py:705 src/shortcuts-dialog.blp:21 src/window.blp:99
-#: src/window.blp:490 src/window.blp:556
+#: src/window.py:712 src/shortcuts-dialog.blp:21 src/window.blp:100
+#: src/window.blp:495 src/window.blp:561
 msgid "Open Folder"
 msgstr "Ava kaust"
 
-#: src/window.py:732 src/shortcuts-dialog.blp:16 src/window.blp:98
-#: src/window.blp:555
+#: src/window.py:739 src/shortcuts-dialog.blp:16 src/window.blp:99
+#: src/window.blp:560
 msgid "Open Files"
 msgstr "Ava faile"
 
-#: src/window.py:735 src/playlist.blp:26 src/window.blp:104
+#: src/window.py:742 src/playlist.blp:26 src/window.blp:105
 msgid "Add Files"
 msgstr "Lisa faile"
 
-#: src/window.py:739
+#: src/window.py:746
 msgid "Add Subtitle"
 msgstr "Lisa subtiitrid"
 
-#: src/window.py:742
+#: src/window.py:749
 msgid "Add Audio"
 msgstr "Lisa heli"
 
-#: src/window.py:767
+#: src/window.py:774
 msgid "Media"
 msgstr "Meedium"
 
-#: src/window.py:833
+#: src/window.py:848
 msgid "Session Saved"
 msgstr "Sessioon salvestatud"
 
-#: src/window.py:841 src/playlist.blp:36 src/window.blp:106
+#: src/window.py:856 src/playlist.blp:36 src/window.blp:107
 msgid "Add URL"
 msgstr "Lisa võrguaadress"
 
-#: src/window.py:841 src/shortcuts-dialog.blp:26 src/window.blp:100
-#: src/window.blp:499 src/window.blp:557
+#: src/window.py:856 src/shortcuts-dialog.blp:26 src/window.blp:101
+#: src/window.blp:504 src/window.blp:562
 msgid "Open URL"
 msgstr "Ava võrguaadress"
 
-#: src/window.py:854
+#: src/window.py:869
 msgid "URL"
 msgstr "Võrguaadress"
 
-#: src/window.py:862 src/playlist.blp:22
+#: src/window.py:877 src/playlist.blp:22
 msgid "Add"
 msgstr "Lisa"
 
-#: src/window.py:862 src/window.blp:92
+#: src/window.py:877 src/window.blp:93
 msgid "Open"
 msgstr "Ava"
 
-#: src/window.py:1103
+#: src/window.py:1118
 msgid "Chapter"
 msgstr "Peatükk"
 
-#: src/window.py:1164 src/window.py:1997
+#: src/window.py:1179 src/window.py:2084
 msgid "Play"
 msgstr "Esita"
 
-#: src/window.py:1164
+#: src/window.py:1179
 msgid "Pause"
 msgstr "Peata esitus"
 
-#: src/window.py:1250
+#: src/window.py:1265
 msgid "Loop Playlist"
 msgstr "Korda esitusloendit"
 
-#: src/window.py:1997
+#: src/window.py:2084
 msgid "Play or Add Subtitles"
 msgstr "Esita või lisa subtiitrid"
 
@@ -704,29 +704,29 @@ msgid "Normalize Volume"
 msgstr "Normaliseeri helivaljus"
 
 #: src/preferences.blp:93
+msgid "Auto Window Resize"
+msgstr "Automaatne akna suuruse muutmine"
+
+#: src/preferences.blp:94
+msgid "Adapt window size when changing videos"
+msgstr "Kohanda akna suurust videote vahetamisel"
+
+#: src/preferences.blp:98
 msgid "Graphics Offload"
 msgstr "Graafika-offload"
 
-#: src/preferences.blp:94
+#: src/preferences.blp:99
 msgid "Reduces resource usage; disable if you encounter playback issues"
 msgstr ""
 "Vähendab ressursikasutust; lülita välja, kui tekib probleeme taasesitusega"
 
-#: src/preferences.blp:98
+#: src/preferences.blp:103
 msgid "Hardware Acceleration"
 msgstr "Video raudvaraline töötlus"
 
-#: src/preferences.blp:99
+#: src/preferences.blp:104
 msgid "Use GPU for video decoding when available"
 msgstr "Kui võimalik, siis kasuta graafikaprotsessorit video dekodeerimiseks"
-
-#: src/preferences.blp:103
-msgid "GPU-Next Renderer (Requires Restart)"
-msgstr "GPU-Next pilditöötlus (eeldab uuesti käivitust)"
-
-#: src/preferences.blp:104
-msgid "Better colors and HDR-to-SDR tone mapping"
-msgstr "Paremad värvid ja toonide vastendamine HDR-st SDR-i"
 
 #: src/preferences.blp:109
 msgid "Pick up where you left off after saving from the menu"
@@ -824,11 +824,11 @@ msgstr "Näita kiirklahve"
 msgid "Close Window"
 msgstr "Sulge aken"
 
-#: src/shortcuts-dialog.blp:76 src/window.blp:136
+#: src/shortcuts-dialog.blp:76 src/window.blp:141
 msgid "Save Session"
 msgstr "Salvesta sessioon"
 
-#: src/shortcuts-dialog.blp:81 src/window.blp:137
+#: src/shortcuts-dialog.blp:81 src/window.blp:142
 msgid "Save Session and Close"
 msgstr "Salvesta sessioon ja sulge"
 
@@ -836,49 +836,62 @@ msgstr "Salvesta sessioon ja sulge"
 msgid "Quit"
 msgstr "Välju"
 
-#: src/window.blp:125
+#: src/window.blp:126
 msgid "Main Menu"
 msgstr "Põhimenüü"
 
-#: src/window.blp:131
+#: src/window.blp:132
 msgid "Keyboard Shortcuts"
 msgstr "Klaviatuuri kiirklahvid"
 
-#: src/window.blp:132
+#: src/window.blp:133
 msgid "About Cine"
 msgstr "Rakenduse teave: Cine"
 
-#: src/window.blp:176 src/window.blp:550
+#: src/window.blp:137
+msgid "Clear Session and Stop"
+msgstr "Tühjenda sessioon ja lõpeta"
+
+#: src/window.blp:181 src/window.blp:555
 msgid "Previous"
 msgstr "Eelmine"
 
-#: src/window.blp:199 src/window.blp:551
+#: src/window.blp:204 src/window.blp:556
 msgid "Next"
 msgstr "Järgmine"
 
-#: src/window.blp:284
+#: src/window.blp:289
 msgid "Video"
 msgstr "Video"
 
-#: src/window.blp:299
+#: src/window.blp:304
 msgid "Chapters"
 msgstr "Peatükid"
 
-#: src/window.blp:316
+#: src/window.blp:321
 msgid "Shuffle Playlist"
 msgstr "Sega esitusloend"
 
-#: src/window.blp:399
+#: src/window.blp:404
 msgid "Toggle Elapsed/Remaining"
 msgstr "Vaheta jäänud aeg ja kulunud aeg"
 
-#: src/window.blp:446
+#: src/window.blp:451
 msgid "Drag and drop files here"
 msgstr "Lohista failid siia"
 
-#: src/window.blp:466
+#: src/window.blp:471
 msgid "Open…"
 msgstr "Ava…"
+
+#~ msgid "GPU-Next Renderer (Requires Restart)"
+#~ msgstr "GPU-Next pilditöötlus (eeldab uuesti käivitust)"
+
+#~ msgid "Better colors and HDR-to-SDR tone mapping"
+#~ msgstr "Paremad värvid ja toonide vastendamine HDR-st SDR-i"
+
+#~ msgid "Restoring Session…"
+#~ msgstr "Taastan sessiooni…"
 
 #~ msgid "Some fonts may not work"
 #~ msgstr "Mõned kirjatüübid ei pruugi toimida"
