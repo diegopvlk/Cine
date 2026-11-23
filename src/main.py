@@ -111,6 +111,7 @@ class CineApplication(Adw.Application):
             win.realize()
 
         if not open_new:
+            win.present()
             if is_same_playlist(win.mpv.playlist):
                 win.mpv.write_watch_later_config()
             win.mpv.stop()
