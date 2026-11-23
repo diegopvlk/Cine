@@ -46,6 +46,7 @@ def get_init_mpv_settings():
         "sub-shadow-offset": 8 if sub_bg else 0.6,
         "sub-back-color": sub_bg_color if sub_bg else "#97000000",
         "sub-border-color": sub_bg_color if sub_bg else "#B6000000",
+        "auto-window-resize": settings.get_boolean("auto-window-resize"),
     }
 
 
@@ -81,6 +82,7 @@ class Preferences(Adw.Dialog):
     copy_cmd_button: Gtk.Button = Gtk.Template.Child()
     open_new_row: Adw.SwitchRow = Gtk.Template.Child()
     thumb_preview_row: Adw.SwitchRow = Gtk.Template.Child()
+    auto_resize_row: Adw.SwitchRow = Gtk.Template.Child()
     offload_row: Adw.SwitchRow = Gtk.Template.Child()
     hwdec_row: Adw.SwitchRow = Gtk.Template.Child()
     normalize_volume_row: Adw.SwitchRow = Gtk.Template.Child()
@@ -136,6 +138,7 @@ class Preferences(Adw.Dialog):
         settings.set_string("subtitle-font", mpv.sub_font)
         settings.set_string("subtitle-bg-color", mpv.sub_back_color)
         settings.set_boolean("subtitle-bg", mpv.sub_border_style == "background-box")
+        settings.set_boolean("auto-window-resize", mpv.auto_window_resize)
 
     def _bind_ui(self):
         bindings = [
@@ -152,6 +155,7 @@ class Preferences(Adw.Dialog):
             ("right-click", self.secondary_click_row, "selected"),
             ("subtitle-languages", self.subtitle_lang_row, "text"),
             ("audio-languages", self.audio_lang_row, "text"),
+            ("auto-window-resize", self.auto_resize_row, "active"),
         ]
 
         for key, widget, property in bindings:

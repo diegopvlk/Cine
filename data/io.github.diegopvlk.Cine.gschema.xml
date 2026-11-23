@@ -66,5 +66,8 @@
 		<key name="loop-state" enum="io.github.diegopvlk.Cine.LoopState">
 			<default>'off'</default>
 		</key>
+		<key name="auto-window-resize" type="b">
+			<default>true</default>
+		</key>
 	</schema>
 </schemalist>

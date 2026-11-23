@@ -177,6 +177,7 @@ class CineWindow(Adw.ApplicationWindow):
             save_position_on_quit=init_setts["save-position-on-quit"],
             save_watch_history=True,
             watch_history_path=WATCH_HISTORY_JSONL,
+            auto_window_resize=init_setts["auto-window-resize"],
         )
 
         self.mpv.vo = "libmpv"
@@ -1722,7 +1723,7 @@ class CineWindow(Adw.ApplicationWindow):
         if force_dismiss:
             timeout_add_seconds_once(2, toast.dismiss)
 
-    def set_win_size_and_present(self, width=1920, height=1080):
+    def set_win_size_and_present(self, width=1920, height=1080, present=True):
         scale_tiers = (
             (144, 1.6666),
             (240, 1.50),
@@ -1738,9 +1739,32 @@ class CineWindow(Adw.ApplicationWindow):
                 break
 
         new_w, new_h = get_window_w_h(self, width, height)
-        self.set_default_size(new_w, new_h)
-        self.present()
-        self._presented = True
+
+        if present:
+            self.set_default_size(new_w, new_h)
+            self.present()
+            self._presented = True
+            return
+
+        prev_w = self.get_width()
+        prev_h = self.get_height()
+
+        self.set_gravity(Gtk.WindowGravity.CENTER)
+
+        for prop, init, target in (
+            ("default-width", prev_w, new_w),
+            ("default-height", prev_h, new_h),
+        ):
+            anim = Adw.TimedAnimation.new(
+                self, init, target, 500, Adw.PropertyAnimationTarget.new(self, prop)
+            )
+            anim.props.easing = Adw.Easing.EASE_IN_OUT_QUAD
+
+            anim.connect(
+                "done", lambda *a: self.set_gravity(Gtk.WindowGravity.TOP_START)
+            )
+
+            anim.play()
 
     def _setup_observers(self):
         @self.mpv.event_callback("start-file")
@@ -1817,26 +1841,35 @@ class CineWindow(Adw.ApplicationWindow):
         def on_path_change(_name, path):
             self._video_path = path
 
-        @self.mpv.property_observer("video-params/rotate")
-        def on_rotate_change(_name, rotate_val):
-            if rotate_val is None or self._presented:
-                return
-
+        def _get_vid_w_h(rotate_val):
             vid_w = cast(int, self.mpv.width) or 1920
             vid_h = cast(int, self.mpv.height) or 1080
 
-            if abs(rotate_val) in (90, 270):
-                vid_w = vid_h
-                vid_h = vid_w
+            if (rotate_val % 360) in (90, 270):
+                vid_w, vid_h = vid_h, vid_w
 
-            self.set_win_size_and_present(vid_w, vid_h)
+            return vid_w, vid_h
+
+        @self.mpv.property_observer("video-params/rotate")
+        def on_rotate_change(_name, rotate_val):
+            if rotate_val is None:
+                return
+
+            if not self._presented:
+                vid_w, vid_h = _get_vid_w_h(rotate_val)
+                self.set_win_size_and_present(vid_w, vid_h)
+                return
+
+            if settings.get_boolean("auto-window-resize"):
+                vid_w, vid_h = _get_vid_w_h(rotate_val)
+                idle_add_once(self.set_win_size_and_present, vid_w, vid_h, False)
 
         @self.mpv.property_observer("audio-params")
         def on_a_params_change(_name, audio_params):
             if audio_params is None or self._presented:
                 return
 
-            self.set_win_size_and_present()
+            idle_add_once(self.set_win_size_and_present)
 
         @self.mpv.property_observer("playlist-count")
         def on_playlist_count_change(_name, _count):
