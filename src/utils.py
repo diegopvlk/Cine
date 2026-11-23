@@ -192,7 +192,7 @@ def _get_fallback_w_h(width, height):
     return new_w, new_h
 
 
-def _get_window_w_h(window, width, height):
+def get_window_w_h(window, width, height):
     # Code mostly copied from showtime/loupe:
     # https://gitlab.gnome.org/GNOME/showtime/-/blob/25066ad0ca1c20bd8b9f6f776f5be75b31277039/showtime/widgets/window.py#L467-500
     # https://gitlab.gnome.org/GNOME/loupe/-/blob/4ca5f9e03d18667db5d72325597cebc02887777a/src/widgets/image/rendering.rs#L151
@@ -230,7 +230,7 @@ def _get_window_w_h(window, width, height):
         new_w = max_w
         new_h = height * new_w / width
 
-    max_h = monitor_height - 106 * hidpi_scale
+    max_h = monitor_height - 104 * hidpi_scale
     if new_h > max_h:
         new_h = max_h
         new_w = width * new_h / height
@@ -254,28 +254,6 @@ def _get_window_w_h(window, width, height):
             final_h += 1
 
     return final_w, final_h
-
-
-def set_window_size(window, width, height):
-    if width <= 0 or height <= 0:
-        return
-
-    scale_tiers = (
-        (144, 1.6666),
-        (240, 1.50),
-        (360, 1.3333),
-        (480, 1.15),
-    )
-
-    # Scale up small videos
-    for threshold, multiplier in scale_tiers:
-        if min(width, height) <= threshold:
-            width *= multiplier
-            height *= multiplier
-            break
-
-    new_w, new_h = _get_window_w_h(window, width, height)
-    window.set_default_size(new_w, new_h)
 
 
 def format_time(seconds):

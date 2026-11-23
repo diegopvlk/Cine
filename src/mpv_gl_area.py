@@ -40,6 +40,34 @@ glGetIntegerv.argtypes = [ctypes.c_uint, ctypes.POINTER(ctypes.c_int)]
 DISPLAY_PARAM = get_display_param()
 
 
+def _get_proc_address(_inst, name):
+    return egl_get_proc_address(name)
+
+
+def create_mpv_context(area: Gtk.GLArea, mpv_inst: MPV) -> MpvRenderContext | None:
+    try:
+        api_type = (
+            "opengl-next"
+            if is_flatpak and settings.get_boolean("gpu-next")
+            else "opengl"
+        )
+        proc_address_fn = MpvGlGetProcAddressFn(_get_proc_address)
+        ctx = MpvRenderContext(
+            mpv_inst,
+            api_type,
+            opengl_init_params={"get_proc_address": proc_address_fn},
+            **DISPLAY_PARAM,
+        )
+        ctx.update_cb = lambda: GLib.idle_add(
+            area.queue_render,
+            priority=GLib.PRIORITY_HIGH_IDLE,
+        )
+        return ctx
+    except Exception:
+        logger.exception("GLArea create_mpv_context failed")
+        return None
+
+
 class BaseGLArea(Gtk.GLArea):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -53,38 +81,16 @@ class BaseGLArea(Gtk.GLArea):
         self.connect("resize", self._set_w_h)
         self.connect("notify::scale-factor", self._set_w_h)
 
+    def set_ctx(self, ctx: MpvRenderContext | None):
+        self._ctx = ctx
+
+    def _on_realize(self, _area):
+        raise NotImplementedError("Subclasses must implement _on_realize")
+
     def _set_w_h(self, *args):
         scale = self.props.scale_factor
         self._fbo_width = self.get_width() * scale
         self._fbo_height = self.get_height() * scale
-
-    def _setup_mpv_context(self, mpv_instance: MPV) -> MpvRenderContext | None:
-        api_type = (
-            "opengl-next"
-            if is_flatpak and settings.get_boolean("gpu-next")
-            else "opengl"
-        )
-        try:
-            proc_address_fn = MpvGlGetProcAddressFn(
-                lambda _inst, name: egl_get_proc_address(name)
-            )
-            ctx = MpvRenderContext(
-                mpv_instance,
-                api_type,
-                opengl_init_params={"get_proc_address": proc_address_fn},
-                **DISPLAY_PARAM,
-            )
-            ctx.update_cb = lambda: GLib.idle_add(
-                self.queue_render,
-                priority=GLib.PRIORITY_HIGH_IDLE,
-            )
-            return ctx
-        except Exception:
-            logger.exception("BaseGLArea _setup_mpv_context failed")
-            return None
-
-    def _on_realize(self, _area):
-        raise NotImplementedError("Subclasses must implement _on_realize")
 
     def _on_render(self, _area, _context):
         try:
@@ -98,8 +104,10 @@ class BaseGLArea(Gtk.GLArea):
                     "fbo": self._fbo.value,
                 },
             )
+            return True
         except Exception:
             logger.exception("ThumbPreviewGLArea _on_render failed")
+        return False
 
 
 class ThumbPreviewGLArea(BaseGLArea):
@@ -153,7 +161,7 @@ class ThumbPreviewGLArea(BaseGLArea):
         try:
             self.make_current()
             assert self._mpv is not None
-            self._ctx = self._setup_mpv_context(self._mpv)
+            self._ctx = create_mpv_context(self, self._mpv)
         except Exception:
             logger.exception("ThumbPreviewGLArea _on_realize failed")
 
@@ -209,5 +217,6 @@ class VideoGLArea(BaseGLArea):
         self._mpv = mpv_instance
 
     def _on_realize(self, _area):
-        self.make_current()
-        self._ctx = self._setup_mpv_context(self._mpv)
+        # this context needs to be created in window
+        # to set window size before its presented
+        return
