@@ -18,8 +18,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import ctypes
+import gettext
+import json
 import logging
 import os
+from functools import lru_cache
 from urllib.parse import urlparse
 
 from gi.repository import Gdk, GdkWayland, GdkX11, GLib
@@ -284,6 +287,39 @@ def append_modifiers(key_state, mods: list):
         mods.append("Shift")
     if key_state & Gdk.ModifierType.META_MASK:
         mods.append("Meta")
+
+
+@lru_cache(maxsize=1)
+def _load_iso639_map() -> dict[str, str]:
+    try:
+        with open("/usr/share/iso-codes/json/iso_639-2.json", encoding="utf-8") as f:
+            entries = json.load(f).get("639-2", [])
+
+        mapping: dict[str, str] = {}
+
+        for entry in entries:
+            if not (name := entry.get("name").split(";", 1)[0]):
+                continue
+            for key in ("alpha_2", "alpha_3", "bibliographic"):
+                if code := entry.get(key):
+                    mapping[code.lower()] = name
+
+        return mapping
+    except Exception:
+        logger.exception("_load_iso639_map failed")
+        return {}
+
+
+def resolve_lang_name(lang: str | None) -> str | None:
+    if not lang:
+        return None
+
+    base_code = lang.strip().lower().replace("_", "-").split("-", 1)[0]
+
+    if not (name := _load_iso639_map().get(base_code)):
+        return None
+
+    return gettext.dgettext("iso_639-2", name)
 
 
 class PrimaryClick:

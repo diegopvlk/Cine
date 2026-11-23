@@ -57,6 +57,7 @@ from .utils import (
     idle_add_once,
     is_local_path,
     parse_bindings,
+    resolve_lang_name,
     timeout_add_once,
     timeout_add_seconds_once,
 )
@@ -654,12 +655,16 @@ class CineWindow(Adw.ApplicationWindow):
     def _add_track_to_menu(self, track):
         track_id = int(track.get("id", 0))
         track_type = track.get("type")
-        lang = track.get("lang")
-        title = track.get("title")
+        title = (track.get("title") or "").strip()
+        raw_lang = (track.get("lang") or "").strip()
+        lang = None if (raw_lang and raw_lang.lower() == "und") else raw_lang
 
-        label_parts = [p for p in (title, lang) if p]
+        display_title = title or resolve_lang_name(lang)
+        label_parts = [p for p in (display_title, lang) if p]
         label = (
-            " – ".join(label_parts) if label_parts else (_("Track") + f" {track_id}")
+            "\u200e" + " ‣ ".join(label_parts)
+            if label_parts
+            else (_("Track") + f" {track_id}")
         )
 
         if track_type == "sub":
