@@ -27,12 +27,12 @@ from .utils import LAST_PLAYLIST_FILE, idle_add_once, is_local_path
 logger = logging.getLogger(__name__)
 
 
-def save_last_playlist_file(win_mpv):
+def save_last_playlist_file(win_mpv, clear_session=False):
     """Saves the current playlist to a m3u8 file."""
 
     try:
         with open(LAST_PLAYLIST_FILE, "w", encoding="utf-8") as f:
-            if win_mpv.idle_active:
+            if clear_session or win_mpv.idle_active:
                 f.write("")
                 return
 

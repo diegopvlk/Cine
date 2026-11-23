@@ -284,6 +284,7 @@ class CineWindow(Adw.ApplicationWindow):
         self._create_action("open-sub-menu", self._on_open_sub_menu)
         self._create_action("open-audio-menu", self._on_open_audio_menu)
         self._create_action("open-chapters-menu", self._on_open_chapters_menu)
+        self._create_action("clear-session", self._on_clear_session)
         self._create_action("save-session", self._on_save_session)
         self._create_action(
             "save-session-close", lambda *a: self._on_save_session(close=True)
@@ -826,6 +827,14 @@ class CineWindow(Adw.ApplicationWindow):
 
     def restore_session(self):
         restore_last_playlist(self)
+
+    def _on_clear_session(self, *args):
+        try:
+            self.mpv.stop()
+            settings.set_boolean("save-session", False)
+            save_last_playlist_file(self.mpv, clear_session=True)
+        except Exception:
+            logger.exception("_on_clear_session failed")
 
     def _on_save_session(self, *args, close=False):
         try:
