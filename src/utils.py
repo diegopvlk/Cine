@@ -130,6 +130,25 @@ def is_local_path(path):
     return bool(not s or s == "file" or len(s) == 1)
 
 
+_timers = {}
+
+
+def idle_add_once_debounced(func, *args, delay_ms=75, **kwargs):
+    def schedule():
+        if timer_id := _timers.pop(func, None):
+            GLib.source_remove(timer_id)
+
+        def run():
+            _timers.pop(func, None)
+            func(*args, **kwargs)
+            return GLib.SOURCE_REMOVE
+
+        _timers[func] = GLib.timeout_add(delay_ms, run)
+        return GLib.SOURCE_REMOVE
+
+    GLib.idle_add(schedule)
+
+
 def _run_once(func, *args, **kwargs):
     func(*args, **kwargs)
     return GLib.SOURCE_REMOVE

@@ -55,6 +55,7 @@ from .utils import (
     get_window_w_h,
     has_host_permission,
     idle_add_once,
+    idle_add_once_debounced,
     is_local_path,
     parse_bindings,
     resolve_lang_name,
@@ -188,7 +189,6 @@ class CineWindow(Adw.ApplicationWindow):
         self._presented: bool = False
         self._visible_dialog: Adw.Dialog | None = None
         self.playlist_ls: Gio.ListStore = Gio.ListStore.new(PlaylistItemObj)
-        self._playlist_debounce_id: int = 0
         self._playlist_prev_pos: int
         self.prev_shuffle: bool = False
         self.playlist_changed: bool = False
@@ -1689,7 +1689,6 @@ class CineWindow(Adw.ApplicationWindow):
         return False
 
     def splice_playlist(self):
-        self._playlist_debounce_id = 0
         self.has_some_doc_path = False
         new_items = []
         for idx, item in enumerate(cast(list, self.mpv.playlist)):
@@ -1838,11 +1837,8 @@ class CineWindow(Adw.ApplicationWindow):
         def on_playlist_count_change(_name, _count):
             self.playlist_changed = True
             if isinstance(self._visible_dialog, Playlist):
-                if self._playlist_debounce_id > 0:
-                    GLib.source_remove(self._playlist_debounce_id)
-                    self._playlist_debounce_id = 0
-                self._playlist_debounce_id = timeout_add_once(75, self.splice_playlist)
-            idle_add_once(self._sync_can_prev_next)
+                idle_add_once_debounced(self.splice_playlist)
+            idle_add_once_debounced(self._sync_can_prev_next)
 
         def update_playing_item(pos):
             try:
@@ -1858,7 +1854,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("playlist-pos")
         def on_playlist_pos_changed(_name, pos):
-            idle_add_once(update_playing_item, pos)
+            idle_add_once_debounced(update_playing_item, pos)
+            idle_add_once_debounced(self._sync_can_prev_next)
 
         self._ab_loop_a = None
         self._ab_loop_b = None
@@ -2016,16 +2013,12 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("track-list")
         def on_track_list_change(_name, track_list):
-            idle_add_once(self._update_track_menus, track_list)
-
-        @self.mpv.property_observer("playlist-pos")
-        def on_pl_pos_change(_name, _value):
-            idle_add_once(self._sync_can_prev_next)
+            idle_add_once_debounced(self._update_track_menus, track_list)
 
         @self.mpv.property_observer("chapter-list")
         def on_chapter_list_change(_name, chapters):
             self._chapters = []
-            idle_add_once(self._update_chapter_marks_and_menu, chapters)
+            idle_add_once_debounced(self._update_chapter_marks_and_menu, chapters)
 
         @self.mpv.property_observer("chapter")
         def on_chapter_change(_name, chapter_idx):
