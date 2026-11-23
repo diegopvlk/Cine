@@ -1,0 +1,1111 @@
+From 462b99e9cd0b0070bc850dd58073e4e3ea775c64 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 01:47:45 +0100
+Subject: [PATCH 01/10] vo_libmpv: keep frame IDs increasing across VO
+ instances
+
+A render backend lives longer than a VO, and the frame IDs of every VO
+start at 1. A renderer that tells frames apart by their ID would take
+the frames of a new VO for ones it has already seen.
+---
+ video/out/vo_libmpv.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/video/out/vo_libmpv.c b/video/out/vo_libmpv.c
+index 558a1de14b0d9..75fee6b6e6c95 100644
+--- a/video/out/vo_libmpv.c
++++ b/video/out/vo_libmpv.c
+@@ -100,6 +100,8 @@ struct mpv_render_context {
+     bool need_reset;
+     bool need_update_external;
+     struct vo *vo;
++    uint64_t frame_id_offset;       // added to the frame IDs of the VO
++    uint64_t last_frame_id;         // highest ID a frame was passed on with
+ 
+     // --- Mostly immutable after init.
+     struct mp_hwdec_devices *hwdec_devs;
+@@ -493,6 +495,10 @@ static bool draw_frame(struct vo *vo, struct vo_frame *frame)
+     mp_mutex_lock(&ctx->lock);
+     mp_assert(!ctx->next_frame);
+     ctx->next_frame = vo_frame_ref(frame);
++    if (frame->num_frames) {
++        ctx->next_frame->frame_id += ctx->frame_id_offset;
++        ctx->last_frame_id = ctx->next_frame->frame_id + frame->num_frames - 1;
++    }
+     ctx->expected_flip_count = ctx->flip_count + 1;
+     ctx->redrawing = frame->redraw || !frame->current;
+     mp_mutex_unlock(&ctx->lock);
+@@ -698,6 +704,7 @@ static void uninit(struct vo *vo)
+     ctx->need_update_external = true;
+     ctx->need_reset = true;
+     ctx->vo = NULL;
++    ctx->frame_id_offset = ctx->last_frame_id;
+ 
+     // The following do not normally need ctx->lock, however, ctx itself may
+     // become invalid once we release ctx->lock.
+
+From 8cc173b3d3f104f552f68147c9f08fb87b4c7ef5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 01:48:05 +0100
+Subject: [PATCH 02/10] vo_libmpv: tell the render backend about pause
+
+---
+ video/out/libmpv.h    |  2 ++
+ video/out/vo_libmpv.c | 13 +++++++++++++
+ 2 files changed, 15 insertions(+)
+
+diff --git a/video/out/libmpv.h b/video/out/libmpv.h
+index 02efefb1016f6..df641e65ad8df 100644
+--- a/video/out/libmpv.h
++++ b/video/out/libmpv.h
+@@ -52,6 +52,8 @@ struct render_backend_fns {
+     void (*reconfig)(struct render_backend *ctx, struct mp_image_params *params);
+     // Like VOCTRL_RESET.
+     void (*reset)(struct render_backend *ctx);
++    // Like VOCTRL_PAUSE and VOCTRL_RESUME. Optional.
++    void (*set_paused)(struct render_backend *ctx, bool paused);
+     void (*screenshot)(struct render_backend *ctx, struct vo_frame *frame,
+                        struct voctrl_screenshot *args);
+     void (*perfdata)(struct render_backend *ctx,
+diff --git a/video/out/vo_libmpv.c b/video/out/vo_libmpv.c
+index 75fee6b6e6c95..49518b9bf3216 100644
+--- a/video/out/vo_libmpv.c
++++ b/video/out/vo_libmpv.c
+@@ -99,6 +99,7 @@ struct mpv_render_context {
+     bool need_resize;
+     bool need_reset;
+     bool need_update_external;
++    bool paused;
+     struct vo *vo;
+     uint64_t frame_id_offset;       // added to the frame IDs of the VO
+     uint64_t last_frame_id;         // highest ID a frame was passed on with
+@@ -374,6 +375,9 @@ int mpv_render_context_render(mpv_render_context *ctx, mpv_render_param *params)
+         ctx->renderer->fns->reconfig(ctx->renderer, &ctx->img_params);
+     ctx->need_reconfig = false;
+ 
++    if (ctx->renderer->fns->set_paused)
++        ctx->renderer->fns->set_paused(ctx->renderer, ctx->paused);
++
+     if (ctx->need_update_external)
+         ctx->renderer->fns->update_external(ctx->renderer, ctx->vo);
+     ctx->need_update_external = false;
+@@ -617,8 +621,16 @@ static int control(struct vo *vo, uint32_t request, void *data)
+         vo->want_redraw = true;
+         return VO_TRUE;
+     case VOCTRL_PAUSE:
++        mp_mutex_lock(&ctx->lock);
++        ctx->paused = true;
++        mp_mutex_unlock(&ctx->lock);
+         vo->want_redraw = true;
+         return VO_TRUE;
++    case VOCTRL_RESUME:
++        mp_mutex_lock(&ctx->lock);
++        ctx->paused = false;
++        mp_mutex_unlock(&ctx->lock);
++        return VO_TRUE;
+     case VOCTRL_SET_PANSCAN:
+         mp_mutex_lock(&ctx->lock);
+         ctx->need_resize = true;
+@@ -703,6 +715,7 @@ static void uninit(struct vo *vo)
+     ctx->need_resize = true;
+     ctx->need_update_external = true;
+     ctx->need_reset = true;
++    ctx->paused = false;
+     ctx->vo = NULL;
+     ctx->frame_id_offset = ctx->last_frame_id;
+ 
+
+From 56d5deaf7ba7064e7060c08a4ea95e41ef350739 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 01:49:00 +0100
+Subject: [PATCH 03/10] libmpv_gpu: factor out the creation of the API context
+
+Not functional change, will be used in the future.
+---
+ video/out/gpu/libmpv_gpu.c | 57 ++++++++++++++++++++++++++------------
+ video/out/gpu/libmpv_gpu.h |  7 +++++
+ 2 files changed, 47 insertions(+), 17 deletions(-)
+
+diff --git a/video/out/gpu/libmpv_gpu.c b/video/out/gpu/libmpv_gpu.c
+index 2d8f442f65985..6879f67660107 100644
+--- a/video/out/gpu/libmpv_gpu.c
++++ b/video/out/gpu/libmpv_gpu.c
+@@ -45,34 +45,48 @@ static const struct native_resource_entry native_resource_map[] = {
+     },
+ };
+ 
+-static int init(struct render_backend *ctx, mpv_render_param *params)
++void libmpv_gpu_context_destroy(struct libmpv_gpu_context **pctx)
+ {
+-    ctx->priv = talloc_zero(NULL, struct priv);
+-    struct priv *p = ctx->priv;
++    struct libmpv_gpu_context *ctx = *pctx;
++    if (!ctx)
++        return;
++
++    ctx->fns->destroy(ctx);
++    talloc_free(ctx->priv);
++    talloc_free(ctx);
++    *pctx = NULL;
++}
+ 
++int libmpv_gpu_context_create(struct mpv_global *global, struct mp_log *log,
++                              mpv_render_param *params,
++                              struct libmpv_gpu_context **out)
++{
+     char *api = get_mpv_render_param(params, MPV_RENDER_PARAM_API_TYPE, NULL);
+     if (!api)
+         return MPV_ERROR_INVALID_PARAMETER;
+ 
++    struct libmpv_gpu_context *ctx = NULL;
+     for (int n = 0; context_backends[n]; n++) {
+         const struct libmpv_gpu_context_fns *backend = context_backends[n];
+         if (strcmp(backend->api_name, api) == 0) {
+-            p->context = talloc_zero(NULL, struct libmpv_gpu_context);
+-            *p->context = (struct libmpv_gpu_context){
+-                .global = ctx->global,
+-                .log = ctx->log,
++            ctx = talloc_zero(NULL, struct libmpv_gpu_context);
++            *ctx = (struct libmpv_gpu_context){
++                .global = global,
++                .log = log,
+                 .fns = backend,
+             };
+             break;
+         }
+     }
+ 
+-    if (!p->context)
++    if (!ctx)
+         return MPV_ERROR_NOT_IMPLEMENTED;
+ 
+-    int err = p->context->fns->init(p->context, params);
+-    if (err < 0)
++    int err = ctx->fns->init(ctx, params);
++    if (err < 0) {
++        libmpv_gpu_context_destroy(&ctx);
+         return err;
++    }
+ 
+     for (int n = 0; params && params[n].type; n++) {
+         if (params[n].type > 0 &&
+@@ -83,11 +97,24 @@ static int init(struct render_backend *ctx, mpv_render_param *params)
+                 &native_resource_map[params[n].type];
+             void *data = params[n].data;
+             if (entry->size)
+-                data = talloc_memdup(p, data, entry->size);
+-            ra_add_native_resource(p->context->ra_ctx->ra, entry->name, data);
++                data = talloc_memdup(ctx, data, entry->size);
++            ra_add_native_resource(ctx->ra_ctx->ra, entry->name, data);
+         }
+     }
+ 
++    *out = ctx;
++    return 0;
++}
++
++static int init(struct render_backend *ctx, mpv_render_param *params)
++{
++    ctx->priv = talloc_zero(NULL, struct priv);
++    struct priv *p = ctx->priv;
++
++    int err = libmpv_gpu_context_create(ctx->global, ctx->log, params, &p->context);
++    if (err < 0)
++        return err;
++
+     p->renderer = gl_video_init(p->context->ra_ctx->ra, ctx->log, ctx->global);
+ 
+     ctx->hwdec_devs = hwdec_devices_create();
+@@ -231,11 +258,7 @@ static void destroy(struct render_backend *ctx)
+ 
+     hwdec_devices_destroy(ctx->hwdec_devs);
+ 
+-    if (p->context) {
+-        p->context->fns->destroy(p->context);
+-        talloc_free(p->context->priv);
+-        talloc_free(p->context);
+-    }
++    libmpv_gpu_context_destroy(&p->context);
+ }
+ 
+ const struct render_backend_fns render_backend_gpu = {
+diff --git a/video/out/gpu/libmpv_gpu.h b/video/out/gpu/libmpv_gpu.h
+index fad1a00c0a6d9..dafe6f0d6b6e8 100644
+--- a/video/out/gpu/libmpv_gpu.h
++++ b/video/out/gpu/libmpv_gpu.h
+@@ -37,5 +37,12 @@ struct libmpv_gpu_context_fns {
+     void (*destroy)(struct libmpv_gpu_context *ctx);
+ };
+ 
++// Create the context for the MPV_RENDER_PARAM_API_TYPE API.
++// Returns a libmpv error code.
++int libmpv_gpu_context_create(struct mpv_global *global, struct mp_log *log,
++                              mpv_render_param *params,
++                              struct libmpv_gpu_context **out);
++void libmpv_gpu_context_destroy(struct libmpv_gpu_context **pctx);
++
+ extern const struct libmpv_gpu_context_fns libmpv_gpu_context_gl;
+ extern const struct libmpv_gpu_context_fns libmpv_gpu_context_d3d11;
+
+From babe313a2315bc072faaf3c7840e280aff04a68e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 01:50:43 +0100
+Subject: [PATCH 04/10] vo_gpu_next: allow render without an OSD source
+
+---
+ video/out/gpu_next/video.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/video/out/gpu_next/video.c b/video/out/gpu_next/video.c
+index 99960e71b354d..243a2a2e37861 100644
+--- a/video/out/gpu_next/video.c
++++ b/video/out/gpu_next/video.c
+@@ -515,6 +515,11 @@ static void update_overlays(struct mppl_video *p, struct mp_osd_res res,
+                             struct overlay_state *state, struct pl_frame *frame,
+                             struct mp_image *src, int stereo_mode, float ref_luma)
+ {
++    if (!p->osd) {
++        frame->num_overlays = 0;
++        return;
++    }
++
+     double pts = src ? src->pts : 0;
+     int div[2];
+     mp_get_3d_side_by_side(stereo_mode, div);
+
+From c35d8e98ff3c41dbd8370b48a7ef4294682cce78 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 01:50:45 +0100
+Subject: [PATCH 05/10] vo_gpu_next: factor out the queue reset
+
+---
+ video/out/gpu_next/video.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/video/out/gpu_next/video.c b/video/out/gpu_next/video.c
+index 243a2a2e37861..90f9bcb7ee702 100644
+--- a/video/out/gpu_next/video.c
++++ b/video/out/gpu_next/video.c
+@@ -1316,6 +1316,15 @@ static struct frame_params get_frame_params(struct mppl_video *p, struct vo_fram
+     return (struct frame_params){ params, can_interpolate, pts_offset };
+ }
+ 
++static void reset_queue(struct mppl_video *p)
++{
++    pl_queue_reset(p->queue);
++    p->last_pts = 0.0;
++    p->last_id = 0;
++    p->want_reset = false;
++    p->flush_cache = true;
++}
++
+ void mppl_video_begin_frame(struct mppl_video *p, struct vo_frame *frame,
+                             struct pl_color_space display_csp, float display_ref_luma)
+ {
+@@ -1359,13 +1368,8 @@ void mppl_video_begin_frame(struct mppl_video *p, struct vo_frame *frame,
+     for (int n = 0; n < frame->num_frames; n++) {
+         int id = frame->frame_id + n;
+ 
+-        if (p->want_reset) {
+-            pl_queue_reset(p->queue);
+-            p->last_pts = 0.0;
+-            p->last_id = 0;
+-            p->want_reset = false;
+-            p->flush_cache = true;
+-        }
++        if (p->want_reset)
++            reset_queue(p);
+ 
+         if (p->flush_cache) {
+             pl_renderer_flush_cache(p->rr);
+
+From 317dbbf21026ee7ac94a6f758deb7c26ca1e25e8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 01:50:54 +0100
+Subject: [PATCH 06/10] vo_gpu_next: add a function to drop the queued frames
+
+The VO destroys the renderer when the video is gone. A user that
+keeps it can release the frames and the hwdec mappers with
+mppl_video_flush().
+---
+ video/out/gpu_next/video.c | 8 ++++++++
+ video/out/gpu_next/video.h | 1 +
+ 2 files changed, 9 insertions(+)
+
+diff --git a/video/out/gpu_next/video.c b/video/out/gpu_next/video.c
+index 90f9bcb7ee702..9d3826f6242c5 100644
+--- a/video/out/gpu_next/video.c
++++ b/video/out/gpu_next/video.c
+@@ -2146,6 +2146,14 @@ void mppl_video_reset(struct mppl_video *p)
+     p->want_seek_reset = true;
+ }
+ 
++// Drop the queued frames and what was mapped for them.
++void mppl_video_flush(struct mppl_video *p)
++{
++    reset_queue(p);
++    slot_uninit(p, &p->hwdec);
++    slot_uninit(p, &p->el_hwdec);
++}
++
+ void mppl_video_perfdata(struct mppl_video *p, struct voctrl_performance_data *perf)
+ {
+     copy_frame_info_to_mp(&p->perf_fresh, &perf->fresh, &p->hwdec.perf, &p->sw_upload_perf);
+diff --git a/video/out/gpu_next/video.h b/video/out/gpu_next/video.h
+index 981022aa917ba..2dd9b4135ae6a 100644
+--- a/video/out/gpu_next/video.h
++++ b/video/out/gpu_next/video.h
+@@ -79,5 +79,6 @@ enum pl_color_levels mppl_video_get_output_levels(struct mppl_video *p);
+ void mppl_video_set_paused(struct mppl_video *p, bool paused);
+ bool mppl_video_showing_interpolated_frame(struct mppl_video *p);
+ void mppl_video_reset(struct mppl_video *p);
++void mppl_video_flush(struct mppl_video *p);
+ void mppl_video_perfdata(struct mppl_video *p, struct voctrl_performance_data *perf);
+ void mppl_video_screenshot(struct mppl_video *p, struct voctrl_screenshot *args);
+
+From 3d824e132dde4e72c7ffec4c941cf2a6a09f7e12 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 01:53:22 +0100
+Subject: [PATCH 07/10] libmpv: add a gpu-next render backend
+
+It renders with the renderer of vo_gpu_next into the targets of the
+OpenGL and D3D11 API contexts. The libplacebo GPU is created on the ra
+of the API context, and the ra_tex it wraps for the target is converted
+like a hwdec plane.
+
+Nothing selects the backend yet.
+---
+ meson.build                          |   1 +
+ video/out/gpu_next/libmpv_gpu_next.c | 243 +++++++++++++++++++++++++++
+ video/out/libmpv.h                   |   1 +
+ video/out/vo_libmpv.c                |   1 +
+ 4 files changed, 246 insertions(+)
+ create mode 100644 video/out/gpu_next/libmpv_gpu_next.c
+
+diff --git a/meson.build b/meson.build
+index 7d2d6d1b1a3fb..74644ca6dca87 100644
+--- a/meson.build
++++ b/meson.build
+@@ -269,6 +269,7 @@ sources = files(
+     'video/out/placebo/utils.c',
+     'video/out/vo_gpu_next.c',
+     'video/out/gpu_next/context.c',
++    'video/out/gpu_next/libmpv_gpu_next.c',
+     'video/out/gpu_next/video.c',
+ 
+     ## osdep
+diff --git a/video/out/gpu_next/libmpv_gpu_next.c b/video/out/gpu_next/libmpv_gpu_next.c
+new file mode 100644
+index 0000000000000..211fb45d26485
+--- /dev/null
++++ b/video/out/gpu_next/libmpv_gpu_next.c
+@@ -0,0 +1,243 @@
++/*
++ * This file is part of mpv.
++ *
++ * mpv is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * mpv is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with mpv.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "context.h"
++#include "video.h"
++#include "misc/bstr.h"
++#include "video/hwdec.h"
++#include "video/mp_image.h"
++#include "video/out/gpu/context.h"
++#include "video/out/gpu/libmpv_gpu.h"
++#include "video/out/libmpv.h"
++
++struct priv {
++    struct libmpv_gpu_context *context;
++    struct gpu_ctx *gpu_ctx;
++    struct mppl_video *renderer;
++
++    // From MPV_RENDER_PARAM_ICC_PROFILE
++    bstr icc_profile;
++};
++
++static int init(struct render_backend *ctx, mpv_render_param *params)
++{
++    ctx->priv = talloc_zero(NULL, struct priv);
++    struct priv *p = ctx->priv;
++
++    int err = libmpv_gpu_context_create(ctx->global, ctx->log, params, &p->context);
++    if (err < 0)
++        return err;
++
++    p->gpu_ctx = gpu_ctx_create(ctx->log, p->context->ra_ctx, false);
++    if (!p->gpu_ctx)
++        return MPV_ERROR_UNSUPPORTED;
++
++    p->renderer = mppl_video_init(ctx->log, ctx->global, p->gpu_ctx);
++
++    ctx->hwdec_devs = hwdec_devices_create();
++    mppl_video_init_hwdecs(p->renderer, ctx->hwdec_devs, true);
++    ctx->driver_caps = VO_CAP_ROTATE90 | VO_CAP_VFLIP;
++    return 0;
++}
++
++static bool check_format(struct render_backend *ctx, int imgfmt)
++{
++    struct priv *p = ctx->priv;
++
++    return mppl_video_check_format(p->renderer, imgfmt);
++}
++
++// The profile is used with icc-profile-auto only, and the renderer unloads it
++// whenever its options change.
++static void update_icc_profile(struct priv *p)
++{
++    if (mppl_video_icc_auto_enabled(p->renderer))
++        mppl_video_set_icc_profile(p->renderer, bstrdup(NULL, p->icc_profile));
++}
++
++static int set_parameter(struct render_backend *ctx, mpv_render_param param)
++{
++    struct priv *p = ctx->priv;
++
++    switch (param.type) {
++    case MPV_RENDER_PARAM_ICC_PROFILE: {
++        mpv_byte_array *data = param.data;
++        talloc_free(p->icc_profile.start);
++        p->icc_profile = bstrdup(p, (bstr){data->data, data->size});
++        update_icc_profile(p);
++        return 0;
++    }
++    default:
++        return MPV_ERROR_NOT_IMPLEMENTED;
++    }
++}
++
++static void reconfig(struct render_backend *ctx, struct mp_image_params *params)
++{
++    struct priv *p = ctx->priv;
++
++    // There are no params when the VO is gone, and the video with it.
++    if (!params->imgfmt)
++        mppl_video_flush(p->renderer);
++    mppl_video_config(p->renderer, params);
++}
++
++static void reset(struct render_backend *ctx)
++{
++    struct priv *p = ctx->priv;
++
++    mppl_video_reset(p->renderer);
++}
++
++static void set_paused(struct render_backend *ctx, bool paused)
++{
++    struct priv *p = ctx->priv;
++
++    mppl_video_set_paused(p->renderer, paused);
++}
++
++static void update_external(struct render_backend *ctx, struct vo *vo)
++{
++    struct priv *p = ctx->priv;
++
++    mppl_video_set_osd_source(p->renderer, vo ? vo->osd : NULL);
++    mppl_video_reload_options(p->renderer);
++    update_icc_profile(p);
++    if (vo)
++        mppl_video_configure_queue(p->renderer, vo);
++}
++
++static void resize(struct render_backend *ctx, struct mp_rect *src,
++                   struct mp_rect *dst, struct mp_osd_res *osd)
++{
++    struct priv *p = ctx->priv;
++
++    mppl_video_resize(p->renderer, *src, *dst, *osd);
++}
++
++static int get_target_size(struct render_backend *ctx, mpv_render_param *params,
++                           int *out_w, int *out_h)
++{
++    struct priv *p = ctx->priv;
++
++    struct ra_tex *tex;
++    int err = p->context->fns->wrap_fbo(p->context, params, &tex);
++    if (err < 0)
++        return err;
++    *out_w = tex->params.w;
++    *out_h = tex->params.h;
++    return 0;
++}
++
++static int render(struct render_backend *ctx, mpv_render_param *params,
++                  struct vo_frame *frame)
++{
++    struct priv *p = ctx->priv;
++    struct ra *ra = p->context->ra_ctx->ra;
++    pl_gpu gpu = p->gpu_ctx->gpu;
++
++    struct ra_tex *tex;
++    int err = p->context->fns->wrap_fbo(p->context, params, &tex);
++    if (err < 0)
++        return err;
++
++    pl_tex fbo = gpu_ctx_wrap_ra_tex(gpu, ra, tex);
++    if (!fbo) {
++        p->context->fns->done_frame(p->context, frame->display_synced);
++        return MPV_ERROR_UNSUPPORTED;
++    }
++
++    int depth = GET_MPV_RENDER_PARAM(params, MPV_RENDER_PARAM_DEPTH, int, 0);
++    int fbo_depth = fbo->params.format->component_depth[0];
++    struct pl_swapchain_frame target = {
++        .fbo = fbo,
++        .flipped = GET_MPV_RENDER_PARAM(params, MPV_RENDER_PARAM_FLIP_Y, int, 0),
++        .color_repr = {
++            .sys = PL_COLOR_SYSTEM_RGB,
++            .levels = PL_COLOR_LEVELS_FULL,
++            .bits = {
++                .sample_depth = fbo_depth,
++                .color_depth = fbo_depth,
++            },
++        },
++        .color_space = pl_color_space_monitor,
++    };
++
++    // There is no display to take a color space from and none to hint one to.
++    mppl_video_begin_frame(p->renderer, frame, (struct pl_color_space){0}, 0);
++    struct mp_image_params target_params;
++    mppl_video_render_frame(p->renderer, frame, &target, depth, NULL, &target_params);
++
++    gpu_ctx_unwrap_ra_tex(gpu, ra, &fbo);
++    p->context->fns->done_frame(p->context, frame->display_synced);
++
++    return 0;
++}
++
++static struct mp_image *get_image(struct render_backend *ctx, int imgfmt,
++                                  int w, int h, int stride_align, int flags)
++{
++    struct priv *p = ctx->priv;
++
++    return mppl_video_get_image(p->renderer, imgfmt, w, h, stride_align, flags);
++}
++
++static void screenshot(struct render_backend *ctx, struct vo_frame *frame,
++                       struct voctrl_screenshot *args)
++{
++    struct priv *p = ctx->priv;
++
++    mppl_video_screenshot(p->renderer, args);
++}
++
++static void perfdata(struct render_backend *ctx,
++                     struct voctrl_performance_data *out)
++{
++    struct priv *p = ctx->priv;
++
++    mppl_video_perfdata(p->renderer, out);
++}
++
++static void destroy(struct render_backend *ctx)
++{
++    struct priv *p = ctx->priv;
++
++    if (p->renderer)
++        mppl_video_uninit(p->renderer);
++
++    hwdec_devices_destroy(ctx->hwdec_devs);
++
++    gpu_ctx_destroy(&p->gpu_ctx);
++    libmpv_gpu_context_destroy(&p->context);
++}
++
++const struct render_backend_fns render_backend_gpu_next = {
++    .init = init,
++    .check_format = check_format,
++    .set_parameter = set_parameter,
++    .reconfig = reconfig,
++    .reset = reset,
++    .set_paused = set_paused,
++    .update_external = update_external,
++    .resize = resize,
++    .get_target_size = get_target_size,
++    .render = render,
++    .get_image = get_image,
++    .screenshot = screenshot,
++    .perfdata = perfdata,
++    .destroy = destroy,
++};
+diff --git a/video/out/libmpv.h b/video/out/libmpv.h
+index df641e65ad8df..1c018ce653618 100644
+--- a/video/out/libmpv.h
++++ b/video/out/libmpv.h
+@@ -82,4 +82,5 @@ struct render_backend_fns {
+ };
+ 
+ extern const struct render_backend_fns render_backend_gpu;
++extern const struct render_backend_fns render_backend_gpu_next;
+ extern const struct render_backend_fns render_backend_sw;
+diff --git a/video/out/vo_libmpv.c b/video/out/vo_libmpv.c
+index 49518b9bf3216..c1c518860e5d3 100644
+--- a/video/out/vo_libmpv.c
++++ b/video/out/vo_libmpv.c
+@@ -116,6 +116,7 @@ struct mpv_render_context {
+ 
+ const struct render_backend_fns *render_backends[] = {
+     &render_backend_gpu,
++    &render_backend_gpu_next,
+     &render_backend_sw,
+     NULL
+ };
+
+From 6d74d5b16b95e834ad57a927a951e48efc0b4e17 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 01:58:07 +0100
+Subject: [PATCH 08/10] libmpv: add renderer selection to the render API
+
+Add MPV_RENDER_PARAM_RENDERER to select between `gpu` and `gpu-next`.
+---
+ DOCS/client-api-changes.rst          |  2 ++
+ DOCS/man/vo.rst                      |  4 +--
+ include/mpv/client.h                 |  2 +-
+ include/mpv/render.h                 | 39 +++++++++++++++++++++++++---
+ video/out/gpu/libmpv_gpu.c           |  1 +
+ video/out/gpu_next/libmpv_gpu_next.c |  1 +
+ video/out/libmpv.h                   |  3 +++
+ video/out/vo_libmpv.c                |  6 +++++
+ 8 files changed, 52 insertions(+), 6 deletions(-)
+
+diff --git a/DOCS/client-api-changes.rst b/DOCS/client-api-changes.rst
+index a07705739814b..b40a6ca57cf32 100644
+--- a/DOCS/client-api-changes.rst
++++ b/DOCS/client-api-changes.rst
+@@ -32,6 +32,8 @@ API changes
+ 
+ ::
+ 
++ --- mpv 0.43.0 ---
++ 2.7    - add MPV_RENDER_PARAM_RENDERER to select the renderer
+  --- mpv 0.42.0 ---
+  2.6    - add MPV_RENDER_API_TYPE_D3D11 render API backend, along with
+           MPV_RENDER_PARAM_D3D11_INIT_PARAMS and MPV_RENDER_PARAM_D3D11_FBO,
+diff --git a/DOCS/man/vo.rst b/DOCS/man/vo.rst
+index b43e5d773763f..06413021c9358 100644
+--- a/DOCS/man/vo.rst
++++ b/DOCS/man/vo.rst
+@@ -584,8 +584,8 @@ Available video output drivers are:
+     other contexts.
+     (See ``<mpv/render.h>``.)
+ 
+-    This also supports many of the options the ``gpu`` VO has, depending on the
+-    backend.
++    This also supports many of the options the ``gpu-next`` or the ``gpu`` VO
++    has, depending on the renderer and the backend the application selects.
+ 
+ ``drm`` (Direct Rendering Manager)
+     Video output driver using Kernel Mode Setting / Direct Rendering Manager.
+diff --git a/include/mpv/client.h b/include/mpv/client.h
+index f970b9ab5dc79..37dde636787fc 100644
+--- a/include/mpv/client.h
++++ b/include/mpv/client.h
+@@ -248,7 +248,7 @@ extern "C" {
+  * relational operators (<, >, <=, >=).
+  */
+ #define MPV_MAKE_VERSION(major, minor) (((major) << 16) | (minor) | 0UL)
+-#define MPV_CLIENT_API_VERSION MPV_MAKE_VERSION(2, 6)
++#define MPV_CLIENT_API_VERSION MPV_MAKE_VERSION(2, 7)
+ 
+ /**
+  * The API user is allowed to "#define MPV_ENABLE_DEPRECATED 0" before
+diff --git a/include/mpv/render.h b/include/mpv/render.h
+index 0b59982fc4997..dc67cd2d88eea 100644
+--- a/include/mpv/render.h
++++ b/include/mpv/render.h
+@@ -53,6 +53,15 @@ extern "C" {
+  * OpenGL: via MPV_RENDER_API_TYPE_OPENGL, see render_gl.h header.
+  * Software: via MPV_RENDER_API_TYPE_SW, see section "Software renderer"
+  *
++ * Renderers
++ * ---------
++ *
++ * The backend determines the graphics API of the target surface. Which of
++ * mpv's video renderers draws into it is selected independently with
++ * MPV_RENDER_PARAM_RENDERER: the renderer of the `gpu-next` video output, or the
++ * renderer of the `gpu` video output. Both accept the same backend parameters,
++ * so you can switch between them without other changes.
++ *
+  * Threading
+  * ---------
+  *
+@@ -435,6 +444,23 @@ typedef enum mpv_render_param_type {
+      * Type: mpv_d3d11_fbo*
+      */
+     MPV_RENDER_PARAM_D3D11_FBO = 22,
++    /**
++     * Select the video renderer. Valid for mpv_render_context_create().
++     *
++     * Type: char*
++     *
++     * Defined renderers:
++     *
++     *   MPV_RENDER_RENDERER_GPU_NEXT ("gpu-next"):
++     *      The renderer of the gpu-next video output. (recommended)
++     *   MPV_RENDER_RENDERER_GPU ("gpu"):
++     *      The renderer of the gpu video output.
++     *
++     * If omitted, "gpu" is used.
++     *
++     * Ignored with MPV_RENDER_API_TYPE_SW.
++     */
++    MPV_RENDER_PARAM_RENDERER = 23,
+ } mpv_render_param_type;
+ 
+ /**
+@@ -484,6 +510,12 @@ typedef struct mpv_render_param {
+ // See section "Software renderer"
+ #define MPV_RENDER_API_TYPE_SW "sw"
+ 
++/**
++ * Predefined values for MPV_RENDER_PARAM_RENDERER.
++ */
++#define MPV_RENDER_RENDERER_GPU "gpu"
++#define MPV_RENDER_RENDERER_GPU_NEXT "gpu-next"
++
+ /**
+  * Flags used in mpv_render_frame_info.flags. Each value represents a bit in it.
+  */
+@@ -569,6 +601,7 @@ typedef struct mpv_render_frame_info {
+  * You should pass the following parameters:
+  *  - MPV_RENDER_PARAM_API_TYPE to select the underlying backend/GPU API.
+  *  - Backend-specific init parameter, like MPV_RENDER_PARAM_OPENGL_INIT_PARAMS.
++ *  - MPV_RENDER_PARAM_RENDERER to select the video renderer.
+  *  - Setting MPV_RENDER_PARAM_ADVANCED_CONTROL and following its rules is
+  *    strongly recommended.
+  *  - If you want to use hwdec, possibly hwdec interop resources.
+@@ -584,9 +617,9 @@ typedef struct mpv_render_frame_info {
+  * @return error code, including but not limited to:
+  *      MPV_ERROR_UNSUPPORTED: the OpenGL version is not supported
+  *                             (or required extensions are missing)
+- *      MPV_ERROR_NOT_IMPLEMENTED: an unknown API type was provided, or
+- *                                 support for the requested API was not
+- *                                 built in the used libmpv binary.
++ *      MPV_ERROR_NOT_IMPLEMENTED: an unknown API type or renderer was
++ *                                 provided, or support for the requested API
++ *                                 was not built in the used libmpv binary.
+  *      MPV_ERROR_INVALID_PARAMETER: at least one of the provided parameters was
+  *                                   not valid.
+  */
+diff --git a/video/out/gpu/libmpv_gpu.c b/video/out/gpu/libmpv_gpu.c
+index 6879f67660107..ab979fb1fab40 100644
+--- a/video/out/gpu/libmpv_gpu.c
++++ b/video/out/gpu/libmpv_gpu.c
+@@ -262,6 +262,7 @@ static void destroy(struct render_backend *ctx)
+ }
+ 
+ const struct render_backend_fns render_backend_gpu = {
++    .renderer = MPV_RENDER_RENDERER_GPU,
+     .init = init,
+     .check_format = check_format,
+     .set_parameter = set_parameter,
+diff --git a/video/out/gpu_next/libmpv_gpu_next.c b/video/out/gpu_next/libmpv_gpu_next.c
+index 211fb45d26485..7bbac6d76d5f3 100644
+--- a/video/out/gpu_next/libmpv_gpu_next.c
++++ b/video/out/gpu_next/libmpv_gpu_next.c
+@@ -226,6 +226,7 @@ static void destroy(struct render_backend *ctx)
+ }
+ 
+ const struct render_backend_fns render_backend_gpu_next = {
++    .renderer = MPV_RENDER_RENDERER_GPU_NEXT,
+     .init = init,
+     .check_format = check_format,
+     .set_parameter = set_parameter,
+diff --git a/video/out/libmpv.h b/video/out/libmpv.h
+index 1c018ce653618..ee2942b8d4b46 100644
+--- a/video/out/libmpv.h
++++ b/video/out/libmpv.h
+@@ -39,6 +39,9 @@ struct render_backend {
+ // generic as the VO API.) Like with VOs, one backend can support multiple
+ // underlying GPU APIs.
+ struct render_backend_fns {
++    // The value of MPV_RENDER_PARAM_RENDERER that selects the backend. NULL
++    // if the backend does not depend on that parameter.
++    const char *renderer;
+     // Returns libmpv error code. In particular, this function has to check for
+     // MPV_RENDER_PARAM_API_TYPE, and silently return MPV_ERROR_NOT_IMPLEMENTED
+     // if the API is not included in this backend.
+diff --git a/video/out/vo_libmpv.c b/video/out/vo_libmpv.c
+index c1c518860e5d3..66fdc24a924cb 100644
+--- a/video/out/vo_libmpv.c
++++ b/video/out/vo_libmpv.c
+@@ -188,8 +188,14 @@ int mpv_render_context_create(mpv_render_context **res, mpv_handle *mpv,
+     if (GET_MPV_RENDER_PARAM(params, MPV_RENDER_PARAM_ADVANCED_CONTROL, int, 0))
+         ctx->advanced_control = true;
+ 
++    char *renderer = get_mpv_render_param(params, MPV_RENDER_PARAM_RENDERER,
++                                          MPV_RENDER_RENDERER_GPU);
++
+     int err = MPV_ERROR_NOT_IMPLEMENTED;
+     for (int n = 0; render_backends[n]; n++) {
++        const char *name = render_backends[n]->renderer;
++        if (name && strcmp(name, renderer) != 0)
++            continue;
+         ctx->renderer = talloc_zero(NULL, struct render_backend);
+         *ctx->renderer = (struct render_backend){
+             .global = ctx->global,
+
+From aade20e8cd7cbe43e39f4ffc4e00da8e044119c1 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Kacper=20Michaj=C5=82ow?= <kasper93@gmail.com>
+Date: Thu, 12 Nov 2026 02:23:23 +0100
+Subject: [PATCH 09/10] libmpv: use the gpu-next renderer by default in the
+ render API
+
+---
+ DOCS/client-api-changes.rst          |  1 +
+ include/mpv/render.h                 |  4 +++-
+ osdep/mac/libmpv_helper.swift        |  2 ++
+ video/out/gpu_next/libmpv_gpu_next.c |  5 +++--
+ video/out/vo_libmpv.c                | 10 ++++++----
+ 5 files changed, 15 insertions(+), 7 deletions(-)
+
+diff --git a/DOCS/client-api-changes.rst b/DOCS/client-api-changes.rst
+index b40a6ca57cf32..63dd42f0237f3 100644
+--- a/DOCS/client-api-changes.rst
++++ b/DOCS/client-api-changes.rst
+@@ -34,6 +34,7 @@ API changes
+ 
+  --- mpv 0.43.0 ---
+  2.7    - add MPV_RENDER_PARAM_RENDERER to select the renderer
++        - use the gpu-next renderer by default
+  --- mpv 0.42.0 ---
+  2.6    - add MPV_RENDER_API_TYPE_D3D11 render API backend, along with
+           MPV_RENDER_PARAM_D3D11_INIT_PARAMS and MPV_RENDER_PARAM_D3D11_FBO,
+diff --git a/include/mpv/render.h b/include/mpv/render.h
+index dc67cd2d88eea..d55135a2c69cb 100644
+--- a/include/mpv/render.h
++++ b/include/mpv/render.h
+@@ -456,7 +456,9 @@ typedef enum mpv_render_param_type {
+      *   MPV_RENDER_RENDERER_GPU ("gpu"):
+      *      The renderer of the gpu video output.
+      *
+-     * If omitted, "gpu" is used.
++     * If omitted, "gpu-next" is used if it initializes on the given backend,
++     * and "gpu" otherwise. Applications that depend on the options of one
++     * renderer should select it explicitly.
+      *
+      * Ignored with MPV_RENDER_API_TYPE_SW.
+      */
+diff --git a/osdep/mac/libmpv_helper.swift b/osdep/mac/libmpv_helper.swift
+index 65e402e5ab74e..b77d34242b238 100644
+--- a/osdep/mac/libmpv_helper.swift
++++ b/osdep/mac/libmpv_helper.swift
+@@ -36,12 +36,14 @@ class LibmpvHelper {
+     func initRender() {
+         let advanced: CInt = 1
+         let api = UnsafeMutableRawPointer(mutating: (MPV_RENDER_API_TYPE_OPENGL as NSString).utf8String)
++        let renderer = UnsafeMutableRawPointer(mutating: (MPV_RENDER_RENDERER_GPU as NSString).utf8String)
+         let pAddress = mpv_opengl_init_params(get_proc_address: getProcAddress,
+                                               get_proc_address_ctx: nil)
+ 
+         TypeHelper.withUnsafeMutableRawPointers([pAddress, advanced]) { (pointers: [UnsafeMutableRawPointer?]) in
+             var params: [mpv_render_param] = [
+                 mpv_render_param(type: MPV_RENDER_PARAM_API_TYPE, data: api),
++                mpv_render_param(type: MPV_RENDER_PARAM_RENDERER, data: renderer),
+                 mpv_render_param(type: MPV_RENDER_PARAM_OPENGL_INIT_PARAMS, data: pointers[0]),
+                 mpv_render_param(type: MPV_RENDER_PARAM_ADVANCED_CONTROL, data: pointers[1]),
+                 mpv_render_param()
+diff --git a/video/out/gpu_next/libmpv_gpu_next.c b/video/out/gpu_next/libmpv_gpu_next.c
+index 7bbac6d76d5f3..6914278bd45b6 100644
+--- a/video/out/gpu_next/libmpv_gpu_next.c
++++ b/video/out/gpu_next/libmpv_gpu_next.c
+@@ -42,9 +42,10 @@ static int init(struct render_backend *ctx, mpv_render_param *params)
+     if (err < 0)
+         return err;
+ 
+-    p->gpu_ctx = gpu_ctx_create(ctx->log, p->context->ra_ctx, false);
++    bool probing = !get_mpv_render_param(params, MPV_RENDER_PARAM_RENDERER, NULL);
++    p->gpu_ctx = gpu_ctx_create(ctx->log, p->context->ra_ctx, probing);
+     if (!p->gpu_ctx)
+-        return MPV_ERROR_UNSUPPORTED;
++        return probing ? MPV_ERROR_NOT_IMPLEMENTED : MPV_ERROR_UNSUPPORTED;
+ 
+     p->renderer = mppl_video_init(ctx->log, ctx->global, p->gpu_ctx);
+ 
+diff --git a/video/out/vo_libmpv.c b/video/out/vo_libmpv.c
+index 66fdc24a924cb..39fae2cfec02b 100644
+--- a/video/out/vo_libmpv.c
++++ b/video/out/vo_libmpv.c
+@@ -115,8 +115,8 @@ struct mpv_render_context {
+ };
+ 
+ const struct render_backend_fns *render_backends[] = {
+-    &render_backend_gpu,
+     &render_backend_gpu_next,
++    &render_backend_gpu,
+     &render_backend_sw,
+     NULL
+ };
+@@ -188,13 +188,12 @@ int mpv_render_context_create(mpv_render_context **res, mpv_handle *mpv,
+     if (GET_MPV_RENDER_PARAM(params, MPV_RENDER_PARAM_ADVANCED_CONTROL, int, 0))
+         ctx->advanced_control = true;
+ 
+-    char *renderer = get_mpv_render_param(params, MPV_RENDER_PARAM_RENDERER,
+-                                          MPV_RENDER_RENDERER_GPU);
++    char *renderer = get_mpv_render_param(params, MPV_RENDER_PARAM_RENDERER, NULL);
+ 
+     int err = MPV_ERROR_NOT_IMPLEMENTED;
+     for (int n = 0; render_backends[n]; n++) {
+         const char *name = render_backends[n]->renderer;
+-        if (name && strcmp(name, renderer) != 0)
++        if (name && renderer && strcmp(name, renderer) != 0)
+             continue;
+         ctx->renderer = talloc_zero(NULL, struct render_backend);
+         *ctx->renderer = (struct render_backend){
+@@ -217,6 +216,9 @@ int mpv_render_context_create(mpv_render_context **res, mpv_handle *mpv,
+         return err;
+     }
+ 
++    if (ctx->renderer->fns->renderer)
++        MP_VERBOSE(ctx, "Using the %s renderer.\n", ctx->renderer->fns->renderer);
++
+     ctx->hwdec_devs = ctx->renderer->hwdec_devs;
+ 
+     for (int n = IMGFMT_START; n < IMGFMT_END; n++) {
+
+From a98335f57a886b22fb96ee8b55610a08ffb8aee5 Mon Sep 17 00:00:00 2001
+From: der richter <der.richter@gmx.de>
+Date: Wed, 18 Nov 2026 19:39:38 +0100
+Subject: [PATCH 10/10] cocoa-cb: add option to make libmpv renderer selectable
+
+---
+ DOCS/interface-changes/cocoa-cb-renderer.txt |  1 +
+ DOCS/man/options.rst                         | 10 ++++++++++
+ osdep/mac/app_bridge.h                       |  6 ++++++
+ osdep/mac/app_bridge.m                       |  4 ++++
+ osdep/mac/libmpv_helper.swift                |  7 +++++--
+ video/out/cocoa_cb_common.swift              |  2 +-
+ 6 files changed, 27 insertions(+), 3 deletions(-)
+ create mode 100644 DOCS/interface-changes/cocoa-cb-renderer.txt
+
+diff --git a/DOCS/interface-changes/cocoa-cb-renderer.txt b/DOCS/interface-changes/cocoa-cb-renderer.txt
+new file mode 100644
+index 0000000000000..6f665f0949f96
+--- /dev/null
++++ b/DOCS/interface-changes/cocoa-cb-renderer.txt
+@@ -0,0 +1 @@
++add `--cocoa-cb-renderer` option
+diff --git a/DOCS/man/options.rst b/DOCS/man/options.rst
+index b3dde2d33d49a..af00e104cde11 100644
+--- a/DOCS/man/options.rst
++++ b/DOCS/man/options.rst
+@@ -7141,6 +7141,16 @@ them.
+ 
+     macOS and cocoa-cb only.
+ 
++``--cocoa-cb-renderer=<renderer>``
++    This sets the renderer used by libmpv when using cocoa-cb.
++
++    ``<renderer>`` can be one of the following:
++
++    :gpu:       The renderer of the gpu video output (default).
++    :gpu-next:  The renderer of the gpu-next video output.
++
++    macOS and cocoa-cb only.
++
+ ``--macos-title-bar-appearance=<appearance>``
+     Sets the appearance of the title bar (default: auto). Not all combinations
+     of appearances and ``--macos-title-bar-material`` materials make sense or
+diff --git a/osdep/mac/app_bridge.h b/osdep/mac/app_bridge.h
+index 961b01ca8b2bb..228322e8192a2 100644
+--- a/osdep/mac/app_bridge.h
++++ b/osdep/mac/app_bridge.h
+@@ -86,6 +86,11 @@ enum {
+     MAC_CSP_ADOBE,
+ };
+ 
++enum {
++    MAC_RENDERER_GPU = 0,
++    MAC_RENDERER_GPU_NEXT,
++};
++
+ struct macos_opts {
+     int macos_title_bar_appearance;
+     int macos_title_bar_material;
+@@ -100,6 +105,7 @@ struct macos_opts {
+     int cocoa_cb_sw_renderer;
+     bool cocoa_cb_10bit_context;
+     int cocoa_cb_output_csp;
++    int cocoa_cb_renderer;
+ };
+ 
+ void cocoa_init_media_keys(void);
+diff --git a/osdep/mac/app_bridge.m b/osdep/mac/app_bridge.m
+index 58e10cb4051a6..413b311a3b8f1 100644
+--- a/osdep/mac/app_bridge.m
++++ b/osdep/mac/app_bridge.m
+@@ -88,6 +88,9 @@
+             {"srgb-linear", MAC_CSP_SRGB_LINEAR},
+             {"rgb-linear", MAC_CSP_RGB_LINEAR},
+             {"adobe", MAC_CSP_ADOBE})},
++        {"cocoa-cb-renderer", OPT_CHOICE(cocoa_cb_renderer,
++            {"gpu", MAC_RENDERER_GPU},
++            {"gpu-next", MAC_RENDERER_GPU_NEXT})},
+         {0}
+     },
+     .size = sizeof(struct macos_opts),
+@@ -103,6 +106,7 @@
+         .cocoa_cb_sw_renderer = -1,
+         .cocoa_cb_10bit_context = true,
+         .cocoa_cb_output_csp = MAC_CSP_AUTO,
++        .cocoa_cb_renderer = MAC_RENDERER_GPU,
+     },
+ };
+ 
+diff --git a/osdep/mac/libmpv_helper.swift b/osdep/mac/libmpv_helper.swift
+index b77d34242b238..9c77e921938a7 100644
+--- a/osdep/mac/libmpv_helper.swift
++++ b/osdep/mac/libmpv_helper.swift
+@@ -24,19 +24,22 @@ let glDummy: @convention(c) () -> Void = {}
+ class LibmpvHelper {
+     var log: LogHelper
+     var mpv: OpaquePointer?
++    var option: OptionHelper
+     var mpvRenderContext: OpaquePointer?
+     var fbo: GLint = 1
+     let uninitLock = NSLock()
+ 
+-    init(_ mpv: OpaquePointer, _ log: LogHelper) {
++    init(_ mpv: OpaquePointer, _ option: OptionHelper, _ log: LogHelper) {
+         self.mpv = mpv
++        self.option = option
+         self.log = log
+     }
+ 
+     func initRender() {
+         let advanced: CInt = 1
+         let api = UnsafeMutableRawPointer(mutating: (MPV_RENDER_API_TYPE_OPENGL as NSString).utf8String)
+-        let renderer = UnsafeMutableRawPointer(mutating: (MPV_RENDER_RENDERER_GPU as NSString).utf8String)
++        let renderer = UnsafeMutableRawPointer(mutating: ((option.mac.cocoa_cb_renderer == MAC_RENDERER_GPU ?
++            MPV_RENDER_RENDERER_GPU : MPV_RENDER_RENDERER_GPU_NEXT) as NSString).utf8String)
+         let pAddress = mpv_opengl_init_params(get_proc_address: getProcAddress,
+                                               get_proc_address_ctx: nil)
+ 
+diff --git a/video/out/cocoa_cb_common.swift b/video/out/cocoa_cb_common.swift
+index ad0c393d2b294..b1bc6f5952e39 100644
+--- a/video/out/cocoa_cb_common.swift
++++ b/video/out/cocoa_cb_common.swift
+@@ -33,7 +33,7 @@ class CocoaCB: Common, EventSubscriber {
+     init(_ mpv: OpaquePointer) {
+         let log = LogHelper(mp_log_new(UnsafeMutablePointer(mpv), mp_client_get_log(mpv), "cocoacb"))
+         let option = OptionHelper(UnsafeMutablePointer(mpv), mp_client_get_global(mpv))
+-        libmpv = LibmpvHelper(mpv, log)
++        libmpv = LibmpvHelper(mpv, option, log)
+         super.init(option, log)
+         layer = GLLayer(cocoaCB: self)
+         AppHub.shared.event?.subscribe(self, event: .init(name: "MPV_EVENT_SHUTDOWN"))

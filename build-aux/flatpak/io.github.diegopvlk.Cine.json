@@ -63,7 +63,18 @@
                         "url-template": "https://github.com/mpv-player/mpv/archive/v$version.tar.gz",
                         "is-important": true
                     }
-                }
+                },
+                    {
+                        "type": "patch",
+                        "paths": [
+                            "18821.patch",
+                            "18836.patch",
+                            "18845.patch",
+                            "18860.patch",
+                            "18871.patch",
+                            "18879.patch"
+                        ]
+                    }
             ],
             "modules": [
                 "shared-modules/lua5.1/lua-5.1.5.json",
