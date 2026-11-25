@@ -53,28 +53,17 @@
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/mpv-player/mpv/archive/v0.42.0.tar.gz",
-                    "sha256": "bcfebbfa2b65a6d88dc97ea18117831072373e38b5785a2afb874ed4df5070dd",
-                    "x-checker-data": {
+                    "type": "git",
+                    "url": "https://github.com/mpv-player/mpv.git",
+                    "commit": "09cf7a11f27d9caed31b3e8a6c9ddc45ed788c95",
+                    "x-checker-data-disabled": {
                         "type": "anitya",
                         "project-id": 5348,
                         "stable-only": true,
                         "url-template": "https://github.com/mpv-player/mpv/archive/v$version.tar.gz",
                         "is-important": true
                     }
-                },
-                    {
-                        "type": "patch",
-                        "paths": [
-                            "18821.patch",
-                            "18836.patch",
-                            "18845.patch",
-                            "18860.patch",
-                            "18871.patch",
-                            "18879.patch"
-                        ]
-                    }
+                }
             ],
             "modules": [
                 "shared-modules/lua5.1/lua-5.1.5.json",
