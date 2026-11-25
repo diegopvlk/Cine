@@ -72,6 +72,21 @@
   </requires>
 
   <releases>
+    <release version="1.9.0" date="2026-11-25">
+      <description translate="no">
+        <ul>
+          <li>New: Added a preference for Auto Window Resize</li>
+          <li>New: Added a menu action to Clear Session and Stop</li>
+          <li>Updated mpv to v0.42 + GPU-Next as default</li>
+          <li>All fonts now work when selected from the font dialog</li>
+          <li>Improved support for DVD and Blu-ray ISOs</li>
+          <li>When restoring a session, the window now has the correct aspect ratio</li>
+          <li>Added fallback labels for untitled subtitle and audio tracks</li>
+          <li>Subtitle options from mpv.conf are no longer ignored</li>
+          <li>Plus fixes and improvements</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.8.8" date="2026-10-25">
       <description translate="no">
         <ul>
