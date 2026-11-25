@@ -1741,6 +1741,8 @@ class CineWindow(Adw.ApplicationWindow):
         new_w, new_h = get_window_w_h(self, width, height)
 
         if present:
+            if self._presented:
+                return
             self.set_default_size(new_w, new_h)
             self.present()
             self._presented = True
@@ -1808,11 +1810,11 @@ class CineWindow(Adw.ApplicationWindow):
                 reason = info["reason"]
 
                 if not self._presented and not info.get("playlist_insert_num_entries"):
-                    self.set_win_size_and_present()
+                    idle_add_once(self.set_win_size_and_present)
 
                 if reason == b"error":
                     if not self._presented:
-                        self.set_win_size_and_present()
+                        idle_add_once(self.set_win_size_and_present)
 
                     # Avoid stopping playback on last file/folder error
                     playlist_count = cast(int, self.mpv.playlist_count)
@@ -1826,7 +1828,7 @@ class CineWindow(Adw.ApplicationWindow):
 
                     if self._error_count == 20:
                         self.mpv.stop()
-                        self.shuffle_toggle_btn.set_active(False)
+                        idle_add_once(self.shuffle_toggle_btn.set_active, False)
                         self._error_count = 0
                 elif (
                     not self.mpv.keep_open
@@ -1857,19 +1859,23 @@ class CineWindow(Adw.ApplicationWindow):
 
             if not self._presented:
                 vid_w, vid_h = _get_vid_w_h(rotate_val)
-                self.set_win_size_and_present(vid_w, vid_h)
+                idle_add_once(self.set_win_size_and_present, vid_w, vid_h)
                 return
 
             if settings.get_boolean("auto-window-resize"):
                 vid_w, vid_h = _get_vid_w_h(rotate_val)
                 idle_add_once(self.set_win_size_and_present, vid_w, vid_h, False)
 
-        @self.mpv.property_observer("audio-params")
-        def on_a_params_change(_name, audio_params):
-            if audio_params is None or self._presented:
-                return
+        @self.mpv.property_observer("vid")
+        def on_vid_change(_name, value):
+            if value == False and not self._presented:
+                idle_add_once(self.set_win_size_and_present)
 
-            idle_add_once(self.set_win_size_and_present)
+            if not value:
+                # clear the last frame, which sometimes can still be present
+                idle_add_once(self._video_area.queue_render)
+
+            idle_add_once(self.audio_only_icon.set_visible, not bool(value))
 
         @self.mpv.property_observer("playlist-count")
         def on_playlist_count_change(_name, _count):
@@ -2162,7 +2168,7 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("sub-visibility")
         @self.mpv.property_observer("sid")
         def on_sub_vis_change(name, value):
-            idle_add_once(set_sub_icon, name, value)
+            idle_add_once_debounced(set_sub_icon, name, value)
 
         def set_aid_icon(value):
             audio_on = value == "auto" or value
@@ -2172,14 +2178,7 @@ class CineWindow(Adw.ApplicationWindow):
 
         @self.mpv.property_observer("aid")
         def on_aid_change(_name, value):
-            idle_add_once(set_aid_icon, value)
-
-        @self.mpv.property_observer("vid")
-        def on_vid_change(_name, value):
-            idle_add_once(self.audio_only_icon.set_visible, not bool(value))
-            if not value:
-                # clear the last frame, which sometimes can still be present
-                idle_add_once(self._video_area.queue_render)
+            idle_add_once_debounced(set_aid_icon, value)
 
         @self.mpv.property_observer("video-zoom")
         def on_zoom_change(_name, value):
