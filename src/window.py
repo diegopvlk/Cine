@@ -536,6 +536,29 @@ class CineWindow(Adw.ApplicationWindow):
 
                 popover.connect("closed", on_popv_closed)
 
+        self._resize_bounds = (0, 0, 0, 0)
+        self._resize_anim = Adw.TimedAnimation(
+            widget=self,
+            value_to=1.0,
+            duration=500,
+            easing=Adw.Easing.EASE_IN_OUT,
+            target=Adw.CallbackAnimationTarget.new(
+                lambda t: self.set_default_size(
+                    round(Adw.lerp(self._resize_bounds[0], self._resize_bounds[2], t)),
+                    round(Adw.lerp(self._resize_bounds[1], self._resize_bounds[3], t)),
+                )
+            ),
+        )
+        self._resize_anim.connect(
+            "done", lambda *a: self.set_gravity(Gtk.WindowGravity.TOP_START)
+        )
+
+    def _animate_resize(self, prev_w, prev_h, new_w, new_h):
+        self.set_gravity(Gtk.WindowGravity.CENTER)
+        self._resize_bounds = (prev_w, prev_h, new_w, new_h)
+        self._resize_anim.reset()
+        self._resize_anim.play()
+
     def _set_fs_state(self, _window, _gparam):
         is_fullscreen = self.props.fullscreened
 
@@ -1751,22 +1774,7 @@ class CineWindow(Adw.ApplicationWindow):
         prev_w = self.get_width()
         prev_h = self.get_height()
 
-        self.set_gravity(Gtk.WindowGravity.CENTER)
-
-        for prop, init, target in (
-            ("default-width", prev_w, new_w),
-            ("default-height", prev_h, new_h),
-        ):
-            anim = Adw.TimedAnimation.new(
-                self, init, target, 500, Adw.PropertyAnimationTarget.new(self, prop)
-            )
-            anim.props.easing = Adw.Easing.EASE_IN_OUT_QUAD
-
-            anim.connect(
-                "done", lambda *a: self.set_gravity(Gtk.WindowGravity.TOP_START)
-            )
-
-            anim.play()
+        self._animate_resize(prev_w, prev_h, new_w, new_h)
 
     def _setup_observers(self):
         @self.mpv.event_callback("start-file")
