@@ -198,6 +198,7 @@ class CineWindow(Adw.ApplicationWindow):
         self.can_go_next: bool = False
         self._loop_mode: str = "off"
         self._chapters: list = []
+        self._editions: list = []
         self._curr_chapter_time = None
         self._actions: dict[str, Gio.SimpleAction] = {}
         self._prev_motion_xy: tuple = (0, 0)
@@ -273,6 +274,7 @@ class CineWindow(Adw.ApplicationWindow):
         self._create_action_stateful("select-audio", self._on_audio_selected, "i")
         self._create_action_stateful("select-video", self._on_video_selected, "i")
         self._create_action_stateful("select-chapter", self._on_chapter_selected, "i")
+        self._create_action_stateful("select-edition", self._on_edition_selected, "i")
         self._create_action("add-sub-tracks", self._on_add_sub_dialog)
         self._create_action("add-audio-tracks", self._on_add_audio_dialog)
         self._create_action("add-playlist-files", self.on_add_playlist_dialog)
@@ -795,7 +797,14 @@ class CineWindow(Adw.ApplicationWindow):
                 filter.add_mime_type(m)
         else:
             filter.set_name(_("Media"))
-            for m in ["video/*", "audio/*", "image/*"]:
+            for m in (
+                "video/*",
+                "audio/*",
+                "image/*",
+                "application/vnd.efi.iso",
+                "application/x-iso9660-image",
+                "application/x-cd-image",
+            ):
                 filter.add_mime_type(m)
 
         dialog.open_multiple(
@@ -1125,30 +1134,65 @@ class CineWindow(Adw.ApplicationWindow):
 
         self._prev_prog_time = curr_time
 
-    def _update_chapter_marks_and_menu(self, chapters):
-        if not chapters:
-            self.video_progress_scale.clear_marks()
-            self.chapters_menu_btn.set_visible(False)
-            return
-
-        self._chapters = sorted(chapters, key=lambda c: c.get("time", 0))
+    def _update_chapters_and_marks(self, chapters):
+        self.video_progress_scale.clear_marks()
+        self._chapters = (
+            sorted(chapters, key=lambda c: c.get("time", 0)) if chapters else []
+        )
         self.chapter_times, self.chapter_titles = [], []
-
-        self.chapters_menu_btn.set_visible(True)
-        self.chapters_menu.remove_all()
 
         for i, chapter in enumerate(self._chapters):
             title = chapter.get("title") or _("Chapter") + f" {i + 1}"
-            item = Gio.MenuItem.new(title, None)
-            item.set_action_and_target_value("win.select-chapter", GLib.Variant("i", i))
-            self.chapters_menu.append_item(item)
-
             time_pos = chapter.get("time")
+
             if time_pos is not None:
                 self.video_progress_scale.add_mark(time_pos, Gtk.PositionType.TOP, None)
 
-            self.chapter_times.append(chapter.get("time"))
+            self.chapter_times.append(time_pos)
             self.chapter_titles.append(GLib.markup_escape_text(title))
+
+        self._rebuild_chapters_menu()
+
+    def _update_editions(self, editions):
+        self._editions = editions if (editions and len(editions) > 1) else []
+        self._rebuild_chapters_menu()
+
+    def _rebuild_chapters_menu(self):
+        self.chapters_menu.remove_all()
+
+        has_editions = bool(self._editions)
+        has_chapters = bool(self._chapters)
+
+        if not has_editions and not has_chapters:
+            self.chapters_menu_btn.set_visible(False)
+            return
+
+        self.chapters_menu_btn.set_visible(True)
+
+        if has_editions:
+            editions_section = Gio.Menu.new()
+            for i, edition in enumerate(self._editions):
+                edition_id = edition.get("id", i)
+                title = edition.get("title") or "Edition" + f" {edition_id + 1}"
+                item = Gio.MenuItem.new(title, None)
+                item.set_action_and_target_value(
+                    "win.select-edition", GLib.Variant("i", edition_id)
+                )
+                editions_section.append_item(item)
+
+            self.chapters_menu.append_section(None, editions_section)
+
+        if has_chapters:
+            chapters_section = Gio.Menu.new()
+            for i, chapter in enumerate(self._chapters):
+                title = chapter.get("title") or _("Chapter") + f" {i + 1}"
+                item = Gio.MenuItem.new(title, None)
+                item.set_action_and_target_value(
+                    "win.select-chapter", GLib.Variant("i", i)
+                )
+                chapters_section.append_item(item)
+
+            self.chapters_menu.append_section(None, chapters_section)
 
     def _navigate_playlist(self, direction: int):
         pos = int(self.mpv.playlist_pos or 0)
@@ -1186,11 +1230,21 @@ class CineWindow(Adw.ApplicationWindow):
         self.mpv.chapter = chapter_index
         action.set_state(parameter)
 
+    def _on_edition_selected(self, action, parameter):
+        edition_id = parameter.get_int32()
+        self.mpv.edition = edition_id
+        action.set_state(parameter)
+
     @Gtk.Template.Callback()
     def _sync_chapter_menu_selected(self, *args):
         if action := self.lookup_action("select-chapter"):
+            chapter = self.mpv.chapter
             a = cast(Gio.SimpleAction, action)
-            a.set_state(GLib.Variant("i", self.mpv.chapter))
+            a.set_state(GLib.Variant("i", chapter if chapter is not None else -1))
+        if action := self.lookup_action("select-edition"):
+            edition = self.mpv.current_edition
+            a = cast(Gio.SimpleAction, action)
+            a.set_state(GLib.Variant("i", edition if edition is not None else -1))
 
     def _update_play_pause_icon(self, paused):
         play = "cine-playback-start-symbolic"
@@ -1389,7 +1443,14 @@ class CineWindow(Adw.ApplicationWindow):
 
             mime = info.get_content_type() or ""
             if info.get_file_type() == Gio.FileType.DIRECTORY or mime.startswith(
-                ("video/", "audio/", "image/")
+                (
+                    "video/",
+                    "audio/",
+                    "image/",
+                    "application/vnd.efi.iso",
+                    "application/x-iso9660-image",
+                    "application/x-cd-image",
+                )
             ):
                 playable_items.append(path)
 
@@ -2070,11 +2131,16 @@ class CineWindow(Adw.ApplicationWindow):
         @self.mpv.property_observer("chapter-list")
         def on_chapter_list_change(_name, chapters):
             self._chapters = []
-            idle_add_once_debounced(self._update_chapter_marks_and_menu, chapters)
+            idle_add_once_debounced(self._update_chapters_and_marks, chapters)
+
+        @self.mpv.property_observer("edition-list")
+        def on_edition_list_change(_name, editions):
+            idle_add_once_debounced(self._update_editions, editions)
 
         @self.mpv.property_observer("chapter")
-        def on_chapter_change(_name, chapter_idx):
-            if chapter_idx is not None and self.chapters_menu_btn.get_active():
+        @self.mpv.property_observer("current-edition")
+        def on_chapter_or_edition_change(_name, _idx):
+            if self.chapters_menu_btn.get_active():
                 idle_add_once(self._sync_chapter_menu_selected)
 
         @self.mpv.property_observer("pause")

@@ -266,6 +266,12 @@ class Playlist(Adw.Dialog):
                     icon_name = "cine-image-x-generic-symbolic"
                 elif content_type == "mpv-url":
                     icon_name = "cine-globe-symbolic"
+                elif (
+                    "application/vnd.efi.iso" in content_type
+                    or "application/x-iso9660-image" in content_type
+                    or "application/x-cd-image" in content_type
+                ):
+                    icon_name = "cine-iso-symbolic"
                 elif content_type == "error":
                     icon_name = "cine-warning-symbolic"
 
@@ -359,7 +365,14 @@ class Playlist(Adw.Dialog):
                     accepted = True
                     continue
 
-                valid_types = ("video/", "audio/", "image/")
+                valid_types = (
+                    "video/",
+                    "audio/",
+                    "image/",
+                    "application/vnd.efi.iso",
+                    "application/x-iso9660-image",
+                    "application/x-cd-image",
+                )
                 if mime_type.startswith(valid_types):
                     self._mpv.loadfile(path, "append-play")
                     accepted = True

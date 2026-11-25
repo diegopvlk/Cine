@@ -137,6 +137,79 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "libdvdread",
+                    "buildsystem": "meson",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://download.videolan.org/pub/videolan/libdvdread/7.1.1/libdvdread-7.1.1.tar.xz",
+                            "sha256": "a0d47876548bec806774bbf8dbf20bb19ba139464383156b32eb8e59915b90a9",
+                            "x-checker-data": {
+                                "type": "html",
+                                "url": "https://download.videolan.org/pub/videolan/libdvdread/last/",
+                                "version-pattern": "libdvdread-([\\w.]+)\\.tar\\.",
+                                "url-template": "https://download.videolan.org/pub/videolan/libdvdread/$version/libdvdread-$version.tar.xz"
+                            }
+                        }
+                    ],
+                    "modules": [
+                        {
+                            "name": "libdvdcss",
+                            "buildsystem": "meson",
+                            "sources": [
+                                {
+                                    "type": "archive",
+                                    "url": "https://download.videolan.org/pub/libdvdcss/1.6.0/libdvdcss-1.6.0.tar.xz",
+                                    "sha256": "7ea556c846b7bfc32d47b41cae56d1863a6b6d5f706bb162778d6f298490977c",
+                                    "x-checker-data": {
+                                        "type": "anitya",
+                                        "project-id": 5568,
+                                        "url-template": "https://download.videolan.org/pub/libdvdcss/$version/libdvdcss-$version.tar.xz"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "libdvdnav",
+                    "buildsystem": "meson",
+                    "sources": [
+                        {
+                            "type": "archive",
+                            "url": "https://download.videolan.org/pub/videolan/libdvdnav/7.0.0/libdvdnav-7.0.0.tar.xz",
+                            "sha256": "a2a18f5ad36d133c74bf9106b6445806fa253b09141a46392550394b647b221e",
+                            "x-checker-data": {
+                                "type": "html",
+                                "url": "https://download.videolan.org/pub/videolan/libdvdnav/last/",
+                                "version-pattern": "libdvdnav-([\\w.]+)\\.tar\\.",
+                                "url-template": "https://download.videolan.org/pub/videolan/libdvdnav/$version/libdvdnav-$version.tar.xz"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "libbluray",
+                    "buildsystem": "meson",
+                    "config-opts": [
+                        "-Dbdj_jar=disabled",
+                        "-Denable_tools=false"
+                    ],
+                    "sources": [
+                        {
+                            "sha256": "f676408e91a5d321abf8b8d4dfdae36205c297dab5c54c3ec519639025f474a2",
+                            "type": "archive",
+                            "url": "https://download.videolan.org/pub/videolan/libbluray/1.5.0/libbluray-1.5.0.tar.xz",
+                            "x-checker-data": {
+                                "type": "html",
+                                "url": "https://download.videolan.org/pub/videolan/libbluray/last/",
+                                "version-pattern": "libbluray-([\\w.]+)\\.tar\\.",
+                                "url-template": "https://download.videolan.org/pub/videolan/libbluray/$version/libbluray-$version.tar.xz"
+                            }
+                        }
+                    ]
                 }
             ]
         },
@@ -211,8 +284,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/yt-dlp/yt-dlp.git",
-                    "tag": "2026.10.26",
-                    "commit": "f264a6cbd1f630894da0f368df00f8aae50140e0",
+                    "tag": "2026.11.23",
+                    "commit": "6f73a8d1664a58cdef8c25f01ffb5ab9cf730408",
                     "x-checker-data": {
                         "type": "git",
                         "tag-pattern": "^([\\d.]+)$"
