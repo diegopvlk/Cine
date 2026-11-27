@@ -72,7 +72,7 @@
   </requires>
 
   <releases>
-    <release version="1.9.0" date="2026-11-25">
+    <release version="1.9.1" date="2026-11-27">
       <description translate="no">
         <ul>
           <li>New: Added a preference for Auto Window Resize</li>
