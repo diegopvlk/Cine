@@ -668,8 +668,8 @@ class CineWindow(Adw.ApplicationWindow):
 
         video_count = 0
         for track in track_list:
-            self._add_track_to_menu(track)
             track_type = track.get("type")
+            self._add_track_to_menu(track, track_type)
             if track_type == "video" and not track.get("albumart"):
                 video_count += 1
 
@@ -678,9 +678,8 @@ class CineWindow(Adw.ApplicationWindow):
         self._hide_box_first_model_btn(self.subtitles_menu_btn)
         self._hide_box_first_model_btn(self.audio_tracks_menu_btn)
 
-    def _add_track_to_menu(self, track):
+    def _add_track_to_menu(self, track, track_type):
         track_id = int(track.get("id", 0))
-        track_type = track.get("type")
         title = (track.get("title") or "").strip()
         raw_lang = (track.get("lang") or "").strip()
         lang = None if (raw_lang and raw_lang.lower() == "und") else raw_lang
