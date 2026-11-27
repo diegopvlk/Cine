@@ -673,7 +673,6 @@ class CineWindow(Adw.ApplicationWindow):
             if track_type == "video" and not track.get("albumart"):
                 video_count += 1
 
-        self._is_audio = video_count == 0
         self.video_tracks_menu_btn.set_visible(video_count > 1)
 
         self._hide_box_first_model_btn(self.subtitles_menu_btn)
@@ -970,8 +969,10 @@ class CineWindow(Adw.ApplicationWindow):
 
         v_width, v_height = 1280, 720
 
+        self._is_audio = self.mpv.vid == False
+
         try:
-            if self.mpv.vid:
+            if not self._is_audio:
                 self.mpv.wait_for_property("width", timeout=2)
                 self.mpv.wait_for_property("height", timeout=2)
                 v_width = cast(int, self.mpv.width)
